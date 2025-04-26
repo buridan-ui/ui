@@ -358,7 +358,45 @@ def sidemenu_right():
             color=rx.color("gray", 4),
             class_name=" w-full p-2",
         ),
+        rx.box(
+            rx.box(
+                rx.box(
+                    rx.el.label(
+                        "Notice",
+                        class_name="text-sm font-bold "
+                        + rx.color_mode_cond("text-slate-700", "text-slate-200").to(
+                            str
+                        ),
+                    ),
+                    rx.el.label(
+                        "We’re upgrading our UI library with Tailwind CSS for faster, cleaner, and more customizable designs.",
+                        class_name="text-sm font-light pt-1 pb-2 "
+                        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(
+                            str
+                        ),
+                    ),
+                    rx.el.label(
+                        "You may notice styling updates as we roll out improvements.",
+                        class_name="text-sm font-light pt-1 pb-2 "
+                        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(
+                            str
+                        ),
+                    ),
+                    rx.el.label(
+                        "Thanks for being part of the journey!",
+                        class_name="text-sm font-light pt-1 pb-2 "
+                        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(
+                            str
+                        ),
+                    ),
+                    class_name="flex flex-col px-2 py-2 gap-y-2",
+                ),
+                color=rx.color("amber", 5),
+                class_name="flex flex-col gap-y-2 p-2 w-full inset-0 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]",
+            ),
+            class_name="w-full p-2",
+        ),
         height="100vh",
         class_name="flex flex-col max-w-[280px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
-        display=create_responsive_display("none", "flex"),  # Hide on small screens
+        display=create_responsive_display("none", "flex"),
     )

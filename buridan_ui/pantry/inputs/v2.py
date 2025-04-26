@@ -1,45 +1,92 @@
 import reflex as rx
 
-data = ["🇪🇺 EUR", "🇺🇸 USD", "🇨🇦 CAD", "🇬🇧 GBP", "🇦🇺 AUD"]
-
-
-def title(name: str) -> rx.Component:
-    return rx.text(name, size="1", weight="bold", color=rx.color("slate", 11))
-
-
-def select() -> rx.Component:
-    return rx.select(
-        data,
-        default_value=data[0],
-        top="0",
-        right="0",
-        position="popper",
-        width="120px",
-        variant="soft",
-        radius="none",
-        cursor="pointer",
-        size="3",
-    )
-
-
-def entry(placeholder: str) -> rx.Component:
-    return rx.input(
-        select(),
-        placeholder=placeholder,
-        outline="none",
-        variant="soft",
-        width="100%",
-        overflow="hidden",
-        background=rx.color("gray", 4),
-        height="40px",
-    )
-
 
 def inputs_v2():
-    return rx.vstack(
-        title("Transfer Amount"),
-        entry("1000"),
-        width="100%",
-        max_width="25em",
-        spacing="1",
+    return rx.box(
+        rx.box(
+            rx.text(
+                "Email",
+                class_name=(
+                    # Layout & Spacing
+                    ""
+                    # Typography
+                    + "text-xs font-semibold"
+                    # Border & Shape
+                    + ""
+                    # Effects
+                    + ""
+                    # Interactions
+                    + ""
+                    # Transitions
+                    + ""
+                ),
+            ),
+            rx.text(
+                "optional",
+                class_name=(
+                    # Layout & Spacing
+                    ""
+                    # Typography
+                    + "text-xs font-light text-gray-400"
+                    # Border & Shape
+                    + ""
+                    # Effects
+                    + ""
+                    # Interactions
+                    + ""
+                    # Transitions
+                    + ""
+                ),
+            ),
+            class_name=(
+                # Layout & Spacing
+                "w-full flex flex-row justify-between items-center"
+                # Typography
+                + ""
+                # Border & Shape
+                + ""
+                # Effects
+                + ""
+                # Interactions
+                + ""
+                # Transitions
+                + ""
+            ),
+        ),
+        rx.el.input(
+            placeholder="something@email.com",
+            # outline="none",
+            class_name=(
+                # Layout & Spacing
+                "p-2 w-full "
+                # Typography
+                + "text-sm "
+                # Border & Shape
+                + "rounded-md bg-transparent border "
+                + rx.color_mode_cond(
+                    "border-gray-200 ",
+                    "border-gray-800 ",
+                )
+                # Effects
+                + ""
+                # Interactions
+                + "focus:outline-none focus:border-blue-500"
+                # Transitions
+                + ""
+            ),
+        ),
+        class_name=(
+            # Layout & Spacing
+            "w-full max-w-[20em] flex flex-col gap-y-2"
+            # Typography
+            + ""
+            # Border & Shape
+            + ""
+            # Effects
+            + ""
+            # Interactions
+            + ""
+            # Transitions
+            + ""
+        ),
     )

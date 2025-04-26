@@ -154,8 +154,8 @@ def tab_selector(tabs=None):
         rx.hstack(
             *[
                 rx.button(
-                    rx.text(
-                        tab,
+                    rx.icon(
+                        tag=tab,
                         color=rx.cond(
                             ActiveTab.value == i,
                             rx.color("slate", 12),  # Active text color
@@ -216,7 +216,7 @@ def create_header(url: str):
         ),
         rx.el.div(
             # app_settings(),
-            # tab_selector(tabs=["Free", "Pro"]),
+            # tab_selector(),
             rx.box(
                 drawer(),
                 display=create_responsive_display("flex", "none"),

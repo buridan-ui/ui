@@ -1,7 +1,7 @@
 import reflex as rx
 
 
-def card_v2():
+def card_v4():
     return rx.box(
         rx.box(
             color=rx.color("gray", 4),
@@ -18,6 +18,16 @@ def card_v2():
             class_name=(
                 # Dimesnions
                 "w-full h-64 "
+                # Placeholder Background
+                + "col-start-2 row-span-full row-start-1 bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]"
+            ),
+        ),
+        rx.divider(),
+        rx.box(
+            color=rx.color("gray", 4),
+            class_name=(
+                # Dimesnions
+                "w-full h-12 "
                 # Placeholder Background
                 + "col-start-2 row-span-full row-start-1 bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]"
             ),

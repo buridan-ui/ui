@@ -15,7 +15,7 @@ class FooterStyle:
         default_factory=lambda: {
             "display": "grid",
             "grid_template_columns": [
-                f"repeat({i}, minmax(0, 1fr))" for i in [2, 3, 4, 5, 5, 5]
+                f"repeat({i}, minmax(0, 1fr))" for i in [2, 2, 4, 4, 5, 5]
             ],
             "justify": "start",
             "gap": "1rem 3rem",

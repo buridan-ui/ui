@@ -16,14 +16,14 @@ class ExportConfig:
             "tabs": {"versions": range(1, 4), "func_prefix": "tab"},
             "sidebars": {"versions": range(1, 2), "func_prefix": "sidebar"},
             "accordions": {"versions": range(1, 2), "func_prefix": "accordion"},
-            "animations": {"versions": range(1, 7), "func_prefix": "animation"},
+            "animations": {"versions": range(1, 4), "func_prefix": "animation"},
             "backgrounds": {"versions": range(1, 5), "func_prefix": "background"},
-            "cards": {"versions": range(1, 4), "func_prefix": "card"},
+            "cards": {"versions": range(1, 5), "func_prefix": "card"},
             "faq": {"versions": [1], "func_prefix": "faq"},
             "featured": {"versions": range(1, 3), "func_prefix": "featured"},
             "footers": {"versions": range(1, 3), "func_prefix": "footer"},
             "forms": {"versions": range(1, 4), "func_prefix": "forms"},
-            "inputs": {"versions": range(1, 5), "func_prefix": "inputs"},
+            "inputs": {"versions": range(1, 6), "func_prefix": "inputs"},
             "lists": {"versions": [1], "func_prefix": "lists"},
             "logins": {"versions": range(1, 3), "func_prefix": "logins"},
             "menus": {"versions": [1], "func_prefix": "menus"},
@@ -61,10 +61,7 @@ class ExportConfig:
         }
 
         # Grid configurations
-        self.GRID_CONFIGS = {
-            "animations": {"lg": 2, "gap": 8},
-            "backgrounds": {"lg": 2},
-        }
+        self.GRID_CONFIGS = {}
 
         # Development mode settings
         self.development_mode = False
@@ -439,6 +436,6 @@ def filter_routes(routes_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 # Generate the exports based on the configuration
-pro_exports_config = generate_pro_exports()
-pantry_exports_config = generate_pantry_exports()
-charts_exports_config = generate_chart_exports()
+# pro_exports_config = generate_pro_exports()
+# pantry_exports_config = generate_pantry_exports()
+# charts_exports_config = generate_chart_exports()
