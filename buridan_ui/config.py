@@ -14,7 +14,7 @@ LOCAL_BASE_PANTRY_PATH = os.path.join(
 )
 
 # ------------------------ DO NOT EDIT ---------------------------- #
-VERSION = "v.0.6.2"
+VERSION = "v.0.6.3"
 
 
 BASE_PANTRY_PATH = (
