@@ -436,6 +436,6 @@ def filter_routes(routes_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 # Generate the exports based on the configuration
-# pro_exports_config = generate_pro_exports()
-# pantry_exports_config = generate_pantry_exports()
-# charts_exports_config = generate_chart_exports()
+pro_exports_config = generate_pro_exports()
+pantry_exports_config = generate_pantry_exports()
+charts_exports_config = generate_chart_exports()
