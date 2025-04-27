@@ -2,46 +2,39 @@ import reflex as rx
 
 
 def subscribe_v2():
-    return rx.center(
-        rx.vstack(
-            rx.text(
-                "Sign up to our newsletter",
-                size="4",
-                weight="bold",
-                color=rx.color("slate", 12),
-            ),
-            rx.hstack(
-                rx.hstack(
-                    rx.input(
-                        variant="soft",
-                        background="transparent",
-                        outline="none",
-                        placeholder="Enter your email",
-                        width="100%",
+    return rx.box(
+        rx.box(
+            rx.text("Sign up to our newsletter", class_name="text-md"),
+            rx.box(
+                rx.el.input(
+                    placeholder="Enter your email...",
+                    # outline="none",
+                    class_name=(
+                        # Layout & Spacing
+                        "p-2 w-full "
+                        # Typography
+                        + "text-sm "
+                        # Border & Shape
+                        + "rounded-md bg-transparent border "
+                        + rx.color_mode_cond(
+                            "border-gray-200 ",
+                            "border-gray-800 ",
+                        )
+                        # Effects
+                        + ""
+                        # Interactions
+                        + "focus:outline-none focus:border-blue-500"
+                        # Transitions
+                        + ""
                     ),
-                    align="center",
-                    spacing="0",
-                    border=f"1px solid {rx.color('gray', 6)}",
-                    border_radius="8px",
-                    padding="5px 5px 5px 10px",
-                    flex=["100%" if i <= 3 else "80%" for i in range(6)],
                 ),
-                rx.button(
-                    "Subscribe",
-                    variant="solid",
-                    flex=["100%" if i <= 3 else "15%" for i in range(6)],
-                    size="3",
-                ),
-                align="center",
-                width="100%",
-                justify="start",
-                flex_wrap="wrap",
+                class_name="relative focus:outline-none w-full",
             ),
-            max_width="30em",
-            width="100%",
-            align="center",
-            spacing="5",
+            rx.button(
+                "Subscribe",
+                class_name="w-full !text-sm bg-blue-500",
+            ),
+            class_name="w-full max-w-[20em] h-full flex flex-col gap-y-4 items-center justify-center",
         ),
-        width="100%",
-        height="25vh",
+        class_name="w-full h-[25vh] flex justify-center items-center align-center",
     )

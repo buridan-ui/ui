@@ -32,7 +32,7 @@ class ExportConfig:
             "popups": {"versions": range(1, 3), "func_prefix": "popups"},
             "pricing": {"versions": range(1, 3), "func_prefix": "pricing"},
             "prompts": {"versions": range(1, 3), "func_prefix": "prompt"},
-            "subscribe": {"versions": range(1, 3), "func_prefix": "subscribe"},
+            "subscribe": {"versions": range(1, 4), "func_prefix": "subscribe"},
             "tables": {"versions": range(1, 5), "func_prefix": "tables"},
             "timeline": {"versions": [1], "func_prefix": "timeline"},
         }

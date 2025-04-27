@@ -1,5 +1,5 @@
 ChartMetaData = {
-    "area": ["Dec 12, 2024", "Apr 20, 2025", 8],
+    "area": ["Dec 12, 2024", "Apr 26, 2025", 8],
     "bar": ["Dec 12, 2024", "Apr 11, 2025", 10],
     "line": ["Dec 12, 2024", "Apr 11, 2025", 8],
     "pie": ["Dec 12, 2024", "Apr 11, 2025", 6],
@@ -11,8 +11,8 @@ ChartMetaData = {
     "chord": ["Mar 28, 2025", "Apr 11, 2025", 1],
 }
 PantryMetaData = {
-    "tabs": ["Apr 18, 2025", "Apr 18, 2025", 3],
-    "sidebars": ["Apr 06, 2025", "Apr 20, 2025", 1],
+    "tabs": ["Apr 18, 2025", "Apr 26, 2025", 3],
+    "sidebars": ["Apr 06, 2025", "Apr 26, 2025", 1],
     "accordions": ["Mar 30, 2025", "Apr 11, 2025", 1],
     "animations": ["Dec 12, 2024", "Apr 26, 2025", 4],
     "backgrounds": ["Dec 12, 2024", "Dec 12, 2024", 4],
@@ -30,7 +30,7 @@ PantryMetaData = {
     "popups": ["Dec 12, 2024", "Apr 11, 2025", 2],
     "pricing": ["Dec 12, 2024", "Apr 11, 2025", 2],
     "prompts": ["Dec 12, 2024", "Apr 11, 2025", 2],
-    "subscribe": ["Dec 12, 2024", "Apr 11, 2025", 2],
+    "subscribe": ["Dec 12, 2024", "Apr 27, 2025", 3],
     "tables": ["Dec 12, 2024", "Apr 11, 2025", 4],
     "timeline": ["Dec 12, 2024", "Apr 11, 2025", 1],
 }

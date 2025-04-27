@@ -1,24 +1,16 @@
 import reflex as rx
 
 
-def subscribe_v1():
+def subscribe_v3():
     return rx.box(
         rx.box(
             rx.box(
-                rx.icon(
-                    tag="mail",
-                    class_name="absolute left-2 top-1/2 transform -translate-y-1/2 size-5 "
-                    + rx.color_mode_cond(
-                        "!text-gray-400",
-                        "!text-gray-600",
-                    ),
-                ),
                 rx.el.input(
                     placeholder="Enter your email...",
                     # outline="none",
                     class_name=(
                         # Layout & Spacing
-                        "pl-9 pr-20 py-2 w-full "
+                        "p-2 w-full "
                         # Typography
                         + "text-sm "
                         # Border & Shape
@@ -35,14 +27,13 @@ def subscribe_v1():
                         + ""
                     ),
                 ),
-                rx.button(
-                    "Join",
-                    class_name="absolute right-2 top-1/2 transform -translate-y-1/2 h-2/3 !text-sm bg-blue-500",
-                ),
-                class_name="w-full relative focus:outline-none",
+                class_name="relative focus:outline-none w-full",
             ),
-            rx.text("No spam, unsubscribe at any time.", class_name="text-sm"),
-            class_name="w-full max-w-[20em] h-full flex flex-col gap-y-2 items-center justify-center align-start",
+            rx.button(
+                "Subscribe",
+                class_name="!text-sm bg-blue-500",
+            ),
+            class_name="w-full max-w-[20em] h-full flex flex-row gap-x-4 items-center justify-center",
         ),
         class_name="w-full h-[25vh] flex justify-center items-center align-center",
     )

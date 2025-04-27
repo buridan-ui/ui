@@ -338,26 +338,43 @@ def sidemenu_right():
                             str
                         ),
                     ),
-                    rx.el.a(
-                        rx.el.label(
-                            "Start Building",
-                            color=rx.color("slate", 12),
-                            class_name="text-sm",
+                    rx.link(
+                        rx.el.div(
+                            rx.el.label(
+                                "Start Building",
+                                class_name="text-sm underline hover:cursor-pointer",
+                            ),
+                            # rx.icon(
+                            #     "arrow-right",
+                            #     class_name="size-3",
+                            # ),
+                            class_name="flex felx-row items-center justify-between gap-x-2",
                         ),
-                        target="_blank",
                         href="https://reflex.build/",
-                        _hover={"background": rx.color("accent", 8)},
-                        background=rx.color("accent", 7),
-                        class_name="cursor-pointer p-2 flex items-center justify-center rounded-md",
+                        is_external=True,
                     ),
+                    # rx.el.a(
+                    #     rx.el.label(
+                    #         "Start Building",
+                    #         color=rx.color("slate", 12),
+                    #         class_name="text-sm",
+                    #     ),
+                    #     target="_blank",
+                    #     href="https://reflex.build/",
+                    #     _hover={"background": rx.color("accent", 8)},
+                    #     background=rx.color("accent", 7),
+                    #     class_name="cursor-pointer p-2 flex items-center justify-center rounded-md",
+                    # ),
                     class_name="flex flex-col w-full h-full p-2 gap-y-2",
                 ),
                 color=rx.color("gray", 4),
-                class_name="flex flex-col gap-y-2 p-2 w-full inset-0 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]",
+                class_name="flex flex-col gap-y-2 w-full",
+                # inset-0 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]
             ),
-            color=rx.color("gray", 4),
-            class_name=" w-full p-2",
+            # color=rx.color("gray", 4),
+            class_name=" w-full px-1 py-2 " + "border-l border-dashed border-slate-500",
         ),
+        rx.divider(class_name="h-[10px] opacity-0"),
         rx.box(
             rx.box(
                 rx.box(
@@ -389,12 +406,13 @@ def sidemenu_right():
                             str
                         ),
                     ),
-                    class_name="flex flex-col px-2 py-2 gap-y-2",
+                    class_name="flex flex-col px-2 gap-y-2",
                 ),
                 color=rx.color("amber", 5),
-                class_name="flex flex-col gap-y-2 p-2 w-full inset-0 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]",
+                class_name="flex flex-col gap-y-2 w-full" + "",
+                # inset-0 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]
             ),
-            class_name="w-full p-2",
+            class_name="w-full px-1 py-2 " + "border-l border-dashed border-orange-500",
         ),
         height="100vh",
         class_name="flex flex-col max-w-[280px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
