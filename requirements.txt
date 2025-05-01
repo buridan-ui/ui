@@ -1,1 +1,1 @@
-reflex>=0.7.7a1
+reflex>=0.7.8
