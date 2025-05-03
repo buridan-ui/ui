@@ -1,25 +1,9 @@
 import reflex as rx
 
 
-def inputs_v3():
+def input_v3():
     return rx.box(
-        rx.text(
-            "Email",
-            class_name=(
-                # Layout & Spacing
-                ""
-                # Typography
-                + "text-xs font-semibold"
-                # Border & Shape
-                + ""
-                # Effects
-                + ""
-                # Interactions
-                + ""
-                # Transitions
-                + ""
-            ),
-        ),
+        rx.text("Email", class_name="text-xs font-semibold"),
         rx.box(
             rx.icon(
                 tag="mail",
@@ -27,44 +11,22 @@ def inputs_v3():
                 + rx.color_mode_cond(
                     "!text-gray-400",
                     "!text-gray-600",
-                ),
+                ).to(str),
             ),
             rx.el.input(
                 placeholder="something@email.com",
-                # outline="none",
                 class_name=(
-                    # Layout & Spacing
                     "pl-9 py-2 w-full "
-                    # Typography
                     + "text-sm "
-                    # Border & Shape
                     + "rounded-md bg-transparent border "
                     + rx.color_mode_cond(
                         "border-gray-200 ",
                         "border-gray-800 ",
-                    )
-                    # Effects
-                    + ""
-                    # Interactions
+                    ).to(str)
                     + "focus:outline-none focus:border-blue-500"
-                    # Transitions
-                    + ""
                 ),
             ),
             class_name="relative focus:outline-none",
         ),
-        class_name=(
-            # Layout & Spacing
-            "w-full max-w-[20em] flex flex-col gap-y-2"
-            # Typography
-            + ""
-            # Border & Shape
-            + ""
-            # Effects
-            + ""
-            # Interactions
-            + ""
-            # Transitions
-            + ""
-        ),
+        class_name="w-full max-w-[20em] flex flex-col gap-y-2",
     )

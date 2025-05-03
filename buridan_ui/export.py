@@ -23,7 +23,7 @@ class ExportConfig:
             "featured": {"versions": range(1, 3), "func_prefix": "featured"},
             "footers": {"versions": range(1, 3), "func_prefix": "footer"},
             "forms": {"versions": range(1, 4), "func_prefix": "forms"},
-            "inputs": {"versions": range(1, 6), "func_prefix": "inputs"},
+            "inputs": {"versions": range(1, 6), "func_prefix": "input"},
             "lists": {"versions": [1], "func_prefix": "lists"},
             "logins": {"versions": range(1, 3), "func_prefix": "logins"},
             "menus": {"versions": [1], "func_prefix": "menus"},
