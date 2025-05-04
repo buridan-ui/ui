@@ -1,74 +1,49 @@
 import os
 
-# ------------------------ DO NOT EDIT ---------------------------- #
-# Get the directory of the current script/module
-current_dir = os.path.dirname(os.path.abspath(__file__))
+VERSION = "v.0.6.3"
+NAME = "buridan_ui"
 
-# Navigate up to your project root if needed
+BURIDAN_URL = "https://buridan-ui.reflex.run/"
+BURIDAN_SLOGAN = (
+    "Beautifully designed Reflex components to build your web apps faster. Open source."
+)
+BURIDAN_KEY_WORDS = (
+    "buridan, ui, web apps, framework, open source, frontend, backend, full stack"
+)
+
+
+BASE_GITHUB_URL = "https://github.com/LineIndent/buridan-ui/blob/main/buridan_ui/"
+SITE_LOGO_URL = "https://raw.githubusercontent.com/buridan-ui/ui/refs/heads/main/assets/new_logo.PNG"
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, "..", ".."))
 
-LOCAL_BASE_PRO_PATH = os.path.join(project_root, "buridan_ui", "buridan_ui", "pro")
-LOCAL_BASE_CHART_PATH = os.path.join(project_root, "buridan_ui", "buridan_ui", "charts")
-LOCAL_BASE_PANTRY_PATH = os.path.join(
-    project_root, "buridan_ui", "buridan_ui", "pantry"
-)
+LOCAL_BASE_PRO_PATH = os.path.join(project_root, NAME, NAME, "pro")
+LOCAL_BASE_CHART_PATH = os.path.join(project_root, NAME, NAME, "charts")
+LOCAL_BASE_PANTRY_PATH = os.path.join(project_root, NAME, NAME, "pantry")
 
-# ------------------------ DO NOT EDIT ---------------------------- #
-VERSION = "v.0.6.3"
+BASE_PANTRY_PATH = BASE_GITHUB_URL + "pantry/"
+BASE_CHART_PATH = BASE_GITHUB_URL + "charts/"
 
 
-BASE_PANTRY_PATH = (
-    "https://github.com/LineIndent/buridan-ui/blob/main/buridan_ui/pantry/"
-)
+SITE_THEME = "dark"
+FONT_FAMILY = "JetBrains Mono,ui-monospace,monospace"
 
-BASE_CHART_PATH = (
-    "https://github.com/LineIndent/buridan-ui/blob/main/buridan_ui/charts/"
-)
-
-SiteFont = "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-
-SiteTheme = "dark"
-
-# original font family:  "IBM Plex Mono,ui-monospace,monospace"
-FontFamily = "JetBrains Mono,ui-monospace,monospace"
-
-
-SiteMetaTags = [
+SITE_META_TAGS = [
     {"name": "application-name", "content": "Buridan UI"},
-    {
-        "name": "keywords",
-        "content": "buridan, ui, web apps, framework, open source, frontend, backend, full stack",
-    },
-    {
-        "name": "description",
-        "content": "Beautifully designed Reflex components to build your web apps faster. Open source.",
-    },
-    {"property": "og:url", "content": "https://buridan-ui.reflex.run/"},
+    {"name": "keywords", "content": BURIDAN_KEY_WORDS},
+    {"name": "description", "content": BURIDAN_SLOGAN},
+    {"property": "og:url", "content": BURIDAN_URL},
     {"property": "og:type", "content": "website"},
     {"property": "og:title", "content": "Buridan UI"},
-    {
-        "property": "og:description",
-        "content": "Beautifully designed Reflex components to build your web apps faster. Open source.",
-    },
-    {
-        "property": "og:image",
-        "content": "https://raw.githubusercontent.com/buridan-ui/ui/refs/heads/main/assets/new_logo.PNG",
-    },
+    {"property": "og:description", "content": BURIDAN_SLOGAN},
+    {"property": "og:image", "content": SITE_LOGO_URL},
     {"property": "og:image:width", "content": "1200"},
     {"property": "og:image:height", "content": "630"},
     {"name": "twitter:card", "content": "summary_large_image"},
-    {"property": "twitter:domain", "content": "https://buridan-ui.reflex.run/"},
-    {
-        "property": "twitter:url",
-        "content": "https://buridan-ui.reflex.run/",
-    },
+    {"property": "twitter:domain", "content": BURIDAN_URL},
+    {"property": "twitter:url", "content": BURIDAN_URL},
     {"name": "twitter:title", "content": "Buridan UI"},
-    {
-        "name": "twitter:description",
-        "content": "Beautifully designed Reflex components to build your web apps faster. Open source.",
-    },
-    {
-        "name": "twitter:image",
-        "content": "https://raw.githubusercontent.com/buridan-ui/ui/refs/heads/main/assets/new_logo.PNG",
-    },
+    {"name": "twitter:description", "content": BURIDAN_SLOGAN},
+    {"name": "twitter:image", "content": SITE_LOGO_URL},
 ]

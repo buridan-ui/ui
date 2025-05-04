@@ -21,7 +21,7 @@ PantryMetaData = {
     "featured": ["Dec 12, 2024", "Apr 11, 2025", 2],
     "footers": ["Dec 12, 2024", "Apr 11, 2025", 2],
     "forms": ["Dec 12, 2024", "Apr 11, 2025", 3],
-    "inputs": ["Dec 12, 2024", "Apr 26, 2025", 5],
+    "inputs": ["Dec 12, 2024", "May 03, 2025", 5],
     "lists": ["Dec 12, 2024", "Apr 11, 2025", 1],
     "logins": ["Dec 12, 2024", "Apr 11, 2025", 2],
     "menus": ["Dec 12, 2024", "Apr 11, 2025", 1],
@@ -30,7 +30,7 @@ PantryMetaData = {
     "popups": ["Dec 12, 2024", "Apr 11, 2025", 2],
     "pricing": ["Dec 12, 2024", "Apr 11, 2025", 2],
     "prompts": ["Dec 12, 2024", "Apr 11, 2025", 2],
-    "subscribe": ["Dec 12, 2024", "Apr 27, 2025", 3],
+    "subscribe": ["Dec 12, 2024", "May 02, 2025", 3],
     "tables": ["Dec 12, 2024", "Apr 11, 2025", 4],
     "timeline": ["Dec 12, 2024", "Apr 11, 2025", 1],
 }
