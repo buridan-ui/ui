@@ -11,12 +11,13 @@ ChartMetaData = {
     "chord": ["Mar 28, 2025", "Apr 11, 2025", 1],
 }
 PantryMetaData = {
+    "stats": ["May 04, 2025", "May 04, 2025", 2],
     "tabs": ["Apr 18, 2025", "Apr 26, 2025", 3],
     "sidebars": ["Apr 06, 2025", "Apr 26, 2025", 1],
     "accordions": ["Mar 30, 2025", "Apr 11, 2025", 1],
     "animations": ["Dec 12, 2024", "Apr 26, 2025", 4],
     "backgrounds": ["Dec 12, 2024", "Dec 12, 2024", 4],
-    "cards": ["Dec 12, 2024", "Apr 26, 2025", 4],
+    "cards": ["Dec 12, 2024", "May 03, 2025", 4],
     "faq": ["Dec 12, 2024", "Apr 11, 2025", 1],
     "featured": ["Dec 12, 2024", "Apr 11, 2025", 2],
     "footers": ["Dec 12, 2024", "Apr 11, 2025", 2],

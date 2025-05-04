@@ -21,6 +21,7 @@ GettingStartedRoutes = [
 # ... pantry component paths
 PantryRoutes = sorted(
     [
+        {"name": "Stats", "path": f"{_P}stats", "dir": "stats"},
         {"name": "Tabs", "path": f"{_P}tabs", "dir": "tabs"},
         {"name": "Sidebars", "path": f"{_P}sidebars", "dir": "sidebars"},
         {"name": "Accordions", "path": f"{_P}accordions", "dir": "accordions"},
