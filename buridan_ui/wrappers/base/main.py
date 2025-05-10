@@ -138,18 +138,7 @@ def create_pattern_background():
 ActiveTab = ClientStateVar.create("active_tab", 0)
 
 
-def tab_selector(tabs=None):
-    """
-    A tab selector component with a nice active tab highlighting.
-
-    Args:
-        tabs: List of tab names to display
-        on_tab_change: Optional callback function when tab changes
-
-    Returns:
-        The tab selector component
-    """
-
+def tab_selector(tabs=["Preview", "Code"]):
     return rx.box(
         rx.hstack(
             *[
@@ -215,8 +204,6 @@ def create_header(url: str):
             display=create_responsive_display("flex", "none"),
         ),
         rx.el.div(
-            # app_settings(),
-            # tab_selector(),
             rx.box(
                 drawer(),
                 display=create_responsive_display("flex", "none"),
