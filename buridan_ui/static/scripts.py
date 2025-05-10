@@ -5,7 +5,6 @@ from buridan_ui.config import (
     LOCAL_BASE_PANTRY_PATH,
     LOCAL_BASE_PRO_PATH,
 )
-from buridan_ui.export import config
 from buridan_ui.wrappers.base.utils.meta import get_file_times
 
 
@@ -22,6 +21,8 @@ def count_python_files_in_folder(folder_name) -> int:
 
 
 def get_directory_meta_data():
+    from buridan_ui.export import config
+
     charts, pantry, pro = {}, {}, {}
 
     # Get the pro directories metadata
