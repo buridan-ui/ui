@@ -1,5 +1,8 @@
 import reflex as rx
-from ..style import tooltip
+from buridan_ui.charts.style import (
+    get_tooltip,
+    get_cartesian_grid,
+)
 
 
 def barchart_v8():
@@ -51,9 +54,7 @@ def barchart_v8():
 
     def create_chart(data: list[dict[str, str | int]]):
         return rx.recharts.bar_chart(
-            rx.recharts.cartesian_grid(
-                horizontal=True, vertical=False, class_name="opacity-25"
-            ),
+            get_cartesian_grid(),
             rx.foreach(
                 categories,
                 lambda key, index: rx.recharts.bar(
@@ -73,7 +74,7 @@ def barchart_v8():
                 axis_line=False,
                 tick_line=False,
             ),
-            rx.recharts.graphing_tooltip(**tooltip),
+            get_tooltip(),
             data=data,
             width="100%",
             height=250,
@@ -98,7 +99,7 @@ def barchart_v8():
             rx.tabs.content(create_chart(EUROPE), value="1", margin_top="-5px"),
             rx.tabs.content(create_chart(ASIA), value="2", margin_top="-5px"),
             default_value="1",
-            class_name="w-[100%] [&_.recharts-tooltip-item-separator]:w-full",
+            class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
         ),
         width="100%",
         padding="0.5em",

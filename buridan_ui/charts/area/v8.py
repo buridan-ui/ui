@@ -1,5 +1,5 @@
 import reflex as rx
-from ..style import tooltip
+from buridan_ui.charts.style import get_tooltip, get_cartesian_grid
 
 
 def areachart_v8():
@@ -29,7 +29,7 @@ def areachart_v8():
             ),
         )
 
-    return rx.vstack(
+    return rx.box(
         rx.hstack(
             rx.foreach(
                 [["Desktop", "red"], ["Mobile", "blue"]],
@@ -49,7 +49,8 @@ def areachart_v8():
         rx.recharts.area_chart(
             create_gradient("red"),
             create_gradient("blue"),
-            rx.recharts.graphing_tooltip(**tooltip),
+            get_tooltip(),
+            get_cartesian_grid(),
             rx.recharts.area(
                 data_key="desktop",
                 fill="url(#red)",
@@ -74,5 +75,5 @@ def areachart_v8():
             width="100%",
             height=250,
         ),
-        class_name="w-[100%] [&_.recharts-tooltip-item-separator]:w-full",
+        class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )
