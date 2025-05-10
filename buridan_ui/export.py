@@ -14,6 +14,7 @@ class ExportConfig:
     def __init__(self):
         # Component configurations
         self.COMPONENTS = {
+            "stats": {"versions": range(1, 3), "func_prefix": "stat"},
             "tabs": {"versions": range(1, 4), "func_prefix": "tab"},
             "sidebars": {"versions": range(1, 2), "func_prefix": "sidebar"},
             "accordions": {"versions": range(1, 2), "func_prefix": "accordion"},

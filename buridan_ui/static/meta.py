@@ -11,6 +11,7 @@ ChartMetaData = {
     "chord": ["Mar 28, 2025", "Apr 11, 2025", 1],
 }
 PantryMetaData = {
+    "stats": ["May 04, 2025", "May 04, 2025", 2],
     "tabs": ["Apr 18, 2025", "Apr 26, 2025", 3],
     "sidebars": ["Apr 06, 2025", "Apr 26, 2025", 1],
     "accordions": ["Mar 30, 2025", "Apr 11, 2025", 1],

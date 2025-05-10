@@ -101,6 +101,20 @@ def changelog():
             rx.box(
                 rx.vstack(
                     wrapper(
+                        "Component Refinements and Bug Fixes",
+                        "May 04, 2025",
+                        [
+                            info(
+                                "Fixed issues in several components to enhance stability."
+                            ),
+                            info("Restored missing `exports.py` file."),
+                            info(
+                                "Performed code cleanup for improved maintainability."
+                            ),
+                            changelog_badge("sparkles", "buridan/ui v0.6.3"),
+                        ],
+                    ),
+                    wrapper(
                         "New Features, Pro Tier, and Improvements",
                         "April 20, 2025",
                         [
