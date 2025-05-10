@@ -1,5 +1,8 @@
 import reflex as rx
-from ..style import tooltip
+from buridan_ui.charts.style import (
+    get_tooltip,
+    get_x_axis,
+)
 
 
 def barchart_v10():
@@ -15,7 +18,7 @@ def barchart_v10():
 
     def create_alternating_chart(data, colors, active):
         return rx.recharts.bar_chart(
-            rx.recharts.graphing_tooltip(**tooltip),
+            get_tooltip(),
             rx.foreach(
                 ["Running", "Cycling"],
                 lambda key, index: rx.recharts.bar(
@@ -32,13 +35,7 @@ def barchart_v10():
                     },
                 ),
             ),
-            rx.recharts.x_axis(
-                data_key="date",
-                axis_line=False,
-                tick_size=10,
-                tick_line=False,
-                custom_attrs={"fontSize": "12px"},
-            ),
+            get_x_axis("date"),
             data=data,
             width="100%",
             height=250,
@@ -46,7 +43,7 @@ def barchart_v10():
             bar_category_gap="30%",
         )
 
-    return rx.vstack(
+    return rx.box(
         rx.tabs.root(
             rx.tabs.list(
                 rx.tabs.trigger(
@@ -71,5 +68,5 @@ def barchart_v10():
             default_value="1",
             width="100%",
         ),
-        class_name="w-[100%] [&_.recharts-tooltip-item-separator]:w-full",
+        class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

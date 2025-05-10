@@ -2,7 +2,12 @@ from datetime import datetime
 
 import reflex as rx
 
-from ..style import info, tooltip
+from buridan_ui.charts.style import (
+    info,
+    get_tooltip,
+    get_cartesian_grid,
+    get_x_axis,
+)
 
 
 def barchart_v5():
@@ -98,56 +103,43 @@ def barchart_v5():
 
     SelectedType = ClientStateVar.create("selected", "mobile")
 
-    return rx.center(
-        rx.vstack(
-            rx.hstack(
-                info(
-                    "Bar Chart - Dynamic",
-                    "3",
-                    "Showing total visitors for the last 6 months",
-                    "start",
-                ),
-                rx.el.select(
-                    rx.el.option("Mobile", on_click=SelectedType.set_value("mobile")),
-                    rx.el.option("Desktop", on_click=SelectedType.set_value("desktop")),
-                    default_value="Mobile",
-                    bg=rx.color("gray", 2),
-                    border=f"1px solid {rx.color('gray', 4)}",
-                    class_name="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-lg shadow-sm px-3",
-                ),
-                align="center",
-                justify="between",
-                width="100%",
-                wrap="wrap",
+    return rx.box(
+        rx.hstack(
+            info(
+                "Bar Chart - Dynamic",
+                "3",
+                "Showing total visitors for the last 6 months",
+                "start",
             ),
-            rx.recharts.bar_chart(
-                rx.recharts.graphing_tooltip(**tooltip),
-                rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False, class_name="opacity-25"
-                ),
-                rx.recharts.bar(
-                    data_key=SelectedType.value,
-                    fill=rx.color("accent"),
-                    radius=[2, 2, 0, 0],
-                ),
-                rx.recharts.y_axis(type_="number", hide=True),
-                rx.recharts.x_axis(
-                    data_key="date",
-                    type_="category",
-                    axis_line=False,
-                    min_tick_gap=32,
-                    tick_size=10,
-                    tick_line=False,
-                    custom_attrs={"fontSize": "12px"},
-                    interval="preserveStartEnd",
-                ),
-                data=formatted_data,
-                width="100%",
-                height=280,
+            rx.el.select(
+                rx.el.option("Mobile", on_click=SelectedType.set_value("mobile")),
+                rx.el.option("Desktop", on_click=SelectedType.set_value("desktop")),
+                default_value="Mobile",
+                bg=rx.color("gray", 2),
+                border=f"1px solid {rx.color('gray', 4)}",
+                class_name="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-lg shadow-sm px-3",
             ),
-            info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
-            class_name="w-[100%] [&_.recharts-tooltip-item-separator]:w-full",
+            align="center",
+            justify="between",
+            width="100%",
+            wrap="wrap",
         ),
+        rx.recharts.bar_chart(
+            get_tooltip(),
+            get_cartesian_grid(),
+            rx.recharts.bar(
+                data_key=SelectedType.value,
+                fill=rx.color("accent"),
+                radius=[2, 2, 0, 0],
+            ),
+            rx.recharts.y_axis(type_="number", hide=True),
+            get_x_axis("date"),
+            data=formatted_data,
+            width="100%",
+            height=280,
+        ),
+        info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
+        class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
         width="100%",
         padding="0.5em",
     )

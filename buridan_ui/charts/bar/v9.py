@@ -1,5 +1,8 @@
 import reflex as rx
-from ..style import tooltip
+from buridan_ui.charts.style import (
+    get_tooltip,
+    get_x_axis,
+)
 
 
 def barchart_v9():
@@ -11,7 +14,7 @@ def barchart_v9():
         {"month": "May", "desktop": 209, "mobile": 130, "tablet": 80},
     ]
 
-    return rx.vstack(
+    return rx.box(
         rx.hstack(
             rx.foreach(
                 [["Desktop", "red"], ["Mobile", "sky"], ["Tablet", "orange"]],
@@ -29,22 +32,16 @@ def barchart_v9():
             class_name="py-4 px-4 flex w-full flex justify-center gap-8",
         ),
         rx.recharts.bar_chart(
-            rx.recharts.graphing_tooltip(**tooltip),
+            get_tooltip(),
             rx.recharts.bar(data_key="desktop", fill=rx.color("red", 7), radius=4),
             rx.recharts.bar(data_key="mobile", fill=rx.color("sky", 7), radius=4),
             rx.recharts.bar(data_key="tablet", fill=rx.color("orange", 7), radius=4),
-            rx.recharts.x_axis(
-                data_key="month",
-                axis_line=False,
-                tick_size=10,
-                tick_line=False,
-                custom_attrs={"fontSize": "12px"},
-            ),
+            get_x_axis("month"),
             data=data,
             width="100%",
             height=250,
             bar_size=18,
             bar_category_gap="30%",
         ),
-        class_name="w-[100%] [&_.recharts-tooltip-item-separator]:w-full",
+        class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

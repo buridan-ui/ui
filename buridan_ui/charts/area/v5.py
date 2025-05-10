@@ -1,6 +1,10 @@
 import reflex as rx
 
-from ..style import info, tooltip
+from buridan_ui.charts.style import (
+    info,
+    get_tooltip,
+    get_cartesian_grid,
+)
 
 
 def areachart_v5():
@@ -102,112 +106,105 @@ def areachart_v5():
 
     SelectedRange = ClientStateVar.create("selected", data)
 
-    return rx.center(
-        rx.vstack(
-            rx.hstack(
-                info(
-                    "Area Chart - Dynamic",
-                    "3",
-                    "Showing total visitors for the last 6 months",
-                    "start",
-                ),
-                rx.el.select(
-                    rx.el.option(
-                        "Last 3 Months", on_click=SelectedRange.set_value(data)
-                    ),
-                    rx.el.option(
-                        "Last 30 days", on_click=SelectedRange.set_value(data[-30:])
-                    ),
-                    rx.el.option(
-                        "Last 7 days", on_click=SelectedRange.set_value(data[-7:])
-                    ),
-                    default_value="Last 3 months",
-                    bg=rx.color("gray", 2),
-                    border=f"1px solid {rx.color('gray', 4)}",
-                    class_name="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-lg shadow-sm px-3",
-                ),
-                align="center",
-                justify="between",
-                width="100%",
-                wrap="wrap",
-            ),
-            rx.recharts.area_chart(
-                rx.el.svg.defs(
-                    rx.el.svg.linear_gradient(
-                        rx.el.svg.stop(
-                            stop_color=rx.color("accent", 7),
-                            offset="0%",
-                            stop_opacity=0.3,
-                        ),
-                        rx.el.svg.stop(
-                            stop_color=rx.color("accent", 8),
-                            offset="95%",
-                            stop_opacity=0.1,
-                        ),
-                        x1=0,
-                        x2=0,
-                        y1=0,
-                        y2=1,
-                        id="desktop",
-                    )
-                ),
-                rx.el.svg.defs(
-                    rx.el.svg.linear_gradient(
-                        rx.el.svg.stop(
-                            stop_color=rx.color("orange", 7),
-                            offset="0%",
-                            stop_opacity=0.3,
-                        ),
-                        rx.el.svg.stop(
-                            stop_color=rx.color("orange", 8),
-                            offset="95%",
-                            stop_opacity=0.1,
-                        ),
-                        x1=0,
-                        x2=0,
-                        y1=0,
-                        y2=1,
-                        id="mobile",
-                    )
-                ),
-                rx.recharts.graphing_tooltip(**tooltip),
-                rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False, class_name="opacity-25"
-                ),
-                *[
-                    rx.recharts.area(
-                        data_key=name,
-                        fill=f"url(#{name})",
-                        stack_id="a",
-                        stroke=rx.cond(
-                            name == "desktop",
-                            rx.color("accent", 8),
-                            rx.color("orange", 8),
-                        ),
-                        animation_easing="linear",
-                    )
-                    for index, name in enumerate(["desktop", "mobile"])
-                ],
-                rx.recharts.x_axis(
-                    data_key="date",
-                    axis_line=False,
-                    min_tick_gap=32,
-                    tick_size=10,
-                    tick_line=False,
-                    custom_attrs={"fontSize": "12px"},
-                    interval="preserveStartEnd",
-                ),
-                data=SelectedRange.value,
-                width="100%",
-                height=280,
-            ),
+    return rx.box(
+        rx.hstack(
             info(
-                "Trending up by 5.2% this month",
-                "2",
-                "January - June 2024",
+                "Area Chart - Dynamic",
+                "3",
+                "Showing total visitors for the last 6 months",
                 "start",
             ),
-            class_name="w-[100%] [&_.recharts-tooltip-item-separator]:w-full",
+            rx.el.select(
+                rx.el.option("Last 3 Months", on_click=SelectedRange.set_value(data)),
+                rx.el.option(
+                    "Last 30 days", on_click=SelectedRange.set_value(data[-30:])
+                ),
+                rx.el.option(
+                    "Last 7 days", on_click=SelectedRange.set_value(data[-7:])
+                ),
+                default_value="Last 3 months",
+                bg=rx.color("gray", 2),
+                border=f"1px solid {rx.color('gray', 4)}",
+                class_name="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-lg shadow-sm px-3",
+            ),
+            align="center",
+            justify="between",
+            width="100%",
+            wrap="wrap",
         ),
-        class_name="w-[100%] p-1",
+        rx.recharts.area_chart(
+            rx.el.svg.defs(
+                rx.el.svg.linear_gradient(
+                    rx.el.svg.stop(
+                        stop_color=rx.color("accent", 7),
+                        offset="0%",
+                        stop_opacity=0.3,
+                    ),
+                    rx.el.svg.stop(
+                        stop_color=rx.color("accent", 8),
+                        offset="95%",
+                        stop_opacity=0.1,
+                    ),
+                    x1=0,
+                    x2=0,
+                    y1=0,
+                    y2=1,
+                    id="desktop",
+                )
+            ),
+            rx.el.svg.defs(
+                rx.el.svg.linear_gradient(
+                    rx.el.svg.stop(
+                        stop_color=rx.color("orange", 7),
+                        offset="0%",
+                        stop_opacity=0.3,
+                    ),
+                    rx.el.svg.stop(
+                        stop_color=rx.color("orange", 8),
+                        offset="95%",
+                        stop_opacity=0.1,
+                    ),
+                    x1=0,
+                    x2=0,
+                    y1=0,
+                    y2=1,
+                    id="mobile",
+                )
+            ),
+            get_tooltip(),
+            get_cartesian_grid(),
+            *[
+                rx.recharts.area(
+                    data_key=name,
+                    fill=f"url(#{name})",
+                    stack_id="a",
+                    stroke=rx.cond(
+                        name == "desktop",
+                        rx.color("accent", 8),
+                        rx.color("orange", 8),
+                    ),
+                    animation_easing="linear",
+                )
+                for index, name in enumerate(["desktop", "mobile"])
+            ],
+            rx.recharts.x_axis(
+                data_key="date",
+                axis_line=False,
+                min_tick_gap=32,
+                tick_size=10,
+                tick_line=False,
+                custom_attrs={"fontSize": "12px"},
+                interval="preserveStartEnd",
+            ),
+            data=SelectedRange.value,
+            width="100%",
+            height=280,
+        ),
+        info(
+            "Trending up by 5.2% this month",
+            "2",
+            "January - June 2024",
+            "start",
+        ),
+        class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )
