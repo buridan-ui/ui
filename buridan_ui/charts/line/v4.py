@@ -28,17 +28,17 @@ def linechart_v4():
         rx.recharts.line_chart(
             get_tooltip(),
             get_cartesian_grid(),
-            *[
-                rx.recharts.line(
+            rx.foreach(
+                ["desktop", "mobile"],
+                lambda name, index: rx.recharts.line(
                     data_key=name,
                     stroke=rx.color("accent", 7 + index),
                     stroke_width=2,
                     type_="natural",
                     dot=False,
                     stack_id="a",
-                )
-                for index, name in enumerate(["desktop", "mobile"])
-            ],
+                ),
+            ),
             get_x_axis("month"),
             data=data,
             width="100%",
@@ -46,6 +46,4 @@ def linechart_v4():
         ),
         info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
-        width="100%",
-        padding="0.5em",
     )

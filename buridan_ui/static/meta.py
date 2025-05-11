@@ -1,7 +1,7 @@
 ChartMetaData = {
     "area": ["Dec 12, 2024", "May 10, 2025", 8],
-    "bar": ["Dec 12, 2024", "May 09, 2025", 10],
-    "line": ["Dec 12, 2024", "May 09, 2025", 8],
+    "bar": ["Dec 12, 2024", "May 11, 2025", 10],
+    "line": ["Dec 12, 2024", "May 11, 2025", 8],
     "pie": ["Dec 12, 2024", "May 09, 2025", 6],
     "radar": ["Dec 12, 2024", "May 09, 2025", 6],
     "scatter": ["Mar 15, 2025", "Apr 11, 2025", 1],
@@ -11,7 +11,7 @@ ChartMetaData = {
     "chord": ["Mar 28, 2025", "Apr 11, 2025", 1],
 }
 PantryMetaData = {
-    "stats": ["May 04, 2025", "May 04, 2025", 2],
+    "stats": ["May 04, 2025", "May 10, 2025", 2],
     "tabs": ["Apr 18, 2025", "Apr 26, 2025", 3],
     "sidebars": ["Apr 06, 2025", "Apr 26, 2025", 1],
     "accordions": ["Mar 30, 2025", "Apr 11, 2025", 1],

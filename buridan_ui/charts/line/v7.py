@@ -150,6 +150,4 @@ def linechart_v7():
         ),
         info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
-        width="100%",
-        padding="0.5em",
     )

@@ -28,14 +28,14 @@ def barchart_v1():
         rx.recharts.bar_chart(
             get_tooltip(),
             get_cartesian_grid(),
-            *[
-                rx.recharts.bar(
+            rx.foreach(
+                ["desktop", "mobile"],
+                lambda name, index: rx.recharts.bar(
                     data_key=name,
                     fill=rx.color("accent", 7 + index),
                     radius=6,
-                )
-                for index, name in enumerate(["desktop", "mobile"])
-            ],
+                ),
+            ),
             get_x_axis("month"),
             data=data,
             width="100%",

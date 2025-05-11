@@ -81,7 +81,7 @@ def barchart_v8():
             bar_size=25,
         )
 
-    return rx.vstack(
+    return rx.box(
         rx.text("Online Transactions", class_name="text-md font-semibold pb-3"),
         rx.tabs.root(
             rx.tabs.list(
@@ -99,8 +99,6 @@ def barchart_v8():
             rx.tabs.content(create_chart(EUROPE), value="1", margin_top="-5px"),
             rx.tabs.content(create_chart(ASIA), value="2", margin_top="-5px"),
             default_value="1",
-            class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
         ),
-        width="100%",
-        padding="0.5em",
+        class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )
