@@ -5,8 +5,8 @@ def download_site_source():
     return rx.el.div(
         rx.el.label(
             "Download Repo",
-            class_name="text-sm font-regular "
-            + rx.color_mode_cond("text-slate-700", "text-slate-200"),
+            color=rx.color("slate", 12),
+            class_name="text-sm font-regular",
         ),
         rx.box(
             rx.el.label(

@@ -15,7 +15,7 @@ from buridan_ui.static.routes import (
 import reflex as rx
 
 
-# Centralized state variables
+# Centralized state variables with localStorage persistence
 SIDEBAR_STATES = {
     "site_settings": ClientStateVar.create("site_settings", False),
     "getting_started": ClientStateVar.create("getting_started", False),
@@ -23,15 +23,6 @@ SIDEBAR_STATES = {
     "pantry": ClientStateVar.create("pantry", False),
     "pro": ClientStateVar.create("pro", False),
 }
-
-
-# Common styling functions
-def get_text_style(is_bold=False, additional_classes=""):
-    """Generate consistent text styling."""
-    weight = "font-bold" if is_bold else "font-regular"
-    return f"text-sm {weight} {additional_classes} " + rx.color_mode_cond(
-        "text-slate-700", "text-slate-200"
-    ).to(str)
 
 
 def get_icon_box_style():
@@ -75,7 +66,7 @@ def _menu_settings(title: str, icon: str, is_theme=False):
         )
 
     return rx.el.div(
-        rx.el.label(title, class_name=get_text_style()),
+        rx.el.label(title, class_name="text-sm font-regular"),
         rx.el.div(icon_component),
         class_name="w-full flex flex-row justify-between align-center items-center",
     )
@@ -89,7 +80,9 @@ def side_bar_wrapper(title: str, component, state_key: str):
         state,
         rx.el.div(
             rx.el.div(
-                rx.el.label(title, class_name=get_text_style(is_bold=True)),
+                rx.el.label(
+                    title, color=rx.color("slate", 12), class_name="text-sm font-bold"
+                ),
                 (
                     rx.hover_card.root(
                         rx.hover_card.trigger(
@@ -150,8 +143,8 @@ def create_sidebar_menu_items(routes: list[dict[str, str]]):
             rx.link(
                 rx.el.label(
                     data["name"],
-                    _hover={"color": rx.color("slate", 12)},
-                    class_name=get_text_style(additional_classes="cursor-pointer"),
+                    color=rx.color("slate", 12),
+                    class_name="cursor-pointer text-sm font-regular",
                 ),
                 href=data["path"],
                 text_decoration="none",
@@ -159,15 +152,18 @@ def create_sidebar_menu_items(routes: list[dict[str, str]]):
             class_name="w-full",
         )
 
-    return rx.vstack(rx.foreach(routes, item), spacing="0", width="100%")
+    return rx.box(
+        rx.foreach(routes, item),
+        class_name="w-full flex flex-col gap-y-0",
+    )
 
 
 def create_section_description(text_parts):
     """Create a consistent section description."""
     return rx.el.label(
         *text_parts,
-        class_name="text-sm font-light pt-1 pb-2 "
-        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(str),
+        color=rx.color("gray", 12),
+        class_name="text-sm font-light pt-1 pb-2",
     )
 
 
@@ -215,7 +211,11 @@ def sidemenu(in_drawer=False):
         create_section_description(
             [
                 "A collection of ",
-                rx.el.span(f"{chart_count} ", class_name="text-sm font-bold"),
+                rx.el.span(
+                    f"{chart_count} ",
+                    class_name="text-sm font-bold",
+                    color=rx.color("slate", 12),
+                ),
                 "chart components to help visualize data, build dashboards, and more.",
             ]
         ),
@@ -231,7 +231,11 @@ def sidemenu(in_drawer=False):
         create_section_description(
             [
                 "Get access to ",
-                rx.el.span(f"{pro_count} ", class_name="text-sm font-bold"),
+                rx.el.span(
+                    f"{pro_count} ",
+                    class_name="text-sm font-bold",
+                    color=rx.color("slate", 12),
+                ),
                 "carefully designed block to build dashboards and data apps even faster.",
             ]
         ),
@@ -247,7 +251,11 @@ def sidemenu(in_drawer=False):
         create_section_description(
             [
                 "A set of ",
-                rx.el.span(f"{pantry_count} ", class_name="text-sm font-bold"),
+                rx.el.span(
+                    f"{pantry_count} ",
+                    class_name="text-sm font-bold",
+                    color=rx.color("slate", 12),
+                ),
                 "components to help build and customize your interface with ease.",
             ]
         ),
@@ -264,10 +272,8 @@ def sidemenu(in_drawer=False):
             rx.link(
                 rx.el.label(
                     "buridan/ui",
-                    class_name=get_text_style(
-                        is_bold=True,
-                        additional_classes="font-sans flex items-center align-center gap-x-2 cursor-pointer",
-                    ),
+                    class_name="text-sm font-bold flex items-center align-center gap-x-2 cursor-pointer",
+                    color=rx.color("slate", 12),
                 ),
                 text_decoration="none",
                 href="/",
@@ -319,24 +325,18 @@ def sidemenu_right():
                 rx.box(
                     rx.el.label(
                         "Reflex Build",
-                        class_name="text-sm font-bold "
-                        + rx.color_mode_cond("text-slate-700", "text-slate-200").to(
-                            str
-                        ),
+                        class_name="text-sm font-bold",
+                        color=rx.color("slate", 12),
                     ),
                     rx.el.label(
                         "Build smarter, faster, and more efficiently with Reflex's AI builder.",
-                        class_name="text-sm font-light pt-1 pb-2 "
-                        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(
-                            str
-                        ),
+                        class_name="text-sm font-light pt-1 pb-2",
+                        color=rx.color("gray", 12),
                     ),
                     rx.el.label(
                         "Reflex streamlines Python app development with powerful AI tools and seamless deployment.",
-                        class_name="text-sm font-light pt-1 pb-2 "
-                        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(
-                            str
-                        ),
+                        class_name="text-sm font-light pt-1 pb-2",
+                        color=rx.color("gray", 12),
                     ),
                     rx.link(
                         rx.el.div(
@@ -344,34 +344,16 @@ def sidemenu_right():
                                 "Start Building",
                                 class_name="text-sm underline hover:cursor-pointer",
                             ),
-                            # rx.icon(
-                            #     "arrow-right",
-                            #     class_name="size-3",
-                            # ),
                             class_name="flex felx-row items-center justify-between gap-x-2",
                         ),
                         href="https://reflex.build/",
                         is_external=True,
                     ),
-                    # rx.el.a(
-                    #     rx.el.label(
-                    #         "Start Building",
-                    #         color=rx.color("slate", 12),
-                    #         class_name="text-sm",
-                    #     ),
-                    #     target="_blank",
-                    #     href="https://reflex.build/",
-                    #     _hover={"background": rx.color("accent", 8)},
-                    #     background=rx.color("accent", 7),
-                    #     class_name="cursor-pointer p-2 flex items-center justify-center rounded-md",
-                    # ),
                     class_name="flex flex-col w-full h-full p-2 gap-y-2",
                 ),
                 color=rx.color("gray", 4),
                 class_name="flex flex-col gap-y-2 w-full",
-                # inset-0 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]
             ),
-            # color=rx.color("gray", 4),
             class_name=" w-full px-1 py-2 " + "border-l border-dashed border-slate-500",
         ),
         rx.divider(class_name="h-[10px] opacity-0"),
@@ -380,37 +362,28 @@ def sidemenu_right():
                 rx.box(
                     rx.el.label(
                         "Notice",
-                        class_name="text-sm font-bold "
-                        + rx.color_mode_cond("text-slate-700", "text-slate-200").to(
-                            str
-                        ),
+                        class_name="text-sm font-bold",
+                        color=rx.color("slate", 12),
                     ),
                     rx.el.label(
                         "We’re upgrading our UI library with Tailwind CSS for faster, cleaner, and more customizable designs.",
-                        class_name="text-sm font-light pt-1 pb-2 "
-                        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(
-                            str
-                        ),
+                        class_name="text-sm font-light pt-1 pb-2",
+                        color=rx.color("gray", 12),
                     ),
                     rx.el.label(
                         "You may notice styling updates as we roll out improvements.",
-                        class_name="text-sm font-light pt-1 pb-2 "
-                        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(
-                            str
-                        ),
+                        class_name="text-sm font-light pt-1 pb-2",
+                        color=rx.color("gray", 12),
                     ),
                     rx.el.label(
                         "Thanks for being part of the journey!",
-                        class_name="text-sm font-light pt-1 pb-2 "
-                        + rx.color_mode_cond("text-slate-600", "text-slate-300").to(
-                            str
-                        ),
+                        class_name="text-sm font-light pt-1 pb-2",
+                        color=rx.color("gray", 12),
                     ),
                     class_name="flex flex-col px-2 gap-y-2",
                 ),
                 color=rx.color("amber", 5),
                 class_name="flex flex-col gap-y-2 w-full" + "",
-                # inset-0 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]
             ),
             class_name="w-full px-1 py-2 " + "border-l border-dashed border-orange-500",
         ),
