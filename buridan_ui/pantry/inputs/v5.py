@@ -17,11 +17,7 @@ def input_v5():
                 placeholder="0.00",
                 class_name="pl-6 py-2 w-full "
                 + "text-sm "
-                + "rounded-md bg-transparent border "
-                + rx.color_mode_cond(
-                    "border-gray-200 ",
-                    "border-gray-800 ",
-                ).to(str)
+                + "rounded-md bg-transparent border border-gray-500/40 "
                 + "focus:outline-none focus:border-blue-500",
             ),
             class_name="relative focus:outline-none",

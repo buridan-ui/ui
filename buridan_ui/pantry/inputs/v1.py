@@ -9,12 +9,8 @@ def input_v1():
             class_name=(
                 "p-2 w-full "
                 + "text-sm "
-                + "rounded-md bg-transparent border "
-                + rx.color_mode_cond(
-                    "border-gray-200 ",
-                    "border-gray-800 ",
-                ).to(str)
-                + "focus:outline-none focus:border-blue-500"
+                + "rounded-md bg-transparent border border-gray-500/40 "
+                + "focus:outline-none focus:border-blue-500 shadow-sm"
             ),
         ),
         class_name="w-full max-w-[20em] flex flex-col gap-y-2",
