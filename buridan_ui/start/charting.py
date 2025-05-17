@@ -30,8 +30,8 @@ def create_code_line(code_string: str):
             rx.icon(tag="copy", size=13),
             cursor="pointer",
             position="absolute",
-            right="2%",
-            top="8%",
+            right="15px",
+            top="15px",
             on_click=[
                 rx.toast("Command copied"),
                 rx.set_clipboard(code_string),
