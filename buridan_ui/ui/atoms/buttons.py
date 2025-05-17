@@ -38,10 +38,14 @@ def button_with_link(icon: str, url: str):
 def theme_button():
     return rx.el.button(
         rx.color_mode.icon(
-            light_component=rx.icon(
-                "moon",
-                size=13,
-                color=rx.color("slate", 11),
+            light_component=rx.el.div(
+                rx.icon(
+                    "moon",
+                    size=13,
+                    color=rx.color("slate", 11),
+                ),
+                rx.el.p("Light", class_name="text-sm"),
+                class_name="flex flex-row items-center gap-x-2",
             ),
             dark_component=rx.icon(
                 "sun",

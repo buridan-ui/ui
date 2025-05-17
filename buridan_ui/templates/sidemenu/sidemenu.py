@@ -4,7 +4,7 @@ from reflex.experimental import ClientStateVar
 
 from buridan_ui.config import VERSION
 from buridan_ui.static.scripts import count_python_files_in_folder
-from buridan_ui.templates.sidemenu.download import download_site_source
+from buridan_ui.templates.sidemenu.scripts import SideBarScript
 from buridan_ui.static.routes import (
     ChartRoutes,
     PantryRoutes,
@@ -30,7 +30,7 @@ def get_icon_box_style():
     return {
         "_hover": {"background": rx.color("gray", 3)},
         "border": f"0.81px solid {rx.color('gray', 5)}",
-        "class_name": "flex flex-row cursor-pointer rounded-md flex items-center justify-center align-center p-1",
+        "class_name": "flex flex-row cursor-pointer rounded-md flex items-center justify-center align-center py-1 px-2",
     }
 
 
@@ -50,15 +50,60 @@ def _menu_settings(title: str, icon: str, is_theme=False):
 
     if not is_theme:
         icon_component = rx.link(
-            rx.box(create_icon(icon), **icon_box_style),
+            rx.box(
+                rx.el.div(
+                    rx.icon(
+                        "github",
+                        size=11,
+                        color=rx.color("slate", 12),
+                    ),
+                    rx.el.p(
+                        "GitHub",
+                        class_name="text-sm",
+                        color=rx.color("slate", 12),
+                    ),
+                    class_name="flex flex-row items-center gap-x-2",
+                ),
+                **icon_box_style,
+            ),
             href="https://github.com/buridan-ui/ui",
             is_external=True,
         )
+
+        # icon_component = rx.link(
+        #     rx.box(create_icon(icon), **icon_box_style),
+        #     href="https://github.com/buridan-ui/ui",
+        #     is_external=True,
+        # )
     else:
         icon_component = rx.box(
             rx.color_mode.icon(
-                light_component=rx.icon("moon", size=11, color=rx.color("slate", 11)),
-                dark_component=rx.icon("sun", size=11, color=rx.color("slate", 11)),
+                light_component=rx.el.div(
+                    rx.icon(
+                        "moon",
+                        size=11,
+                        color=rx.color("slate", 12),
+                    ),
+                    rx.el.p(
+                        "Dark",
+                        class_name="text-sm",
+                        color=rx.color("slate", 12),
+                    ),
+                    class_name="flex flex-row items-center gap-x-2",
+                ),
+                dark_component=rx.el.div(
+                    rx.icon(
+                        "sun",
+                        size=11,
+                        color=rx.color("slate", 12),
+                    ),
+                    rx.el.p(
+                        "Light",
+                        class_name="text-sm",
+                        color=rx.color("slate", 12),
+                    ),
+                    class_name="flex flex-row items-center gap-x-2",
+                ),
             ),
             title="Toggle theme",
             on_click=rx.toggle_color_mode,
@@ -150,6 +195,7 @@ def create_sidebar_menu_items(routes: list[dict[str, str]]):
                 text_decoration="none",
             ),
             class_name="w-full",
+            id=data["path"],
         )
 
     return rx.box(
@@ -190,7 +236,7 @@ def sidemenu(in_drawer=False):
             ]
         ),
         _menu_settings("Light/Dark Mode", "", True),
-        download_site_source(),
+        # download_site_source(),
         _menu_settings("Source", "github"),
         spacing="2",
     )
@@ -309,6 +355,7 @@ def sidemenu(in_drawer=False):
         height="100vh",
         class_name="flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
         display=sidebar_display,
+        on_mount=rx.call_script(SideBarScript),
     )
 
 
