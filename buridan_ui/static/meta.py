@@ -6,9 +6,6 @@ ChartMetaData = {
     "radar": ["Dec 12, 2024", "May 09, 2025", 6],
     "scatter": ["Mar 15, 2025", "Apr 11, 2025", 1],
     "doughnut": ["Mar 15, 2025", "Apr 11, 2025", 2],
-    "sunburst": ["Mar 23, 2025", "Apr 11, 2025", 1],
-    "bump": ["Mar 28, 2025", "Apr 11, 2025", 1],
-    "chord": ["Mar 28, 2025", "Apr 11, 2025", 1],
 }
 PantryMetaData = {
     "stats": ["May 04, 2025", "May 10, 2025", 2],

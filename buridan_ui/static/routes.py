@@ -70,9 +70,6 @@ ChartRoutes = sorted(
         {"name": "Radar Charts", "path": f"{_C}radar-charts", "dir": "radar"},
         {"name": "Scatter Charts", "path": f"{_C}scatter-charts", "dir": "scatter"},
         {"name": "Doughnut Charts", "path": f"{_C}doughnut-charts", "dir": "doughnut"},
-        {"name": "Sunburst Charts", "path": f"{_C}sunburst-charts", "dir": "sunburst"},
-        {"name": "Area-Bump Charts", "path": f"{_C}bump-charts", "dir": "bump"},
-        {"name": "Chord Charts", "path": f"{_C}chord-charts", "dir": "chord"},
     ],
     key=lambda x: x["name"],
 )

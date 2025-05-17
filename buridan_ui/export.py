@@ -52,9 +52,6 @@ class ExportConfig:
             "radar": {"versions": range(1, 7), "func_prefix": "radar"},
             "scatter": {"versions": [1], "func_prefix": "scatterchart"},
             "doughnut": {"versions": range(1, 3), "func_prefix": "doughnutchart"},
-            "sunburst": {"versions": [1], "func_prefix": "sunburst"},
-            "bump": {"versions": [1], "func_prefix": "bump"},
-            "chord": {"versions": [1], "func_prefix": "chord"},
         }
 
         # Pro configurations
