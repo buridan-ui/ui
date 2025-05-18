@@ -9,7 +9,7 @@ Pre-designed UI components built with Reflex. Easily copy and paste into your ow
 
 ## Pantry
 
-Visit the [Pantry](https://buridan-ui.reflex.run/pantry/animations/) section to view the available pre-built components. 
+Visit the [Pantry](https://buridan-ui.reflex.run/pantry/accordions/) section to view the available pre-built components. 
 
 ## Charts
 
