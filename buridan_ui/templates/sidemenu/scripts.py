@@ -32,7 +32,7 @@ window.addEventListener("popstate", () => {
 // Run after clicking any sidebar link (client-side navigation)
 document.querySelectorAll("a[href^='/']").forEach(link => {
   link.addEventListener("click", () => {
-    setTimeout(highlightActiveSidebarLink, 1500);
+    setTimeout(highlightActiveSidebarLink, 800);
   });
 });
 """

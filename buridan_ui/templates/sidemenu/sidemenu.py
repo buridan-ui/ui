@@ -70,11 +70,6 @@ def _menu_settings(title: str, icon: str, is_theme=False):
             is_external=True,
         )
 
-        # icon_component = rx.link(
-        #     rx.box(create_icon(icon), **icon_box_style),
-        #     href="https://github.com/buridan-ui/ui",
-        #     is_external=True,
-        # )
     else:
         icon_component = rx.box(
             rx.color_mode.icon(
