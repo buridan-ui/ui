@@ -24,8 +24,19 @@ def changelog_wrapper(title: str, date: str, version: str, log: str):
             rx.text(title, class_name="text-2xl font-semibold"),
             class_name="flex flex-col gap-y-2",
         ),
-        rx.markdown(log),
-        class_name="border-y border-dashed border-slate-500 py-4 px-2",
+        rx.markdown(
+            log,
+            component_map={
+                "ul": lambda *children: rx.list(*children, class_name="py-3"),
+                "li": lambda text: rx.list_item(
+                    rx.el.span("•", class_name="text-[12px]"),
+                    rx.text(f"{text}", class_name="text-[12px]"),
+                    class_name="flex flex-row items-center gap-x-4 py-1",
+                ),
+            },
+        ),
+        border=f"1px dashed {rx.color('gray', 5)}",
+        class_name="rounded-xl p-4",
     )
 
 
@@ -50,7 +61,7 @@ def changelog():
                 version="buridan/ui v0.6.3",
                 log="""
 - Fixed issues in several components to enhance stability.
-- Restored missing `exports.py` file.
+- Restored missing exports.py file.
 - Performed code cleanup for improved maintainability.
 """,
             ),
@@ -60,7 +71,7 @@ def changelog():
                 version="buridan/ui v0.6.2",
                 log="""
 - Introduced Buridan Pro — gated access to premium components.
-- Added development helper script: `dev.sh` for local testing & filtering.
+- Added development helper script: dev.sh for local testing & filtering.
 - Implemented active sidebar highlighting based on current route.
 - Improved layout: breadcrumb in main content, version in left sidebar.
 - Right sidebar now includes a persistent header and optional callouts.
