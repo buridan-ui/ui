@@ -442,7 +442,7 @@ def export_app(app: rx.App):
     from buridan_ui.start.charting import charting
     from buridan_ui.start.installation import installation
     from buridan_ui.start.introduction import introduction
-    from buridan_ui.start.changelog.changelog import changelog
+    from buridan_ui.start.changelog import changelog
     from buridan_ui.wrappers.base.main import base
     from buridan_ui.config import SITE_LOGO_URL, SITE_META_TAGS
 
