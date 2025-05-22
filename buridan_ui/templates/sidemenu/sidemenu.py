@@ -148,7 +148,7 @@ def side_bar_wrapper(title: str, component, state_key: str):
                 rx.box(
                     rx.cond(
                         (ACTIVE_SECTION.value == state_key)
-                        | (ACTIVE_SECTION.value is None),
+                        | (ACTIVE_SECTION.value == None),  # noqa: E711
                         create_icon("plus"),
                         create_icon("minus"),
                     ),
@@ -163,7 +163,7 @@ def side_bar_wrapper(title: str, component, state_key: str):
             class_name="w-full flex flex-row justify-between align-center items-center",
         ),
         rx.cond(
-            (ACTIVE_SECTION.value == state_key) | (ACTIVE_SECTION.value is None),
+            (ACTIVE_SECTION.value == state_key) | (ACTIVE_SECTION.value == None),  # noqa: E711
             component,
             rx.el.div(class_name="hidden"),
         ),
