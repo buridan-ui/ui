@@ -15,14 +15,7 @@ from buridan_ui.static.routes import (
 import reflex as rx
 
 
-# Centralized state variables with localStorage persistence
-SIDEBAR_STATES = {
-    "site_settings": ClientStateVar.create("site_settings", False),
-    "getting_started": ClientStateVar.create("getting_started", False),
-    "chart": ClientStateVar.create("chart", False),
-    "pantry": ClientStateVar.create("pantry", False),
-    "pro": ClientStateVar.create("pro", False),
-}
+ACTIVE_SECTION = ClientStateVar.create("active_section", None)
 
 
 def get_icon_box_style():
@@ -30,7 +23,7 @@ def get_icon_box_style():
     return {
         "_hover": {"background": rx.color("gray", 3)},
         "border": f"0.81px solid {rx.color('gray', 5)}",
-        "class_name": "flex flex-row cursor-pointer rounded-md flex items-center justify-center align-center py-1 px-2",
+        "class_name": "flex flex-row cursor-pointer rounded-md flex items-center justify-center align-center py-1 px-1",
     }
 
 
@@ -114,10 +107,8 @@ def _menu_settings(title: str, icon: str, is_theme=False):
 
 def side_bar_wrapper(title: str, component, state_key: str):
     """Create a sidebar section with toggle functionality."""
-    state = SIDEBAR_STATES[state_key]
 
     return rx.el.div(
-        state,
         rx.el.div(
             rx.el.div(
                 rx.el.label(
@@ -156,20 +147,25 @@ def side_bar_wrapper(title: str, component, state_key: str):
             rx.el.div(
                 rx.box(
                     rx.cond(
-                        state.value,
+                        (ACTIVE_SECTION.value == state_key)
+                        | (ACTIVE_SECTION.value is None),
                         create_icon("plus"),
                         create_icon("minus"),
                     ),
                     **get_icon_box_style(),
-                    on_click=rx.call_function(state.set_value(~state.value)),
+                    on_click=rx.cond(
+                        ACTIVE_SECTION.value == state_key,
+                        rx.call_function(ACTIVE_SECTION.set_value(None)),
+                        rx.call_function(ACTIVE_SECTION.set_value(state_key)),
+                    ),
                 ),
             ),
             class_name="w-full flex flex-row justify-between align-center items-center",
         ),
         rx.cond(
-            state.value,
-            rx.el.div(class_name="hidden"),
+            (ACTIVE_SECTION.value == state_key) | (ACTIVE_SECTION.value is None),
             component,
+            rx.el.div(class_name="hidden"),
         ),
         class_name="flex flex-col w-full gap-y-2 p-4",
     )
@@ -396,7 +392,7 @@ def sidemenu_right():
                 color=rx.color("gray", 4),
                 class_name="flex flex-col gap-y-2 w-full",
             ),
-            class_name=" w-full px-1 py-2 " + "border-l border-dashed border-slate-500",
+            class_name=" w-full px-1 py-2 " + "border-r border-dashed border-slate-500",
         ),
         rx.divider(class_name="h-[10px] opacity-0"),
         rx.box(
@@ -427,7 +423,7 @@ def sidemenu_right():
                 color=rx.color("amber", 5),
                 class_name="flex flex-col gap-y-2 w-full" + "",
             ),
-            class_name="w-full px-1 py-2 " + "border-l border-dashed border-orange-500",
+            class_name="w-full px-1 py-2 " + "border-r border-dashed border-orange-500",
         ),
         height="100vh",
         class_name="flex flex-col max-w-[280px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
