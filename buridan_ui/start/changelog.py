@@ -45,6 +45,16 @@ def changelog():
     return [
         rx.box(
             changelog_wrapper(
+                title="Sidebar Changes and Doc Improvement",
+                date="May 22, 2025",
+                version="buridan/ui v0.6.5",
+                log="""
+- New changelog UI design page.
+- Update sidebar with new visibility feature.
+- Improved charting walkthrough documentation.
+""",
+            ),
+            changelog_wrapper(
                 title="New Sidebar UX and Menu Structure",
                 date="May 18, 2025",
                 version="buridan/ui v0.6.4",
