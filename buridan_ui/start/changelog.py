@@ -5,9 +5,11 @@ from buridan_ui.wrappers.base.main import base
 
 def changelog_meta(tag: str, text: str):
     return rx.box(
-        rx.icon(tag=tag, size=14, color=rx.color("slate", 11))
-        if text
-        else rx.box(class_name="hidden"),
+        (
+            rx.icon(tag=tag, size=14, color=rx.color("slate", 11))
+            if text
+            else rx.box(class_name="hidden")
+        ),
         rx.text(text, class_name="text-sm font-semibold"),
         class_name="flex flex-row gap-x-2 items-center",
     )

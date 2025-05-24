@@ -23,7 +23,7 @@ class State(rx.State):
         {"month": "May", "desktop": 209},
         {"month": "Jun", "desktop": 214},
     ]
-```  
+```
 
 # 4. Creating Your Chart
 The Buridan UI library includes 7 chart types: [Area](/charts/area-charts), [Bar](/charts/bar-charts), [Line](/charts/line-charts), [Pie](/charts/pie-charts), [Doughnut](/charts/doughnut-charts), [Radar](/charts/radar-charts), and [Scatter](/charts/scatter-charts). For this walkthrough, we’ll focus on **Area Charts**. To set up the area chart, import your state class inside the file that will contain your area chart component, then create the following function:
@@ -42,8 +42,8 @@ def area_chart():
         width="100%",
         height=250,
     )
-```  
-- `data_key`: Defines which field will be used for y-axis values.  
+```
+- `data_key`: Defines which field will be used for y-axis values.
 - `data`: Links the chart to your state data array.
 
 # 5. Customization: Cartesian Grid
@@ -57,9 +57,9 @@ rx.recharts.cartesian_grid(
     vertical=False,
     class_name="opacity-25"
 )
-```  
-- `horizontal=True`: Enable horizontal lines.  
-- `vertical=False`: Disable vertical lines.  
+```
+- `horizontal=True`: Enable horizontal lines.
+- `vertical=False`: Disable vertical lines.
 - `class_name="opacity-25"`: Low opacity for subtlety.
 
 # 6. Customization: XAxis
@@ -76,9 +76,9 @@ rx.recharts.x_axis(
     custom_attrs={"fontSize": "12px"},
     interval="preserveStartEnd",
 )
-```  
-- `axis_line=False`: Hide the axis line.  
-- `tick_line=False`: Hide tick marks.  
+```
+- `axis_line=False`: Hide the axis line.
+- `tick_line=False`: Hide tick marks.
 - `interval="preserveStartEnd"`: Always show first and last ticks.
 
 # 7. Customization: Tooltip (Advanced)
@@ -135,7 +135,7 @@ def charting():
                     "h1": lambda t: rx.heading(t, class_name="text-xl py-3"),
                     "p": lambda t: rx.text(
                         t,
-                        class_name="text-sm leading-7 pb-4",
+                        class_name="text-sm leading-6 pb-4",
                     ),
                     "li": lambda t: rx.list_item(
                         rx.text(t, color=rx.color("slate", 11), class_name="text-sm"),
@@ -153,7 +153,6 @@ def charting():
                             bg="transparent",
                             class_name="rounded-md shadow-sm",
                             border=f"1px dashed {rx.color('gray', 5)}",
-                            show_line_numbers=True,
                         ),
                         rx.el.button(
                             rx.icon(tag="copy", size=13),
