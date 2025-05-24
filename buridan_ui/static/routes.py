@@ -15,6 +15,11 @@ GettingStartedRoutes = [
     {"name": "Who is Buridan?", "path": f"{_GS_Base}who-is-buridan", "dir": "buridan"},
     {"name": "Installation", "path": f"{_GS_Base}installation", "dir": "installation"},
     {"name": "Charting Walkthrough", "path": f"{_GS_Base}charting", "dir": "charting"},
+    {
+        "name": "ClientStateVar",
+        "path": f"{_GS_Base}client-state-var",
+        "dir": "clientstate",
+    },
     {"name": "Changelog", "path": f"{_GS_Base}changelog", "dir": "changelog"},
 ]
 

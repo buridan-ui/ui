@@ -443,6 +443,7 @@ def export_app(app: rx.App):
     from buridan_ui.start.installation import installation
     from buridan_ui.start.introduction import introduction
     from buridan_ui.start.changelog import changelog
+    from buridan_ui.start.clientstate import client_state_var
     from buridan_ui.wrappers.base.main import base
     from buridan_ui.config import SITE_LOGO_URL, SITE_META_TAGS
 
@@ -525,6 +526,11 @@ def export_app(app: rx.App):
             "path": "/getting-started/charting",
             "component": charting,
             "title": "Charting - Buridan UI",
+        },
+        {
+            "path": "/getting-started/client-state-var",
+            "component": client_state_var,
+            "title": "ClientStateVar - Buridan UI",
         },
     ]
 
