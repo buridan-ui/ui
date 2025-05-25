@@ -5,4 +5,9 @@ description = "Buridan UI – a Reflex-based UI component library"
 authors = [{ name = "Ahmad Hakim", email = "ahmad@reflex.dev" }]
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["reflex>=0.7.12", "pre-commit>=4.2.0", "black>=25.1.0"]
+dependencies = [
+    "reflex>=0.7.12",
+    "pre-commit>=4.2.0",
+    "black>=25.1.0",
+    "pytest>=8.3.5",
+]
