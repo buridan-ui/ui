@@ -16,6 +16,11 @@ GettingStartedRoutes = [
     {"name": "Installation", "path": f"{_GS_Base}installation", "dir": "installation"},
     {"name": "Charting Walkthrough", "path": f"{_GS_Base}charting", "dir": "charting"},
     {
+        "name": "Dashboard Walkthrough",
+        "path": f"{_GS_Base}dashboard",
+        "dir": "dashboard",
+    },
+    {
         "name": "ClientStateVar",
         "path": f"{_GS_Base}client-state-var",
         "dir": "clientstate",
