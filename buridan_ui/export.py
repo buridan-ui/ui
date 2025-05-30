@@ -440,6 +440,7 @@ def export_app(app: rx.App):
     from buridan_ui.static.meta import ChartMetaData, PantryMetaData, ProMetaData
     from buridan_ui.start.buridan import buridan
     from buridan_ui.start.charting import charting
+    from buridan_ui.start.dashboard import dashboard
     from buridan_ui.start.installation import installation
     from buridan_ui.start.introduction import introduction
     from buridan_ui.start.changelog import changelog
@@ -526,6 +527,11 @@ def export_app(app: rx.App):
             "path": "/getting-started/charting",
             "component": charting,
             "title": "Charting - Buridan UI",
+        },
+        {
+            "path": "/getting-started/dashboard",
+            "component": dashboard,
+            "title": "Dashboard - Buridan UI",
         },
         {
             "path": "/getting-started/client-state-var",
