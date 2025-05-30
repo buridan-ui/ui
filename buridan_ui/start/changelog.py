@@ -47,6 +47,17 @@ def changelog():
     return [
         rx.box(
             changelog_wrapper(
+                title="Minor Updates and Docs Enhancements",
+                date="May 30, 2025",
+                version="buridan/ui v0.6.6",
+                log="""
+- Patch error for sidebar visibility feature.
+- Support for uv package manager.
+- Client State Var documentation.
+- Dashboard documentation.
+""",
+            ),
+            changelog_wrapper(
                 title="Sidebar Changes and Doc Improvement",
                 date="May 22, 2025",
                 version="buridan/ui v0.6.5",
