@@ -144,22 +144,24 @@ def side_bar_wrapper(title: str, component, state_key: str):
                 ),
                 class_name="flex flex-row items-center gap-x-2",
             ),
-            rx.el.div(
-                rx.box(
-                    rx.cond(
-                        (ACTIVE_SECTION.value == state_key)
-                        | (ACTIVE_SECTION.value == None),  # noqa: E711
-                        create_icon("plus"),
-                        create_icon("minus"),
-                    ),
-                    **get_icon_box_style(),
-                    on_click=rx.cond(
-                        ACTIVE_SECTION.value == state_key,
-                        rx.call_function(ACTIVE_SECTION.set_value(None)),
-                        rx.call_function(ACTIVE_SECTION.set_value(state_key)),
-                    ),
-                ),
-            ),
+            # ... sidemenu toggles have weird behaviour - toggling a section messes the width of hte main content on smaller screens.False
+            # ... ... requires triage!!
+            # rx.el.div(
+            #     rx.box(
+            #         rx.cond(
+            #             (ACTIVE_SECTION.value == state_key)
+            #             | (ACTIVE_SECTION.value == None),  # noqa: E711
+            #             create_icon("plus"),
+            #             create_icon("minus"),
+            #         ),
+            #         **get_icon_box_style(),
+            #         on_click=rx.cond(
+            #             ACTIVE_SECTION.value == state_key,
+            #             rx.call_function(ACTIVE_SECTION.set_value(None)),
+            #             rx.call_function(ACTIVE_SECTION.set_value(state_key)),
+            #         ),
+            #     ),
+            # ),
             class_name="w-full flex flex-row justify-between align-center items-center",
         ),
         rx.cond(
