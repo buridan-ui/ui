@@ -60,12 +60,11 @@ def tab_selector(tabs=["Preview", "Code"], component_id=None, source_code=""):
                 rx.text("Copy", color=rx.color("slate", 9)),
                 on_click=[
                     rx.set_clipboard(source_code),
-                    rx.toast.info("Component copied!"),
+                    rx.toast.success("Component copied!"),
                 ],
                 aria_disabled="false",
                 background="transparent",
                 style={
-                    "display": "inline-flex",
                     "align_items": "center",
                     "justify_content": "center",
                     "white_space": "nowrap",
@@ -82,6 +81,7 @@ def tab_selector(tabs=["Preview", "Code"], component_id=None, source_code=""):
                     "cursor": "pointer",
                     "border_radius": "0.5rem",
                 },
+                class_name="hidden sm:inline-flex",
             ),
             rx.foreach(
                 tabs,

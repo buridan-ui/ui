@@ -192,7 +192,6 @@ def theme_option(
         rx.el.div(
             rx.el.button(
                 f"{name} {arabic_name}",
-                on_click=rx.call_function(Chart_Theme.set_value(color_class).to(str)),
                 class_name="w-full text-left",
                 type="button",
             ),
@@ -200,7 +199,19 @@ def theme_option(
                 style={"backgroundColor": f"var(--{color_var})"},
                 class_name=f"h-2 w-2 rounded {color_class}",
             ),
-            class_name="flex flex-row gap-x-2 items-center px-3 py-2 w-full justify-between hover:px-4 transition-[padding] duration-200 ease-out",
+            on_click=[
+                rx.call_function(Chart_Theme.set_value(color_class).to(str)),
+                rx.call_script(
+                    """
+                    document.querySelectorAll('.recharts-wrapper').forEach(chart => {
+                      chart.style.display = 'none';
+                      void chart.offsetHeight;
+                      chart.style.display = '';
+                    });
+                    """
+                ),
+            ],
+            class_name="flex flex-row gap-x-2 items-center px-3 py-2 w-full justify-between hover:px-4 transition-[padding] duration-200 ease-out cursor-pointer",
         )
     )
 
@@ -210,7 +221,7 @@ def theme_select_menu():
         rx.popover.root(
             rx.popover.trigger(
                 rx.el.button(
-                    "Theme",
+                    "Chart Theme",
                     class_name="text-sm px-2 font-semibold flex items-center gap-x-1 rounded-md",
                     type="button",
                     color=rx.color("slate", 11),
@@ -218,22 +229,27 @@ def theme_select_menu():
             ),
             rx.popover.content(
                 rx.box(
-                    theme_option("Feyrouz", "فيْروز", "theme-blue", "chart-1"),
+                    theme_option("Feyrouz", "فيْروز", "theme-blue", "chart-2"),
                     rx.divider(
                         border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
                         bg="transparent",
                     ),
-                    theme_option("Yaqout", "يَاقوت", "theme-red", "chart-1"),
+                    theme_option("Yaqout", "يَاقوت", "theme-red", "chart-2"),
                     rx.divider(
                         border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
                         bg="transparent",
                     ),
-                    theme_option("Zumurrud", "زُمُرُّد", "theme-green", "chart-1"),
+                    theme_option("Zumurrud", "زُمُرُّد", "theme-green", "chart-2"),
                     rx.divider(
                         border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
                         bg="transparent",
                     ),
-                    theme_option("Kahraman", "كَهْرَمان", "theme-amber", "chart-1"),
+                    theme_option("Kahraman", "كَهْرَمان", "theme-amber", "chart-2"),
+                    rx.divider(
+                        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
+                        bg="transparent",
+                    ),
+                    theme_option("Amethyst", "أَمِيثِسْت", "theme-purple", "chart-2"),
                     class_name="bg-background w-[160px] flex flex-col text-sm rounded-md shadow-md",
                     border=f"1.25px dashed {rx.color('gray', 4)}",
                 ),
@@ -263,6 +279,7 @@ def create_header(url: str):
     Returns:
         Header component
     """
+
     return rx.el.div(
         rx.el.label(
             base_content_path_ui(url),
@@ -275,7 +292,9 @@ def create_header(url: str):
             display=create_responsive_display("flex", "none"),
         ),
         rx.el.div(
-            theme_select_menu(),
+            theme_select_menu()
+            if url.startswith("/charts/")
+            else rx.box(class_name="hidden"),
             rx.box(
                 drawer(),
                 display=create_responsive_display("flex", "none"),
