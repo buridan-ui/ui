@@ -439,6 +439,7 @@ def export_app(app: rx.App):
     from buridan_ui.static.routes import ChartRoutes, PantryRoutes, BuridanProRoutes
     from buridan_ui.static.meta import ChartMetaData, PantryMetaData, ProMetaData
     from buridan_ui.start.buridan import buridan
+    from buridan_ui.start.theming import theming
     from buridan_ui.start.charting import charting
     from buridan_ui.start.dashboard import dashboard
     from buridan_ui.start.installation import installation
@@ -522,6 +523,11 @@ def export_app(app: rx.App):
             "path": "/getting-started/installation",
             "component": installation,
             "title": "Installation - Buridan UI",
+        },
+        {
+            "path": "/getting-started/theming",
+            "component": theming,
+            "title": "Theming - Buridan UI",
         },
         {
             "path": "/getting-started/charting",

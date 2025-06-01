@@ -27,7 +27,7 @@ def barchart_v2():
             get_tooltip(),
             rx.recharts.bar(
                 data_key="desktop",
-                fill=rx.color("accent"),
+                fill="var(--chart-1)",
                 radius=6,
             ),
             rx.recharts.x_axis(type_="number", hide=True, tick_size=0),

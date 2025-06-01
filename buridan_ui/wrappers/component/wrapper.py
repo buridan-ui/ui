@@ -6,6 +6,7 @@ from typing import Callable
 import reflex as rx
 from reflex.components.datadisplay.code import Theme
 from reflex.experimental import ClientStateVar
+from buridan_ui.wrappers.base.main import Chart_Theme
 
 import random
 import string
@@ -59,12 +60,11 @@ def tab_selector(tabs=["Preview", "Code"], component_id=None, source_code=""):
                 rx.text("Copy", color=rx.color("slate", 9)),
                 on_click=[
                     rx.set_clipboard(source_code),
-                    rx.toast.info("Component copied!"),
+                    rx.toast.success("Component copied!"),
                 ],
                 aria_disabled="false",
                 background="transparent",
                 style={
-                    "display": "inline-flex",
                     "align_items": "center",
                     "justify_content": "center",
                     "white_space": "nowrap",
@@ -81,6 +81,7 @@ def tab_selector(tabs=["Preview", "Code"], component_id=None, source_code=""):
                     "cursor": "pointer",
                     "border_radius": "0.5rem",
                 },
+                class_name="hidden sm:inline-flex",
             ),
             rx.foreach(
                 tabs,
@@ -191,7 +192,8 @@ def component_wrapper(path: str):
                     + rx.cond(active_tab.value == 0, "px-4", "").to(str),
                 ),
                 border=f"1px dashed {rx.color('gray', 5)}",
-                class_name="rounded-xl shadow-sm size-full flex flex-col p-1",
+                class_name="rounded-xl shadow-sm size-full flex flex-col p-1 "
+                + Chart_Theme.value.to(str),
             )
 
         return wrapper

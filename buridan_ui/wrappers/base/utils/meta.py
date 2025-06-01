@@ -6,35 +6,45 @@ from datetime import datetime, timedelta
 def get_file_times(file_path):
     """Get directory meta data"""
 
-    # Get file stats
-    stats = os.stat(file_path)
+    try:
+        dir_stat = os.stat(file_path)
+        if platform.system() == "Windows":
+            creation_time = dir_stat.st_ctime
+        else:
+            try:
+                creation_time = dir_stat.st_birthtime
+            except AttributeError:
+                creation_time = dir_stat.st_ctime  # fallback
+    except Exception:
+        creation_time = None
 
-    # Last modified time (works on all platforms)
-    modified_time = datetime.fromtimestamp(stats.st_mtime)
+    # Scan files for latest modified time
+    try:
+        files = [
+            os.path.join(file_path, f)
+            for f in os.listdir(file_path)
+            if os.path.isfile(os.path.join(file_path, f))
+        ]
 
-    # Creation time is platform-dependent
-    if platform.system() == "Windows":
-        # On Windows, st_ctime is the creation time
-        creation_time = datetime.fromtimestamp(stats.st_ctime)
-    else:
-        # On Unix/Linux, st_birthtime is the creation time, but not always available
-        try:
-            # This works on macOS and some BSD systems
-            creation_time = datetime.fromtimestamp(stats.st_birthtime)
-        except AttributeError:
-            # Fallback for Linux where true creation time might not be available
-            creation_time = "Creation time not available on this platform"
+        latest_mtime = max(os.stat(f).st_mtime for f in files) if files else None
+        file_count = len(files)
+    except Exception:
+        latest_mtime = None
+        file_count = 0
 
-    # Count files in the directory (non-recursive)
-    file_count = len(
-        [f for f in os.listdir(file_path) if os.path.isfile(os.path.join(file_path, f))]
+    # Format results
+    creation_str = (
+        datetime.fromtimestamp(creation_time).strftime("%b %d, %Y")
+        if isinstance(creation_time, (float, int))
+        else "Not available"
+    )
+    modified_str = (
+        datetime.fromtimestamp(latest_mtime).strftime("%b %d, %Y")
+        if isinstance(latest_mtime, (float, int))
+        else "Not available"
     )
 
-    # Convert datetime objects to strings with MMM DD, YYYY format
-    creation_time = creation_time.strftime("%b %d, %Y")
-    modified_time = modified_time.strftime("%b %d, %Y")
-
-    return [creation_time, modified_time, file_count]
+    return [creation_str, modified_str, file_count]
 
 
 def get_time_ago(past_time, current_time=None):

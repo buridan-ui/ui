@@ -14,6 +14,7 @@ GettingStartedRoutes = [
     {"name": "Introduction", "path": f"{_GS_Base}introduction", "dir": "introduction"},
     {"name": "Who is Buridan?", "path": f"{_GS_Base}who-is-buridan", "dir": "buridan"},
     {"name": "Installation", "path": f"{_GS_Base}installation", "dir": "installation"},
+    {"name": "Theming", "path": f"{_GS_Base}theming", "dir": "theming"},
     {"name": "Charting Walkthrough", "path": f"{_GS_Base}charting", "dir": "charting"},
     {
         "name": "Dashboard Walkthrough",

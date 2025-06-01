@@ -29,13 +29,13 @@ def barchart_v3():
             get_tooltip(),
             rx.recharts.bar(
                 data_key="desktop",
-                fill=rx.color("accent"),
+                fill="var(--chart-1)",
                 stack_id="a",
                 radius=[0, 0, 6, 6],
             ),
             rx.recharts.bar(
                 data_key="mobile",
-                fill=rx.color("accent", 8),
+                fill="var(--chart-2)",
                 stack_id="a",
                 radius=[6, 6, 0, 0],
             ),

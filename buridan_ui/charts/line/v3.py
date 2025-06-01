@@ -35,7 +35,7 @@ def linechart_v3():
                     custom_attrs={"fontSize": "12px", "fontWeight": "bold"},
                 ),
                 data_key="desktop",
-                stroke=rx.color("accent", 8),
+                stroke="var(--chart-1)",
                 stroke_width=2,
                 type_="linear",
                 dot=True,

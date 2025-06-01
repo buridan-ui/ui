@@ -28,14 +28,18 @@ def areachart_v6():
         rx.recharts.area_chart(
             get_tooltip(),
             get_cartesian_grid(),
-            *[
-                rx.recharts.area(
-                    data_key=name,
-                    fill=rx.color("accent", 7 + index),
-                    stroke="none",
-                )
-                for index, name in enumerate(["desktop", "mobile"])
-            ],
+            rx.recharts.area(
+                data_key="mobile",
+                fill="var(--chart-1)",
+                stroke="var(--chart-1)",
+                stack_id="a",
+            ),
+            rx.recharts.area(
+                data_key="desktop",
+                fill="var(--chart-2)",
+                stroke="var(--chart-2)",
+                stack_id="a",
+            ),
             get_x_axis("month"),
             rx.recharts.legend(),
             data=data,

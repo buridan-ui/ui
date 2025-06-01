@@ -1,6 +1,9 @@
 import reflex as rx
 
-from ..style import info, tooltip
+from buridan_ui.charts.style import (
+    info,
+    get_tooltip,
+)
 
 
 def piechart_v1():
@@ -12,21 +15,21 @@ def piechart_v1():
         {"browser": "other", "visitors": 90},
     ]
 
-    data = [
-        {**item, "fill": rx.color("accent", index + 4)}
-        for index, item in enumerate(data)
-    ]
-
-    return rx.vstack(
+    return rx.box(
         info("Pie Chart", "3", "January - June 2024", "center"),
         rx.recharts.pie_chart(
-            rx.recharts.graphing_tooltip(**tooltip),
+            get_tooltip(),
             rx.recharts.pie(
+                rx.foreach(
+                    range(6),
+                    lambda color, index: rx.recharts.cell(
+                        fill=f"var(--chart-{index + 1})",
+                    ),
+                ),
                 data=data,
                 data_key="visitors",
                 name_key="browser",
                 stroke="0",
-                is_animation_active=False,
             ),
             width="100%",
             height=250,
@@ -37,8 +40,5 @@ def piechart_v1():
             "Showing total visitors for the last 6 months",
             "center",
         ),
-        width="100%",
-        align="center",
-        padding="0.5em",
-        class_name="w-[100%] [&_.recharts-tooltip-item-separator]:w-full",
+        class_name="w-full flex flex-col gap-y-4 p-1 items-center [&_.recharts-tooltip-item-separator]:w-full",
     )

@@ -21,7 +21,7 @@ def barchart_v6():
     modified_data = [
         {
             **item,
-            "stroke": (rx.color("accent", 11) if item.get("active", False) else "none"),
+            "stroke": ("var(--chart-3)" if item.get("active", False) else "none"),
         }
         for item in data
     ]
@@ -38,11 +38,11 @@ def barchart_v6():
             get_tooltip(),
             rx.recharts.bar(
                 data_key="desktop",
-                fill=rx.color("accent"),
+                fill="var(--chart-1)",
                 stack_id="a",
                 radius=6,
                 stroke="stroke",
-                stroke_width=2,
+                stroke_width=3,
             ),
             rx.recharts.y_axis(type_="number", hide=True),
             get_x_axis("month"),
