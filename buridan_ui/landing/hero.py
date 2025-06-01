@@ -11,7 +11,7 @@ def button_with_link(icon: str, url: str):
                 size=13,
             ),
             href=url,
-            is_external=True,
+            is_external=False,
             text_cdecoration="none",
             color=rx.color("slate", 11),
             _hover={"color": rx.color("slate", 12)},
