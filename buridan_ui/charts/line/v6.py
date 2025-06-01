@@ -30,7 +30,7 @@ def linechart_v6():
                 data_key="visitors",
                 type_="natural",
                 dot=False,
-                stroke=rx.color("accent", 8),
+                stroke="var(--chart-1)",
                 stroke_width=2,
             ),
             data=data,

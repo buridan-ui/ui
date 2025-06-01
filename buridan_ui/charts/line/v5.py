@@ -34,7 +34,7 @@ def linechart_v5():
                     data_key="browser",
                 ),
                 data_key="visitors",
-                stroke=rx.color("accent", 8),
+                stroke="var(--chart-1)",
                 stroke_width=2,
                 type_="natural",
                 dot=True,

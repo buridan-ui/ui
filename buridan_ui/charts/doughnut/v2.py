@@ -21,9 +21,9 @@ def doughnutchart_v2():
         rx.recharts.pie_chart(
             rx.recharts.pie(
                 rx.foreach(
-                    ["red", "blue", "green", "yellow", "purple"],
+                    ["red", "blue", "green", "amber", "purple"],
                     lambda color, index: rx.recharts.cell(
-                        fill=rx.color(color),
+                        fill="var(--chart-2)", class_name=f"theme-{color}"
                     ),
                 ),
                 data=data,

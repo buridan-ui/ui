@@ -36,7 +36,7 @@ def barchart_v4():
                     offset=10,
                 ),
                 data_key="desktop",
-                fill=rx.color("accent"),
+                fill="var(--chart-1)",
                 stack_id="a",
                 radius=6,
             ),

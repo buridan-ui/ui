@@ -129,7 +129,7 @@ def barchart_v5():
             get_cartesian_grid(),
             rx.recharts.bar(
                 data_key=SelectedType.value,
-                fill=rx.color("accent"),
+                fill="var(--chart-1)",
                 radius=[2, 2, 0, 0],
             ),
             rx.recharts.y_axis(type_="number", hide=True),

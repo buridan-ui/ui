@@ -8,11 +8,11 @@ from buridan_ui.charts.style import (
 
 def barchart_v7():
     data = [
-        {"browser": "Chrome", "visitors": 275, "fill": rx.color("accent", 7)},
-        {"browser": "Safari", "visitors": 200, "fill": rx.color("accent", 8)},
-        {"browser": "Firefox", "visitors": 187, "fill": rx.color("accent", 9)},
-        {"browser": "Edge", "visitors": 173, "fill": rx.color("accent", 10)},
-        {"browser": "Other", "visitors": 90, "fill": rx.color("accent", 11)},
+        {"browser": "Chrome", "visitors": 275, "fill": "var(--chart-1)"},
+        {"browser": "Safari", "visitors": 200, "fill": "var(--chart-2)"},
+        {"browser": "Firefox", "visitors": 187, "fill": "var(--chart-3)"},
+        {"browser": "Edge", "visitors": 173, "fill": "var(--chart-4)"},
+        {"browser": "Other", "visitors": 90, "fill": "var(--chart-5)"},
     ]
 
     return rx.box(

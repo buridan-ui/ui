@@ -1,6 +1,6 @@
 import reflex as rx
 
-from ..style import info, tooltip
+from buridan_ui.charts.style import info
 
 
 def radar_v2():
@@ -13,7 +13,7 @@ def radar_v2():
         {"category": "Positioning", "score": 7},
     ]
 
-    return rx.vstack(
+    return rx.box(
         info(
             "Radar Chart - Dots",
             "3",
@@ -21,7 +21,6 @@ def radar_v2():
             "center",
         ),
         rx.recharts.radar_chart(
-            rx.recharts.graphing_tooltip(**tooltip),
             rx.recharts.polar_grid(
                 class_name=rx.color_mode_cond(
                     "text-sm stroke-gray-300",
@@ -38,11 +37,9 @@ def radar_v2():
             rx.recharts.radar(
                 data_key="score",
                 dot=True,
-                stroke=rx.color("accent"),
-                custom_attrs={
-                    "fill": rx.color("accent"),
-                    "strokeWidth": 2,
-                },
+                stroke="var(--chart-2)",
+                fill="var(--chart-1)",
+                custom_attrs={"strokeWidth": 2},
             ),
             data=stats,
             width="100%",
@@ -55,7 +52,5 @@ def radar_v2():
             "Performance trends in key gameplay categories",
             "center",
         ),
-        width="100%",
-        align="center",
-        padding="0.5em",
+        class_name="w-full flex flex-col gap-y-4 p-1 items-center",
     )

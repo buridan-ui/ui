@@ -10,6 +10,8 @@ from buridan_ui.templates.sidemenu.sidemenu import sidemenu, sidemenu_right
 
 from buridan_ui.wrappers.base.utils.routes import base_content_path_ui
 
+Chart_Theme = ClientStateVar.create("chart_theme", "")
+
 
 def create_responsive_display(
     small_screens: str, large_screens: str, breakpoint: int = 3
@@ -183,6 +185,75 @@ def tab_selector(tabs=["Preview", "Code"]):
     )
 
 
+def theme_option(
+    name: str, arabic_name: str, color_class: str, color_var: str
+) -> rx.Component:
+    return rx.popover.close(
+        rx.el.div(
+            rx.el.button(
+                f"{name} {arabic_name}",
+                on_click=rx.call_function(Chart_Theme.set_value(color_class).to(str)),
+                class_name="w-full text-left",
+                type="button",
+            ),
+            rx.el.div(
+                style={"backgroundColor": f"var(--{color_var})"},
+                class_name=f"h-2 w-2 rounded {color_class}",
+            ),
+            class_name="flex flex-row gap-x-2 items-center px-3 py-2 w-full justify-between hover:px-4 transition-[padding] duration-200 ease-out",
+        )
+    )
+
+
+def theme_select_menu():
+    return rx.box(
+        rx.popover.root(
+            rx.popover.trigger(
+                rx.el.button(
+                    "Theme",
+                    class_name="text-sm px-2 font-semibold flex items-center gap-x-1 rounded-md",
+                    type="button",
+                    color=rx.color("slate", 11),
+                ),
+            ),
+            rx.popover.content(
+                rx.box(
+                    theme_option("Feyrouz", "فيْروز", "theme-blue", "chart-1"),
+                    rx.divider(
+                        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
+                        bg="transparent",
+                    ),
+                    theme_option("Yaqout", "يَاقوت", "theme-red", "chart-1"),
+                    rx.divider(
+                        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
+                        bg="transparent",
+                    ),
+                    theme_option("Zumurrud", "زُمُرُّد", "theme-green", "chart-1"),
+                    rx.divider(
+                        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
+                        bg="transparent",
+                    ),
+                    theme_option("Kahraman", "كَهْرَمان", "theme-amber", "chart-1"),
+                    class_name="bg-background w-[160px] flex flex-col text-sm rounded-md shadow-md",
+                    border=f"1.25px dashed {rx.color('gray', 4)}",
+                ),
+                side="left",
+                side_offset=15,
+                class_name="items-center bg-transparent !shadow-none !p-0 border-none w-auto overflow-visible font-sans pointer-events-auto",
+            ),
+        ),
+        style={
+            "display": "inline-flex",
+            "height": "1.925rem",
+            "align_items": "baseline",
+            "justify_content": "flex-start",
+            "padding": "0.25rem",
+            "border": f"1.25px dashed {rx.color('gray', 4)}",
+        },
+        class_name="rounded-md",
+    )
+
+
 def create_header(url: str):
     """Create the page header component.
 
@@ -204,6 +275,7 @@ def create_header(url: str):
             display=create_responsive_display("flex", "none"),
         ),
         rx.el.div(
+            theme_select_menu(),
             rx.box(
                 drawer(),
                 display=create_responsive_display("flex", "none"),

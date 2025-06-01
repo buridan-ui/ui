@@ -17,9 +17,9 @@ def linechart_v8():
     return rx.box(
         rx.hstack(
             rx.foreach(
-                [["Desktop", "red"], ["Mobile", "blue"]],
+                [["Desktop", "var(--chart-1)"], ["Mobile", "var(--chart-2)"]],
                 lambda key: rx.hstack(
-                    rx.box(class_name="w-3 h-3 rounded-sm", bg=rx.color(key[1])),
+                    rx.box(class_name="w-3 h-3 rounded-sm", bg=key[1]),
                     rx.text(
                         key[0],
                         class_name="text-sm font-semibold",
@@ -35,14 +35,14 @@ def linechart_v8():
             get_tooltip(),
             rx.recharts.line(
                 data_key="desktop",
-                stroke=rx.color("red"),
+                stroke="var(--chart-1)",
                 type_="linear",
                 dot=False,
                 stroke_width=2,
             ),
             rx.recharts.line(
                 data_key="mobile",
-                stroke=rx.color("blue"),
+                stroke="var(--chart-2)",
                 type_="linear",
                 dot=False,
                 stroke_width=2,

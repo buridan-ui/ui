@@ -32,7 +32,7 @@ def linechart_v4():
                 ["desktop", "mobile"],
                 lambda name, index: rx.recharts.line(
                     data_key=name,
-                    stroke=rx.color("accent", 7 + index),
+                    stroke=f"var(--chart-{index + 1})",
                     stroke_width=2,
                     type_="natural",
                     dot=False,

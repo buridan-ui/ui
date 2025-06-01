@@ -17,9 +17,13 @@ def barchart_v9():
     return rx.box(
         rx.hstack(
             rx.foreach(
-                [["Desktop", "red"], ["Mobile", "sky"], ["Tablet", "orange"]],
+                [
+                    ["Desktop", "var(--chart-1)"],
+                    ["Mobile", "var(--chart-2)"],
+                    ["Tablet", "var(--chart-3)"],
+                ],
                 lambda key: rx.hstack(
-                    rx.box(class_name="w-3 h-3 rounded-sm", bg=rx.color(key[1])),
+                    rx.box(class_name="w-3 h-3 rounded-sm", bg=key[1]),
                     rx.text(
                         key[0],
                         class_name="text-sm font-semibold",
@@ -33,15 +37,13 @@ def barchart_v9():
         ),
         rx.recharts.bar_chart(
             get_tooltip(),
-            rx.recharts.bar(data_key="desktop", fill=rx.color("red", 7), radius=4),
-            rx.recharts.bar(data_key="mobile", fill=rx.color("sky", 7), radius=4),
-            rx.recharts.bar(data_key="tablet", fill=rx.color("orange", 7), radius=4),
+            rx.recharts.bar(data_key="desktop", fill="var(--chart-1)", radius=4),
+            rx.recharts.bar(data_key="mobile", fill="var(--chart-2)", radius=4),
+            rx.recharts.bar(data_key="tablet", fill="var(--chart-3)", radius=4),
             get_x_axis("month"),
             data=data,
             width="100%",
             height=250,
-            bar_size=18,
-            bar_category_gap="30%",
         ),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

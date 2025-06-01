@@ -30,7 +30,7 @@ def linechart_v2():
             get_cartesian_grid(),
             rx.recharts.line(
                 data_key="desktop",
-                stroke=rx.color("accent", 8),
+                stroke="var(--chart-1)",
                 stroke_width=2,
                 type_="linear",
                 dot=False,

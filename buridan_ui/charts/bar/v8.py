@@ -6,7 +6,6 @@ from buridan_ui.charts.style import (
 
 
 def barchart_v8():
-    color = ["teal", "orange"]
     categories = ["Successful", "Refunded"]
     EUROPE = [
         {"date": f"{month} 23", "Successful": successful, "Refunded": refunded}
@@ -59,10 +58,7 @@ def barchart_v8():
                 categories,
                 lambda key, index: rx.recharts.bar(
                     data_key=key,
-                    fill=rx.color(
-                        rx.Var.create(color)[index],
-                        6 + (index * 2),
-                    ),
+                    fill=f"var(--chart-{index + 1})",
                     stack_id="_",
                 ),
             ),

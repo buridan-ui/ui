@@ -32,7 +32,7 @@ def barchart_v1():
                 ["desktop", "mobile"],
                 lambda name, index: rx.recharts.bar(
                     data_key=name,
-                    fill=rx.color("accent", 7 + index),
+                    fill=f"var(--chart-{index + 1})",
                     radius=6,
                 ),
             ),

@@ -12,31 +12,33 @@ def areachart_v8():
         {"month": "Jun", "desktop": 214, "mobile": 140},
     ]
 
-    def create_gradient(color_key):
+    series = [("desktop", "Desktop", "--chart-1"), ("mobile", "Mobile", "--chart-2")]
+
+    def create_gradient(var_name):
         return rx.el.svg.defs(
             rx.el.svg.linear_gradient(
                 rx.el.svg.stop(
-                    stop_color=rx.color(color_key, 7), offset="0%", stop_opacity=0.3
+                    stop_color=f"var({var_name})", offset="5%", stop_opacity=0.8
                 ),
                 rx.el.svg.stop(
-                    stop_color=rx.color(color_key, 7), offset="75%", stop_opacity=0
+                    stop_color=f"var({var_name})", offset="95%", stop_opacity=0.1
                 ),
                 x1=0,
                 x2=0,
                 y1=0,
                 y2=1,
-                id=color_key,
-            ),
+                id=var_name.strip("-"),
+            )
         )
 
     return rx.box(
         rx.hstack(
             rx.foreach(
-                [["Desktop", "red"], ["Mobile", "blue"]],
-                lambda key: rx.hstack(
-                    rx.box(class_name="w-3 h-3 rounded-sm", bg=rx.color(key[1])),
+                series,
+                lambda s: rx.hstack(
+                    rx.box(class_name="w-3 h-3 rounded-sm", bg=f"var({s[2]})"),
                     rx.text(
-                        key[0],
+                        s[1],
                         class_name="text-sm font-semibold",
                         color=rx.color("slate", 11),
                     ),
@@ -44,24 +46,20 @@ def areachart_v8():
                     spacing="2",
                 ),
             ),
-            class_name="py-4 px-4 flex w-full flex justify-center gap-8",
+            class_name="py-4 px-4 flex w-full justify-center gap-8",
         ),
         rx.recharts.area_chart(
-            create_gradient("red"),
-            create_gradient("blue"),
+            *(create_gradient(s[2]) for s in series),
             get_tooltip(),
             get_cartesian_grid(),
-            rx.recharts.area(
-                data_key="desktop",
-                fill="url(#red)",
-                stroke=rx.color("red", 8),
-                stack_id="1",
-            ),
-            rx.recharts.area(
-                data_key="mobile",
-                fill="url(#blue)",
-                stroke=rx.color("blue", 8),
-                stack_id="1",
+            *(
+                rx.recharts.area(
+                    data_key=s[0],
+                    fill=f"url(#{s[2].strip('-')})",
+                    stroke=f"var({s[2]})",
+                    stack_id="1",
+                )
+                for s in series
             ),
             rx.recharts.x_axis(
                 data_key="month",

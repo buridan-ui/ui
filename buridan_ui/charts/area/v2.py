@@ -30,8 +30,9 @@ def areachart_v2():
             get_cartesian_grid(),
             rx.recharts.area(
                 data_key="desktop",
-                fill=rx.color("accent"),
-                stroke=rx.color("accent", 8),
+                fill="var(--chart-1)",
+                stroke="var(--chart-1)",
+                stroke_width=2,
                 type_="linear",
             ),
             get_x_axis("month"),

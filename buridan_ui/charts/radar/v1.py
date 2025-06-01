@@ -1,6 +1,6 @@
 import reflex as rx
 
-from ..style import info
+from buridan_ui.charts.style import info
 
 
 def radar_v1():
@@ -13,7 +13,7 @@ def radar_v1():
         {"category": "Positioning", "score": 7},
     ]
 
-    return rx.vstack(
+    return rx.box(
         info(
             "Radar Chart",
             "3",
@@ -37,7 +37,7 @@ def radar_v1():
             rx.recharts.radar(
                 data_key="score",
                 stroke="none",
-                custom_attrs={"fill": rx.color("accent")},
+                fill="var(--chart-1)",
             ),
             data=stats,
             width="100%",
@@ -50,7 +50,5 @@ def radar_v1():
             "Performance trends in key gameplay categories",
             "center",
         ),
-        width="100%",
-        align="center",
-        padding="0.5em",
+        class_name="w-full flex flex-col gap-y-4 p-1 items-center",
     )

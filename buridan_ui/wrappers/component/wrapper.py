@@ -6,6 +6,7 @@ from typing import Callable
 import reflex as rx
 from reflex.components.datadisplay.code import Theme
 from reflex.experimental import ClientStateVar
+from buridan_ui.wrappers.base.main import Chart_Theme
 
 import random
 import string
@@ -191,7 +192,8 @@ def component_wrapper(path: str):
                     + rx.cond(active_tab.value == 0, "px-4", "").to(str),
                 ),
                 border=f"1px dashed {rx.color('gray', 5)}",
-                class_name="rounded-xl shadow-sm size-full flex flex-col p-1",
+                class_name="rounded-xl shadow-sm size-full flex flex-col p-1 "
+                + Chart_Theme.value.to(str),
             )
 
         return wrapper

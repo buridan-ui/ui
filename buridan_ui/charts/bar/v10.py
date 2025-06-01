@@ -16,55 +16,54 @@ def barchart_v10():
         {"date": "Jul 23", "Running": 164, "Cycling": 134},
     ]
 
-    def create_alternating_chart(data, colors, active):
+    activities = ["Running", "Cycling"]
+    chart_colors = ["var(--chart-1)", "var(--chart-2)"]
+
+    def create_alternating_chart(active_key: str):
         return rx.recharts.bar_chart(
             get_tooltip(),
-            rx.foreach(
-                ["Running", "Cycling"],
-                lambda key, index: rx.recharts.bar(
+            *[
+                rx.recharts.bar(
                     is_animation_active=False,
                     radius=4,
                     data_key=key,
-                    fill=rx.color(rx.Var.create(colors)[index]),
+                    fill=color,
                     custom_attrs={
                         "opacity": rx.cond(
-                            key == active,
+                            key == active_key,
                             "0.25",
                             "1",
                         )
                     },
-                ),
-            ),
+                )
+                for key, color in zip(activities, chart_colors)
+            ],
             get_x_axis("date"),
-            data=data,
+            data=sport,
             width="100%",
             height=250,
-            bar_size=18,
-            bar_category_gap="30%",
+            bar_category_gap="20%",
         )
 
     return rx.box(
         rx.tabs.root(
             rx.tabs.list(
-                rx.tabs.trigger(
-                    rx.text("Running", class_name="text-sm font-semibold"),
-                    value="1",
-                ),
-                rx.tabs.trigger(
-                    rx.text("Cycling", class_name="text-sm font-semibold"),
-                    value="2",
-                ),
+                *[
+                    rx.tabs.trigger(
+                        rx.text(activity, class_name="text-sm font-semibold"),
+                        value=str(i + 1),
+                    )
+                    for i, activity in enumerate(activities)
+                ]
             ),
-            rx.tabs.content(
-                create_alternating_chart(sport, ["red", "blue"], "Running"),
-                value="1",
-                margin_top="-5px",
-            ),
-            rx.tabs.content(
-                create_alternating_chart(sport, ["red", "blue"], "Cycling"),
-                value="2",
-                margin_top="-5px",
-            ),
+            *[
+                rx.tabs.content(
+                    create_alternating_chart(active),
+                    value=str(i + 1),
+                    margin_top="-5px",
+                )
+                for i, active in enumerate(activities)
+            ],
             default_value="1",
             width="100%",
         ),
