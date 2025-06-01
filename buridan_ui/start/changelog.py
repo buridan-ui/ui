@@ -47,6 +47,17 @@ def changelog():
     return [
         rx.box(
             changelog_wrapper(
+                title="Enhanced Charting Experience & Theming Overhaul",
+                date="June 1, 2025",
+                version="buridan/ui v0.6.7",
+                log="""
+- Introduced a centralized theming system for consistent chart styling.
+- Enhanced Recharts with smooth animations and improved responsiveness.
+- Added subtle hover effects to theme selection for better UX.
+- Updated documentation for theming and charting components.
+""",
+            ),
+            changelog_wrapper(
                 title="Minor Updates and Docs Enhancements",
                 date="May 30, 2025",
                 version="buridan/ui v0.6.6",
