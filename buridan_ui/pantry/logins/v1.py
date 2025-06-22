@@ -31,8 +31,15 @@ def logins_v1():
         ),
         rx.form(
             rx.box(
-                rx.input(
-                    width="100%", placeholder="something@example.com", name="input"
+                rx.el.input(
+                    placeholder="something@email.com",
+                    class_name=(
+                        "p-2 w-full "
+                        + "text-sm "
+                        + "rounded-md bg-transparent border border-gray-500/40 "
+                        + "focus:outline-none focus:border-blue-500 shadow-sm"
+                    ),
+                    name="input",
                 ),
                 login_button("Sign In with Email", type="submit"),
                 class_name="w-full gap-y-2 flex flex-col",

@@ -45,14 +45,26 @@ def logins_v2():
         ),
         rx.form(
             rx.vstack(
-                rx.input(
-                    width="100%", placeholder="something@example.com", name="email"
+                rx.el.input(
+                    placeholder="something@email.com",
+                    class_name=(
+                        "p-2 w-full "
+                        + "text-sm "
+                        + "rounded-md bg-transparent border border-gray-500/40 "
+                        + "focus:outline-none focus:border-blue-500 shadow-sm"
+                    ),
+                    name="input",
                 ),
-                rx.input(
-                    width="100%",
+                rx.el.input(
                     placeholder="password",
-                    type="password",
+                    class_name=(
+                        "p-2 w-full "
+                        + "text-sm "
+                        + "rounded-md bg-transparent border border-gray-500/40 "
+                        + "focus:outline-none focus:border-blue-500 shadow-sm"
+                    ),
                     name="password",
+                    type="password",
                 ),
                 rx.button(
                     "Create Account",
