@@ -1,2 +1,2 @@
-reflex>=0.8.0a4
+reflex>=0.8.0
 pre-commit>=4.2.0
