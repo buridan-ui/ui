@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#  ./cleanup.sh /PREFIX-NAME
+#  ./cleanup.sh PREFIX-NAME
 
 PREFIX=$1
 
@@ -18,7 +18,16 @@ for branch in $(git branch | grep "$PREFIX"); do
   fi
 done
 
-echo "Clearing all stashes..."
-git stash clear
+# Ask the user if they want to clear the stash
+read -p "Do you want to clear the git stash? (y/n): " clear_stash
+
+# If the user confirms, clear the stash
+if [[ "$clear_stash" =~ ^[Yy]$ ]]; then
+  echo "Clearing all stashes..."
+  git stash clear
+  echo "Git stash cleared."
+else
+  echo "Git stash not cleared."
+fi
 
 echo "Cleanup complete."
