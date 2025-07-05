@@ -148,10 +148,17 @@ def charting():
                             language="bash",
                             wrap_long_lines=True,
                             scrollbar_width="none",
-                            code_tag_props={"pre": "transparent", "bg": "transparent"},
-                            custom_attrs={"bg": "transparent"},
-                            bg="transparent",
-                            class_name="rounded-md shadow-sm",
+                            code_tag_props={
+                                "pre": "transparent",
+                                "background": "transparent",
+                            },
+                            custom_attrs={
+                                "background": "transparent !important",
+                                "pre": {"background": "transparent !important"},
+                                "code": {"background": "transparent !important"},
+                            },
+                            background="transparent !important",
+                            class_name="rounded-md shadow-sm !bg-transparent",
                             border=f"1px dashed {rx.color('gray', 5)}",
                         ),
                         rx.el.button(

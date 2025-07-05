@@ -222,7 +222,11 @@ def theme_select_menu():
             rx.popover.trigger(
                 rx.el.button(
                     "Chart Theme",
-                    class_name="text-sm px-2 font-semibold flex items-center gap-x-1 rounded-md",
+                    rx.el.div(
+                        style={"backgroundColor": "var(--chart-2)"},
+                        class_name=f"h-2 w-2 rounded-full {Chart_Theme.value.to(str)}",
+                    ),
+                    class_name="text-sm px-2 font-semibold flex flex-row justify-between items-center gap-x-4 rounded-md",
                     type="button",
                     color=rx.color("slate", 11),
                 ),

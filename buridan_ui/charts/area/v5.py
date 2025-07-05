@@ -1,13 +1,10 @@
 import reflex as rx
-
-from buridan_ui.charts.style import (
-    info,
-    get_tooltip,
-    get_cartesian_grid,
-)
+from buridan_ui.charts.style import info
+from buridan_ui.charts.area.api import AreaChart
 
 
 def areachart_v5():
+    # Data generation
     import datetime
     import random
     from reflex.experimental import ClientStateVar
@@ -22,29 +19,8 @@ def areachart_v5():
         for i in range(91)
     ]
 
+    # Client-side state for filtering
     SelectedRange = ClientStateVar.create("selected", data)
-
-    def gradient(id_: str, color: str):
-        return rx.el.svg.linear_gradient(
-            rx.el.svg.stop(stop_color=f"var(--{color})", offset="5%", stop_opacity=0.8),
-            rx.el.svg.stop(
-                stop_color=f"var(--{color})", offset="95%", stop_opacity=0.1
-            ),
-            x1=0,
-            x2=0,
-            y1=0,
-            y2=1,
-            id=id_,
-        )
-
-    def area(data_key: str, color: str):
-        return rx.recharts.area(
-            data_key=data_key,
-            fill=f"url(#{data_key})",
-            stack_id="a",
-            stroke=f"var(--{color})",
-            animation_easing="linear",
-        )
 
     select_options = [
         ("Last 3 Months", data),
@@ -75,28 +51,23 @@ def areachart_v5():
             width="100%",
             wrap="wrap",
         ),
-        rx.recharts.area_chart(
-            rx.el.svg.defs(
-                gradient("desktop", "chart-1"),
-                gradient("mobile", "chart-2"),
-            ),
-            get_tooltip(),
-            get_cartesian_grid(),
-            area("mobile", "chart-2"),
-            area("desktop", "chart-1"),
-            rx.recharts.x_axis(
-                data_key="date",
-                axis_line=False,
-                min_tick_gap=32,
-                tick_size=10,
-                tick_line=False,
-                custom_attrs={"fontSize": "12px"},
-                interval="preserveStartEnd",
-            ),
-            data=SelectedRange.value,
-            width="100%",
-            height=280,
-        ),
+        (
+            AreaChart(SelectedRange.value)
+            .x("date")
+            .series(
+                "mobile", color="chart-2", gradient=True, stroke="chart-2", stack_id="a"
+            )
+            .series(
+                "desktop",
+                color="chart-1",
+                gradient=True,
+                stroke="chart-1",
+                stack_id="a",
+            )
+            .tooltip(True)
+            .grid(True)
+            .size("100%", 280)
+        )(),
         info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

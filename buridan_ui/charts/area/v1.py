@@ -1,11 +1,7 @@
 import reflex as rx
 
-from buridan_ui.charts.style import (
-    info,
-    get_tooltip,
-    get_cartesian_grid,
-    get_x_axis,
-)
+from buridan_ui.charts.style import info
+from buridan_ui.charts.area.api import AreaChart
 
 
 def areachart_v1():
@@ -25,20 +21,14 @@ def areachart_v1():
             "Showing total visitors for the last 6 months",
             "start",
         ),
-        rx.recharts.area_chart(
-            get_tooltip(),
-            get_cartesian_grid(),
-            rx.recharts.area(
-                data_key="desktop",
-                fill="var(--chart-1)",
-                stroke="var(--chart-1)",
-                stroke_width=2,
-            ),
-            get_x_axis("month"),
-            data=data,
-            width="100%",
-            height=250,
-        ),
+        (
+            AreaChart(data)
+            .x("month")
+            .series("desktop", color="chart-1")
+            .tooltip(True)
+            .grid(True)
+            # .size("100%", 250)
+        )(),
         info(
             "Trending up by 5.2% this month",
             "2",
