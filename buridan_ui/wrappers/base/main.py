@@ -396,6 +396,21 @@ def table_of_content(name: str):
             "id_prefix": "pie",
             "quantity": 6,
         },
+        "Doughnut Charts": {
+            "url": "/charts/doughnut-charts",
+            "id_prefix": "doughnut",
+            "quantity": 2,
+        },
+        "Radar Charts": {
+            "url": "/charts/radar-charts",
+            "id_prefix": "radar",
+            "quantity": 6,
+        },
+        "Scatter Charts": {
+            "url": "/charts/scatter-charts",
+            "id_prefix": "scatter",
+            "quantity": 1,
+        },
     }
 
     if name in charts:
