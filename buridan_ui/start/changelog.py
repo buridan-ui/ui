@@ -47,6 +47,20 @@ def changelog():
     return [
         rx.box(
             changelog_wrapper(
+                title="Major API Revamp & Foundation for v0.7.0-beta.1 Release",
+                date="July 6, 2025",
+                version="buridan/ui v0.7.0-beta.1",
+                log="""
+- Introduced brand new fluent APIs for core chart types: AreaChart, BarChart, LineChart, and PieChart.
+- Redesigned internal charting references and hooks to improve extensibility and performance.
+- Implemented breaking changes to component refs to simplify and standardize usage.
+- Updated all chart components to support custom legends, dynamic series, and enhanced theming.
+- Refined the documentation to reflect the new APIs and usage patterns.
+- Upgraded build and deployment scripts to streamline beta releases.
+- This beta version signals that v0.7.0 is feature-complete and ready for broader testing and feedback.
+""",
+            ),
+            changelog_wrapper(
                 title="Enhanced Charting Experience & Theming Overhaul",
                 date="June 1, 2025",
                 version="buridan/ui v0.6.7",
