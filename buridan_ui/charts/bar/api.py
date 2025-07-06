@@ -42,13 +42,16 @@ class BarChart:
         name: Optional[str] = None,
         **kwargs: Any,
     ) -> "BarChart":
-        # Handle fill color - add var() wrapper if not already present
-        if fill.startswith("var("):
-            fill_color = fill
-        elif fill.startswith("#") or fill.startswith("rgb") or fill.startswith("hsl"):
-            fill_color = fill
-        else:
-            fill_color = f"var(--{fill})"
+        # Handle fill color with rx.cond for reactive variables
+        fill_color = rx.cond(
+            fill.startswith("var("),
+            fill,
+            rx.cond(
+                fill.startswith("#") | fill.startswith("rgb") | fill.startswith("hsl"),
+                fill,
+                f"var(--{fill})",
+            ),
+        )
 
         bar_props = {
             "data_key": key,
@@ -62,8 +65,7 @@ class BarChart:
             "name": name,
         }
         bar_props.update(kwargs)
-        # Remove None values
-        bar_props = {k: v for k, v in bar_props.items() if v is not None}
+        # Don't filter None values here - let Reflex handle it
         self._series.append(bar_props)
         return self
 
@@ -189,6 +191,26 @@ class BarChart:
         self._components.extend(components)
         return self
 
+    def _create_legend_item(self, series_data: Dict[str, Any]) -> rx.Component:
+        """Create a legend item for a series"""
+        data_key = series_data["data_key"]
+        label = rx.cond(
+            self._custom_legend is not None,
+            self._custom_legend.get(data_key, data_key),
+            data_key,
+        )
+
+        return rx.hstack(
+            rx.box(bg=series_data["fill"], class_name="w-3 h-3 rounded-sm"),
+            rx.text(
+                label,
+                class_name="text-sm font-semibold",
+                color=rx.color("slate", 11),
+            ),
+            spacing="2",
+            align="center",
+        )
+
     def __call__(self, **kwargs: Any) -> rx.Component:
         if not self._x_key:
             raise ValueError("X axis key must be set with `.x()` before rendering.")
@@ -254,8 +276,8 @@ class BarChart:
             elif s.get("label") is True:
                 label_list.append(rx.recharts.label_list())
 
-            # Create bar component
-            bar_props = {k: v for k, v in s.items() if k != "label"}
+            # Create bar component - filter None values at render time
+            bar_props = {k: v for k, v in s.items() if v is not None and k != "label"}
             components.append(rx.recharts.bar(*label_list, **bar_props))
 
         # Add X axis LAST (like in AreaChart)
@@ -293,37 +315,18 @@ class BarChart:
             **kwargs,
         )
 
-        # Handle custom legend
+        # Handle custom legend with reactive components
         if self._custom_legend:
-            legend_items = []
-            for s in self._series:
-                data_key = s["data_key"]
-                label = self._custom_legend.get(data_key, data_key)
-                legend_items.append(
-                    rx.hstack(
-                        rx.box(bg=s["fill"], class_name="w-3 h-3 rounded-sm"),
-                        rx.text(
-                            label,
-                            class_name="text-sm font-semibold",
-                            color=rx.color("slate", 11),
-                        ),
-                        spacing="2",
-                        align="center",
-                    )
-                )
-
+            legend_items = [self._create_legend_item(s) for s in self._series]
             legend = rx.hstack(
                 *legend_items,
                 class_name="justify-center gap-4 py-2",
             )
 
-            return rx.box(
-                *(
-                    [legend, chart]
-                    if self._legend_position == "top"
-                    else [chart, legend]
-                ),
-                class_name="w-full flex flex-col",
+            return rx.cond(
+                self._legend_position == "top",
+                rx.box(legend, chart, class_name="w-full flex flex-col"),
+                rx.box(chart, legend, class_name="w-full flex flex-col"),
             )
 
         return chart

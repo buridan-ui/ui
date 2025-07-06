@@ -598,20 +598,14 @@ def api_reference_wrapper(path: str):
 @tailwind utilities;
 
 :root {
-    --background: oklch(0.985 0 0);
-    --foreground: oklch(0.145 0 0);
     --chart-1: oklch(0.81 0.1 252);
     --chart-2: oklch(0.62 0.19 260);
     --chart-3: oklch(0.55 0.22 263);
     --chart-4: oklch(0.49 0.22 264);
     --chart-5: oklch(0.42 0.18 266);
-    --pattern-ui: oklch(0.715 0.143 215.221);
-    --pattern-lab: oklch(0.696 0.17 162.48);
 }
 
 .dark {
-    --background: oklch(0.16 0 0);
-    --foreground: oklch(0.985 0 0);
     --chart-1: oklch(0.81 0.1 252);
     --chart-2: oklch(0.62 0.19 260);
     --chart-3: oklch(0.55 0.22 263);
@@ -634,20 +628,14 @@ def api_reference_wrapper(path: str):
                         @tailwind utilities;
 
                         :root {
-                            --background: oklch(0.985 0 0);
-                            --foreground: oklch(0.145 0 0);
                             --chart-1: oklch(0.81 0.1 252);
                             --chart-2: oklch(0.62 0.19 260);
                             --chart-3: oklch(0.55 0.22 263);
                             --chart-4: oklch(0.49 0.22 264);
                             --chart-5: oklch(0.42 0.18 266);
-                            --pattern-ui: oklch(0.715 0.143 215.221);
-                            --pattern-lab: oklch(0.696 0.17 162.48);
                         }
 
                         .dark {
-                            --background: oklch(0.16 0 0);
-                            --foreground: oklch(0.985 0 0);
                             --chart-1: oklch(0.81 0.1 252);
                             --chart-2: oklch(0.62 0.19 260);
                             --chart-3: oklch(0.55 0.22 263);

@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import reflex as rx
 
 from buridan_ui.charts.style import info
@@ -7,6 +5,7 @@ from buridan_ui.charts.bar.api import BarChart
 
 
 def barchart_v5():
+    from datetime import datetime
     from reflex.experimental import ClientStateVar
 
     data = [
@@ -130,41 +129,3 @@ def barchart_v5():
         info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )
-    # return rx.box(
-    #     rx.hstack(
-    #         info(
-    #             "Bar Chart - Dynamic",
-    #             "3",
-    #             "Showing total visitors for the last 6 months",
-    #             "start",
-    #         ),
-    #         rx.el.select(
-    #             rx.el.option("Mobile", on_click=SelectedType.set_value("mobile")),
-    #             rx.el.option("Desktop", on_click=SelectedType.set_value("desktop")),
-    #             default_value="Mobile",
-    #             bg=rx.color("gray", 2),
-    #             border=f"1px solid {rx.color('gray', 4)}",
-    #             class_name="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-lg shadow-sm px-3",
-    #         ),
-    #         align="center",
-    #         justify="between",
-    #         width="100%",
-    #         wrap="wrap",
-    #     ),
-    #     rx.recharts.bar_chart(
-    #         get_tooltip(),
-    #         get_cartesian_grid(),
-    #         rx.recharts.bar(
-    #             data_key=SelectedType.value,
-    #             fill="var(--chart-1)",
-    #             radius=[2, 2, 0, 0],
-    #         ),
-    #         rx.recharts.y_axis(type_="number", hide=True),
-    #         get_x_axis("date"),
-    #         data=formatted_data,
-    #         width="100%",
-    #         height=280,
-    #     ),
-    #     info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
-    #     class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
-    # )

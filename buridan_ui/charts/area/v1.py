@@ -21,14 +21,12 @@ def areachart_v1():
             "Showing total visitors for the last 6 months",
             "start",
         ),
-        (
-            AreaChart(data)
-            .x("month")
-            .series("desktop", color="chart-1")
-            .tooltip(True)
-            .grid(True)
-            # .size("100%", 250)
-        )(),
+        AreaChart(data)
+        .x("month")
+        .series("desktop", color="chart-1")
+        .tooltip(True)
+        .grid(True)
+        .size("100%", 250)(),
         info(
             "Trending up by 5.2% this month",
             "2",
