@@ -11,6 +11,7 @@ from buridan_ui.wrappers.base.main import Chart_Theme
 import random
 import string
 import importlib
+import textwrap
 
 # Common styles extracted as constants
 BUTTON_STYLE = {
@@ -45,6 +46,7 @@ CODE_BLOCK_PROPS = {
     "language": "python",
     "theme": rx.color_mode_cond(Theme.light, Theme.darcula),
     "background": "transparent !important",
+    "text_align": "left",
     "width": "100%",
     "font_size": "12px",
     "scrollbar_width": "none",
@@ -85,7 +87,7 @@ def create_breadcrumb(items):
             )
         )
 
-    return rx.hstack(*breadcrumb_items, spacing="1")
+    return rx.hstack(*breadcrumb_items, spacing="1", id=f"{items[0]}-{items[1]}")
 
 
 def create_copy_button(source_code):
@@ -191,7 +193,7 @@ def create_content_wrapper(content, add_px_on_condition=None):
     return rx.box(content, class_name=class_name)
 
 
-def create_section_header(title, subtitle):
+def create_section_header(title, subtitle, id=""):
     """Create a standardized section header."""
     return rx.el.div(
         rx.el.div(
@@ -205,6 +207,7 @@ def create_section_header(title, subtitle):
             ),
             class_name="w-full justify-start flex flex-col -mb-8",
         ),
+        id=id,
         class_name="flex flex-col p-0 gap-y-2 w-full",
     )
 
@@ -537,13 +540,15 @@ def api_reference_wrapper(path: str):
         ),
         # Installation
         create_section_header(
-            "Installation", "Copy the following chart API inside your app."
+            "Installation",
+            "Copy the following chart API inside your app.",
+            f"{path}-installation",
         ),
         rx.box(
             # Installation header with expand and copy buttons
             rx.box(
                 rx.el.label(
-                    create_breadcrumb(["components", "ui", f"{path}_chart.py"]),
+                    create_breadcrumb(["components", "ui", f"{path}.py"]),
                     class_name="text-sm",
                 ),
                 rx.box(
@@ -565,6 +570,7 @@ def api_reference_wrapper(path: str):
                         ),
                         "overflow": "hidden",
                     },
+                    class_name="w-full text-left",
                 ),
             ),
             border=f"1px dashed {rx.color('gray', 5)}",
@@ -572,14 +578,101 @@ def api_reference_wrapper(path: str):
             + Chart_Theme.value.to(str),
         ),
         create_section_header(
+            "Chart Theme",
+            "Add the following colors to your CSS file. Make sure to call it in your rx.App instance by setting the CSS file path inside the stylesheets attribute.",
+            f"{path}-theme",
+        ),
+        rx.box(
+            # CSS file
+            rx.box(
+                rx.el.label(
+                    create_breadcrumb(["assets", "css", "globals.css"]),
+                    class_name="text-sm",
+                ),
+                rx.box(
+                    rx.box(
+                        create_copy_button(
+                            """
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --background: oklch(0.985 0 0);
+    --foreground: oklch(0.145 0 0);
+    --chart-1: oklch(0.81 0.1 252);
+    --chart-2: oklch(0.62 0.19 260);
+    --chart-3: oklch(0.55 0.22 263);
+    --chart-4: oklch(0.49 0.22 264);
+    --chart-5: oklch(0.42 0.18 266);
+    --pattern-ui: oklch(0.715 0.143 215.221);
+    --pattern-lab: oklch(0.696 0.17 162.48);
+}
+
+.dark {
+    --background: oklch(0.16 0 0);
+    --foreground: oklch(0.985 0 0);
+    --chart-1: oklch(0.81 0.1 252);
+    --chart-2: oklch(0.62 0.19 260);
+    --chart-3: oklch(0.55 0.22 263);
+    --chart-4: oklch(0.49 0.22 264);
+    --chart-5: oklch(0.42 0.18 266);
+}
+                            """
+                        ),
+                        style=TAB_CONTAINER_STYLE,
+                    ),
+                    class_name="flex align-center gap-2",
+                ),
+                class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center bg-background rounded-xl sticky top-0",
+            ),
+            create_content_wrapper(
+                create_code_block(
+                    textwrap.dedent("""
+                        @tailwind base;
+                        @tailwind components;
+                        @tailwind utilities;
+
+                        :root {
+                            --background: oklch(0.985 0 0);
+                            --foreground: oklch(0.145 0 0);
+                            --chart-1: oklch(0.81 0.1 252);
+                            --chart-2: oklch(0.62 0.19 260);
+                            --chart-3: oklch(0.55 0.22 263);
+                            --chart-4: oklch(0.49 0.22 264);
+                            --chart-5: oklch(0.42 0.18 266);
+                            --pattern-ui: oklch(0.715 0.143 215.221);
+                            --pattern-lab: oklch(0.696 0.17 162.48);
+                        }
+
+                        .dark {
+                            --background: oklch(0.16 0 0);
+                            --foreground: oklch(0.985 0 0);
+                            --chart-1: oklch(0.81 0.1 252);
+                            --chart-2: oklch(0.62 0.19 260);
+                            --chart-3: oklch(0.55 0.22 263);
+                            --chart-4: oklch(0.49 0.22 264);
+                            --chart-5: oklch(0.42 0.18 266);
+                        }
+                        """)
+                ),
+            ),
+            text_align="left",
+            border=f"1px dashed {rx.color('gray', 5)}",
+            class_name="rounded-xl shadow-sm size-full flex flex-col p-1 "
+            + Chart_Theme.value.to(str),
+        ),
+        create_section_header(
             "API Reference",
             "A complete list of available methods, their parameters, types, defaults, and descriptions for building and customizing your chart.",
+            f"{path}-reference",
         ),
         rx.box(
             # API Reference header with expand button only
             rx.box(
                 rx.el.label(
-                    create_breadcrumb(["api", f"{path} chart"]), class_name="text-sm"
+                    create_breadcrumb(["api", f"{path} chart"]),
+                    class_name="text-sm",
                 ),
                 rx.box(
                     rx.box(
