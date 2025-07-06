@@ -428,6 +428,6 @@ def sidemenu_right():
             class_name="w-full px-1 py-2 " + "border-r border-dashed border-orange-500",
         ),
         height="100vh",
-        class_name="flex flex-col max-w-[280px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
+        class_name="flex flex-col max-w-[260px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
         display=create_responsive_display("none", "flex"),
     )

@@ -396,21 +396,21 @@ def table_of_content(name: str):
             "id_prefix": "pie",
             "quantity": 6,
         },
-        "Doughnut Charts": {
-            "url": "/charts/doughnut-charts",
-            "id_prefix": "doughnut",
-            "quantity": 2,
-        },
-        "Radar Charts": {
-            "url": "/charts/radar-charts",
-            "id_prefix": "radar",
-            "quantity": 6,
-        },
-        "Scatter Charts": {
-            "url": "/charts/scatter-charts",
-            "id_prefix": "scatter",
-            "quantity": 1,
-        },
+        # "Doughnut Charts": {
+        #     "url": "/charts/doughnut-charts",
+        #     "id_prefix": "doughnut",
+        #     "quantity": 2,
+        # },
+        # "Radar Charts": {
+        #     "url": "/charts/radar-charts",
+        #     "id_prefix": "radar",
+        #     "quantity": 6,
+        # },
+        # "Scatter Charts": {
+        #     "url": "/charts/scatter-charts",
+        #     "id_prefix": "scatter",
+        #     "quantity": 1,
+        # },
     }
 
     if name in charts:
@@ -452,7 +452,7 @@ def table_of_content(name: str):
                 class_name="flex flex-col w-full gap-y-2 p-4",
             ),
             height="100vh",
-            class_name="flex flex-col max-w-[260px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
+            class_name="hidden xl:flex flex-col max-w-[260px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
         )
         if links and refs
         else sidemenu_right()
