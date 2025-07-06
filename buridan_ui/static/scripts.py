@@ -14,7 +14,14 @@ def count_python_files_in_folder(folder_name) -> int:
 
     for _dirpath, _dirnames, filenames in os.walk(folder_name):
         total_files += len(
-            [f for f in filenames if f.endswith(".py") and f != "__init__.py"]
+            [
+                f
+                for f in filenames
+                if f.endswith(".py")
+                and f != "__init__.py"
+                and f != "api.py"
+                and f != "ref.py"
+            ]
         )
 
     return total_files

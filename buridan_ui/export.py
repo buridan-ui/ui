@@ -6,7 +6,10 @@ from typing import Callable, Dict, List, Any
 
 from buridan_ui.config import BASE_PANTRY_PATH, BASE_CHART_PATH
 from buridan_ui.ui.organisms.grid import responsive_grid
-from buridan_ui.wrappers.component.wrapper import component_wrapper
+from buridan_ui.wrappers.component.wrapper import (
+    component_wrapper,
+    api_reference_wrapper,
+)
 
 
 # Define a unified configuration system
@@ -183,14 +186,24 @@ class SourceRetriever:
         """Get source for chart components including style.py."""
         source: str = ""
 
-        # Check if the function name starts with 'sunburst' or 'bump'
-        if not (
-            func.__name__.startswith("sunburst") or func.__name__.startswith("bump")
+        if not func.__name__.startswith(
+            ("areachart", "barchart", "linechart", "piechart")
         ):
-            # Only read the file if the name doesn't start with 'sunburst' or 'bump'
             with open("buridan_ui/charts/style.py") as file:
                 source += file.read()
                 source += "\n"
+
+        else:
+            source += """
+def info(title: str, size: str, subtitle: str, align: str):
+    return rx.vstack(
+        rx.heading(title, size=size, weight="bold"),
+        rx.text(subtitle, size="1", color=rx.color("slate", 11), weight="medium"),
+        spacing="1",
+        align=align,
+    )
+"""
+            source += "\n"
 
         source += inspect.getsource(func)
         return source
@@ -268,10 +281,10 @@ class ExportFactory:
         )
 
         @component_wrapper(f"{BASE_CHART_PATH}{directory}/v{version}.py")
-        def export():
+        def chart_export():
             return [chart_func(), SourceRetriever.chart_source(chart_func), flexgen_url]
 
-        return export
+        return chart_export
 
     @staticmethod
     def _import_component(
@@ -388,8 +401,13 @@ def generate_chart_exports() -> Dict[str, List]:
         # Get any custom grid config for this chart type
         grid_config = config.GRID_CONFIGS.get(chart_type, {})
 
+        # Generate the API for the charts
+        if chart_type in ["area", "bar", "line", "pie"]:
+            export_items.append(api_reference_wrapper(chart_type))
+
         # Use responsive_grid to organize the exports
         chart_exports.append(responsive_grid(*export_items, **grid_config))
+
         exports[chart_type] = chart_exports
 
     return exports

@@ -1,8 +1,8 @@
 ChartMetaData = {
-    "area": ["Dec 12, 2024", "Jun 01, 2025", 8],
-    "bar": ["Dec 12, 2024", "Jun 01, 2025", 10],
-    "line": ["Dec 12, 2024", "Jun 01, 2025", 8],
-    "pie": ["Dec 12, 2024", "Jun 01, 2025", 6],
+    "area": ["Dec 12, 2024", "Jul 06, 2025", 10],
+    "bar": ["Dec 12, 2024", "Jul 06, 2025", 12],
+    "line": ["Dec 12, 2024", "Jul 06, 2025", 10],
+    "pie": ["Dec 12, 2024", "Jul 06, 2025", 8],
     "radar": ["Dec 12, 2024", "Jun 01, 2025", 6],
     "scatter": ["Mar 15, 2025", "May 22, 2025", 1],
     "doughnut": ["Mar 15, 2025", "Jun 01, 2025", 2],
@@ -21,7 +21,7 @@ PantryMetaData = {
     "forms": ["Dec 12, 2024", "May 22, 2025", 3],
     "inputs": ["Dec 12, 2024", "May 22, 2025", 5],
     "lists": ["Dec 12, 2024", "May 22, 2025", 1],
-    "logins": ["Dec 12, 2024", "May 22, 2025", 2],
+    "logins": ["Dec 12, 2024", "Jul 02, 2025", 2],
     "menus": ["Dec 12, 2024", "May 22, 2025", 1],
     "onboardings": ["Dec 12, 2024", "May 22, 2025", 1],
     "payments": ["Dec 12, 2024", "May 22, 2025", 1],
@@ -32,4 +32,4 @@ PantryMetaData = {
     "tables": ["Dec 12, 2024", "May 22, 2025", 4],
     "timeline": ["Dec 12, 2024", "May 22, 2025", 1],
 }
-ProMetaData = {"table": ["Apr 13, 2025", "Apr 19, 2025", 1]}
+ProMetaData = {"table": ["Apr 13, 2025", "Jun 04, 2025", 2]}

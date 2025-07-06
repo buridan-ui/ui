@@ -10,6 +10,7 @@ from buridan_ui.templates.sidemenu.sidemenu import sidemenu, sidemenu_right
 
 from buridan_ui.wrappers.base.utils.routes import base_content_path_ui
 
+
 Chart_Theme = ClientStateVar.create("chart_theme", "")
 
 
@@ -222,7 +223,11 @@ def theme_select_menu():
             rx.popover.trigger(
                 rx.el.button(
                     "Chart Theme",
-                    class_name="text-sm px-2 font-semibold flex items-center gap-x-1 rounded-md",
+                    rx.el.div(
+                        style={"backgroundColor": "var(--chart-2)"},
+                        class_name=f"h-2 w-2 rounded-full {Chart_Theme.value.to(str)}",
+                    ),
+                    class_name="text-sm px-2 font-semibold flex flex-row justify-between items-center gap-x-4 rounded-md",
                     type="button",
                     color=rx.color("slate", 11),
                 ),
@@ -343,6 +348,117 @@ def create_footer_section():
     )
 
 
+def generate_reference_links(chart_data, name):
+    return [
+        rx.el.a(
+            "Installation",
+            href=f"{chart_data['url']}#{chart_data['id_prefix']}-installation",
+            id=f"{chart_data['id_prefix']}-installation",  # Add ID here
+            color=rx.color("slate", 11),
+            class_name="cursor-pointer text-sm font-regular hover:underline",
+        ),
+        rx.el.a(
+            "Chart Theme",
+            href=f"{chart_data['url']}#{chart_data['id_prefix']}-theme",
+            id=f"{chart_data['id_prefix']}-theme",  # Add ID here
+            color=rx.color("slate", 11),
+            class_name="cursor-pointer text-sm font-regular hover:underline",
+        ),
+        rx.el.a(
+            "API Reference",
+            href=f"{chart_data['url']}#{chart_data['id_prefix']}-reference",
+            id=f"{chart_data['id_prefix']}-reference",  # Add ID here
+            color=rx.color("slate", 11),
+            class_name="cursor-pointer text-sm font-regular hover:underline",
+        ),
+    ]
+
+
+def table_of_content(name: str):
+    charts = {
+        "Bar Charts": {
+            "url": "/charts/bar-charts",
+            "id_prefix": "bar",
+            "quantity": 10,
+        },
+        "Area Charts": {
+            "url": "/charts/area-charts",
+            "id_prefix": "area",
+            "quantity": 8,
+        },
+        "Line Charts": {
+            "url": "/charts/line-charts",
+            "id_prefix": "line",
+            "quantity": 8,
+        },
+        "Pie Charts": {
+            "url": "/charts/pie-charts",
+            "id_prefix": "pie",
+            "quantity": 6,
+        },
+        # "Doughnut Charts": {
+        #     "url": "/charts/doughnut-charts",
+        #     "id_prefix": "doughnut",
+        #     "quantity": 2,
+        # },
+        # "Radar Charts": {
+        #     "url": "/charts/radar-charts",
+        #     "id_prefix": "radar",
+        #     "quantity": 6,
+        # },
+        # "Scatter Charts": {
+        #     "url": "/charts/scatter-charts",
+        #     "id_prefix": "scatter",
+        #     "quantity": 1,
+        # },
+    }
+
+    if name in charts:
+        chart_data = charts[name]
+        links = [
+            rx.el.a(
+                f"{name} v{i + 1}",
+                href=f"{chart_data['url']}#{chart_data['id_prefix']}-v{i + 1}",
+                id=f"{chart_data['id_prefix']}-v{i + 1}",
+                color=rx.color("slate", 11),
+                class_name="cursor-pointer text-sm font-regular hover:underline",
+            )
+            for i in range(chart_data["quantity"])
+        ]
+        refs = generate_reference_links(chart_data, name)
+    else:
+        links = []
+        refs = []
+
+    return (
+        rx.scroll_area(
+            rx.el.div(
+                border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
+                class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99] bg-background",
+            ),
+            rx.box(
+                rx.el.label(
+                    "Examples",
+                    color=rx.color("slate", 12),
+                    class_name="text-sm font-bold",
+                ),
+                *links,
+                rx.el.label(
+                    "API",
+                    color=rx.color("slate", 12),
+                    class_name="text-sm font-bold pt-6",
+                ),
+                *refs,
+                class_name="flex flex-col w-full gap-y-2 p-4",
+            ),
+            height="100vh",
+            class_name="hidden xl:flex flex-col max-w-[260px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
+        )
+        if links and refs
+        else sidemenu_right()
+    )
+
+
 def base(url: str, page_name: str, dir_meta: List[str | int] = []):
     """Create a base page template.
 
@@ -387,7 +503,7 @@ def base(url: str, page_name: str, dir_meta: List[str | int] = []):
                     height=["100%" if i == 0 else "100vh" for i in range(6)],
                 ),
                 create_pattern_background(),
-                sidemenu_right(),
+                table_of_content(name=page_name),
                 class_name="w-[100%] h-[100vh] gap-x-0 bg-background",
             )
 
