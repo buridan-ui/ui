@@ -186,8 +186,23 @@ class SourceRetriever:
         """Get source for chart components including style.py."""
         source: str = ""
 
-        with open("buridan_ui/charts/style.py") as file:
-            source += file.read()
+        if not func.__name__.startswith(
+            ("areachart", "barchart", "linechart", "piechart")
+        ):
+            with open("buridan_ui/charts/style.py") as file:
+                source += file.read()
+                source += "\n"
+
+        else:
+            source += """
+def info(title: str, size: str, subtitle: str, align: str):
+    return rx.vstack(
+        rx.heading(title, size=size, weight="bold"),
+        rx.text(subtitle, size="1", color=rx.color("slate", 11), weight="medium"),
+        spacing="1",
+        align=align,
+    )
+"""
             source += "\n"
 
         source += inspect.getsource(func)
@@ -386,8 +401,9 @@ def generate_chart_exports() -> Dict[str, List]:
         # Get any custom grid config for this chart type
         grid_config = config.GRID_CONFIGS.get(chart_type, {})
 
-        #
-        export_items.append(api_reference_wrapper(chart_type))
+        # Generate the API for the charts
+        if chart_type in ["area", "bar", "line", "pie"]:
+            export_items.append(api_reference_wrapper(chart_type))
 
         # Use responsive_grid to organize the exports
         chart_exports.append(responsive_grid(*export_items, **grid_config))
