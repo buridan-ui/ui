@@ -47,6 +47,16 @@ def changelog():
     return [
         rx.box(
             changelog_wrapper(
+                title="Search Feature For Buridan UI Site",
+                date="July 13, 2025",
+                version="buridan/ui v0.7.0-beta.2",
+                log="""
+- Added search functionality to the Buridan UI site for enhanced user experience.
+- Added a fast, client-side search function using ClientStateVar for ultra-responsive results.
+- This ensures fast, real-time search results with no server-side delay, improving user experience.
+""",
+            ),
+            changelog_wrapper(
                 title="Major API Revamp & Foundation for v0.7.0-beta.1 Release",
                 date="July 6, 2025",
                 version="buridan/ui v0.7.0-beta.1",
