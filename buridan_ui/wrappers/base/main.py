@@ -4,6 +4,7 @@ from typing import Callable, List, Optional
 import reflex as rx
 from reflex.experimental import ClientStateVar
 
+from buridan_ui.templates.search.search import search
 from buridan_ui.templates.drawer.drawer import drawer
 from buridan_ui.templates.footer.footer import desktop_footer, footer
 from buridan_ui.templates.sidemenu.sidemenu import sidemenu, sidemenu_right
@@ -297,6 +298,7 @@ def create_header(url: str):
             display=create_responsive_display("flex", "none"),
         ),
         rx.el.div(
+            search(),
             theme_select_menu()
             if url.startswith("/charts/")
             else rx.box(class_name="hidden"),
