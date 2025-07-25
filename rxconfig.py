@@ -21,4 +21,5 @@ config = rx.Config(
     tailwind=tailwind_config,
     plugins=[rx.plugins.TailwindV3Plugin()],
     show_built_with_reflex=False,
+    disable_plugins=["reflex.plugins.sitemap.SitemapPlugin"],
 )
