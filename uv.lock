@@ -95,7 +95,7 @@ wheels = [
 
 [[package]]
 name = "buridan-ui"
-version = "0.6.7"
+version = "0.7.0b2"
 source = { virtual = "." }
 dependencies = [
     { name = "black" },
@@ -109,7 +109,7 @@ requires-dist = [
     { name = "black", specifier = ">=25.1.0" },
     { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "reflex", specifier = ">=0.8.0" },
+    { name = "reflex", specifier = ">=0.8.3" },
 ]
 
 [[package]]
@@ -822,7 +822,7 @@ wheels = [
 
 [[package]]
 name = "reflex"
-version = "0.8.0"
+version = "0.8.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "alembic" },
@@ -844,27 +844,25 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "wrapt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/48/01/f7a471af9dce698d2db6b66a2970039be040707dad20b42308e023aaa792/reflex-0.8.0.tar.gz", hash = "sha256:78d810fb7f05b65fd81d39a4b62b7b9716c0ff7fe7a84bedfc403d544ab700b4", size = 583434, upload-time = "2025-07-01T19:23:00.861Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ef/28/af635f4ccc3183b3f9680eaa189f434e512d3574ad010baff57129c82bc1/reflex-0.8.3.tar.gz", hash = "sha256:4e2e92a19394705dd713a303c06a523c885538a021fcafa760bcf83580be46a7", size = 591422, upload-time = "2025-07-21T21:20:31.592Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4d/27/df1ef5185538b0221eb964a36b4ef6db29c76a1dff12be0ea7ab39129348/reflex-0.8.0-py3-none-any.whl", hash = "sha256:7e21b092fbb3d1c2d0add84c5f482ba7e6573a0c05dfa690d6f12d8f79531257", size = 876944, upload-time = "2025-07-01T19:22:58.958Z" },
+    { url = "https://files.pythonhosted.org/packages/08/e3/eed54f0e4a8d38f5e74185e8338c5a0d89731b3d2bed5cdda9da61ddd115/reflex-0.8.3-py3-none-any.whl", hash = "sha256:667dcfb3f6b57a52e7819b5a63f4c847148dd3aa91a0897241c25f9c1c4c7d45", size = 887718, upload-time = "2025-07-21T21:20:29.587Z" },
 ]
 
 [[package]]
 name = "reflex-hosting-cli"
-version = "0.1.49"
+version = "0.1.53"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "httpx" },
     { name = "packaging" },
     { name = "platformdirs" },
-    { name = "pyyaml" },
     { name = "rich" },
-    { name = "tabulate" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/20/8b/16437551c914dd7aae4af7546e634561d47a8d5873734ba0d9a83d1d301a/reflex_hosting_cli-0.1.49.tar.gz", hash = "sha256:708536fe14f15ed02cc67e6dc15f311b000e7117ea0637aa2f8764957b797e44", size = 31688, upload-time = "2025-05-02T00:49:39.634Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/24/e5/239a487a18ba9fb135cce25228d3209260c0610a8f8280b763ff1eeaaf17/reflex_hosting_cli-0.1.53.tar.gz", hash = "sha256:a7152767302e79c8336c48be3cd5ceaf2f7246302c3e1ce86e3495efe3cf0ee9", size = 35181, upload-time = "2025-07-21T23:43:47.333Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/97/2d29105da4c88a4b1e90a19f4e3f91cdf245aa0319fd04e45cf2d471cd20/reflex_hosting_cli-0.1.49-py3-none-any.whl", hash = "sha256:ea7d8d6770d2cfb74fce564d918d7a9aadae7499b2dc978774b6bfaf54f6296c", size = 40586, upload-time = "2025-05-02T00:49:38.333Z" },
+    { url = "https://files.pythonhosted.org/packages/90/7d/6a31ef3c2dac3074babe1e94cfacc6028b6a70e7108916cc242128e1aa7d/reflex_hosting_cli-0.1.53-py3-none-any.whl", hash = "sha256:30675693373b264d70bde11a50435de74ee2d80a9951bb1d4ec8663e6e3b1af1", size = 44508, upload-time = "2025-07-21T23:43:45.973Z" },
 ]
 
 [[package]]
@@ -970,15 +968,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ce/20/08dfcd9c983f6a6f4a1000d934b9e6d626cff8d2eeb77a89a68eef20a2b7/starlette-0.46.2.tar.gz", hash = "sha256:7f7361f34eed179294600af672f565727419830b54b7b084efe44bb82d2fccd5", size = 2580846, upload-time = "2025-04-13T13:56:17.942Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8b/0c/9d30a4ebeb6db2b25a841afbb80f6ef9a854fc3b41be131d249a977b4959/starlette-0.46.2-py3-none-any.whl", hash = "sha256:595633ce89f8ffa71a015caed34a5b2dc1c0cdb3f0f1fbd1e69339cf2abeec35", size = 72037, upload-time = "2025-04-13T13:56:16.21Z" },
-]
-
-[[package]]
-name = "tabulate"
-version = "0.9.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/ec/fe/802052aecb21e3797b8f7902564ab6ea0d60ff8ca23952079064155d1ae1/tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c", size = 81090, upload-time = "2022-10-06T17:21:48.54Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/40/44/4a5f08c96eb108af5cb50b41f76142f0afa346dfa99d5296fe7202a11854/tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f", size = 35252, upload-time = "2022-10-06T17:21:44.262Z" },
 ]
 
 [[package]]
