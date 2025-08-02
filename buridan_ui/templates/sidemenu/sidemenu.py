@@ -9,7 +9,6 @@ from buridan_ui.static.routes import (
     ChartRoutes,
     PantryRoutes,
     GettingStartedRoutes,
-    BuridanProRoutes,
 )
 
 import reflex as rx
@@ -265,26 +264,6 @@ def sidemenu(in_drawer=False):
         class_name="flex flex-col p-0 m-0",
     )
 
-    pro_count = count_python_files_in_folder("buridan_ui/pro")
-    pro_components_content = rx.el.div(
-        create_section_description(
-            [
-                "Get access to ",
-                rx.el.span(
-                    f"{pro_count} ",
-                    class_name="text-sm font-bold",
-                    color=rx.color("slate", 12),
-                ),
-                "carefully designed block to build dashboards and data apps even faster.",
-            ]
-        ),
-        rx.el.div(
-            create_sidebar_menu_items(BuridanProRoutes),
-            class_name="flex flex-row h-full w-full gap-x-2",
-        ),
-        class_name="flex flex-col p-0 m-0",
-    )
-
     pantry_count = count_python_files_in_folder("buridan_ui/pantry")
     pantry_components_content = rx.el.div(
         create_section_description(
@@ -309,10 +288,21 @@ def sidemenu(in_drawer=False):
     header = rx.el.div(
         rx.el.div(
             rx.link(
-                rx.el.label(
-                    "buridan/ui",
-                    class_name="text-sm font-bold flex items-center align-center gap-x-2 cursor-pointer",
+                rx.box(
+                    rx.text(
+                        "buridan",
+                        font_weight="700",
+                        font_size="1rem",
+                        letter_spacing="-0.04em",
+                    ),
+                    rx.text(
+                        ".UI",
+                        font_size="0.6rem",
+                        position="relative",
+                        font_weight="600",
+                    ),
                     color=rx.color("slate", 12),
+                    class_name="flex flex-row items-baseline gap-x-[1px]",
                 ),
                 text_decoration="none",
                 href="/",
@@ -322,22 +312,16 @@ def sidemenu(in_drawer=False):
                 class_name="text-xs font-medium",
                 color=rx.color("slate", 11),
             ),
-            class_name="w-full flex flex-row justify-between align-end items-end",
+            class_name="w-full flex flex-row justify-between items-baseline",
         ),
-        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
-        class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99] bg-background",
+        class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99] backdrop-blur-md",
     )
     # Main content
     content = rx.el.div(
         header,
         side_bar_wrapper("Site Settings", site_settings_content, "site_settings"),
-        create_divider(),
         side_bar_wrapper("Getting Started", getting_started_content, "getting_started"),
-        create_divider(),
-        side_bar_wrapper("Data App Components", pro_components_content, "pro"),
-        create_divider(),
         side_bar_wrapper("Chart Components", chart_components_content, "chart"),
-        create_divider(),
         side_bar_wrapper("Pantry Components", pantry_components_content, "pantry"),
         class_name="flex flex-col w-full h-full pt-12",
     )
@@ -349,85 +333,4 @@ def sidemenu(in_drawer=False):
         class_name="flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
         display=sidebar_display,
         on_mount=rx.call_script(SideBarScript),
-    )
-
-
-def sidemenu_right():
-    from buridan_ui.wrappers.base.main import create_responsive_display
-
-    return rx.scroll_area(
-        rx.el.div(
-            border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
-            class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99] bg-background",
-        ),
-        rx.box(
-            rx.box(
-                rx.box(
-                    rx.el.label(
-                        "Reflex Build",
-                        class_name="text-sm font-bold",
-                        color=rx.color("slate", 12),
-                    ),
-                    rx.el.label(
-                        "Build smarter, faster, and more efficiently with Reflex's AI builder.",
-                        class_name="text-sm font-light pt-1 pb-2",
-                        color=rx.color("gray", 12),
-                    ),
-                    rx.el.label(
-                        "Reflex streamlines Python app development with powerful AI tools and seamless deployment.",
-                        class_name="text-sm font-light pt-1 pb-2",
-                        color=rx.color("gray", 12),
-                    ),
-                    rx.link(
-                        rx.el.div(
-                            rx.el.label(
-                                "Start Building",
-                                class_name="text-sm underline hover:cursor-pointer",
-                            ),
-                            class_name="flex felx-row items-center justify-between gap-x-2",
-                        ),
-                        href="https://reflex.build/",
-                        is_external=True,
-                    ),
-                    class_name="flex flex-col w-full h-full p-2 gap-y-2",
-                ),
-                color=rx.color("gray", 4),
-                class_name="flex flex-col gap-y-2 w-full",
-            ),
-            class_name=" w-full px-1 py-2 " + "border-r border-dashed border-slate-500",
-        ),
-        rx.divider(class_name="h-[10px] opacity-0"),
-        rx.box(
-            rx.box(
-                rx.box(
-                    rx.el.label(
-                        "Notice",
-                        class_name="text-sm font-bold",
-                        color=rx.color("slate", 12),
-                    ),
-                    rx.el.label(
-                        "We’re upgrading our UI library with Tailwind CSS for faster, cleaner, and more customizable designs.",
-                        class_name="text-sm font-light pt-1 pb-2",
-                        color=rx.color("gray", 12),
-                    ),
-                    rx.el.label(
-                        "You may notice styling updates as we roll out improvements.",
-                        class_name="text-sm font-light pt-1 pb-2",
-                        color=rx.color("gray", 12),
-                    ),
-                    rx.el.label(
-                        "Thanks for being part of the journey!",
-                        class_name="text-sm font-light pt-1 pb-2",
-                        color=rx.color("gray", 12),
-                    ),
-                    class_name="flex flex-col px-2 gap-y-2",
-                ),
-                color=rx.color("amber", 5),
-                class_name="flex flex-col gap-y-2 w-full" + "",
-            ),
-            class_name="w-full px-1 py-2 " + "border-r border-dashed border-orange-500",
-        ),
-        height="100vh",
-        class_name="flex flex-col max-w-[260px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
-        display=create_responsive_display("none", "flex"),
     )

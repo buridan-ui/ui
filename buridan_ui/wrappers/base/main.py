@@ -7,7 +7,7 @@ from reflex.experimental import ClientStateVar
 from buridan_ui.templates.search.search import search
 from buridan_ui.templates.drawer.drawer import drawer
 from buridan_ui.templates.footer.footer import desktop_footer, footer
-from buridan_ui.templates.sidemenu.sidemenu import sidemenu, sidemenu_right
+from buridan_ui.templates.sidemenu.sidemenu import sidemenu
 
 from buridan_ui.wrappers.base.utils.routes import base_content_path_ui
 
@@ -270,8 +270,8 @@ def theme_select_menu():
             "align_items": "baseline",
             "justify_content": "flex-start",
             "padding": "0.25rem",
-            "border": f"1.25px dashed {rx.color('gray', 4)}",
         },
+        border=f"1px solid {rx.color('gray', 3)}",
         class_name="rounded-md",
     )
 
@@ -292,24 +292,36 @@ def create_header(url: str):
             class_name="text-sm font-bold font-sans flex items-center align-center gap-x-2",
             display=create_responsive_display("none", "flex"),
         ),
-        rx.el.label(
-            "buridan/ui",
-            class_name="text-sm font-bold font-sans flex items-center align-center gap-x-2",
+        rx.link(
+            rx.box(
+                rx.text(
+                    "buridan",
+                    font_weight="700",
+                    font_size="1rem",
+                    letter_spacing="-0.04em",
+                ),
+                rx.text(
+                    ".UI",
+                    font_size="0.6rem",
+                    position="relative",
+                    font_weight="600",
+                ),
+                color=rx.color("slate", 12),
+                class_name="flex flex-row items-baseline gap-x-[1px]",
+            ),
             display=create_responsive_display("flex", "none"),
+            text_decoration="none",
+            href="/",
         ),
         rx.el.div(
             search(),
             theme_select_menu()
             if url.startswith("/charts/")
             else rx.box(class_name="hidden"),
-            rx.box(
-                drawer(),
-                display=create_responsive_display("flex", "none"),
-            ),
+            rx.box(drawer(), class_name="flex md:hidden"),
             class_name="flex flex-row gap-x-2",
         ),
-        border_bottom=create_border(),
-        class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[20] flex flex-row justify-between align-center items-center gap-x-2 bg-background",
+        class_name="w-full h-12 px-4 py-3 sticky top-0 left-0 z-[20] flex flex-row justify-between align-center items-center gap-x-2 backdrop-blur-md",
     )
 
 
@@ -433,10 +445,10 @@ def table_of_content(name: str):
         refs = []
 
     return (
-        rx.scroll_area(
+        rx.box(
             rx.el.div(
-                border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
-                class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99] bg-background",
+                # border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
+                class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99]",
             ),
             rx.box(
                 rx.el.label(
@@ -454,10 +466,13 @@ def table_of_content(name: str):
                 class_name="flex flex-col w-full gap-y-2 p-4",
             ),
             height="100vh",
-            class_name="hidden xl:flex flex-col max-w-[260px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
+            class_name="hidden xl:flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky self-start top-8 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
         )
         if links and refs
-        else sidemenu_right()
+        else rx.box(
+            height="100vh",
+            class_name="hidden xl:flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
+        )
     )
 
 
@@ -494,19 +509,22 @@ def base(url: str, page_name: str, dir_meta: List[str | int] = []):
                 content_section.children.append(item)
 
             # Create the main layout
-            return rx.hstack(
+            return rx.box(
                 sidemenu(),
-                create_pattern_background(),
                 rx.scroll_area(
                     create_header(url),
-                    content_section,
-                    create_footer_section(),
-                    class_name="flex flex-col w-full gap-y-2 align-start z-[10] pt-14 [&_.rt-ScrollAreaScrollbar]:mt-[4rem] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
-                    height=["100%" if i == 0 else "100vh" for i in range(6)],
+                    rx.box(
+                        rx.box(
+                            content_section,
+                            create_footer_section(),
+                            class_name="flex flex-col w-full max-lg:max-w-[60rem] mx-auto",
+                        ),
+                        table_of_content(name=page_name),
+                        class_name="items-start relative flex flex-row gap-x-0",
+                    ),
+                    class_name="h-screen w-full overflow-y-auto [&_.rt-ScrollAreaScrollbar]:mt-[4rem] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
                 ),
-                create_pattern_background(),
-                table_of_content(name=page_name),
-                class_name="w-[100%] h-[100vh] gap-x-0 bg-background",
+                class_name="w-full h-screen flex flex-row gap-x-0",
             )
 
         return template

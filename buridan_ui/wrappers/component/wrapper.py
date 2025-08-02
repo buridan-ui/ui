@@ -264,7 +264,7 @@ def component_wrapper(path: str):
                         tab_selector(["Preview", "Code"], component_id, component_code),
                         class_name="flex align-center gap-2",
                     ),
-                    class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center bg-background rounded-xl "
+                    class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center rounded-xl "
                     + rx.cond(active_tab.value == 1, "sticky top-0", "").to(str),
                 ),
                 create_content_wrapper(
@@ -559,7 +559,7 @@ def api_reference_wrapper(path: str):
                     ),
                     class_name="flex align-center gap-2",
                 ),
-                class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center bg-background rounded-xl sticky top-0",
+                class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center rounded-xl sticky top-0",
             ),
             create_content_wrapper(
                 rx.box(
@@ -618,7 +618,7 @@ def api_reference_wrapper(path: str):
                     ),
                     class_name="flex align-center gap-2",
                 ),
-                class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center bg-background rounded-xl sticky top-0",
+                class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center rounded-xl sticky top-0",
             ),
             create_content_wrapper(
                 create_code_block(
@@ -669,7 +669,7 @@ def api_reference_wrapper(path: str):
                     ),
                     class_name="flex align-center gap-2",
                 ),
-                class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center bg-background rounded-xl sticky top-0 z-[20]",
+                class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center rounded-xl sticky top-0 z-[20]",
             ),
             create_content_wrapper(
                 rx.box(

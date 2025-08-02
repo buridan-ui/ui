@@ -1,122 +1,185 @@
 import reflex as rx
 
-from buridan_ui.config import VERSION
+from ..templates.search.search import search
 
 
-def button_with_link(icon: str, url: str):
+def doc_icon_svg(fill: str, background: str) -> rx.Component:
+    return rx.html(
+        f"""<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect width="16" height="16" rx="2" fill="{background}"/>
+            <path d="M10 9V13H12V9H10Z" fill="{fill}"/>
+            <path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" fill="{fill}"/>
+        </svg>""",
+        class_name="flex justify-center items-center",
+    )
+
+
+def title():
     return rx.box(
-        rx.link(
-            rx.icon(
-                tag=icon,
-                size=13,
-            ),
-            href=url,
-            is_external=False,
-            text_cdecoration="none",
-            color=rx.color("slate", 11),
-            _hover={"color": rx.color("slate", 12)},
+        rx.text(
+            "buridan",
+            font_weight="700",
+            font_size="1.25rem",
+            letter_spacing="-0.04em",
         ),
-        _hover={"background": rx.color("gray", 3)},
-        border=f"1px solid {rx.color('gray', 5)}",
-        class_name="cursor-pointer rounded-lg py-1 px-1 flex items-center justify-center",
+        rx.text(
+            ".UI",
+            font_size="0.6rem",
+            position="relative",
+            font_weight="600",
+        ),
+        class_name="flex flex-row items-baseline gap-x-[1px]",
     )
 
 
-def create_block_design(color: str):
+def nav_link(name: str, url: str = "#"):
+    return rx.link(
+        name,
+        href=url,
+        text_decoration="none",
+        font_weight="400",
+        color=rx.color("slate", 11),
+        _hover={"color": rx.color("slate", 12)},
+    )
+
+
+def links():
     return rx.box(
-        # border_left=f"1.25px dashed {rx.color(color, 5)}",
-        # border_right=f"1.25px dashed {rx.color(color, 5)}",
-        # color=rx.color(color, 8),
-        class_name=f"h-full p-4 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)] border-x-[1.25px] border-dashed text-{color} border-{color}",
+        nav_link("Getting Started", "/getting-started/introduction"),
+        nav_link("Charts", "/charts/area-charts"),
+        nav_link("Pantry", "/pantry/accordions"),
+        nav_link("Changelog", "/getting-started/changelog"),
+        font_weight="400",
+        class_name="hidden md:flex flex-row items-center text-sm no-underline gap-x-4",
     )
 
 
-def create_block_link(name: str, description: str, url: str):
-    return rx.el.div(
-        rx.el.div(
-            rx.el.label(name, class_name="text-lg font-medium"),
-            rx.el.label(
-                description,
-                color=rx.color("slate", 11),
-                class_name="text-sm font-medium",
-            ),
-            class_name="flex flex-col gap-y-1 max-w-sm",
+def navbar():
+    return rx.box(
+        rx.box(
+            title(),
+            links(),
+            class_name="flex flex-row items-baseline gap-x-8",
         ),
-        button_with_link("chevron-right", url),
-        class_name="flex flex-row justify-between align-center items-center w-full",
-        **{
-            "position": "relative",
-            "animation": "rightSlide 0.6s",
-            "@keyframes rightSlide": {
-                "from": {"bottom": "-25px", "opacity": "0"},
-                "to": {"bottom": "0px", "opacity": "1"},
-            },
-        },
+        rx.box(
+            search(),
+            rx.link(
+                rx.el.button(
+                    rx.color_mode_cond(
+                        doc_icon_svg(fill="white", background="black"),
+                        doc_icon_svg(fill="black", background="white"),
+                    ),
+                    "Build",
+                    class_name="rounded-md flex items-center gap-x-2 text-sm font-semibold",
+                    border=f"1px solid {rx.color('gray', 3)}",
+                    _hover={"background": rx.color("gray", 3)},
+                    style={
+                        "display": "inline-flex",
+                        "height": "1.925rem",
+                        "padding": "0.25rem 0.50rem",
+                    },
+                ),
+                href="https://build.reflex.dev/",
+                text_decoration="none",
+                color=rx.color("slate", 12),
+                _hover={"color": rx.color("slate", 12)},
+            ),
+            class_name="flex flex-row items-center gap-x-4",
+        ),
+        class_name="w-full h-10 absolute top-0 left-0 px-4 py-6 items-center justify-between flex flex-row",
     )
 
 
-def welcome_msessage():
-    return rx.el.div(
-        rx.el.div(
-            rx.link(
-                rx.el.label(
-                    "ui",
-                    class_name="text-sm underline hover:cursor-pointer",
-                ),
-                href="https://github.com/buridan-ui",
-                is_external=True,
+def header():
+    return rx.text(
+        "The Reflex Library for Web Apps",
+        font_size="max(48px,min(5vw,76px))",
+        font_weight="800",
+        letter_spacing="-0.05em",
+        line_height="1",
+    )
+
+
+def sub_header():
+    return rx.box(
+        rx.el.p(
+            rx.fragment(
+                "The ",
+                rx.el.strong(rx.el.u("Buridan Library")),
+                " provides Reflex developers ",
+                rx.el.strong("modern UI components, smart layouts,"),
+                " and ",
+                rx.el.strong("clean design for building stunning web apps."),
             ),
-            "⋅",
-            rx.link(
-                rx.el.label(
-                    "github",
-                    class_name="text-sm underline hover:cursor-pointer",
+            font_size="max(15px,min(2vw,20px))",
+            font_weight="400",
+            letter_spacing="-0.01em",
+            line_height="1.8",
+        ),
+        class_name="w-full max-w-[750px] flex text-left md:text-center p-[12px] md:p-[40px 32px]",
+    )
+
+
+def product_details(*children, props: str = "") -> rx.Component:
+    """Individual product feature card component."""
+    return rx.box(
+        *children,
+        class_name="p-8 h-full flex items-center justify-center" + props,
+    )
+
+
+def products_showcase() -> rx.Component:
+    """Main products grid component with dividers."""
+    return rx.box(
+        product_details(props=" hidden md:flex"),
+        product_details(
+            rx.box(
+                rx.link(
+                    rx.el.button(
+                        "Get Started",
+                        class_name="py-3 px-4 rounded-md w-full",
+                        background=rx.color("slate", 12),
+                        color=rx.color("slate", 1),
+                    ),
+                    href="/getting-started/introduction/",
+                    text_decoration="none",
+                    color=rx.color("slate", 12),
+                    _hover={"color": rx.color("slate", 12)},
+                    class_name="w-full",
                 ),
-                href="https://github.com/LineIndent",
-                is_external=True,
-            ),
-            class_name="flex flex-row gap-x-1 align-center items-center justify-end w-full",
+                rx.link(
+                    rx.el.button(
+                        "Learn Reflex",
+                        class_name="py-3 px-4 rounded-md w-full",
+                        border=f"1px solid {rx.color('gray', 3)}",
+                        _hover={"background": rx.color("gray", 3)},
+                    ),
+                    href="https://reflex.dev/docs/getting-started/introduction/",
+                    text_decoration="none",
+                    color=rx.color("slate", 12),
+                    _hover={"color": rx.color("slate", 12)},
+                    class_name="w-full",
+                ),
+                class_name="flex flex-col w-full sm:flex-row items-center gap-y-3 md:gap-x-3 text-sm font-semibold",
+            )
         ),
-        rx.el.label("The Buridan Stack", class_name="text-lg font-bold"),
-        rx.el.label(
-            "Build, customize, and deploy data-driven applications effortlessly with Buridan's UI components and dashboard builder, built specifically for the Reflex framework.",
-            color=rx.color("slate", 11),
-            class_name="text-sm font-medium",
-        ),
-        class_name="flex flex-col w-full max-w-xl gap-y-2",
+        product_details(props=" hidden md:flex"),
+        class_name="grid grid-cols-1 lg:grid-cols-3 w-full",
     )
 
 
 def hero():
-    return rx.el.div(
-        # rx.color_mode.button(),
-        rx.el.div(
-            rx.el.div(welcome_msessage(), class_name="p-4"),
-            rx.divider(
-                border_bottom=f"1.25px dashed {rx.color('gray', 5)}", bg="transparent"
+    return rx.box(
+        navbar(),
+        rx.box(
+            rx.box(
+                header(),
+                class_name="w-full flex items-center justify-center p-[12px] md:p-[24px]",
             ),
-            rx.el.div(
-                create_block_design("pattern-ui"),
-                create_block_link(
-                    f"Buridan UI ({VERSION})",
-                    " Beautifully designed Reflex components to build your web apps faster. Open source. ",
-                    "/getting-started/introduction/",
-                ),
-                class_name="flex flex-row justify-start gap-x-4 p-4 w-full align-center items-center overflow-hidden",
-            ),
-            rx.divider(
-                border_bottom=f"1.25px dashed {rx.color('gray', 5)}", bg="transparent"
-            ),
-            rx.el.div(
-                create_block_design("pattern-lab"),
-                create_block_link(
-                    "Buridan Lab (beta)",
-                    "Create custom dashboards with flexible layouts and spans, and visualize data through beautiful, interactive charts.",
-                    "https://buridan-lab.reflex.run/",
-                ),
-                class_name="flex flex-row justify-start gap-x-4 p-4 w-full align-center items-center",
-            ),
-            class_name="flex flex-col w-full max-w-xl justify-start align-center items-center",
+            rx.box(sub_header(), class_name="w-full flex items-center justify-center"),
+            products_showcase(),
+            class_name="w-full h-screen flex flex-col items-center justify-center divide-dashed divide-neutral-500/50",
+            max_width="calc(1234px)",
         ),
-        class_name="w-full h-[100vh] flex flex-col justify-center align-center items-center bg-background",
+        class_name="w-full h-screen flex flex-col items-center justify-center",
     )

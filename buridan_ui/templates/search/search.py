@@ -79,19 +79,19 @@ def search_trigger():
             rx.el.input(
                 placeholder="Search documentation",
                 read_only=True,
-                _hover={"bg": rx.color("gray", 2)},
                 class_name="p-2 w-full placeholder:text-sm "
                 + "text-sm "
                 + "rounded-md bg-transparent "
                 + "focus:outline-none focus:border-none cursor-pointer",
             ),
+            _hover={"bg": rx.color("gray", 3)},
             class_name="relative focus:outline-none rounded-md w-full",
             style={
                 "display": "inline-flex",
                 "height": "1.925rem",
                 "padding": "0.25rem",
-                "border": f"1.25px dashed {rx.color('gray', 4)}",
             },
+            border=f"1px solid {rx.color('gray', 3)}",
         ),
     )
 
