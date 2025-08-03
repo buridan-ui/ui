@@ -11,7 +11,7 @@ from buridan_ui.config import (
     SITE_LOGO_URL,
     SITE_META_TAGS,
 )
-from buridan_ui.ui.organisms.grid import responsive_grid
+from buridan_ui.components.layout import responsive_grid
 from buridan_ui.wrappers.component.wrapper import (
     component_wrapper,
 )
