@@ -76,7 +76,7 @@ class ExportConfig:
             "prompts": ComponentConfig(range(1, 3), "prompt"),
             "subscribe": ComponentConfig(range(1, 4), "subscribe"),
             "tables": ComponentConfig(range(1, 5), "tables"),
-            "timeline": ComponentConfig([1], "timeline"),
+            "timeline": ComponentConfig(range(1, 3), "timeline"),
         }
 
         self.CHARTS = {

@@ -30,5 +30,5 @@ PantryMetaData = {
     "prompts": ["Dec 12, 2024", "May 22, 2025", 2],
     "subscribe": ["Dec 12, 2024", "May 22, 2025", 3],
     "tables": ["Dec 12, 2024", "May 22, 2025", 4],
-    "timeline": ["Dec 12, 2024", "May 22, 2025", 1],
+    "timeline": ["Dec 12, 2024", "Aug 03, 2025", 2],
 }
