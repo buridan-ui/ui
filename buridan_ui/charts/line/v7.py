@@ -1,11 +1,16 @@
+from datetime import datetime
+
 import reflex as rx
 
-from buridan_ui.charts.style import info
-from buridan_ui.charts.line.api import LineChart
+from buridan_ui.charts.style import (
+    info,
+    get_tooltip,
+    get_cartesian_grid,
+    get_x_axis,
+)
 
 
 def linechart_v7():
-    from datetime import datetime
     from reflex.experimental import ClientStateVar
 
     data = [
@@ -110,8 +115,7 @@ def linechart_v7():
             ),
             rx.hstack(
                 rx.checkbox(
-                    "Show Dots",
-                    on_change=DotTrigger.set_value(~DotTrigger.value),
+                    "Show Dots", on_change=DotTrigger.set_value(~DotTrigger.value)
                 ),
                 rx.el.select(
                     rx.el.option("Mobile", on_click=SelectedType.set_value("mobile")),
@@ -128,16 +132,22 @@ def linechart_v7():
             width="100%",
             wrap="wrap",
         ),
-        LineChart(formatted_data)
-        .x("date")
-        .series(
-            key=SelectedType.value,
-            stroke="var(--chart-1)",
-            stroke_width=2,
-            type_="natural",
-            dot=DotTrigger.value,
-        )
-        .size("100%", 280)(),
+        rx.recharts.line_chart(
+            get_tooltip(),
+            get_cartesian_grid(),
+            rx.recharts.line(
+                data_key=SelectedType.value,
+                stroke="var(--chart-1)",
+                stroke_width=2,
+                type_="natural",
+                dot=DotTrigger.value,
+            ),
+            rx.recharts.y_axis(type_="number", hide=True),
+            get_x_axis("date"),
+            data=formatted_data,
+            width="100%",
+            height=280,
+        ),
         info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

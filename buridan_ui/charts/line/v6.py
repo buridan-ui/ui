@@ -1,7 +1,10 @@
 import reflex as rx
 
-from buridan_ui.charts.style import info
-from buridan_ui.charts.line.api import LineChart
+from buridan_ui.charts.style import (
+    info,
+    get_tooltip,
+    get_cartesian_grid,
+)
 
 
 def linechart_v6():
@@ -20,12 +23,21 @@ def linechart_v6():
             "Showing total visitors for the last 6 months",
             "start",
         ),
-        LineChart(data)
-        .x("visitors")
-        .series(
-            "visitors", stroke="chart-1", stroke_width=2, type_="natural", dot=False
-        )
-        .x_axis(hide=True)(),
+        rx.recharts.line_chart(
+            get_tooltip(),
+            get_cartesian_grid(),
+            rx.recharts.line(
+                data_key="visitors",
+                type_="natural",
+                dot=False,
+                stroke="var(--chart-1)",
+                stroke_width=2,
+            ),
+            data=data,
+            width="100%",
+            height=250,
+            margin={"left": 20, "right": 20, "top": 25},
+        ),
         info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

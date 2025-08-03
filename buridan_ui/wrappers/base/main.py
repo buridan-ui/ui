@@ -307,17 +307,13 @@ def _generate_reference_links(chart_data: dict):
     ]
 
 
-def _create_toc_content(chart_links: List, reference_links: List):
+def _create_toc_content(chart_links: List):
     """Create table of contents content."""
     return rx.box(
         rx.el.label(
             "Examples", color=rx.color("slate", 12), class_name="text-sm font-bold"
         ),
         *chart_links,
-        rx.el.label(
-            "API", color=rx.color("slate", 12), class_name="text-sm font-bold pt-6"
-        ),
-        *reference_links,
         class_name="flex flex-col w-full gap-y-2 p-4",
     )
 
@@ -337,11 +333,10 @@ def table_of_content(name: str):
 
     chart_data = CHART_CONFIGS[name]
     chart_links = _generate_chart_links(chart_data, name)
-    reference_links = _generate_reference_links(chart_data)
 
     return rx.box(
         rx.el.div(class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99]"),
-        _create_toc_content(chart_links, reference_links),
+        _create_toc_content(chart_links),
         height="100vh",
         class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} self-start top-8",
     )

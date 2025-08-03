@@ -1,6 +1,9 @@
 import reflex as rx
-from buridan_ui.charts.pie.api import PieChart
-from buridan_ui.charts.style import info
+
+from buridan_ui.charts.style import (
+    info,
+    get_tooltip,
+)
 
 
 def piechart_v3():
@@ -14,22 +17,27 @@ def piechart_v3():
 
     return rx.box(
         info("Pie Chart - Inner Labels", "3", "January - June 2024", "center"),
-        PieChart(data)
-        .values("visitors", "browser")
-        .colors(
-            [
-                "var(--chart-1)",
-                "var(--chart-2)",
-                "var(--chart-3)",
-                "var(--chart-4)",
-                "var(--chart-5)",
-            ]
-        )
-        .label_list(
-            fill=rx.color("slate", 12),
-            class_name="text-sm font-bold",
-        )
-        .size("100%", 250)(),
+        rx.recharts.pie_chart(
+            get_tooltip(),
+            rx.recharts.pie(
+                rx.recharts.label_list(
+                    fill=rx.color("slate", 12),
+                    class_name="text-sm font-bold",
+                ),
+                rx.foreach(
+                    range(6),
+                    lambda color, index: rx.recharts.cell(
+                        fill=f"var(--chart-{index + 1})",
+                    ),
+                ),
+                data=data,
+                data_key="visitors",
+                name_key="browser",
+                stroke="0",
+            ),
+            width="100%",
+            height=250,
+        ),
         info(
             "Trending up by 5.2% this month",
             "2",

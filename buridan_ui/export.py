@@ -14,7 +14,6 @@ from buridan_ui.config import (
 from buridan_ui.ui.organisms.grid import responsive_grid
 from buridan_ui.wrappers.component.wrapper import (
     component_wrapper,
-    api_reference_wrapper,
 )
 from buridan_ui.wrappers.base.main import base
 
@@ -81,10 +80,10 @@ class ExportConfig:
         }
 
         self.CHARTS = {
-            "area": ComponentConfig(range(1, 9), "areachart", has_api_reference=True),
-            "bar": ComponentConfig(range(1, 11), "barchart", has_api_reference=True),
-            "line": ComponentConfig(range(1, 9), "linechart", has_api_reference=True),
-            "pie": ComponentConfig(range(1, 7), "piechart", has_api_reference=True),
+            "area": ComponentConfig(range(1, 9), "areachart"),
+            "bar": ComponentConfig(range(1, 11), "barchart"),
+            "line": ComponentConfig(range(1, 9), "linechart"),
+            "pie": ComponentConfig(range(1, 7), "piechart"),
             "radar": ComponentConfig(range(1, 7), "radar"),
             "scatter": ComponentConfig([1], "scatterchart"),
             "doughnut": ComponentConfig(range(1, 3), "doughnutchart"),
@@ -243,27 +242,12 @@ class SourceRetriever:
         """Get source for chart components including style.py when needed."""
         source = ""
 
-        if not func.__name__.startswith(
-            ("areachart", "barchart", "linechart", "piechart")
-        ):
-            with open("buridan_ui/charts/style.py") as file:
-                source += file.read() + "\n"
-        else:
-            source += SourceRetriever._get_chart_info_function() + "\n"
+        with open("buridan_ui/charts/style.py") as file:
+            source += file.read() + "\n"
 
         source += inspect.getsource(func)
-        return source
 
-    @staticmethod
-    def _get_chart_info_function() -> str:
-        """Get the info function for chart components."""
-        return """def info(title: str, size: str, subtitle: str, align: str):
-    return rx.vstack(
-        rx.heading(title, size=size, weight="bold"),
-        rx.text(subtitle, size="1", color=rx.color("slate", 11), weight="medium"),
-        spacing="1",
-        align=align,
-    )"""
+        return source
 
 
 # ============================================================================
@@ -372,10 +356,6 @@ class ExportGenerator:
                     chart_type, chart_config, version
                 )
                 export_items.append(export_func())
-
-            # Add API reference if configured
-            if chart_config.has_api_reference:
-                export_items.append(api_reference_wrapper(chart_type))
 
             # Apply grid configuration
             grid_config = self.config.GRID_CONFIGS.get(chart_type, {})

@@ -1,4 +1,5 @@
-from buridan_ui.charts.area.api import AreaChart
+import reflex as rx
+from buridan_ui.charts.style import get_tooltip, get_cartesian_grid
 
 
 def areachart_v8():
@@ -11,23 +12,66 @@ def areachart_v8():
         {"month": "Jun", "desktop": 214, "mobile": 140},
     ]
 
-    return (
-        AreaChart(data)
-        .x("month")
-        .series(
-            "desktop", color="chart-1", stroke="chart-1", gradient=True, stack_id="1"
+    series = [("desktop", "Desktop", "--chart-1"), ("mobile", "Mobile", "--chart-2")]
+
+    def create_gradient(var_name):
+        return rx.el.svg.defs(
+            rx.el.svg.linear_gradient(
+                rx.el.svg.stop(
+                    stop_color=f"var({var_name})", offset="5%", stop_opacity=0.8
+                ),
+                rx.el.svg.stop(
+                    stop_color=f"var({var_name})", offset="95%", stop_opacity=0.1
+                ),
+                x1=0,
+                x2=0,
+                y1=0,
+                y2=1,
+                id=var_name.strip("-"),
+            )
         )
-        .series(
-            "mobile", color="chart-2", stroke="chart-2", gradient=True, stack_id="1"
-        )
-        .tooltip(True)
-        .grid(True)
-        .legend(
-            {
-                "desktop": "Desktop",
-                "mobile": "Mobile",
-            },
-            position="bottom",
-        )
-        .size("100%", 250)()
+
+    return rx.box(
+        rx.hstack(
+            rx.foreach(
+                series,
+                lambda s: rx.hstack(
+                    rx.box(class_name="w-3 h-3 rounded-sm", bg=f"var({s[2]})"),
+                    rx.text(
+                        s[1],
+                        class_name="text-sm font-semibold",
+                        color=rx.color("slate", 11),
+                    ),
+                    align="center",
+                    spacing="2",
+                ),
+            ),
+            class_name="py-4 px-4 flex w-full justify-center gap-8",
+        ),
+        rx.recharts.area_chart(
+            *(create_gradient(s[2]) for s in series),
+            get_tooltip(),
+            get_cartesian_grid(),
+            *(
+                rx.recharts.area(
+                    data_key=s[0],
+                    fill=f"url(#{s[2].strip('-')})",
+                    stroke=f"var({s[2]})",
+                    stack_id="1",
+                )
+                for s in series
+            ),
+            rx.recharts.x_axis(
+                data_key="month",
+                axis_line=False,
+                tick_size=10,
+                tick_line=False,
+                custom_attrs={"fontSize": "12px"},
+                interval="preserveStartEnd",
+            ),
+            data=data,
+            width="100%",
+            height=250,
+        ),
+        class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )
