@@ -47,6 +47,17 @@ def changelog():
     return [
         rx.box(
             changelog_wrapper(
+                title="Updates & Site Enhancements",
+                date="August 3, 2025",
+                version="buridan/ui v0.7.1",
+                log="""
+- Updated Reflex version and configuration file for latest compatibility. [#47](https://github.com/buridan-ui/ui/pull/47)
+- Integrated GoatTracker for privacy-friendly site analytics. [#46](https://github.com/buridan-ui/ui/pull/46)
+- Added Reflex Build link to the site TOC for easier access to the AI builder. [#49](https://github.com/buridan-ui/ui/pull/49)
+- General code cleanup and maintenance improvements. [#48](https://github.com/buridan-ui/ui/pull/48)
+""",
+            ),
+            changelog_wrapper(
                 title="Search Feature For Buridan UI Site",
                 date="July 13, 2025",
                 version="buridan/ui v0.7.0-beta.2",
