@@ -235,8 +235,5 @@ def search() -> rx.Component:
             on_escape_key_down=SearchInput.set_value(""),
             class_name="focus:outline-none bg-background h-[60vh] p-3 border-none",
         ),
-        on_mount=[
-            keyboard_shortcut_script(),
-            rx.call_function(SearchInput.set_value("")),
-        ],
+        on_mount=[keyboard_shortcut_script()],
     )
