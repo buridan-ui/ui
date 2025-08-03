@@ -2,263 +2,297 @@ import os
 import inspect
 import importlib
 import reflex as rx
-from typing import Callable, Dict, List, Any
+from typing import Callable, Dict, List, Any, Optional
+from dataclasses import dataclass
 
-from buridan_ui.config import BASE_PANTRY_PATH, BASE_CHART_PATH
+from buridan_ui.config import (
+    BASE_PANTRY_PATH,
+    BASE_CHART_PATH,
+    SITE_LOGO_URL,
+    SITE_META_TAGS,
+)
 from buridan_ui.ui.organisms.grid import responsive_grid
 from buridan_ui.wrappers.component.wrapper import (
     component_wrapper,
     api_reference_wrapper,
 )
+from buridan_ui.wrappers.base.main import base
 
 
-# Define a unified configuration system
+# ============================================================================
+# CONFIGURATION DATA STRUCTURES
+# ============================================================================
+
+
+@dataclass
+class ComponentConfig:
+    """Configuration for a component or chart type."""
+
+    versions: range | List[int]
+    func_prefix: str
+    flexgen_url: str = ""
+    has_api_reference: bool = False
+
+
+@dataclass
+class RouteConfig:
+    """Configuration for a static route."""
+
+    path: str
+    component: Callable
+    title: str
+    dir_meta: Optional[List] = None
+
+
 class ExportConfig:
+    """Unified configuration system for all exports."""
+
     def __init__(self):
-        # Component configurations
+        self._init_configurations()
+        self._init_development_settings()
+        self._init_getting_started_routes()
+
+    def _init_configurations(self):
+        """Initialize all component, chart, and pro configurations."""
         self.COMPONENTS = {
-            "stats": {"versions": range(1, 3), "func_prefix": "stat"},
-            "tabs": {"versions": range(1, 4), "func_prefix": "tab"},
-            "sidebars": {"versions": range(1, 2), "func_prefix": "sidebar"},
-            "accordions": {"versions": range(1, 2), "func_prefix": "accordion"},
-            "animations": {"versions": range(1, 4), "func_prefix": "animation"},
-            "backgrounds": {"versions": range(1, 5), "func_prefix": "background"},
-            "cards": {"versions": range(1, 5), "func_prefix": "card"},
-            "faq": {"versions": [1], "func_prefix": "faq"},
-            "featured": {"versions": range(1, 3), "func_prefix": "featured"},
-            "footers": {"versions": range(1, 3), "func_prefix": "footer"},
-            "forms": {"versions": range(1, 4), "func_prefix": "forms"},
-            "inputs": {"versions": range(1, 6), "func_prefix": "input"},
-            "lists": {"versions": [1], "func_prefix": "lists"},
-            "logins": {"versions": range(1, 3), "func_prefix": "logins"},
-            "menus": {"versions": [1], "func_prefix": "menus"},
-            "onboardings": {"versions": [1], "func_prefix": "onboardings"},
-            "payments": {"versions": [1], "func_prefix": "payments"},
-            "popups": {"versions": range(1, 3), "func_prefix": "popups"},
-            "pricing": {"versions": range(1, 3), "func_prefix": "pricing"},
-            "prompts": {"versions": range(1, 3), "func_prefix": "prompt"},
-            "subscribe": {"versions": range(1, 4), "func_prefix": "subscribe"},
-            "tables": {"versions": range(1, 5), "func_prefix": "tables"},
-            "timeline": {"versions": [1], "func_prefix": "timeline"},
+            "stats": ComponentConfig(range(1, 3), "stat"),
+            "tabs": ComponentConfig(range(1, 4), "tab"),
+            "sidebars": ComponentConfig(range(1, 2), "sidebar"),
+            "accordions": ComponentConfig(range(1, 2), "accordion"),
+            "animations": ComponentConfig(range(1, 4), "animation"),
+            "backgrounds": ComponentConfig(range(1, 5), "background"),
+            "cards": ComponentConfig(range(1, 5), "card"),
+            "faq": ComponentConfig([1], "faq"),
+            "featured": ComponentConfig(range(1, 3), "featured"),
+            "footers": ComponentConfig(range(1, 3), "footer"),
+            "forms": ComponentConfig(range(1, 4), "forms"),
+            "inputs": ComponentConfig(range(1, 6), "input"),
+            "lists": ComponentConfig([1], "lists"),
+            "logins": ComponentConfig(range(1, 3), "logins"),
+            "menus": ComponentConfig([1], "menus"),
+            "onboardings": ComponentConfig([1], "onboardings"),
+            "payments": ComponentConfig([1], "payments"),
+            "popups": ComponentConfig(range(1, 3), "popups"),
+            "pricing": ComponentConfig(range(1, 3), "pricing"),
+            "prompts": ComponentConfig(range(1, 3), "prompt"),
+            "subscribe": ComponentConfig(range(1, 4), "subscribe"),
+            "tables": ComponentConfig(range(1, 5), "tables"),
+            "timeline": ComponentConfig([1], "timeline"),
         }
 
-        # Chart configurations
         self.CHARTS = {
-            "area": {
-                "versions": range(1, 9),
-                "func_prefix": "areachart",
-                "flexgen": "https://reflex.build/gen/85caad0f-95d1-4180-b4eb-fc72edafdc9a/",
-            },
-            "bar": {"versions": range(1, 11), "func_prefix": "barchart"},
-            "line": {"versions": range(1, 9), "func_prefix": "linechart"},
-            "pie": {"versions": range(1, 7), "func_prefix": "piechart"},
-            "radar": {"versions": range(1, 7), "func_prefix": "radar"},
-            "scatter": {"versions": [1], "func_prefix": "scatterchart"},
-            "doughnut": {"versions": range(1, 3), "func_prefix": "doughnutchart"},
+            "area": ComponentConfig(range(1, 9), "areachart", has_api_reference=True),
+            "bar": ComponentConfig(range(1, 11), "barchart", has_api_reference=True),
+            "line": ComponentConfig(range(1, 9), "linechart", has_api_reference=True),
+            "pie": ComponentConfig(range(1, 7), "piechart", has_api_reference=True),
+            "radar": ComponentConfig(range(1, 7), "radar"),
+            "scatter": ComponentConfig([1], "scatterchart"),
+            "doughnut": ComponentConfig(range(1, 3), "doughnutchart"),
         }
 
-        # Pro configurations
-        self.PRO = {
-            "table": {"versions": range(1, 2), "func_prefix": "integrated_table"},
-        }
-
-        # Grid configurations
+        # Grid configurations for custom layouts
         self.GRID_CONFIGS = {}
 
-        # Development mode settings
-        self.development_mode = False
-        self.selected_components = set()
-        self.selected_charts = set()
-        self.selected_pro = set()
-
-        # Keep a complete list of all component and chart names
+        # Keep sets of all names for filtering
         self.all_component_names = set(self.COMPONENTS.keys())
         self.all_chart_names = set(self.CHARTS.keys())
-        self.all_pro_names = set(self.PRO.keys())
 
-        # Initialize development environment from environment variables
-        self._init_from_env()
-
-    def _init_from_env(self):
-        """Initialize development settings from environment variables."""
+    def _init_development_settings(self):
+        """Initialize development mode settings from environment variables."""
         self.development_mode = os.environ.get("BURIDAN_DEV_MODE", "").lower() in (
             "true",
             "1",
             "yes",
         )
 
+        self.selected_components = set()
+        self.selected_charts = set()
+        self.selected_pro = set()
+
         if self.development_mode:
-            components = os.environ.get("BURIDAN_COMPONENTS", "")
-            if components:
-                self.selected_components = {
-                    c.strip() for c in components.split(",") if c.strip()
-                }
+            self._parse_dev_selections()
+            self._print_dev_settings()
 
-            charts = os.environ.get("BURIDAN_CHARTS", "")
-            if charts:
-                self.selected_charts = {
-                    c.strip() for c in charts.split(",") if c.strip()
-                }
+    def _init_getting_started_routes(self):
+        """Initialize all getting started route configurations."""
+        # Import all getting started components
+        from buridan_ui.landing.hero import hero
+        from buridan_ui.start.buridan import buridan
+        from buridan_ui.start.theming import theming
+        from buridan_ui.start.charting import charting
+        from buridan_ui.start.dashboard import dashboard
+        from buridan_ui.start.installation import installation
+        from buridan_ui.start.introduction import introduction
+        from buridan_ui.start.changelog import changelog
+        from buridan_ui.start.clientstate import client_state_var
 
-            pro = os.environ.get("BURIDAN_PRO", "")
-            if pro:
-                self.selected_pro = {c.strip() for c in pro.split(",") if c.strip()}
+        self.STATIC_ROUTES = [
+            RouteConfig("/", hero, "Buridan Stack"),
+            RouteConfig(
+                "/getting-started/who-is-buridan",
+                buridan,
+                "Who Is Buridan - Buridan UI",
+            ),
+            RouteConfig(
+                "/getting-started/changelog", changelog, "Changelog - Buridan UI"
+            ),
+            RouteConfig(
+                "/getting-started/introduction",
+                introduction,
+                "Introduction - Buridan UI",
+            ),
+            RouteConfig(
+                "/getting-started/installation",
+                installation,
+                "Installation - Buridan UI",
+            ),
+            RouteConfig("/getting-started/theming", theming, "Theming - Buridan UI"),
+            RouteConfig("/getting-started/charting", charting, "Charting - Buridan UI"),
+            RouteConfig(
+                "/getting-started/dashboard", dashboard, "Dashboard - Buridan UI"
+            ),
+            RouteConfig(
+                "/getting-started/client-state-var",
+                client_state_var,
+                "ClientStateVar - Buridan UI",
+            ),
+        ]
 
-            # Print development settings
-            print("Development mode: Enabled")
-            if self.selected_components:
-                print(f"Selected components: {', '.join(self.selected_components)}")
-            if self.selected_charts:
-                print(f"Selected charts: {', '.join(self.selected_charts)}")
-            if self.selected_pro:
-                print(f"Selected pro components: {', '.join(self.selected_pro)}")
+    def _parse_dev_selections(self):
+        """Parse development selections from environment variables."""
+        components = os.environ.get("BURIDAN_COMPONENTS", "")
+        if components:
+            self.selected_components = {
+                c.strip() for c in components.split(",") if c.strip()
+            }
+
+        charts = os.environ.get("BURIDAN_CHARTS", "")
+        if charts:
+            self.selected_charts = {c.strip() for c in charts.split(",") if c.strip()}
+
+        pro = os.environ.get("BURIDAN_PRO", "")
+        if pro:
+            self.selected_pro = {c.strip() for c in pro.split(",") if c.strip()}
+
+    def _print_dev_settings(self):
+        """Print development settings for debugging."""
+        print("Development mode: Enabled")
+        if self.selected_components:
+            print(f"Selected components: {', '.join(self.selected_components)}")
+        if self.selected_charts:
+            print(f"Selected charts: {', '.join(self.selected_charts)}")
 
     def should_include_component(self, component_name: str) -> bool:
         """Check if a component should be included based on development settings."""
         if not self.development_mode:
             return True
 
-        # If charts or pro are specifically selected and components aren't, exclude all components
-        if (self.selected_charts and not self.selected_components) or (
-            self.selected_pro and not self.selected_components
-        ):
+        # If other categories are selected but components aren't, exclude all components
+        if (self.selected_charts or self.selected_pro) and not self.selected_components:
             return False
 
-        if not self.selected_components:
-            return True
-
-        return component_name in self.selected_components
+        return (
+            not self.selected_components or component_name in self.selected_components
+        )
 
     def should_include_chart(self, chart_name: str) -> bool:
         """Check if a chart should be included based on development settings."""
         if not self.development_mode:
             return True
 
-        # If components or pro are specifically selected and charts aren't, exclude all charts
-        if (self.selected_components and not self.selected_charts) or (
-            self.selected_pro and not self.selected_charts
-        ):
+        # If other categories are selected but charts aren't, exclude all charts
+        if (self.selected_components or self.selected_pro) and not self.selected_charts:
             return False
 
-        if not self.selected_charts:
-            return True
-
-        return chart_name in self.selected_charts
+        return not self.selected_charts or chart_name in self.selected_charts
 
     def should_include_pro(self, pro_name: str) -> bool:
         """Check if a pro component should be included based on development settings."""
         if not self.development_mode:
             return True
 
-        # If components or charts are specifically selected and pro aren't, exclude all pro components
-        if (self.selected_components and not self.selected_pro) or (
-            self.selected_charts and not self.selected_pro
-        ):
+        # If other categories are selected but pro isn't, exclude all pro components
+        if (self.selected_components or self.selected_charts) and not self.selected_pro:
             return False
 
-        if not self.selected_pro:
-            return True
-
-        return pro_name in self.selected_pro
+        return not self.selected_pro or pro_name in self.selected_pro
 
 
-# Create a singleton config instance
-config = ExportConfig()
+# ============================================================================
+# SOURCE RETRIEVAL STRATEGIES
+# ============================================================================
 
 
 class SourceRetriever:
-    """Class to handle different source code retrieval strategies"""
+    """Handles different source code retrieval strategies."""
 
     @staticmethod
-    def pro_source(directory: str, filename: str) -> str:
-        """Get source for pantry components."""
+    def get_pro_source(directory: str, filename: str) -> str:
+        """Get source for pro components."""
         with open(os.path.join("buridan_ui", "pro", directory, filename)) as file:
             return file.read()
 
     @staticmethod
-    def pantry_source(directory: str, filename: str) -> str:
+    def get_pantry_source(directory: str, filename: str) -> str:
         """Get source for pantry components."""
         with open(os.path.join("buridan_ui", "pantry", directory, filename)) as file:
             return file.read()
 
     @staticmethod
-    def chart_source(func: Callable) -> str:
-        """Get source for chart components including style.py."""
-        source: str = ""
+    def get_chart_source(func: Callable) -> str:
+        """Get source for chart components including style.py when needed."""
+        source = ""
 
         if not func.__name__.startswith(
             ("areachart", "barchart", "linechart", "piechart")
         ):
             with open("buridan_ui/charts/style.py") as file:
-                source += file.read()
-                source += "\n"
-
+                source += file.read() + "\n"
         else:
-            source += """
-def info(title: str, size: str, subtitle: str, align: str):
+            source += SourceRetriever._get_chart_info_function() + "\n"
+
+        source += inspect.getsource(func)
+        return source
+
+    @staticmethod
+    def _get_chart_info_function() -> str:
+        """Get the info function for chart components."""
+        return """def info(title: str, size: str, subtitle: str, align: str):
     return rx.vstack(
         rx.heading(title, size=size, weight="bold"),
         rx.text(subtitle, size="1", color=rx.color("slate", 11), weight="medium"),
         spacing="1",
         align=align,
-    )
-"""
-            source += "\n"
+    )"""
 
-        source += inspect.getsource(func)
-        return source
+
+# ============================================================================
+# EXPORT FACTORY
+# ============================================================================
 
 
 class ExportFactory:
-    """Factory class for creating exports"""
-
-    @staticmethod
-    def create_pro_export(
-        directory: str,
-        version: int,
-        func_prefix: str,
-        flexgen_url: str = "",
-    ) -> Callable:
-        """Create an export function for a pro component."""
-        # Import the component dynamically
-        component_func = ExportFactory._import_component(
-            base_module="buridan_ui.pro",
-            directory=directory,
-            version=version,
-            func_prefix=func_prefix,
-        )
-
-        @component_wrapper(f"{BASE_PANTRY_PATH}{directory}/v{version}.py")
-        def export():
-            return [
-                component_func(),
-                SourceRetriever.pro_source(directory, f"v{version}.py"),
-                flexgen_url,
-            ]
-
-        return export
+    """Factory for creating different types of export functions."""
 
     @staticmethod
     def create_pantry_export(
-        directory: str,
-        version: int,
-        func_prefix: str,
-        flexgen_url: str = "https://reflex.build/gen/85caad0f-95d1-4180-b4eb-fc72edafdc9a/",
+        directory: str, config: ComponentConfig, version: int
     ) -> Callable:
         """Create an export function for a pantry component."""
-        # Import the component dynamically
         component_func = ExportFactory._import_component(
-            base_module="buridan_ui.pantry",
-            directory=directory,
-            version=version,
-            func_prefix=func_prefix,
+            "buridan_ui.pantry", directory, version, config.func_prefix
+        )
+
+        flexgen_url = (
+            config.flexgen_url
+            or "https://reflex.build/gen/85caad0f-95d1-4180-b4eb-fc72edafdc9a/"
         )
 
         @component_wrapper(f"{BASE_PANTRY_PATH}{directory}/v{version}.py")
         def export():
             return [
                 component_func(),
-                SourceRetriever.pantry_source(directory, f"v{version}.py"),
+                SourceRetriever.get_pantry_source(directory, f"v{version}.py"),
                 flexgen_url,
             ]
 
@@ -266,23 +300,20 @@ class ExportFactory:
 
     @staticmethod
     def create_chart_export(
-        directory: str,
-        version: int,
-        func_prefix: str,
-        flexgen_url: str = "",
+        directory: str, config: ComponentConfig, version: int
     ) -> Callable:
         """Create an export function for a chart component."""
-        # Import the chart component dynamically
         chart_func = ExportFactory._import_component(
-            base_module="buridan_ui.charts",
-            directory=directory,
-            version=version,
-            func_prefix=func_prefix,
+            "buridan_ui.charts", directory, version, config.func_prefix
         )
 
         @component_wrapper(f"{BASE_CHART_PATH}{directory}/v{version}.py")
         def chart_export():
-            return [chart_func(), SourceRetriever.chart_source(chart_func), flexgen_url]
+            return [
+                chart_func(),
+                SourceRetriever.get_chart_source(chart_func),
+                config.flexgen_url,
+            ]
 
         return chart_export
 
@@ -302,206 +333,186 @@ class ExportFactory:
                 f"Failed to import {function_name} from {module_path}: {e}"
             )
 
-    @staticmethod
-    def import_page(module_path: str, func_name: str) -> Callable:
-        """Import a page function directly."""
-        try:
-            module = importlib.import_module(module_path)
-            return getattr(module, func_name)
-        except (ImportError, AttributeError) as e:
-            raise ImportError(f"Failed to import {func_name} from {module_path}: {e}")
+
+# ============================================================================
+# EXPORT GENERATORS
+# ============================================================================
 
 
-def generate_pro_exports() -> Dict[str, List]:
-    """Generate all pro component exports dynamically."""
-    exports = {}
+class ExportGenerator:
+    """Handles generation of different export types."""
 
-    # Filter components if in development mode
-    component_configs = {}
-    for name, details in config.PRO.items():
-        if config.should_include_pro(name):
-            component_configs[name] = details
+    def __init__(self, config: ExportConfig):
+        self.config = config
 
-    for directory, details in component_configs.items():
-        versions = details["versions"]
-        func_prefix = details["func_prefix"]
-        component_exports = []
-        export_items = []
+    def generate_pantry_exports(self) -> Dict[str, List]:
+        """Generate all pantry component exports."""
+        return self._generate_exports(
+            self.config.COMPONENTS,
+            self.config.should_include_component,
+            ExportFactory.create_pantry_export,
+        )
 
-        for version in versions:
-            export_func = ExportFactory.create_pro_export(
-                directory, version, func_prefix
-            )
-            export_items.append(export_func())
+    def generate_chart_exports(self) -> Dict[str, List]:
+        """Generate all chart exports."""
+        exports = {}
 
-        # Get any custom grid config for this component type
-        grid_config = config.GRID_CONFIGS.get(directory, {})
+        filtered_configs = {
+            name: config
+            for name, config in self.config.CHARTS.items()
+            if self.config.should_include_chart(name)
+        }
 
-        # Use responsive_grid to organize the exports
-        component_exports.append(responsive_grid(*export_items, **grid_config))
-        exports[directory] = component_exports
+        for chart_type, chart_config in filtered_configs.items():
+            export_items = []
 
-    return exports
+            # Generate version exports
+            for version in chart_config.versions:
+                export_func = ExportFactory.create_chart_export(
+                    chart_type, chart_config, version
+                )
+                export_items.append(export_func())
 
+            # Add API reference if configured
+            if chart_config.has_api_reference:
+                export_items.append(api_reference_wrapper(chart_type))
 
-def generate_pantry_exports() -> Dict[str, List]:
-    """Generate all pantry component exports dynamically."""
-    exports = {}
+            # Apply grid configuration
+            grid_config = self.config.GRID_CONFIGS.get(chart_type, {})
+            exports[chart_type] = [responsive_grid(*export_items, **grid_config)]
 
-    # Filter components if in development mode
-    component_configs = {}
-    for name, details in config.COMPONENTS.items():
-        if config.should_include_component(name):
-            component_configs[name] = details
+        return exports
 
-    for directory, details in component_configs.items():
-        versions = details["versions"]
-        func_prefix = details["func_prefix"]
-        component_exports = []
-        export_items = []
+    def _generate_exports(
+        self,
+        configs: Dict[str, ComponentConfig],
+        should_include_func: Callable,
+        export_factory_func: Callable,
+    ) -> Dict[str, List]:
+        """Generic method to generate exports for any component type."""
+        exports = {}
 
-        for version in versions:
-            export_func = ExportFactory.create_pantry_export(
-                directory, version, func_prefix
-            )
-            export_items.append(export_func())
+        filtered_configs = {
+            name: config
+            for name, config in configs.items()
+            if should_include_func(name)
+        }
 
-        # Get any custom grid config for this component type
-        grid_config = config.GRID_CONFIGS.get(directory, {})
+        for directory, component_config in filtered_configs.items():
+            export_items = []
 
-        # Use responsive_grid to organize the exports
-        component_exports.append(responsive_grid(*export_items, **grid_config))
-        exports[directory] = component_exports
+            for version in component_config.versions:
+                export_func = export_factory_func(directory, component_config, version)
+                export_items.append(export_func())
 
-    return exports
+            # Apply grid configuration
+            grid_config = self.config.GRID_CONFIGS.get(directory, {})
+            exports[directory] = [responsive_grid(*export_items, **grid_config)]
 
-
-def generate_chart_exports() -> Dict[str, List]:
-    """Generate all chart exports dynamically."""
-    exports = {}
-
-    # Filter charts if in development mode
-    chart_configs = {}
-    for name, details in config.CHARTS.items():
-        if config.should_include_chart(name):
-            chart_configs[name] = details
-
-    for chart_type, details in chart_configs.items():
-        versions = details["versions"]
-        func_prefix = details["func_prefix"]
-        chart_exports = []
-        export_items = []
-
-        for version in versions:
-            export_func = ExportFactory.create_chart_export(
-                chart_type, version, func_prefix
-            )
-            export_items.append(export_func())
-
-        # Get any custom grid config for this chart type
-        grid_config = config.GRID_CONFIGS.get(chart_type, {})
-
-        # Generate the API for the charts
-        if chart_type in ["area", "bar", "line", "pie"]:
-            export_items.append(api_reference_wrapper(chart_type))
-
-        # Use responsive_grid to organize the exports
-        chart_exports.append(responsive_grid(*export_items, **grid_config))
-
-        exports[chart_type] = chart_exports
-
-    return exports
+        return exports
 
 
-def filter_routes(routes_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Filter routes based on development settings.
+# ============================================================================
+# ROUTE MANAGEMENT
+# ============================================================================
 
-    This function should be used to filter PantryRoutes and ChartRoutes before adding them.
 
-    Args:
-        routes_list: The original list of route dictionaries
+class RouteManager:
+    """Manages route filtering and registration."""
 
-    Returns:
-        A filtered list of routes based on development settings
-    """
-    if not config.development_mode:
-        return routes_list
+    def __init__(self, config: ExportConfig):
+        self.config = config
 
-    filtered_routes = []
+    def filter_routes(self, routes_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Filter routes based on development settings."""
+        if not self.config.development_mode:
+            return routes_list
 
-    for route in routes_list:
-        directory = route.get("dir")
-        if directory:
-            # Check if this is a component or chart route
-            if directory in config.all_component_names:
-                if config.should_include_component(directory):
-                    filtered_routes.append(route)
-            elif directory in config.all_chart_names:
-                if config.should_include_chart(directory):
-                    filtered_routes.append(route)
-            elif directory in config.all_pro_names:
-                if config.should_include_pro(directory):
-                    filtered_routes.append(route)
-            else:
-                # If it's neither, include it by default
+        filtered_routes = []
+        for route in routes_list:
+            directory = route.get("dir")
+            if not directory or self._should_include_route(directory):
                 filtered_routes.append(route)
+
+        return filtered_routes
+
+    def _should_include_route(self, directory: str) -> bool:
+        """Check if a route should be included based on its directory."""
+        if directory in self.config.all_component_names:
+            return self.config.should_include_component(directory)
+        elif directory in self.config.all_chart_names:
+            return self.config.should_include_chart(directory)
         else:
-            # Include routes without a directory by default
-            filtered_routes.append(route)
-
-    return filtered_routes
+            return True  # Include unknown routes by default
 
 
-def export_app(app: rx.App):
-    from buridan_ui.landing.hero import hero
-    from buridan_ui.static.routes import ChartRoutes, PantryRoutes, BuridanProRoutes
-    from buridan_ui.static.meta import ChartMetaData, PantryMetaData, ProMetaData
-    from buridan_ui.start.buridan import buridan
-    from buridan_ui.start.theming import theming
-    from buridan_ui.start.charting import charting
-    from buridan_ui.start.dashboard import dashboard
-    from buridan_ui.start.installation import installation
-    from buridan_ui.start.introduction import introduction
-    from buridan_ui.start.changelog import changelog
-    from buridan_ui.start.clientstate import client_state_var
-    from buridan_ui.wrappers.base.main import base
-    from buridan_ui.config import SITE_LOGO_URL, SITE_META_TAGS
+# ============================================================================
+# MAIN APPLICATION EXPORTER
+# ============================================================================
 
-    pro_exports_config = generate_pro_exports()
-    pantry_exports_config = generate_pantry_exports()
-    charts_exports_config = generate_chart_exports()
 
-    def get_exports(directory: str, config_file: dict[str, list[callable]]):
-        return [export for export in config_file[directory]]
+class ApplicationExporter:
+    """Main class for exporting the complete application."""
 
-    def add_routes(
-        routes: list[dict[str, str]],
-        export_config: dict[str, list[callable]],
+    def __init__(self):
+        self.config = ExportConfig()
+        self.generator = ExportGenerator(self.config)
+        self.route_manager = RouteManager(self.config)
+
+    def export_app(self, app: rx.App):
+        """Export the complete application with all routes and configurations."""
+        # Import required metadata and routes
+        from buridan_ui.static.routes import ChartRoutes, PantryRoutes
+        from buridan_ui.static.meta import ChartMetaData, PantryMetaData
+
+        # Generate all exports
+        pantry_exports = self.generator.generate_pantry_exports()
+        chart_exports = self.generator.generate_chart_exports()
+
+        # Add dynamic routes
+        self._add_dynamic_routes(
+            app, ChartRoutes, chart_exports, ChartMetaData, "charts"
+        )
+        self._add_dynamic_routes(
+            app, PantryRoutes, pantry_exports, PantryMetaData, "pantry"
+        )
+
+        # Add static routes
+        self._add_static_routes(app)
+
+    def _add_dynamic_routes(
+        self,
+        app: rx.App,
+        routes: List[Dict[str, str]],
+        export_config: Dict[str, List],
+        metadata_source: Dict,
         parent_dir: str,
-    ) -> None:
-        if parent_dir == "charts":
-            metadata_source = ChartMetaData
+    ):
+        """Add dynamic routes based on configuration."""
+        filtered_routes = self.route_manager.filter_routes(routes)
 
-        if parent_dir == "pantry":
-            metadata_source = PantryMetaData
+        for route in filtered_routes:
+            dir_meta = metadata_source[route["dir"]]
 
-        if parent_dir == "pro":
-            metadata_source = ProMetaData
+            @base(route["path"], route["name"], dir_meta)
+            def export_page(directory=route["dir"]) -> List:
+                return export_config[directory]
 
-        # Filter the routes based on development settings
-        filtered_routes = filter_routes(routes)
+            self._add_page(
+                app, export_page(), route["path"], f"{route['name']} - Buridan UI"
+            )
 
-        for _route in filtered_routes:
-            dir_meta = metadata_source[_route["dir"]]
+    def _add_static_routes(self, app: rx.App):
+        """Add all static routes from configuration."""
+        for route_config in self.config.STATIC_ROUTES:
+            self._add_page(
+                app, route_config.component(), route_config.path, route_config.title
+            )
 
-            @base(_route["path"], _route["name"], dir_meta)
-            def export_page() -> callable:
-                return get_exports(_route["dir"], export_config)
-
-            add_page(export_page(), _route["path"], f"{_route['name']} - Buridan UI")
-
-    def add_page(page_component, route_path, title):
-        """Helper function to add pages with consistent metadata"""
+    def _add_page(
+        self, app: rx.App, page_component: Callable, route_path: str, title: str
+    ):
+        """Helper function to add pages with consistent metadata."""
         app.add_page(
             page_component,
             route=route_path,
@@ -510,60 +521,22 @@ def export_app(app: rx.App):
             meta=SITE_META_TAGS,
         )
 
-    # Add dynamic routes from configurations
-    add_routes(ChartRoutes, charts_exports_config, "charts")
-    add_routes(PantryRoutes, pantry_exports_config, "pantry")
-    add_routes(BuridanProRoutes, pro_exports_config, "pro")
 
-    # Define static routes with consistent structure
-    STATIC_ROUTES = [
-        {
-            "path": "/",
-            "component": hero,
-            "title": "Buridan Stack",
-        },
-        {
-            "path": "/getting-started/who-is-buridan",
-            "component": buridan,
-            "title": "Who Is Buridan - Buridan UI",
-        },
-        {
-            "path": "/getting-started/changelog",
-            "component": changelog,
-            "title": "Changelog - Buridan UI",
-        },
-        {
-            "path": "/getting-started/introduction",
-            "component": introduction,
-            "title": "Introduction - Buridan UI",
-        },
-        {
-            "path": "/getting-started/installation",
-            "component": installation,
-            "title": "Installation - Buridan UI",
-        },
-        {
-            "path": "/getting-started/theming",
-            "component": theming,
-            "title": "Theming - Buridan UI",
-        },
-        {
-            "path": "/getting-started/charting",
-            "component": charting,
-            "title": "Charting - Buridan UI",
-        },
-        {
-            "path": "/getting-started/dashboard",
-            "component": dashboard,
-            "title": "Dashboard - Buridan UI",
-        },
-        {
-            "path": "/getting-started/client-state-var",
-            "component": client_state_var,
-            "title": "ClientStateVar - Buridan UI",
-        },
-    ]
+# ============================================================================
+# SINGLETON INSTANCE & PUBLIC API
+# ============================================================================
 
-    # Add static routes
-    for route in STATIC_ROUTES:
-        add_page(route["component"](), route["path"], route["title"])
+# Create singleton instances
+_config = ExportConfig()
+_exporter = ApplicationExporter()
+
+
+# Public API functions
+def export_app(app: rx.App):
+    """Export the complete application - main entry point."""
+    _exporter.export_app(app)
+
+
+def filter_routes(routes_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Filter routes based on development settings - utility function."""
+    return _exporter.route_manager.filter_routes(routes_list)
