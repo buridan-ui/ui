@@ -129,7 +129,6 @@ def search_result(tags: list, value: dict):
                 value["description"], class_name="text-sm font-regular opacity-[0.81]"
             ),
             search_breadcrumb(tags),
-            # get_search_components(value['dir']),  # this will display all the component examples in the search!!
             class_name="p-2 w-full flex flex-col gap-y-1 justify-start items-start align-start",
         ),
         href=value["path"],

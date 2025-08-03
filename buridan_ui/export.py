@@ -205,17 +205,6 @@ class ExportConfig:
 
         return not self.selected_charts or chart_name in self.selected_charts
 
-    def should_include_pro(self, pro_name: str) -> bool:
-        """Check if a pro component should be included based on development settings."""
-        if not self.development_mode:
-            return True
-
-        # If other categories are selected but pro isn't, exclude all pro components
-        if (self.selected_components or self.selected_charts) and not self.selected_pro:
-            return False
-
-        return not self.selected_pro or pro_name in self.selected_pro
-
 
 # ============================================================================
 # SOURCE RETRIEVAL STRATEGIES
@@ -507,7 +496,7 @@ class ApplicationExporter:
 # ============================================================================
 
 # Create singleton instances
-_config = ExportConfig()
+# _config = ExportConfig()
 _exporter = ApplicationExporter()
 
 
