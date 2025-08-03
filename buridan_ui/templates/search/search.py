@@ -183,7 +183,7 @@ def search_content():
                 rx.box(
                     rx.foreach(
                         GettingStartedData.value,
-                        lambda value, index: rx.cond(
+                        lambda value: rx.cond(
                             value["name"].lower().contains(SearchInput.value.lower()),
                             search_result(
                                 ["ui", "getting started", value["dir"]], value
