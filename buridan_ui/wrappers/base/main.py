@@ -9,6 +9,7 @@ from buridan_ui.templates.drawer.drawer import drawer
 from buridan_ui.templates.footer.footer import desktop_footer, footer
 from buridan_ui.templates.sidemenu.sidemenu import sidemenu
 from buridan_ui.wrappers.base.utils.routes import base_content_path_ui
+from buridan_ui.landing.hero import doc_icon_svg
 
 
 # ============================================================================
@@ -292,19 +293,54 @@ def _generate_chart_links(chart_data: dict, name: str):
     ]
 
 
-def _generate_reference_links(chart_data: dict):
-    """Generate API reference links."""
-    references = ["installation", "theme", "reference"]
-    return [
-        rx.el.a(
-            ref.replace("-", " ").title(),
-            href=f"{chart_data['url']}#{chart_data['id_prefix']}-{ref}",
-            id=f"{chart_data['id_prefix']}-{ref}",
-            color=rx.color("slate", 11),
-            class_name="cursor-pointer text-sm font-regular hover:underline",
-        )
-        for ref in references
-    ]
+def _create_reflex_build_link():
+    return rx.link(
+        rx.el.button(
+            rx.vstack(
+                rx.hstack(
+                    rx.color_mode_cond(
+                        doc_icon_svg(fill="white", background="black"),
+                        doc_icon_svg(fill="black", background="white"),
+                    ),
+                    rx.el.strong(
+                        "AI Builder",
+                        class_name="text-sm",
+                    ),
+                    spacing="2",
+                    align="center",
+                ),
+                rx.text(
+                    rx.fragment(
+                        rx.el.strong("Reflex Build"),
+                        " is your ",
+                        rx.el.strong("AI-powered assistant"),
+                        " for building ",
+                        rx.el.strong("beautiful, production-ready apps"),
+                        " — directly from text prompts, in seconds.",
+                    ),
+                    class_name="text-sm text-left text-slate-11",
+                    width="100%",
+                ),
+                rx.text(
+                    "No boilerplate. Just results.",
+                    class_name="text-sm font-medium text-slate-11 pt-1",
+                ),
+                spacing="2",
+                align="start",
+                class_name="w-full",
+            ),
+            class_name="rounded-lg w-full text-left p-3",
+            border=f"1px solid {rx.color('gray', 3)}",
+            _hover={"background": rx.color("gray", 3)},
+        ),
+        href="https://build.reflex.dev/",
+        text_decoration="none",
+        width="100%",
+        color=rx.color("slate", 12),
+        _hover={"color": rx.color("slate", 12)},
+        class_name="-translate-x-3",
+        is_external=True,
+    )
 
 
 def _create_toc_content(chart_links: List):
@@ -314,6 +350,7 @@ def _create_toc_content(chart_links: List):
             "Examples", color=rx.color("slate", 12), class_name="text-sm font-bold"
         ),
         *chart_links,
+        _create_reflex_build_link(),
         class_name="flex flex-col w-full gap-y-2 p-4",
     )
 
@@ -321,8 +358,9 @@ def _create_toc_content(chart_links: List):
 def _create_empty_toc():
     """Create empty table of contents for non-chart pages."""
     return rx.box(
+        _create_reflex_build_link(),
         height="100vh",
-        class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} pt-12",
+        class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} pt-12 p-4",
     )
 
 
