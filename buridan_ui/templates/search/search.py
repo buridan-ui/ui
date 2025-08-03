@@ -129,7 +129,6 @@ def search_result(tags: list, value: dict):
                 value["description"], class_name="text-sm font-regular opacity-[0.81]"
             ),
             search_breadcrumb(tags),
-            # get_search_components(value['dir']),  # this will display all the component examples in the search!!
             class_name="p-2 w-full flex flex-col gap-y-1 justify-start items-start align-start",
         ),
         href=value["path"],
@@ -183,7 +182,7 @@ def search_content():
                 rx.box(
                     rx.foreach(
                         GettingStartedData.value,
-                        lambda value, index: rx.cond(
+                        lambda value: rx.cond(
                             value["name"].lower().contains(SearchInput.value.lower()),
                             search_result(
                                 ["ui", "getting started", value["dir"]], value
@@ -236,8 +235,5 @@ def search() -> rx.Component:
             on_escape_key_down=SearchInput.set_value(""),
             class_name="focus:outline-none bg-background h-[60vh] p-3 border-none",
         ),
-        on_mount=[
-            keyboard_shortcut_script(),
-            rx.call_function(SearchInput.set_value("")),
-        ],
+        on_mount=[keyboard_shortcut_script()],
     )

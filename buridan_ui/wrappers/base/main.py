@@ -8,26 +8,47 @@ from buridan_ui.templates.search.search import search
 from buridan_ui.templates.drawer.drawer import drawer
 from buridan_ui.templates.footer.footer import desktop_footer, footer
 from buridan_ui.templates.sidemenu.sidemenu import sidemenu
-
 from buridan_ui.wrappers.base.utils.routes import base_content_path_ui
 
 
+# ============================================================================
+# CLIENT STATE VARIABLES
+# ============================================================================
+
 Chart_Theme = ClientStateVar.create("chart_theme", "")
+
+# ============================================================================
+# CONSTANTS & CONFIGURATION
+# ============================================================================
+
+CHART_CONFIGS = {
+    "Bar Charts": {"url": "/charts/bar-charts", "id_prefix": "bar", "quantity": 10},
+    "Area Charts": {"url": "/charts/area-charts", "id_prefix": "area", "quantity": 8},
+    "Line Charts": {"url": "/charts/line-charts", "id_prefix": "line", "quantity": 8},
+    "Pie Charts": {"url": "/charts/pie-charts", "id_prefix": "pie", "quantity": 6},
+}
+
+THEME_OPTIONS = [
+    ("Feyrouz", "فيْروز", "theme-blue"),
+    ("Yaqout", "يَاقوت", "theme-red"),
+    ("Zumurrud", "زُمُرُّد", "theme-green"),
+    ("Kahraman", "كَهْرَمان", "theme-amber"),
+    ("Amethyst", "أَمِيثِسْت", "theme-purple"),
+]
+
+# Common CSS classes
+SIDEBAR_TOC_CLASSES = "flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
+
+
+# ============================================================================
+# UTILITY FUNCTIONS
+# ============================================================================
 
 
 def create_responsive_display(
     small_screens: str, large_screens: str, breakpoint: int = 3
 ):
-    """Create a responsive display list for different screen sizes.
-
-    Args:
-        small_screens: Display value for small screens
-        large_screens: Display value for large screens
-        breakpoint: Index where display changes (default: 3)
-
-    Returns:
-        List of display values for different breakpoints
-    """
+    """Create a responsive display list for different screen sizes."""
     return [small_screens if i <= breakpoint else large_screens for i in range(6)]
 
 
@@ -37,86 +58,37 @@ def create_border(
     style: str = "dashed",
     width: str = "1.25px",
 ):
-    """Create a consistent border style.
-
-    Args:
-        color_name: Color name from the theme
-        shade: Color shade from 1-12
-        style: Border style (solid, dashed, etc.)
-        width: Border width
-
-    Returns:
-        Formatted border string
-    """
+    """Create a consistent border style."""
     return f"{width} {style} {rx.color(color_name, shade)}"
 
 
 def create_icon(tag: str, size: int = 13):
-    """Create a consistently styled icon.
-
-    Args:
-        tag: Icon name
-        size: Icon size
-
-    Returns:
-        Icon component
-    """
+    """Create a consistently styled icon."""
     return rx.icon(tag=tag, size=size, color=rx.color("slate", 11))
 
 
-def base_footer_responsive(
-    component: rx.Component, small_screens: str, large_screens: str
-):
-    """Create a responsive footer component.
+def create_divider():
+    """Create a consistent divider."""
+    return rx.divider(border_bottom=create_border(), bg="transparent")
 
-    Args:
-        component: Footer component to display
-        small_screens: Display value for small screens
-        large_screens: Display value for large screens
 
-    Returns:
-        Responsive footer component
-    """
-    return rx.box(
-        component,
-        display=create_responsive_display(small_screens, large_screens),
-        width="100%",
-    )
+# ============================================================================
+# COMPONENT BUILDERS
+# ============================================================================
 
 
 def create_meta_item(icon_tag: str, label_text: str, title: Optional[str] = None):
-    """Create a metadata item with icon and label.
-
-    Args:
-        icon_tag: Icon name
-        label_text: Text to display
-        title: Optional title attribute
-
-    Returns:
-        Metadata item component
-    """
+    """Create a metadata item with icon and label."""
     return rx.el.div(
         create_icon(icon_tag),
-        rx.el.label(
-            label_text,
-            class_name="text-sm",
-        ),
+        rx.el.label(label_text, class_name="text-sm"),
         class_name="flex flex-row items-center justify-start gap-x-2",
         title=title,
     )
 
 
 def page_meta(created: str, updated: str, dir_count: int):
-    """Create page metadata component showing creation date, update date, and component count.
-
-    Args:
-        created: Creation date string
-        updated: Last update date string
-        dir_count: Number of components
-
-    Returns:
-        Page metadata component
-    """
+    """Create page metadata component showing creation date, update date, and component count."""
     return rx.el.div(
         create_meta_item("file-plus-2", created, "Created On"),
         create_meta_item("file-pen-line", updated, "Last Update"),
@@ -125,71 +97,24 @@ def page_meta(created: str, updated: str, dir_count: int):
     )
 
 
-def create_pattern_background():
-    """Create a patterned background element.
-
-    Returns:
-        Patterned background component
-    """
+def base_footer_responsive(
+    component: rx.Component, small_screens: str, large_screens: str
+):
+    """Create a responsive footer component."""
     return rx.box(
-        border_left=create_border(),
-        border_right=create_border(),
-        color=rx.color("gray", 3),
-        class_name="h-full p-3 col-start-2 row-span-full row-start-1 max-sm:hidden bg-[size:10px_10px] bg-fixed bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,_transparent_0,_transparent_50%)]",
+        component,
+        display=create_responsive_display(small_screens, large_screens),
+        width="100%",
     )
 
 
-ActiveTab = ClientStateVar.create("active_tab", 0)
+# ============================================================================
+# THEME COMPONENTS
+# ============================================================================
 
 
-def tab_selector(tabs=["Preview", "Code"]):
-    return rx.box(
-        rx.hstack(
-            *[
-                rx.button(
-                    rx.icon(
-                        tag=tab,
-                        color=rx.cond(
-                            ActiveTab.value == i,
-                            rx.color("slate", 12),  # Active text color
-                            rx.color("slate", 10),  # Inactive text color
-                        ),
-                    ),
-                    on_click=[
-                        rx.call_function(ActiveTab.set_value(i)),
-                    ],
-                    aria_disabled="false",
-                    background=rx.cond(
-                        ActiveTab.value == i,
-                        rx.color("gray", 3),  # Active background color
-                        "transparent",  # Inactive background (transparent)
-                    ),
-                    cursor="pointer",
-                    class_name=rx.cond(
-                        ActiveTab.value == i,
-                        # Active tab styling (without color references)
-                        "group inline-flex items-center justify-center whitespace-nowrap py-2 align-middle font-semibold "
-                        "transition-all duration-300 ease-in-out min-w-[32px] "
-                        "gap-1.5 text-xs "
-                        "h-6 w-full rounded-md px-3 drop-shadow sm:w-auto",
-                        # Inactive tab styling (without color references)
-                        "group inline-flex items-center justify-center whitespace-nowrap rounded-lg py-2 align-middle "
-                        "font-semibold transition-all duration-300 ease-in-out "
-                        "min-w-[32px] gap-1.5 text-xs "
-                        "h-6 w-full bg-transparent px-3 sm:w-auto",
-                    ),
-                )
-                for i, tab in enumerate(tabs)
-            ],
-            class_name="inline-flex h-8.5 w-full items-baseline justify-start rounded-lg p-1 sm:w-auto",
-            border=create_border(),
-        )
-    )
-
-
-def theme_option(
-    name: str, arabic_name: str, color_class: str, color_var: str
-) -> rx.Component:
+def _create_theme_option(name: str, arabic_name: str, color_class: str):
+    """Create a single theme option."""
     return rx.popover.close(
         rx.el.div(
             rx.el.button(
@@ -198,7 +123,7 @@ def theme_option(
                 type="button",
             ),
             rx.el.div(
-                style={"backgroundColor": f"var(--{color_var})"},
+                style={"backgroundColor": "var(--chart-2)"},
                 class_name=f"h-2 w-2 rounded {color_class}",
             ),
             on_click=[
@@ -218,7 +143,20 @@ def theme_option(
     )
 
 
+def _create_theme_content():
+    """Create theme selection content."""
+    content_items = []
+    for i, (name, arabic_name, color_class) in enumerate(THEME_OPTIONS):
+        content_items.append(_create_theme_option(name, arabic_name, color_class))
+
+    return rx.box(
+        *content_items,
+        class_name="bg-background w-[160px] flex flex-col text-sm rounded-md shadow-md",
+    )
+
+
 def theme_select_menu():
+    """Create theme selection menu."""
     return rx.box(
         rx.popover.root(
             rx.popover.trigger(
@@ -234,31 +172,7 @@ def theme_select_menu():
                 ),
             ),
             rx.popover.content(
-                rx.box(
-                    theme_option("Feyrouz", "فيْروز", "theme-blue", "chart-2"),
-                    rx.divider(
-                        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
-                        bg="transparent",
-                    ),
-                    theme_option("Yaqout", "يَاقوت", "theme-red", "chart-2"),
-                    rx.divider(
-                        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
-                        bg="transparent",
-                    ),
-                    theme_option("Zumurrud", "زُمُرُّد", "theme-green", "chart-2"),
-                    rx.divider(
-                        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
-                        bg="transparent",
-                    ),
-                    theme_option("Kahraman", "كَهْرَمان", "theme-amber", "chart-2"),
-                    rx.divider(
-                        border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
-                        bg="transparent",
-                    ),
-                    theme_option("Amethyst", "أَمِيثِسْت", "theme-purple", "chart-2"),
-                    class_name="bg-background w-[160px] flex flex-col text-sm rounded-md shadow-md",
-                    border=f"1.25px dashed {rx.color('gray', 4)}",
-                ),
+                _create_theme_content(),
                 side="left",
                 side_offset=15,
                 class_name="items-center bg-transparent !shadow-none !p-0 border-none w-auto overflow-visible font-sans pointer-events-auto",
@@ -276,71 +190,72 @@ def theme_select_menu():
     )
 
 
+# ============================================================================
+# HEADER COMPONENTS
+# ============================================================================
+
+
+def _create_logo():
+    """Create the buridan.UI logo."""
+    return rx.link(
+        rx.box(
+            rx.text(
+                "buridan",
+                font_weight="700",
+                font_size="1rem",
+                letter_spacing="-0.04em",
+            ),
+            rx.text(
+                ".UI",
+                font_size="0.6rem",
+                position="relative",
+                font_weight="600",
+            ),
+            color=rx.color("slate", 12),
+            class_name="flex flex-row items-baseline gap-x-[1px]",
+        ),
+        display=create_responsive_display("flex", "none"),
+        text_decoration="none",
+        href="/",
+    )
+
+
+def _create_header_actions(url: str):
+    """Create header action components."""
+    return rx.el.div(
+        search(),
+        theme_select_menu()
+        if url.startswith("/charts/")
+        else rx.box(class_name="hidden"),
+        rx.box(drawer(), class_name="flex md:hidden"),
+        class_name="flex flex-row gap-x-2",
+    )
+
+
 def create_header(url: str):
-    """Create the page header component.
-
-    Args:
-        url: Current page URL
-
-    Returns:
-        Header component
-    """
-
+    """Create the page header component."""
     return rx.el.div(
         rx.el.label(
             base_content_path_ui(url),
             class_name="text-sm font-bold font-sans flex items-center align-center gap-x-2",
             display=create_responsive_display("none", "flex"),
         ),
-        rx.link(
-            rx.box(
-                rx.text(
-                    "buridan",
-                    font_weight="700",
-                    font_size="1rem",
-                    letter_spacing="-0.04em",
-                ),
-                rx.text(
-                    ".UI",
-                    font_size="0.6rem",
-                    position="relative",
-                    font_weight="600",
-                ),
-                color=rx.color("slate", 12),
-                class_name="flex flex-row items-baseline gap-x-[1px]",
-            ),
-            display=create_responsive_display("flex", "none"),
-            text_decoration="none",
-            href="/",
-        ),
-        rx.el.div(
-            search(),
-            theme_select_menu()
-            if url.startswith("/charts/")
-            else rx.box(class_name="hidden"),
-            rx.box(drawer(), class_name="flex md:hidden"),
-            class_name="flex flex-row gap-x-2",
-        ),
+        _create_logo(),
+        _create_header_actions(url),
         class_name="w-full h-12 px-4 py-3 sticky top-0 left-0 z-[20] flex flex-row justify-between align-center items-center gap-x-2 backdrop-blur-md",
     )
 
 
+# ============================================================================
+# LAYOUT COMPONENTS
+# ============================================================================
+
+
 def create_title_section(page_name: str, meta_component: rx.Component):
-    """Create the title section component.
-
-    Args:
-        page_name: Page title
-        meta_component: Metadata component
-
-    Returns:
-        Title section component
-    """
+    """Create the title section component."""
     return rx.el.div(
         rx.el.div(
-            rx.el.label(
-                page_name,
-                class_name="text-4xl sm:4xl font-bold py-6",
-            ),
+            rx.el.label(page_name, class_name="text-4xl sm:4xl font-bold py-6"),
             meta_component,
             class_name="w-full justify-start flex flex-col pb-9 pl-4",
         ),
@@ -349,11 +264,7 @@ def create_title_section(page_name: str, meta_component: rx.Component):
 
 
 def create_footer_section():
-    """Create the footer section component.
-
-    Returns:
-        Footer section component
-    """
+    """Create the footer section component."""
     return rx.el.div(
         base_footer_responsive(desktop_footer(), "none", "flex"),
         base_footer_responsive(footer(), "flex", "none"),
@@ -362,131 +273,82 @@ def create_footer_section():
     )
 
 
-def generate_reference_links(chart_data, name):
+# ============================================================================
+# TABLE OF CONTENTS COMPONENTS
+# ============================================================================
+
+
+def _generate_chart_links(chart_data: dict, name: str):
+    """Generate chart variant links."""
     return [
         rx.el.a(
-            "Installation",
-            href=f"{chart_data['url']}#{chart_data['id_prefix']}-installation",
-            id=f"{chart_data['id_prefix']}-installation",  # Add ID here
+            f"{name} v{i + 1}",
+            href=f"{chart_data['url']}#{chart_data['id_prefix']}-v{i + 1}",
+            id=f"{chart_data['id_prefix']}-v{i + 1}",
             color=rx.color("slate", 11),
             class_name="cursor-pointer text-sm font-regular hover:underline",
-        ),
-        rx.el.a(
-            "Chart Theme",
-            href=f"{chart_data['url']}#{chart_data['id_prefix']}-theme",
-            id=f"{chart_data['id_prefix']}-theme",  # Add ID here
-            color=rx.color("slate", 11),
-            class_name="cursor-pointer text-sm font-regular hover:underline",
-        ),
-        rx.el.a(
-            "API Reference",
-            href=f"{chart_data['url']}#{chart_data['id_prefix']}-reference",
-            id=f"{chart_data['id_prefix']}-reference",  # Add ID here
-            color=rx.color("slate", 11),
-            class_name="cursor-pointer text-sm font-regular hover:underline",
-        ),
+        )
+        for i in range(chart_data["quantity"])
     ]
 
 
-def table_of_content(name: str):
-    charts = {
-        "Bar Charts": {
-            "url": "/charts/bar-charts",
-            "id_prefix": "bar",
-            "quantity": 10,
-        },
-        "Area Charts": {
-            "url": "/charts/area-charts",
-            "id_prefix": "area",
-            "quantity": 8,
-        },
-        "Line Charts": {
-            "url": "/charts/line-charts",
-            "id_prefix": "line",
-            "quantity": 8,
-        },
-        "Pie Charts": {
-            "url": "/charts/pie-charts",
-            "id_prefix": "pie",
-            "quantity": 6,
-        },
-        # "Doughnut Charts": {
-        #     "url": "/charts/doughnut-charts",
-        #     "id_prefix": "doughnut",
-        #     "quantity": 2,
-        # },
-        # "Radar Charts": {
-        #     "url": "/charts/radar-charts",
-        #     "id_prefix": "radar",
-        #     "quantity": 6,
-        # },
-        # "Scatter Charts": {
-        #     "url": "/charts/scatter-charts",
-        #     "id_prefix": "scatter",
-        #     "quantity": 1,
-        # },
-    }
-
-    if name in charts:
-        chart_data = charts[name]
-        links = [
-            rx.el.a(
-                f"{name} v{i + 1}",
-                href=f"{chart_data['url']}#{chart_data['id_prefix']}-v{i + 1}",
-                id=f"{chart_data['id_prefix']}-v{i + 1}",
-                color=rx.color("slate", 11),
-                class_name="cursor-pointer text-sm font-regular hover:underline",
-            )
-            for i in range(chart_data["quantity"])
-        ]
-        refs = generate_reference_links(chart_data, name)
-    else:
-        links = []
-        refs = []
-
-    return (
-        rx.box(
-            rx.el.div(
-                # border_bottom=f"1.25px dashed {rx.color('gray', 5)}",
-                class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99]",
-            ),
-            rx.box(
-                rx.el.label(
-                    "Examples",
-                    color=rx.color("slate", 12),
-                    class_name="text-sm font-bold",
-                ),
-                *links,
-                rx.el.label(
-                    "API",
-                    color=rx.color("slate", 12),
-                    class_name="text-sm font-bold pt-6",
-                ),
-                *refs,
-                class_name="flex flex-col w-full gap-y-2 p-4",
-            ),
-            height="100vh",
-            class_name="hidden xl:flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky self-start top-8 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
+def _generate_reference_links(chart_data: dict):
+    """Generate API reference links."""
+    references = ["installation", "theme", "reference"]
+    return [
+        rx.el.a(
+            ref.replace("-", " ").title(),
+            href=f"{chart_data['url']}#{chart_data['id_prefix']}-{ref}",
+            id=f"{chart_data['id_prefix']}-{ref}",
+            color=rx.color("slate", 11),
+            class_name="cursor-pointer text-sm font-regular hover:underline",
         )
-        if links and refs
-        else rx.box(
-            height="100vh",
-            class_name="hidden xl:flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem] pt-12",
-        )
+        for ref in references
+    ]
+
+
+def _create_toc_content(chart_links: List):
+    """Create table of contents content."""
+    return rx.box(
+        rx.el.label(
+            "Examples", color=rx.color("slate", 12), class_name="text-sm font-bold"
+        ),
+        *chart_links,
+        class_name="flex flex-col w-full gap-y-2 p-4",
     )
 
 
+def _create_empty_toc():
+    """Create empty table of contents for non-chart pages."""
+    return rx.box(
+        height="100vh",
+        class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} pt-12",
+    )
+
+
+def table_of_content(name: str):
+    """Create table of contents component."""
+    if name not in CHART_CONFIGS:
+        return _create_empty_toc()
+
+    chart_data = CHART_CONFIGS[name]
+    chart_links = _generate_chart_links(chart_data, name)
+
+    return rx.box(
+        rx.el.div(class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99]"),
+        _create_toc_content(chart_links),
+        height="100vh",
+        class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} self-start top-8",
+    )
+
+
+# ============================================================================
+# MAIN TEMPLATE DECORATOR
+# ============================================================================
+
+
 def base(url: str, page_name: str, dir_meta: List[str | int] = []):
-    """Create a base page template.
-
-    Args:
-        url: Current page URL
-        page_name: Page title
-        dir_meta: List containing [created_date, updated_date, dir_count]
-
-    Returns:
-        Decorated function that returns the template
-    """
+    """Create a base page template decorator."""
 
     def decorator(content: Callable[[], List[rx.Component]]):
         @wraps(content)
@@ -495,18 +357,11 @@ def base(url: str, page_name: str, dir_meta: List[str | int] = []):
             contents = content()
 
             # Create metadata component or hidden div
-            if dir_meta:
-                created, updated, dir_count = dir_meta
-                meta = page_meta(created, updated, dir_count)
-            else:
-                meta = rx.el.div(class_name="hidden")
+            meta = page_meta(*dir_meta) if dir_meta else rx.el.div(class_name="hidden")
 
             # Create title section with content items
             content_section = create_title_section(page_name, meta)
-
-            # Add content items to the content section
-            for item in contents:
-                content_section.children.append(item)
+            content_section.children.extend(contents)
 
             # Create the main layout
             return rx.box(

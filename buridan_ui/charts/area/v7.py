@@ -1,6 +1,10 @@
 import reflex as rx
-from buridan_ui.charts.style import info
-from buridan_ui.charts.area.api import AreaChart
+
+from buridan_ui.charts.style import (
+    info,
+    get_tooltip,
+    get_cartesian_grid,
+)
 
 
 def areachart_v7():
@@ -20,16 +24,41 @@ def areachart_v7():
             "Showing total visitors for the last 6 months",
             "start",
         ),
-        (
-            AreaChart(data)
-            .x("month")
-            .series("mobile", color="chart-1", stack_id="a")
-            .series("desktop", color="chart-2", stack_id="a")
-            .tooltip(True)
-            .grid(True)
-            .y_axis()
-            .size("100%", 250)
-        )(),
+        rx.recharts.area_chart(
+            get_tooltip(),
+            get_cartesian_grid(),
+            rx.recharts.area(
+                data_key="mobile",
+                fill="var(--chart-1)",
+                stroke="var(--chart-1)",
+                stack_id="a",
+            ),
+            rx.recharts.area(
+                data_key="desktop",
+                fill="var(--chart-2)",
+                stroke="var(--chart-2)",
+                stack_id="a",
+            ),
+            rx.recharts.x_axis(
+                data_key="month",
+                axis_line=False,
+                tick_size=10,
+                tick_line=False,
+                custom_attrs={"fontSize": "12px"},
+                interval="preserveStartEnd",
+            ),
+            rx.recharts.y_axis(
+                width=30,
+                axis_line=False,
+                min_tick_gap=50,
+                tick_size=10,
+                tick_line=False,
+                custom_attrs={"fontSize": "12px"},
+            ),
+            data=data,
+            width="100%",
+            height=250,
+        ),
         info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

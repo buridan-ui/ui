@@ -1,7 +1,4 @@
-from __future__ import annotations
-
-from reflex.experimental import ClientStateVar
-
+import reflex as rx
 from buridan_ui.config import VERSION
 from buridan_ui.static.scripts import count_python_files_in_folder
 from buridan_ui.templates.sidemenu.scripts import SideBarScript
@@ -11,164 +8,31 @@ from buridan_ui.static.routes import (
     GettingStartedRoutes,
 )
 
-import reflex as rx
+
+# ============================================================================
+# CONSTANTS & STYLES
+# ============================================================================
+
+ICON_BOX_STYLE = {
+    "_hover": {"background": rx.color("gray", 3)},
+    "border": f"0.81px solid {rx.color('gray', 5)}",
+    "class_name": "flex flex-row cursor-pointer rounded-md flex items-center justify-center align-center py-1 px-1",
+}
+
+SIDEBAR_CLASSES = "flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
 
 
-ACTIVE_SECTION = ClientStateVar.create("active_section", None)
+# ============================================================================
+# UTILITY FUNCTIONS
+# ============================================================================
 
 
-def get_icon_box_style():
-    """Generate consistent icon box styling."""
-    return {
-        "_hover": {"background": rx.color("gray", 3)},
-        "border": f"0.81px solid {rx.color('gray', 5)}",
-        "class_name": "flex flex-row cursor-pointer rounded-md flex items-center justify-center align-center py-1 px-1",
-    }
-
-
-def create_icon(tag, size=11):
-    """Create a consistently styled icon."""
-    return rx.icon(
-        tag=tag,
-        size=size,
-        color=rx.color("slate", 11),
-        _hover={"color": rx.color("slate", 12)},
-    )
-
-
-def _menu_settings(title: str, icon: str, is_theme=False):
-    """Create a menu settings item."""
-    icon_box_style = get_icon_box_style()
-
-    if not is_theme:
-        icon_component = rx.link(
-            rx.box(
-                rx.el.div(
-                    rx.icon(
-                        "github",
-                        size=11,
-                        color=rx.color("slate", 12),
-                    ),
-                    rx.el.p(
-                        "GitHub",
-                        class_name="text-sm",
-                        color=rx.color("slate", 12),
-                    ),
-                    class_name="flex flex-row items-center gap-x-2",
-                ),
-                **icon_box_style,
-            ),
-            href="https://github.com/buridan-ui/ui",
-            is_external=True,
-        )
-
-    else:
-        icon_component = rx.box(
-            rx.color_mode.icon(
-                light_component=rx.el.div(
-                    rx.icon(
-                        "moon",
-                        size=11,
-                        color=rx.color("slate", 12),
-                    ),
-                    rx.el.p(
-                        "Dark",
-                        class_name="text-sm",
-                        color=rx.color("slate", 12),
-                    ),
-                    class_name="flex flex-row items-center gap-x-2",
-                ),
-                dark_component=rx.el.div(
-                    rx.icon(
-                        "sun",
-                        size=11,
-                        color=rx.color("slate", 12),
-                    ),
-                    rx.el.p(
-                        "Light",
-                        class_name="text-sm",
-                        color=rx.color("slate", 12),
-                    ),
-                    class_name="flex flex-row items-center gap-x-2",
-                ),
-            ),
-            title="Toggle theme",
-            on_click=rx.toggle_color_mode,
-            **icon_box_style,
-        )
-
-    return rx.el.div(
-        rx.el.label(title, class_name="text-sm font-regular"),
-        rx.el.div(icon_component),
-        class_name="w-full flex flex-row justify-between align-center items-center",
-    )
-
-
-def side_bar_wrapper(title: str, component, state_key: str):
-    """Create a sidebar section with toggle functionality."""
-
-    return rx.el.div(
-        rx.el.div(
-            rx.el.div(
-                rx.el.label(
-                    title, color=rx.color("slate", 12), class_name="text-sm font-bold"
-                ),
-                (
-                    rx.hover_card.root(
-                        rx.hover_card.trigger(
-                            rx.icon(
-                                tag="info",
-                                class_name="size-4 cursor-pointer",
-                                color=rx.color("slate", 11),
-                            ),
-                        ),
-                        rx.hover_card.content(
-                            rx.el.div(
-                                rx.el.label(
-                                    "Buridan Pro (coming soon)",
-                                    class_name="text-xs font-bold",
-                                ),
-                                rx.el.label(
-                                    "Unlock advanced components and features with a Pro subscription.",
-                                    class_name="text-xs",
-                                ),
-                                class_name="flex flex-col gap-y-2",
-                            ),
-                            size="1",
-                            width="250px",
-                        ),
-                    )
-                    if state_key == "pro"
-                    else rx.spacer()
-                ),
-                class_name="flex flex-row items-center gap-x-2",
-            ),
-            # ... sidemenu toggles have weird behaviour - toggling a section messes the width of hte main content on smaller screens.False
-            # ... ... requires triage!!
-            # rx.el.div(
-            #     rx.box(
-            #         rx.cond(
-            #             (ACTIVE_SECTION.value == state_key)
-            #             | (ACTIVE_SECTION.value == None),  # noqa: E711
-            #             create_icon("plus"),
-            #             create_icon("minus"),
-            #         ),
-            #         **get_icon_box_style(),
-            #         on_click=rx.cond(
-            #             ACTIVE_SECTION.value == state_key,
-            #             rx.call_function(ACTIVE_SECTION.set_value(None)),
-            #             rx.call_function(ACTIVE_SECTION.set_value(state_key)),
-            #         ),
-            #     ),
-            # ),
-            class_name="w-full flex flex-row justify-between align-center items-center",
-        ),
-        rx.cond(
-            (ACTIVE_SECTION.value == state_key) | (ACTIVE_SECTION.value == None),  # noqa: E711
-            component,
-            rx.el.div(class_name="hidden"),
-        ),
-        class_name="flex flex-col w-full gap-y-2 p-4",
+def create_section_description(text_parts):
+    """Create a consistent section description."""
+    return rx.el.label(
+        *text_parts,
+        color=rx.color("gray", 12),
+        class_name="text-sm font-light pt-1 pb-2",
     )
 
 
@@ -196,96 +60,84 @@ def create_sidebar_menu_items(routes: list[dict[str, str]]):
     )
 
 
-def create_section_description(text_parts):
-    """Create a consistent section description."""
-    return rx.el.label(
-        *text_parts,
-        color=rx.color("gray", 12),
-        class_name="text-sm font-light pt-1 pb-2",
-    )
+# ============================================================================
+# MENU COMPONENTS
+# ============================================================================
 
 
-def create_divider():
-    """Create a consistent divider."""
-    return rx.divider(
-        border_bottom=f"1.25px dashed {rx.color('gray', 5)}", bg="transparent"
-    )
-
-
-def sidemenu(in_drawer=False):
-    """Main sidemenu component."""
-
-    # Display logic for responsive design
-    sidebar_display = (
-        ["none" if i <= 3 else "flex" for i in range(6)] if not in_drawer else "flex"
-    )
-
-    # Content for each section
-    site_settings_content = rx.vstack(
-        create_section_description(
-            [
-                "The visual appearance of the site can be customized using the theme settings."
-            ]
+def _create_github_link():
+    """Create GitHub link component."""
+    return rx.link(
+        rx.box(
+            rx.el.div(
+                rx.icon("github", size=11, color=rx.color("slate", 12)),
+                rx.el.p("GitHub", class_name="text-sm", color=rx.color("slate", 12)),
+                class_name="flex flex-row items-center gap-x-2",
+            ),
+            **ICON_BOX_STYLE,
         ),
-        _menu_settings("Light/Dark Mode", "", True),
-        # download_site_source(),
-        _menu_settings("Source", "github"),
-        spacing="2",
+        href="https://github.com/buridan-ui/ui",
+        is_external=True,
     )
 
-    getting_started_content = rx.el.div(
-        create_section_description(
-            ["Quickly set up and get started with the basics of buridan/ui."]
+
+def _create_theme_toggle():
+    """Create theme toggle component."""
+    return rx.box(
+        rx.color_mode.icon(
+            light_component=rx.el.div(
+                rx.icon("moon", size=11, color=rx.color("slate", 12)),
+                rx.el.p("Dark", class_name="text-sm", color=rx.color("slate", 12)),
+                class_name="flex flex-row items-center gap-x-2",
+            ),
+            dark_component=rx.el.div(
+                rx.icon("sun", size=11, color=rx.color("slate", 12)),
+                rx.el.p("Light", class_name="text-sm", color=rx.color("slate", 12)),
+                class_name="flex flex-row items-center gap-x-2",
+            ),
         ),
+        title="Toggle theme",
+        on_click=rx.toggle_color_mode,
+        **ICON_BOX_STYLE,
+    )
+
+
+def _menu_settings(title: str, icon: str, is_theme=False):
+    """Create a menu settings item."""
+    icon_component = _create_theme_toggle() if is_theme else _create_github_link()
+
+    return rx.el.div(
+        rx.el.label(title, class_name="text-sm font-regular"),
+        rx.el.div(icon_component),
+        class_name="w-full flex flex-row justify-between align-center items-center",
+    )
+
+
+# ============================================================================
+# SECTION COMPONENTS
+# ============================================================================
+
+
+def side_bar_wrapper(title: str, component: rx.Component):
+    """Create a sidebar section with toggle functionality."""
+    return rx.el.div(
         rx.el.div(
-            create_sidebar_menu_items(GettingStartedRoutes),
-            class_name="flex flex-row h-full w-full gap-x-2",
-        ),
-        class_name="flex flex-col p-0 m-0",
-    )
-
-    chart_count = count_python_files_in_folder("buridan_ui/charts")
-    chart_components_content = rx.el.div(
-        create_section_description(
-            [
-                "A collection of ",
-                rx.el.span(
-                    f"{chart_count} ",
-                    class_name="text-sm font-bold",
-                    color=rx.color("slate", 12),
+            rx.el.div(
+                rx.el.label(
+                    title, color=rx.color("slate", 12), class_name="text-sm font-bold"
                 ),
-                "chart components to help visualize data, build dashboards, and more.",
-            ]
+                class_name="flex flex-row items-center gap-x-2",
+            ),
+            class_name="w-full flex flex-row justify-between align-center items-center",
         ),
-        rx.el.div(
-            create_sidebar_menu_items(ChartRoutes),
-            class_name="flex flex-row h-full w-full gap-x-2",
-        ),
-        class_name="flex flex-col p-0 m-0",
+        component,
+        class_name="flex flex-col w-full gap-y-2 p-4",
     )
 
-    pantry_count = count_python_files_in_folder("buridan_ui/pantry")
-    pantry_components_content = rx.el.div(
-        create_section_description(
-            [
-                "A set of ",
-                rx.el.span(
-                    f"{pantry_count} ",
-                    class_name="text-sm font-bold",
-                    color=rx.color("slate", 12),
-                ),
-                "components to help build and customize your interface with ease.",
-            ]
-        ),
-        rx.el.div(
-            create_sidebar_menu_items(PantryRoutes),
-            class_name="flex flex-row h-full w-full gap-x-2",
-        ),
-        class_name="flex flex-col p-0 m-0",
-    )
 
-    # Header component
-    header = rx.el.div(
+def _create_header():
+    """Create the sidebar header."""
+    return rx.el.div(
         rx.el.div(
             rx.link(
                 rx.box(
@@ -316,13 +168,101 @@ def sidemenu(in_drawer=False):
         ),
         class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99] backdrop-blur-md",
     )
+
+
+def _create_site_settings_content():
+    """Create site settings section content."""
+    return rx.vstack(
+        create_section_description(
+            [
+                "The visual appearance of the site can be customized using the theme settings."
+            ]
+        ),
+        _menu_settings("Light/Dark Mode", "", True),
+        _menu_settings("Source", "github"),
+        spacing="2",
+    )
+
+
+def _create_getting_started_content():
+    """Create getting started section content."""
+    return rx.el.div(
+        create_section_description(
+            ["Quickly set up and get started with the basics of buridan/ui."]
+        ),
+        rx.el.div(
+            create_sidebar_menu_items(GettingStartedRoutes),
+            class_name="flex flex-row h-full w-full gap-x-2",
+        ),
+        class_name="flex flex-col p-0 m-0",
+    )
+
+
+def _create_chart_components_content():
+    """Create chart components section content."""
+    chart_count = count_python_files_in_folder("buridan_ui/charts")
+    return rx.el.div(
+        create_section_description(
+            [
+                "A collection of ",
+                rx.el.span(
+                    f"{chart_count} ",
+                    class_name="text-sm font-bold",
+                    color=rx.color("slate", 12),
+                ),
+                "chart components to help visualize data, build dashboards, and more.",
+            ]
+        ),
+        rx.el.div(
+            create_sidebar_menu_items(ChartRoutes),
+            class_name="flex flex-row h-full w-full gap-x-2",
+        ),
+        class_name="flex flex-col p-0 m-0",
+    )
+
+
+def _create_pantry_components_content():
+    """Create pantry components section content."""
+    pantry_count = count_python_files_in_folder("buridan_ui/pantry")
+    return rx.el.div(
+        create_section_description(
+            [
+                "A set of ",
+                rx.el.span(
+                    f"{pantry_count} ",
+                    class_name="text-sm font-bold",
+                    color=rx.color("slate", 12),
+                ),
+                "components to help build and customize your interface with ease.",
+            ]
+        ),
+        rx.el.div(
+            create_sidebar_menu_items(PantryRoutes),
+            class_name="flex flex-row h-full w-full gap-x-2",
+        ),
+        class_name="flex flex-col p-0 m-0",
+    )
+
+
+# ============================================================================
+# MAIN COMPONENT
+# ============================================================================
+
+
+def sidemenu(in_drawer=False):
+    """Main sidemenu component."""
+    # Display logic for responsive design
+    sidebar_display = (
+        ["none" if i <= 3 else "flex" for i in range(6)] if not in_drawer else "flex"
+    )
+
     # Main content
     content = rx.el.div(
-        header,
-        side_bar_wrapper("Site Settings", site_settings_content, "site_settings"),
-        side_bar_wrapper("Getting Started", getting_started_content, "getting_started"),
-        side_bar_wrapper("Chart Components", chart_components_content, "chart"),
-        side_bar_wrapper("Pantry Components", pantry_components_content, "pantry"),
+        _create_header(),
+        side_bar_wrapper("Site Settings", _create_site_settings_content()),
+        side_bar_wrapper("Getting Started", _create_getting_started_content()),
+        side_bar_wrapper("Chart Components", _create_chart_components_content()),
+        side_bar_wrapper("Pantry Components", _create_pantry_components_content()),
         class_name="flex flex-col w-full h-full pt-12",
     )
 
@@ -330,7 +270,7 @@ def sidemenu(in_drawer=False):
     return rx.scroll_area(
         content,
         height="100vh",
-        class_name="flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
+        class_name=SIDEBAR_CLASSES,
         display=sidebar_display,
         on_mount=rx.call_script(SideBarScript),
     )

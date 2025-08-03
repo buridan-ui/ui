@@ -7,5 +7,3 @@
 .web
 __pycache__/
 assets/external/
-buridan_ui/private/
-buridan_ui/pro/

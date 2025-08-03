@@ -1,5 +1,8 @@
 import reflex as rx
-from buridan_ui.charts.bar.api import BarChart
+from buridan_ui.charts.style import (
+    get_tooltip,
+    get_x_axis,
+)
 
 
 def barchart_v10():
@@ -16,26 +19,31 @@ def barchart_v10():
     activities = ["Running", "Cycling"]
     chart_colors = ["var(--chart-1)", "var(--chart-2)"]
 
-    def create_chart(active_key: str):
-        chart = (
-            BarChart(sport)
-            .x("date")
-            .size("100%", 250)
-            .config(bar_category_gap="20%")
-            .tooltip(True)
+    def create_alternating_chart(active_key: str):
+        return rx.recharts.bar_chart(
+            get_tooltip(),
+            *[
+                rx.recharts.bar(
+                    is_animation_active=False,
+                    radius=4,
+                    data_key=key,
+                    fill=color,
+                    custom_attrs={
+                        "opacity": rx.cond(
+                            key == active_key,
+                            "0.25",
+                            "1",
+                        )
+                    },
+                )
+                for key, color in zip(activities, chart_colors)
+            ],
+            get_x_axis("date"),
+            data=sport,
+            width="100%",
+            height=250,
+            bar_category_gap="20%",
         )
-
-        for key, color in zip(activities, chart_colors):
-            opacity = rx.cond(key == active_key, "0.25", "1")
-            chart.series(
-                key=key,
-                fill=color,
-                radius=4,
-                is_animation_active=False,
-                custom_attrs={"opacity": opacity},
-            )
-
-        return chart()
 
     return rx.box(
         rx.tabs.root(
@@ -50,7 +58,7 @@ def barchart_v10():
             ),
             *[
                 rx.tabs.content(
-                    create_chart(active),
+                    create_alternating_chart(active),
                     value=str(i + 1),
                     margin_top="-5px",
                 )

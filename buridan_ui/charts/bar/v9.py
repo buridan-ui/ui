@@ -1,5 +1,8 @@
 import reflex as rx
-from buridan_ui.charts.bar.api import BarChart
+from buridan_ui.charts.style import (
+    get_tooltip,
+    get_x_axis,
+)
 
 
 def barchart_v9():
@@ -11,26 +14,36 @@ def barchart_v9():
         {"month": "May", "desktop": 209, "mobile": 130, "tablet": 80},
     ]
 
-    legend_labels = {
-        "desktop": "Desktop",
-        "mobile": "Mobile",
-        "tablet": "Tablet",
-    }
-
-    colors = {
-        "desktop": "chart-1",
-        "mobile": "chart-2",
-        "tablet": "chart-3",
-    }
-
     return rx.box(
-        BarChart(data)
-        .x("month")
-        .series("desktop", fill=colors["desktop"], radius=4)
-        .series("mobile", fill=colors["mobile"], radius=4)
-        .series("tablet", fill=colors["tablet"], radius=4)
-        .tooltip(True)
-        .legend(legend_labels, position="top")
-        .size("100%", 250)(),
+        rx.hstack(
+            rx.foreach(
+                [
+                    ["Desktop", "var(--chart-1)"],
+                    ["Mobile", "var(--chart-2)"],
+                    ["Tablet", "var(--chart-3)"],
+                ],
+                lambda key: rx.hstack(
+                    rx.box(class_name="w-3 h-3 rounded-sm", bg=key[1]),
+                    rx.text(
+                        key[0],
+                        class_name="text-sm font-semibold",
+                        color=rx.color("slate", 11),
+                    ),
+                    align="center",
+                    spacing="2",
+                ),
+            ),
+            class_name="py-4 px-4 flex w-full flex justify-center gap-8",
+        ),
+        rx.recharts.bar_chart(
+            get_tooltip(),
+            rx.recharts.bar(data_key="desktop", fill="var(--chart-1)", radius=4),
+            rx.recharts.bar(data_key="mobile", fill="var(--chart-2)", radius=4),
+            rx.recharts.bar(data_key="tablet", fill="var(--chart-3)", radius=4),
+            get_x_axis("month"),
+            data=data,
+            width="100%",
+            height=250,
+        ),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

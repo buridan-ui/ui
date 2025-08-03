@@ -1,7 +1,11 @@
 import reflex as rx
 
-from buridan_ui.charts.style import info
-from buridan_ui.charts.bar.api import BarChart
+from buridan_ui.charts.style import (
+    info,
+    get_tooltip,
+    get_cartesian_grid,
+    get_x_axis,
+)
 
 
 def barchart_v6():
@@ -17,7 +21,7 @@ def barchart_v6():
     modified_data = [
         {
             **item,
-            "stroke": "var(--chart-3)" if item.get("active", False) else "none",
+            "stroke": ("var(--chart-3)" if item.get("active", False) else "none"),
         }
         for item in data
     ]
@@ -29,18 +33,25 @@ def barchart_v6():
             "Showing total visitors for the last 6 months",
             "start",
         ),
-        BarChart(modified_data)
-        .x("month")
-        .series(
-            "desktop",
-            fill="chart-1",
-            stack_id="a",
-            radius=6,
-            stroke="stroke",
-            stroke_width=3,
-        )
-        .size("100%", 250)
-        .config(margin={"top": 25}, bar_size=25)(),
+        rx.recharts.bar_chart(
+            get_cartesian_grid(),
+            get_tooltip(),
+            rx.recharts.bar(
+                data_key="desktop",
+                fill="var(--chart-1)",
+                stack_id="a",
+                radius=6,
+                stroke="stroke",
+                stroke_width=3,
+            ),
+            rx.recharts.y_axis(type_="number", hide=True),
+            get_x_axis("month"),
+            data=modified_data,
+            width="100%",
+            height=250,
+            margin={"top": 25},
+            bar_size=25,
+        ),
         info("Trending up by 5.2% this month", "2", "January - June 2024", "start"),
         class_name="w-full flex flex-col gap-y-4 p-1 [&_.recharts-tooltip-item-separator]:w-full",
     )

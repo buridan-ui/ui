@@ -18,7 +18,6 @@ SITE_LOGO_URL = "https://raw.githubusercontent.com/buridan-ui/ui/refs/heads/main
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, "..", ".."))
 
-LOCAL_BASE_PRO_PATH = os.path.join(project_root, NAME, NAME, "pro")
 LOCAL_BASE_CHART_PATH = os.path.join(project_root, NAME, NAME, "charts")
 LOCAL_BASE_PANTRY_PATH = os.path.join(project_root, NAME, NAME, "pantry")
 
@@ -26,7 +25,7 @@ BASE_PANTRY_PATH = BASE_GITHUB_URL + "pantry/"
 BASE_CHART_PATH = BASE_GITHUB_URL + "charts/"
 
 
-SITE_THEME = "dark"
+SITE_THEME = "system"
 FONT_FAMILY = "JetBrains Mono,ui-monospace,monospace"
 
 SITE_META_TAGS = [

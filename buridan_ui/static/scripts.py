@@ -1,10 +1,6 @@
 import os
 
-from buridan_ui.config import (
-    LOCAL_BASE_CHART_PATH,
-    LOCAL_BASE_PANTRY_PATH,
-    LOCAL_BASE_PRO_PATH,
-)
+from buridan_ui.config import LOCAL_BASE_CHART_PATH, LOCAL_BASE_PANTRY_PATH
 from buridan_ui.wrappers.base.utils.meta import get_file_times
 
 
@@ -28,14 +24,10 @@ def count_python_files_in_folder(folder_name) -> int:
 
 
 def get_directory_meta_data():
-    from buridan_ui.export import config
+    from buridan_ui.export import ExportConfig
 
-    charts, pantry, pro = {}, {}, {}
-
-    # Get the pro directories metadata
-    for directory in config.PRO.keys():
-        full_path = os.path.join(LOCAL_BASE_PRO_PATH, directory, "")
-        pro[directory] = get_file_times(full_path)
+    config = ExportConfig()
+    charts, pantry = {}, {}
 
     # Get the chart directories metadata
     for directory in config.CHARTS.keys():
@@ -48,10 +40,8 @@ def get_directory_meta_data():
         pantry[directory] = get_file_times(full_path)
 
     # Write the metadata to static/meta.py
-    with open("meta.py", "w") as file:
-        file.write(
-            f"""ChartMetaData = {charts}\nPantryMetaData = {pantry}\nProMetaData = {pro}"""
-        )
+    with open("buridan_ui/static/meta.py", "w") as file:
+        file.write(f"""ChartMetaData = {charts}\nPantryMetaData = {pantry}\n""")
 
 
 if __name__ == "__main__":
