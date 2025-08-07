@@ -95,7 +95,7 @@ wheels = [
 
 [[package]]
 name = "buridan-ui"
-version = "0.7.0b2"
+version = "0.7.1"
 source = { virtual = "." }
 dependencies = [
     { name = "black" },
@@ -109,7 +109,7 @@ requires-dist = [
     { name = "black", specifier = ">=25.1.0" },
     { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "reflex", specifier = ">=0.8.3" },
+    { name = "reflex", specifier = ">=0.8.5" },
 ]
 
 [[package]]
@@ -170,20 +170,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/36/f4/c6e662dade71f56cd2f3735141b265c3c79293c109549c1e6933b0651ffc/exceptiongroup-1.3.0-py3-none-any.whl", hash = "sha256:4d111e6e0c13d0644cad6ddaa7ed0261a0b36971f6d23e7ec9b4b9097da78a10", size = 16674, upload-time = "2025-05-10T17:42:49.33Z" },
-]
-
-[[package]]
-name = "fastapi"
-version = "0.115.12"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pydantic" },
-    { name = "starlette" },
-    { name = "typing-extensions" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/f4/55/ae499352d82338331ca1e28c7f4a63bfd09479b16395dce38cf50a39e2c2/fastapi-0.115.12.tar.gz", hash = "sha256:1e2c2a2646905f9e83d32f04a3f86aff4a286669c6c950ca95b5fd68c2602681", size = 295236, upload-time = "2025-03-23T22:55:43.822Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/50/b3/b51f09c2ba432a576fe63758bddc81f78f0c6309d9e5c10d194313bf021e/fastapi-0.115.12-py3-none-any.whl", hash = "sha256:e94613d6c05e27be7ffebdd6ea5f388112e5e430c8f7d6494a9d1d88d43e814d", size = 95164, upload-time = "2025-03-23T22:55:42.101Z" },
 ]
 
 [[package]]
@@ -822,12 +808,11 @@ wheels = [
 
 [[package]]
 name = "reflex"
-version = "0.8.3"
+version = "0.8.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "alembic" },
     { name = "click" },
-    { name = "fastapi" },
     { name = "granian", extra = ["reload"] },
     { name = "httpx" },
     { name = "jinja2" },
@@ -841,12 +826,13 @@ dependencies = [
     { name = "reflex-hosting-cli" },
     { name = "rich" },
     { name = "sqlmodel" },
+    { name = "starlette" },
     { name = "typing-extensions" },
     { name = "wrapt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ef/28/af635f4ccc3183b3f9680eaa189f434e512d3574ad010baff57129c82bc1/reflex-0.8.3.tar.gz", hash = "sha256:4e2e92a19394705dd713a303c06a523c885538a021fcafa760bcf83580be46a7", size = 591422, upload-time = "2025-07-21T21:20:31.592Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/99/13/5a553b1080ca4b767f5fc67fb4f297551f51196166a9c26c85daa10368e3/reflex-0.8.5.tar.gz", hash = "sha256:a7ed7a7c70d2264be0e80799684dc4c04b764b940f92ad5f8ae8bc12208cf7c0", size = 581615, upload-time = "2025-08-04T20:19:50.146Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/08/e3/eed54f0e4a8d38f5e74185e8338c5a0d89731b3d2bed5cdda9da61ddd115/reflex-0.8.3-py3-none-any.whl", hash = "sha256:667dcfb3f6b57a52e7819b5a63f4c847148dd3aa91a0897241c25f9c1c4c7d45", size = 887718, upload-time = "2025-07-21T21:20:29.587Z" },
+    { url = "https://files.pythonhosted.org/packages/65/03/dbe3326cd856f56a203860458808bfae62a25d83273e5d4872d1208766ff/reflex-0.8.5-py3-none-any.whl", hash = "sha256:4edbe0d0e4fae29a55291b553514c75aba4ea13c2b217aa50078983282f50bd1", size = 876131, upload-time = "2025-08-04T20:19:48.15Z" },
 ]
 
 [[package]]
@@ -960,14 +946,15 @@ wheels = [
 
 [[package]]
 name = "starlette"
-version = "0.46.2"
+version = "0.47.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ce/20/08dfcd9c983f6a6f4a1000d934b9e6d626cff8d2eeb77a89a68eef20a2b7/starlette-0.46.2.tar.gz", hash = "sha256:7f7361f34eed179294600af672f565727419830b54b7b084efe44bb82d2fccd5", size = 2580846, upload-time = "2025-04-13T13:56:17.942Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/04/57/d062573f391d062710d4088fa1369428c38d51460ab6fedff920efef932e/starlette-0.47.2.tar.gz", hash = "sha256:6ae9aa5db235e4846decc1e7b79c4f346adf41e9777aebeb49dfd09bbd7023d8", size = 2583948, upload-time = "2025-07-20T17:31:58.522Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8b/0c/9d30a4ebeb6db2b25a841afbb80f6ef9a854fc3b41be131d249a977b4959/starlette-0.46.2-py3-none-any.whl", hash = "sha256:595633ce89f8ffa71a015caed34a5b2dc1c0cdb3f0f1fbd1e69339cf2abeec35", size = 72037, upload-time = "2025-04-13T13:56:16.21Z" },
+    { url = "https://files.pythonhosted.org/packages/f7/1f/b876b1f83aef204198a42dc101613fefccb32258e5428b5f9259677864b4/starlette-0.47.2-py3-none-any.whl", hash = "sha256:c5847e96134e5c5371ee9fac6fdf1a67336d5815e09eb2a01fdb57a351ef915b", size = 72984, upload-time = "2025-07-20T17:31:56.738Z" },
 ]
 
 [[package]]
