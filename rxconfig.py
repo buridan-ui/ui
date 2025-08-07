@@ -17,7 +17,7 @@ tailwind_config = {
 
 config = rx.Config(
     telemetry=False,
-    app_name="buridan_ui",
+    app_name="src",
     tailwind=tailwind_config,
     plugins=[rx.plugins.TailwindV3Plugin()],
     show_built_with_reflex=False,

@@ -146,7 +146,7 @@ export BURIDAN_CHARTS=bar,line,pie
 
 ```python
 # In your main app file
-from buridan_ui.export_system import export_app
+from src.export_system import export_app
 
 app = rx.App()
 export_app(app)  # This handles everything
@@ -155,7 +155,7 @@ export_app(app)  # This handles everything
 ### Route Filtering (if needed elsewhere)
 
 ```python
-from buridan_ui.export_system import filter_routes
+from src.export_system import filter_routes
 
 # Filter routes based on dev settings
 filtered_routes = filter_routes(your_routes_list)
@@ -269,7 +269,7 @@ Selected charts: bar, line
 
 The system provides descriptive error messages:
 ```
-Failed to import card_v1 from buridan_ui.pantry.cards.v1: No module named 'buridan_ui.pantry.cards.v1'
+Failed to import card_v1 from src.pantry.cards.v1: No module named 'buridan_ui.pantry.cards.v1'
 ```
 
 ## Best Practices
