@@ -72,7 +72,7 @@ class ExportConfig:
             "onboardings": ComponentConfig([1], "onboardings"),
             "payments": ComponentConfig([1], "payments"),
             "popups": ComponentConfig(range(1, 3), "popups"),
-            "pricing": ComponentConfig(range(1, 3), "pricing"),
+            "pricing": ComponentConfig(range(1, 4), "pricing"),
             "prompts": ComponentConfig(range(1, 3), "prompt"),
             "subscribe": ComponentConfig(range(1, 4), "subscribe"),
             "tables": ComponentConfig(range(1, 5), "tables"),

@@ -1,141 +1,162 @@
 import reflex as rx
 
-check = """
-<svg class="shrink-0 mt-0.5 size-4 text-blue-600 dark:text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-"""
-
-
-freeSpecs = ["1 user", "Plan features", "Product & site support"]
-startUpSpecs = [
-    "Up to 5 users",
-    "Access to premium features",
-    "Email support",
-    "Basic integrations",
-]
-teamSpecs = [
-    "Up to 20 users",
-    "Advanced features",
-    "Priority email support",
-    "Collaboration tools",
-    "Team management features",
-    "Advanced integrations",
-]
-enterpriseSpecs = [
-    "Unlimited users",
-    "All features included",
-    "24/7 dedicated support",
-    "Customizable integrations",
-    "Advanced security features",
-    "SLA support",
-    "Onboarding assistance",
-]
-
-
-def pricingHeader(
-    is_popular: bool,
-    name: str,
-    price: str,
-    subtitle: str,
-) -> rx.Component:
-    return rx.vstack(
-        rx.text(name, size="1", color=rx.color("slate", 11)),
-        rx.heading(price, size="7", color=rx.color("slate", 12)),
-        rx.text(subtitle, size="1", color=rx.color("slate", 11)),
-        spacing="2",
-        width="100%",
-        align="center",
-        text_align="center",
-    )
-
-
-def pricingSpecs(specs: list[str]) -> rx.Component:
-    return rx.vstack(
-        *[
-            rx.hstack(
-                rx.html(check),
-                rx.text(
-                    f"{spec}",
-                    size="1",
-                    weight="bold",
-                    color=rx.color("slate", 11),
-                ),
-                align="center",
-            )
-            for spec in specs
-        ],
-        width="100%",
-    )
-
-
-def pricingButton(style: str) -> rx.Component:
-    return rx.button("Sign Up", width="100%", padding="0.75em", variant=style)
-
-
-def tierStack(
-    is_popular: bool,
-    name: str,
-    price: str,
-    subtitle: str,
-    style: str,
-    spec_list: list[str],
-) -> rx.Component:
-    return rx.vstack(
-        pricingHeader(is_popular, name, price, subtitle),
-        rx.divider(height="1em", opacity="0"),
-        pricingSpecs(spec_list),
-        rx.divider(height="1em", opacity="0"),
-        rx.spacer(),
-        pricingButton(style),
-        padding="1em",
-        border=(
-            f"1px solid {rx.color('gray', 4)}"
-            if not is_popular
-            else f"1px solid {rx.color('blue', 6)}"
-        ),
-        border_radius="8px",
-        flex="1 1 200px",
-        align="stretch",
-        height="50vh",
-    )
-
 
 def pricing_v2():
-    return rx.hstack(
-        tierStack(
-            False,
-            "FREE",
-            "Free",
-            "No pricing. Forever free.",
-            "outline",
-            freeSpecs,
+    return rx.box(
+        # Heading
+        rx.box(
+            rx.text(
+                "Pricing",
+                class_name="text-base/7 font-semibold",
+                color=rx.color("slate", 12),
+            ),
+            rx.text(
+                "Choose the right plan for you",
+                class_name="mt-2 text-5xl font-semibold tracking-tight text-balance sm:text-6xl",
+                color=rx.color("slate", 12),
+            ),
+            class_name="mx-auto max-w-4xl text-center",
         ),
-        tierStack(
-            True,
-            "STARTUP",
-            "39 USD",
-            "All the basics for starting a new business.",
-            "solid",
-            startUpSpecs,
+        rx.text(
+            "Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer loyalty, and driving sales.",
+            class_name="mx-auto mt-6 max-w-2xl text-center text-lg font-medium text-pretty sm:text-xl/8",
+            color=rx.color("slate", 11),
         ),
-        tierStack(
-            False,
-            "TEAM",
-            "59 USD",
-            "Everything you need for a growing business.",
-            "outline",
-            startUpSpecs,
+        # Pricing Cards
+        rx.box(
+            # Hobby Tier
+            rx.box(
+                rx.text(
+                    "Hobby",
+                    id_="tier-hobby",
+                    class_name="text-base/7 font-semibold",
+                    color=rx.color("slate", 12),
+                ),
+                rx.box(
+                    rx.text(
+                        "$29",
+                        class_name="text-5xl font-semibold tracking-tight",
+                        color=rx.color("slate", 12),
+                    ),
+                    rx.text(
+                        "/month",
+                        class_name="text-base",
+                        color=rx.color("slate", 10),
+                    ),
+                    class_name="mt-4 flex items-baseline gap-x-2",
+                ),
+                rx.text(
+                    "The perfect plan if you're just getting started with our product.",
+                    class_name="mt-6 text-base/7",
+                    color=rx.color("slate", 11),
+                ),
+                rx.unordered_list(
+                    *[
+                        rx.text(
+                            rx.el.svg(
+                                rx.el.path(
+                                    d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z",
+                                    clip_rule="evenodd",
+                                    fill_rule="evenodd",
+                                ),
+                                viewbox="0 0 20 20",
+                                fill="currentColor",
+                                class_name="h-6 w-5 flex-none",
+                                color=rx.color("slate", 12),
+                            ),
+                            text,
+                            class_name="flex gap-x-3",
+                            color=rx.color("slate", 11),
+                        )
+                        for text in [
+                            "25 products",
+                            "Up to 10,000 subscribers",
+                            "Advanced analytics",
+                            "24-hour support response time",
+                        ]
+                    ],
+                    role="list",
+                    class_name="mt-8 space-y-3 text-sm/6 sm:mt-10",
+                ),
+                rx.el.button(
+                    "Get started today",
+                    class_name="mt-8 w-full rounded-md border py-3 px-4 sm:mt-10",
+                    border_color=rx.color("slate", 6),
+                    color=rx.color("slate", 12),
+                    background="transparent",
+                ),
+                class_name="rounded-3xl p-8 ring-1 sm:mx-8 sm:p-10 lg:mx-0",
+                border=f"1px solid {rx.color('slate', 6)}",
+                background="transparent",
+            ),
+            # Enterprise Tier
+            rx.box(
+                rx.text(
+                    "Enterprise",
+                    id_="tier-enterprise",
+                    class_name="text-base/7 font-semibold",
+                    color=rx.color("slate", 12),
+                ),
+                rx.box(
+                    rx.text(
+                        "$99",
+                        class_name="text-5xl font-semibold tracking-tight",
+                        color=rx.color("slate", 12),
+                    ),
+                    rx.text(
+                        "/month",
+                        class_name="text-base",
+                        color=rx.color("slate", 10),
+                    ),
+                    class_name="mt-4 flex items-baseline gap-x-2",
+                ),
+                rx.text(
+                    "Dedicated support and infrastructure for your company.",
+                    class_name="mt-6 text-base/7",
+                    color=rx.color("slate", 11),
+                ),
+                rx.unordered_list(
+                    *[
+                        rx.text(
+                            rx.el.svg(
+                                rx.el.path(
+                                    d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z",
+                                    clip_rule="evenodd",
+                                    fill_rule="evenodd",
+                                ),
+                                viewbox="0 0 20 20",
+                                fill="currentColor",
+                                class_name="h-6 w-5 flex-none",
+                                color=rx.color("slate", 12),
+                            ),
+                            text,
+                            class_name="flex gap-x-3",
+                            color=rx.color("slate", 11),
+                        )
+                        for text in [
+                            "Unlimited products",
+                            "Unlimited subscribers",
+                            "Advanced analytics",
+                            "Dedicated support representative",
+                            "Marketing automations",
+                            "Custom integrations",
+                        ]
+                    ],
+                    role="list",
+                    class_name="mt-8 space-y-3 text-sm/6 sm:mt-10",
+                ),
+                rx.el.button(
+                    "Get started today",
+                    class_name="mt-8 w-full rounded-md border py-3 px-4 sm:mt-10",
+                    border_color=rx.color("slate", 6),
+                    color=rx.color("slate", 12),
+                    background="transparent",
+                ),
+                class_name="rounded-3xl p-8 shadow-2xl ring-1 sm:p-10",
+                border=f"1px solid {rx.color('slate', 6)}",
+                background="transparent",
+            ),
+            class_name="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 lg:max-w-4xl lg:grid-cols-2",
         ),
-        tierStack(
-            False,
-            "ENTERPRISE",
-            "199 USD",
-            "Advanced features for scaling your business.",
-            "outline",
-            enterpriseSpecs,
-        ),
-        align="center",
-        wrap="wrap",
-        padding="1em",
-        width="100%",
-        min_height="60vh",
+        class_name="relative isolate px-6 py-24 sm:py-32 lg:px-8",
     )
