@@ -2,11 +2,11 @@
 name = "buridan-ui"
 version = "0.7.1"
 description = "Buridan UI – A Reflex-based UI component library"
-authors = [{ name = "Ahmad Hakim", email = "ahmad@reflex.dev" }]
+authors = [{ name = "Ahmad Al Hakim", email = "ahmad@reflex.dev" }]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "reflex>=0.8.5",
+    "reflex>=0.8.8",
     "pre-commit>=4.2.0",
     "black>=25.1.0",
     "pytest>=8.3.5",
