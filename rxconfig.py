@@ -1,25 +1,21 @@
 import reflex as rx
+from reflex.plugins.shared_tailwind import TailwindConfig
 
-tailwind_config = {
-    "plugins": ["@tailwindcss/typography"],
-    "theme": {
+tailwind_config = TailwindConfig(
+    plugins=["@tailwindcss/typography"],
+    theme={
         "extend": {
             "colors": {
                 "background": "var(--background)",
                 "foreground": "var(--foreground)",
-                "border": "var(--border)",
-                "pattern-ui": "var(--pattern-ui)",
-                "pattern-lab": "var(--pattern-lab)",
             },
         }
     },
-}
+)
 
 config = rx.Config(
-    telemetry=False,
     app_name="src",
-    tailwind=tailwind_config,
-    plugins=[rx.plugins.TailwindV3Plugin()],
+    plugins=[rx.plugins.TailwindV4Plugin(config=tailwind_config)],
     show_built_with_reflex=False,
     disable_plugins=["reflex.plugins.sitemap.SitemapPlugin"],
 )

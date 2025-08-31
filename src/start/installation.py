@@ -39,7 +39,7 @@ You can now easily integrate pantry components within your app and personalize t
 """
 
 
-@base("/getting-started/installation", "Installation")
+@base(url="/getting-started/installation", page_name="Installation")
 def installation():
     return [
         rx.box(
