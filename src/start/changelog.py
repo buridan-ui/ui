@@ -48,6 +48,18 @@ def changelog():
         rx.box(
             changelog_wrapper(
                 title="Updates & Site Enhancements",
+                date="August 31, 2025",
+                version="buridan/ui v0.7.2",
+                log="""
+- Introduced new Pantry component: **Timeline v2**. [#50](https://github.com/buridan-ui/ui/pull/50)
+- Added updated & new **Pricing components** for expanded options. [#51](https://github.com/buridan-ui/ui/pull/51)
+- Renamed project structure folder from `source` to `src`. [#52](https://github.com/buridan-ui/ui/pull/52)
+- Performed general **chore & cleanup** tasks. [#53](https://github.com/buridan-ui/ui/pull/53)
+- Released a **minor patch to the landing page**. [#54](https://github.com/buridan-ui/ui/pull/54)
+""",
+            ),
+            changelog_wrapper(
+                title="Updates & Site Enhancements",
                 date="August 3, 2025",
                 version="buridan/ui v0.7.1",
                 log="""
