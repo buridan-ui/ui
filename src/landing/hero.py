@@ -145,7 +145,7 @@ def products_showcase() -> rx.Component:
                     text_decoration="none",
                     color=rx.color("slate", 12),
                     _hover={"color": rx.color("slate", 12)},
-                    class_name="w-full",
+                    class_name="w-full cursor-pointer",
                 ),
                 rx.link(
                     rx.el.button(
@@ -158,7 +158,7 @@ def products_showcase() -> rx.Component:
                     text_decoration="none",
                     color=rx.color("slate", 12),
                     _hover={"color": rx.color("slate", 12)},
-                    class_name="w-full",
+                    class_name="w-full cursor-pointer",
                 ),
                 class_name="flex flex-col w-full sm:flex-row items-center gap-y-3 md:gap-x-3 text-sm font-semibold",
             )
