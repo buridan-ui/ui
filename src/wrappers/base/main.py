@@ -10,6 +10,8 @@ from src.templates.footer.footer import desktop_footer, footer
 from src.templates.sidemenu.sidemenu import sidemenu
 from src.wrappers.base.utils.routes import base_content_path_ui
 from src.landing.hero import doc_icon_svg
+from src.components.github import github_link
+from src.components.theme import theme_button
 
 
 # ============================================================================
@@ -225,9 +227,11 @@ def _create_header_actions(url: str):
     """Create header action components."""
     return rx.el.div(
         search(),
-        theme_select_menu()
+        rx.box(theme_select_menu(), class_name="hidden md:flex")
         if url.startswith("/charts/")
         else rx.box(class_name="hidden"),
+        github_link(),
+        theme_button(),
         rx.box(drawer(), class_name="flex md:hidden"),
         class_name="flex flex-row gap-x-2",
     )
@@ -243,7 +247,7 @@ def create_header(url: str):
         ),
         _create_logo(),
         _create_header_actions(url),
-        class_name="w-full h-12 px-4 py-3 sticky top-0 left-0 z-[20] flex flex-row justify-between align-center items-center gap-x-2 backdrop-blur-md",
+        class_name="w-full h-12 px-4 py-3 sticky top-0 left-0 z-[99] flex flex-row justify-between align-center items-center gap-x-2 backdrop-blur-md",
     )
 
 

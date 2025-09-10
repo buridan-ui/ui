@@ -259,7 +259,7 @@ def sidemenu(in_drawer=False):
     # Main content
     content = rx.el.div(
         _create_header(),
-        side_bar_wrapper("Site Settings", _create_site_settings_content()),
+        # side_bar_wrapper("Site Settings", _create_site_settings_content()),
         side_bar_wrapper("Getting Started", _create_getting_started_content()),
         side_bar_wrapper("Chart Components", _create_chart_components_content()),
         side_bar_wrapper("Pantry Components", _create_pantry_components_content()),

@@ -1,6 +1,8 @@
 import reflex as rx
 
 from ..templates.search.search import search
+from src.components.github import github_link
+from src.components.theme import theme_button
 
 
 def doc_icon_svg(fill: str, background: str) -> rx.Component:
@@ -62,7 +64,7 @@ def navbar():
             class_name="flex flex-row items-baseline gap-x-8",
         ),
         rx.box(
-            search(),
+            rx.box(search(), class_name="hidden lg:flex"),
             rx.link(
                 rx.el.button(
                     rx.color_mode_cond(
@@ -70,7 +72,7 @@ def navbar():
                         doc_icon_svg(fill="black", background="white"),
                     ),
                     "Build",
-                    class_name="rounded-md flex items-center gap-x-2 text-sm font-semibold",
+                    class_name="rounded-md flex items-center gap-x-2 text-sm font-semibold cursor-pointer",
                     border=f"1px solid {rx.color('gray', 3)}",
                     _hover={"background": rx.color("gray", 3)},
                     style={
@@ -84,7 +86,9 @@ def navbar():
                 color=rx.color("slate", 12),
                 _hover={"color": rx.color("slate", 12)},
             ),
-            class_name="flex flex-row items-center gap-x-4",
+            github_link(),
+            theme_button(),
+            class_name="flex flex-row items-center gap-x-2",
         ),
         class_name="w-full h-10 absolute top-0 left-0 px-4 py-6 items-center justify-between flex flex-row",
     )
@@ -116,7 +120,7 @@ def sub_header():
             letter_spacing="-0.01em",
             line_height="1.8",
         ),
-        class_name="w-full max-w-[750px] flex text-left md:text-center p-[12px] md:p-[40px 32px]",
+        class_name="w-full max-w-[750px] flex text-left sm:text-center p-[12px] md:p-[40px 32px]",
     )
 
 
@@ -137,7 +141,7 @@ def products_showcase() -> rx.Component:
                 rx.link(
                     rx.el.button(
                         "Get Started",
-                        class_name="py-3 px-4 rounded-md w-full",
+                        class_name="py-3 px-4 rounded-md w-full cursor-pointer",
                         background=rx.color("slate", 12),
                         color=rx.color("slate", 1),
                     ),
@@ -145,12 +149,12 @@ def products_showcase() -> rx.Component:
                     text_decoration="none",
                     color=rx.color("slate", 12),
                     _hover={"color": rx.color("slate", 12)},
-                    class_name="w-full cursor-pointer",
+                    class_name="w-full",
                 ),
                 rx.link(
                     rx.el.button(
                         "Learn Reflex",
-                        class_name="py-3 px-4 rounded-md w-full",
+                        class_name="py-3 px-4 rounded-md w-full cursor-pointer",
                         border=f"1px solid {rx.color('gray', 3)}",
                         _hover={"background": rx.color("gray", 3)},
                     ),
@@ -158,7 +162,7 @@ def products_showcase() -> rx.Component:
                     text_decoration="none",
                     color=rx.color("slate", 12),
                     _hover={"color": rx.color("slate", 12)},
-                    class_name="w-full cursor-pointer",
+                    class_name="w-full",
                 ),
                 class_name="flex flex-col w-full sm:flex-row items-center gap-y-3 md:gap-x-3 text-sm font-semibold",
             )
