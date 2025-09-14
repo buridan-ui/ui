@@ -34,16 +34,31 @@ def create_footer_item(title: str, routes: list[dict[str, str]]):
     )
 
 
+def title():
+    return rx.box(
+        rx.text(
+            "buridan",
+            font_weight="700",
+            font_size="1rem",
+            letter_spacing="-0.04em",
+        ),
+        rx.text(
+            ".UI",
+            font_size="0.45rem",
+            position="relative",
+            font_weight="600",
+        ),
+        class_name="flex flex-row items-baseline gap-x-[1px]",
+    )
+
+
 def footer():
     return rx.vstack(
         create_footer_item("Home", GettingStartedRoutes),
         create_footer_item("Charts UI", ChartRoutes),
         create_footer_item("Pantry UI", PantryRoutes),
         rx.vstack(
-            rx.el.label(
-                "buridan/ui",
-                class_name="text-sm font-bold",
-            ),
+            title(),
             rx.el.label(
                 "© 2024 - 2025 Ahmad Hakim. All rights reserved.",
                 class_name="text-sm font-light",
@@ -58,10 +73,7 @@ def footer():
 def desktop_footer():
     return rx.vstack(
         rx.vstack(
-            rx.el.label(
-                "buridan/ui",
-                class_name="text-sm font-bold",
-            ),
+            title(),
             rx.el.label(
                 "© 2024 - 2025 Ahmad Hakim. All rights reserved.",
                 class_name="text-sm font-light",

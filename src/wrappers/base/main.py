@@ -142,7 +142,8 @@ def _create_theme_option(name: str, arabic_name: str, color_class: str):
                 ),
             ],
             class_name="flex flex-row gap-x-2 items-center px-3 py-2 w-full justify-between hover:px-4 transition-[padding] duration-200 ease-out cursor-pointer",
-        )
+        ),
+        class_name="cursor-pointer",
     )
 
 
@@ -169,7 +170,7 @@ def theme_select_menu():
                         style={"backgroundColor": "var(--chart-2)"},
                         class_name=f"h-2 w-2 rounded-full {Chart_Theme.value.to(str)}",
                     ),
-                    class_name="text-sm px-2 font-semibold flex flex-row justify-between items-center gap-x-4 rounded-md",
+                    class_name="text-sm px-2 font-semibold flex flex-row justify-between items-center gap-x-4 rounded-md cursor-pointer",
                     type="button",
                     color=rx.color("slate", 11),
                 ),
@@ -190,6 +191,7 @@ def theme_select_menu():
         },
         border=f"1px solid {rx.color('gray', 3)}",
         class_name="rounded-md",
+        _hover={"color": rx.color("slate", 12), "background": rx.color("gray", 3)},
     )
 
 
@@ -333,7 +335,7 @@ def _create_reflex_build_link():
                 align="start",
                 class_name="w-full",
             ),
-            class_name="rounded-lg w-full text-left p-3",
+            class_name="rounded-lg w-full text-left p-3 cursor-pointer",
             border=f"1px solid {rx.color('gray', 3)}",
             _hover={"background": rx.color("gray", 3)},
         ),
@@ -351,7 +353,9 @@ def _create_toc_content(chart_links: List):
     """Create table of contents content."""
     return rx.box(
         rx.el.label(
-            "Examples", color=rx.color("slate", 12), class_name="text-sm font-bold"
+            "Table of Content",
+            color=rx.color("slate", 12),
+            class_name="text-sm font-bold",
         ),
         *chart_links,
         _create_reflex_build_link(),
