@@ -8,23 +8,13 @@ from src.static.routes import (
     GettingStartedRoutes,
 )
 
-
-# ============================================================================
-# CONSTANTS & STYLES
-# ============================================================================
-
 ICON_BOX_STYLE = {
     "_hover": {"background": rx.color("gray", 3)},
     "border": f"0.81px solid {rx.color('gray', 5)}",
     "class_name": "flex flex-row cursor-pointer rounded-md flex items-center justify-center align-center py-1 px-1",
 }
 
-SIDEBAR_CLASSES = "flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
-
-
-# ============================================================================
-# UTILITY FUNCTIONS
-# ============================================================================
+SIDEBAR_CLASSES = "hidden xl:flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
 
 
 def create_section_description(text_parts):
@@ -58,11 +48,6 @@ def create_sidebar_menu_items(routes: list[dict[str, str]]):
         rx.foreach(routes, item),
         class_name="w-full flex flex-col gap-y-0",
     )
-
-
-# ============================================================================
-# MENU COMPONENTS
-# ============================================================================
 
 
 def _create_github_link():
@@ -111,11 +96,6 @@ def _menu_settings(title: str, icon: str, is_theme=False):
         rx.el.div(icon_component),
         class_name="w-full flex flex-row justify-between align-center items-center",
     )
-
-
-# ============================================================================
-# SECTION COMPONENTS
-# ============================================================================
 
 
 def side_bar_wrapper(title: str, component: rx.Component):
@@ -244,22 +224,12 @@ def _create_pantry_components_content():
     )
 
 
-# ============================================================================
-# MAIN COMPONENT
-# ============================================================================
-
-
 def sidemenu(in_drawer=False):
     """Main sidemenu component."""
-    # Display logic for responsive design
-    sidebar_display = (
-        ["none" if i <= 3 else "flex" for i in range(6)] if not in_drawer else "flex"
-    )
 
     # Main content
     content = rx.el.div(
         _create_header(),
-        # side_bar_wrapper("Site Settings", _create_site_settings_content()),
         side_bar_wrapper("Getting Started", _create_getting_started_content()),
         side_bar_wrapper("Chart Components", _create_chart_components_content()),
         side_bar_wrapper("Pantry Components", _create_pantry_components_content()),
@@ -271,6 +241,5 @@ def sidemenu(in_drawer=False):
         content,
         height="100vh",
         class_name=SIDEBAR_CLASSES,
-        display=sidebar_display,
         on_mount=rx.call_script(SideBarScript),
     )
