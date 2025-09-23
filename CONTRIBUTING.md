@@ -106,11 +106,9 @@ PantryRoutes = [
 ]
 ```
 
-### 2. Add metadata in the corresponding metadata file:
+### 4. Update Metadata
 
-The metadata for components is managed through a special script in `export.py`. To update metadata after adding new components:
-
-### Updating Metadata
+The metadata for components is managed through a script. To update metadata after adding new components:
 
 1. Temporarily comment out the three export generation lines at the end of `export.py`:
    ```python
@@ -120,10 +118,10 @@ The metadata for components is managed through a special script in `export.py`. 
    # charts_exports_config = generate_chart_exports()
    ```
 
-Then, go to the `staic/scripts.py` file and run the python```get_directory_meta_data()``` function. 
-This will update the `static/meta.py` file with new meta data for all files and folders.
+2. In `src/static/scripts.py`, run the `get_directory_meta_data()` function. 
+This updates `src/static/meta.py` with new metadata for all files and folders.
 
-Make sure to uncomment out the exports after you run the script.
+3. Make sure to uncomment the export generation lines after you run the script.
 
 
 ## Adding Charts

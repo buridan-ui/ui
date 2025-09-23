@@ -278,7 +278,7 @@ Failed to import card_v1 from src.pantry.cards.v1: No module named 'buridan_ui.p
 2. **Version Management**: Use ranges for consecutive versions, lists for specific versions
 3. **Configuration First**: Always update configuration before adding files
 4. **Test in Dev Mode**: Use development mode to test individual components
-5. **Document Changes**: Update this README when adding new patterns
+5. **Document Changes**: Update this document when adding new patterns
 
 ## Migration Guide
 
