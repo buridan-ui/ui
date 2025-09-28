@@ -2,7 +2,6 @@ from functools import wraps
 from typing import Callable, List, Optional
 
 import reflex as rx
-from reflex.experimental import ClientStateVar
 
 from src.templates.search.search import search
 from src.templates.drawer.drawer import drawer
@@ -15,25 +14,12 @@ from src.components.theme import theme_button
 from src.config_generator import get_component_config
 from src.templates.navbar import doc_navbar
 
-# ============================================================================
-# CLIENT STATE VARIABLES
-# ============================================================================
-
-Chart_Theme = ClientStateVar.create("chart_theme", "")
 
 # ============================================================================
 # CONSTANTS & CONFIGURATION
 # ============================================================================
 
 COMPONENT_CONFIGS = get_component_config()
-
-THEME_OPTIONS = [
-    ("Feyrouz", "فيْروز", "theme-blue"),
-    ("Yaqout", "يَاقوت", "theme-red"),
-    ("Zumurrud", "زُمُرُّد", "theme-green"),
-    ("Kahraman", "كَهْرَمان", "theme-amber"),
-    ("Amethyst", "أَمِيثِسْت", "theme-purple"),
-]
 
 # Common CSS classes
 SIDEBAR_TOC_CLASSES = "flex flex-col max-w-[18rem] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
@@ -108,90 +94,6 @@ def base_footer_responsive(
 
 
 # ============================================================================
-# THEME COMPONENTS
-# ============================================================================
-
-
-def _create_theme_option(name: str, arabic_name: str, color_class: str):
-    """Create a single theme option."""
-    return rx.popover.close(
-        rx.el.div(
-            rx.el.button(
-                f"{name} {arabic_name}",
-                class_name="w-full text-left",
-                type="button",
-            ),
-            rx.el.div(
-                style={"backgroundColor": "var(--chart-2)"},
-                class_name=f"h-2 w-2 rounded {color_class}",
-            ),
-            on_click=[
-                rx.call_function(Chart_Theme.set_value(color_class).to(str)),
-                rx.call_script(
-                    """
-                    document.querySelectorAll('.recharts-wrapper').forEach(chart => {
-                      chart.style.display = 'none';
-                      void chart.offsetHeight;
-                      chart.style.display = '';
-                    });
-                    """
-                ),
-            ],
-            class_name="flex flex-row gap-x-2 items-center px-3 py-2 w-full justify-between hover:px-4 transition-[padding] duration-200 ease-out cursor-pointer",
-        ),
-        class_name="cursor-pointer",
-    )
-
-
-def _create_theme_content():
-    """Create theme selection content."""
-    content_items = []
-    for i, (name, arabic_name, color_class) in enumerate(THEME_OPTIONS):
-        content_items.append(_create_theme_option(name, arabic_name, color_class))
-
-    return rx.box(
-        *content_items,
-        class_name="bg-background w-[160px] flex flex-col text-sm rounded-md shadow-md",
-    )
-
-
-def theme_select_menu():
-    """Create theme selection menu."""
-    return rx.box(
-        rx.popover.root(
-            rx.popover.trigger(
-                rx.el.button(
-                    "Chart Theme",
-                    rx.el.div(
-                        style={"backgroundColor": "var(--chart-2)"},
-                        class_name=f"h-2 w-2 rounded-full {Chart_Theme.value.to(str)}",
-                    ),
-                    class_name="text-sm px-2 font-semibold flex flex-row justify-between items-center gap-x-4 rounded-md cursor-pointer",
-                    type="button",
-                    color=rx.color("slate", 11),
-                ),
-            ),
-            rx.popover.content(
-                _create_theme_content(),
-                side="left",
-                side_offset=15,
-                class_name="items-center bg-transparent !shadow-none !p-0 border-none w-auto overflow-visible font-sans pointer-events-auto",
-            ),
-        ),
-        style={
-            "display": "inline-flex",
-            "height": "1.925rem",
-            "align_items": "baseline",
-            "justify_content": "flex-start",
-            "padding": "0.25rem",
-        },
-        border=f"1px solid {rx.color('gray', 3)}",
-        class_name="rounded-md",
-        _hover={"color": rx.color("slate", 12), "background": rx.color("gray", 3)},
-    )
-
-
-# ============================================================================
 # HEADER COMPONENTS
 # ============================================================================
 
@@ -224,10 +126,10 @@ def _create_logo():
 def _create_header_actions(url: str):
     """Create header action components."""
     return rx.el.div(
+        # rx.box(theme_select_menu(), class_name="hidden md:flex")
+        # if url.startswith("/charts/")
+        # else rx.box(class_name="hidden"),
         search(),
-        rx.box(theme_select_menu(), class_name="hidden md:flex")
-        if url.startswith("/charts/")
-        else rx.box(class_name="hidden"),
         github_link(),
         theme_button(),
         rx.box(drawer(), class_name="flex md:hidden"),
@@ -405,7 +307,7 @@ def base(url: str, page_name: str, dir_meta: List[str | int] = []):
             content_section.children.extend(contents)
 
             return rx.box(
-                doc_navbar(),
+                doc_navbar(url=url),
                 rx.scroll_area(
                     rx.box(
                         sidemenu(),

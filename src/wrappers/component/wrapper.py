@@ -6,7 +6,7 @@ import reflex as rx
 
 from reflex.components.datadisplay.code import Theme
 from reflex.experimental import ClientStateVar
-from src.wrappers.base.main import Chart_Theme
+from src.templates.navbar import Chart_Theme
 
 import random
 import string
