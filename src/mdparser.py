@@ -33,7 +33,7 @@ markdown_component_map = {
                 "code": {"background": "transparent !important"},
             },
             background="transparent !important",
-            class_name="rounded-md shadow-sm !bg-transparent",
+            class_name="rounded-md !bg-transparent",
             border=f"1px dashed {rx.color('gray', 5)}",
         ),
         rx.el.button(

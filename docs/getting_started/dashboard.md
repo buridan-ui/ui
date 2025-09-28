@@ -1,8 +1,3 @@
-import reflex as rx
-from src.wrappers.base.main import base
-from src.start.style import markdown_component_map
-
-md_content = """
 # 1. Introduction
 This walkthrough helps you scaffold the foundational layout for a dashboard-style Reflex app. While dashboards vary in content and complexity, their layout structure is almost always the same:
 
@@ -17,9 +12,7 @@ This guide walks through building that exact foundation — a reusable layout sk
 
 To begin, create a new Reflex project using the CLI:
 
-```bash
-reflex init --name app
-```
+--show_code(project_setup_init_example)--
 
 When prompted, select: **Blank Reflex App**
 This will generate the following project structure:
@@ -36,9 +29,7 @@ This will generate the following project structure:
 ```
 
 To run the development server and see the app in your browser, use:
-```bash
-reflex run
-```
+--show_code(project_setup_run_example)--
 
 This will start a local server, usually at http://localhost:3000, where you can preview your dashboard as you build it.
 
@@ -62,71 +53,17 @@ app/
 
 We’ll start by building the top-level layout component that wraps all other parts.
 
-```python
-# app/layout/layout.py
-
-import reflex as rx
-from app.layout.sidebar import sidebar
-from app.layout.content_header import content_header
-
-def dashboard_layout() -> rx.Component:
-    return rx.box(
-        sidebar(),
-        rx.scroll_area(
-            content_header(),
-            class_name=(
-                "flex flex-col w-full gap-y-2 align-start z-[10] pt-12 "
-                "[&_.rt-ScrollAreaScrollbar]:mt-[4rem] "
-                "[&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
-            ),
-            height=["100%" if i == 0 else "100vh" for i in range(6)],
-        ),
-        class_name="w-[100%] h-[100vh] gap-x-0 flex flex-row",
-    )
-```
+--show_code(dashboard_layout_example)--
 
 Then in your `app.py`, use it as the root of your page:
 
-```pyhton
-# app/app.py
-
-import reflex as rx
-from app.layout.layout import dashboard_layout
-
-def index() -> rx.Component:
-    return dashboard_layout()
-
-app = rx.App()
-app.add_page(index)
-
-```
+--show_code(app_py_example)--
 
 # 4. Building the Sidebar
 
 The sidebar is a key part of the dashboard layout. It typically contains navigation, branding, or user context and stays fixed on the left side of the screen. We'll start by creating a reusable `sidebar()` component inside `app/layout/sidebar.py`.
 
-```python
-# app/layout/sidebar.py
-
-import reflex as rx
-from app.layout.sidebar_header import sidebar_header
-
-def sidebar() -> rx.Component:
-    return rx.scroll_area(
-        sidebar_header(),
-        rx.box(
-            # Sidebar content (e.g., nav links) goes here
-            class_name="flex flex-col w-full h-full pt-12 px-2",
-        ),
-        class_name=(
-            "flex flex-col max-w-[300px] w-full h-[100vh] gap-y-2 align-start "
-            "sticky top-0 left-0 z-[10] "
-            "[&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] "
-            "[&_.rt-ScrollAreaScrollbar]:mt-[4rem] "
-            "[&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
-        ),
-    )
-```
+--show_code(sidebar_example)--
 
 - `rx.scroll_area(...)` lets the sidebar scroll independently if its content exceeds the viewport height.
 - `sidebar_header()` is a separate component that we'll define next — it's used for a logo, app title, or profile section.
@@ -144,17 +81,7 @@ The sidebar header sits at the top of the sidebar and remains fixed while the re
 
 Here's the component definition:
 
-```python
-# app/layout/sidebar_header.py
-
-import reflex as rx
-
-def sidebar_header() -> rx.Component:
-    return rx.box(
-        # You can add a logo, app title, or user info here
-        class_name="w-full h-12 p-2 absolute top-0 left-0 z-[99]",
-    )
-```
+--show_code(sidebar_header_example)--
 
 Once this header is in place, your sidebar becomes more polished and ready for interactive content. Next, we’ll focus on the main content area, including its own sticky header and scrollable body.
 
@@ -165,17 +92,7 @@ Just like the sidebar has a sticky top section, the main content area also benef
 
 Here’s the header component:
 
-```python
-# app/layout/content_header.py
-
-import reflex as rx
-
-def content_header() -> rx.Component:
-    return rx.box(
-        # You can add breadcrumbs, titles, or action buttons here
-        class_name="w-full h-12 p-2 absolute top-0 left-0 z-[99]",
-    )
-```
+--show_code(content_header_example)--
 
 This header is used inside the scroll area of your `dashboard_layout()`. This ensures the content header stays in view as users scroll down the main area of the dashboard. Next, we’ll create the actual main content section — where all your page content, cards, tables, and graphs will appear.
 
@@ -185,14 +102,7 @@ With the layout now complete, this is where you’ll add the actual content of y
 
 For example, if you have a chart or a card component, you would import it and place it like this:
 
-```python
-rx.scroll_area(
-    content_header(),
-    my_chart_component(),
-    my_table_component(),
-    ...
-)
-```
+--show_code(main_content_section_example)--
 
 # 8. Final Words
 
@@ -208,16 +118,3 @@ From here, you can:
 This foundation keeps your layout logic clean and separate from your business logic — which means faster development and easier maintenance.
 
 Happy building! 🚀
-
-
-"""
-
-
-@base("/getting-started/dashboard", "Dashboard Walkthrough")
-def dashboard():
-    return [
-        rx.box(
-            rx.markdown(md_content, component_map=markdown_component_map),
-            class_name="p-4",
-        )
-    ]

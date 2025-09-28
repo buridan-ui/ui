@@ -2,8 +2,7 @@ import os
 import inspect
 import importlib
 import reflex as rx
-from typing import Callable, Dict, List, Any, Optional
-from dataclasses import dataclass
+from typing import Callable, Dict, List, Any
 
 from src.config import (
     BASE_PANTRY_PATH,
@@ -16,31 +15,9 @@ from src.wrappers.component.wrapper import (
     component_wrapper,
 )
 from src.wrappers.base.main import base
-
-
-# ============================================================================
-# CONFIGURATION DATA STRUCTURES
-# ============================================================================
-
-
-@dataclass
-class ComponentConfig:
-    """Configuration for a component or chart type."""
-
-    versions: range | List[int]
-    func_prefix: str
-    flexgen_url: str = ""
-    has_api_reference: bool = False
-
-
-@dataclass
-class RouteConfig:
-    """Configuration for a static route."""
-
-    path: str
-    component: Callable
-    title: str
-    dir_meta: Optional[List] = None
+from src.docs.docs_generator import generate_docs_routes
+from src.types import RouteConfig, ComponentConfig
+from src.landing.hero import hero
 
 
 class ExportConfig:
@@ -114,48 +91,13 @@ class ExportConfig:
 
     def _init_getting_started_routes(self):
         """Initialize all getting started route configurations."""
-        # Import all getting started components
-        from src.landing.hero import hero
-        from src.start.buridan import buridan
-        from src.start.theming import theming
-        from src.start.charting import charting
-        from src.start.dashboard import dashboard
-        from src.start.installation import installation
-        from src.start.introduction import introduction
-        from src.start.changelog import changelog
-        from src.start.clientstate import client_state_var
+        docs_routes = generate_docs_routes()
 
-        self.STATIC_ROUTES = [
-            RouteConfig("/", hero, "Buridan Stack"),
-            RouteConfig(
-                "/getting-started/who-is-buridan",
-                buridan,
-                "Who Is Buridan - Buridan UI",
-            ),
-            RouteConfig(
-                "/getting-started/changelog", changelog, "Changelog - Buridan UI"
-            ),
-            RouteConfig(
-                "/getting-started/introduction",
-                introduction,
-                "Introduction - Buridan UI",
-            ),
-            RouteConfig(
-                "/getting-started/installation",
-                installation,
-                "Installation - Buridan UI",
-            ),
-            RouteConfig("/getting-started/theming", theming, "Theming - Buridan UI"),
-            RouteConfig("/getting-started/charting", charting, "Charting - Buridan UI"),
-            RouteConfig(
-                "/getting-started/dashboard", dashboard, "Dashboard - Buridan UI"
-            ),
-            RouteConfig(
-                "/getting-started/client-state-var",
-                client_state_var,
-                "ClientStateVar - Buridan UI",
-            ),
-        ]
+        # Add the landing page explicitly
+        landing_page_route = RouteConfig("/", hero, "Buridan Stack")
+        docs_routes.insert(0, landing_page_route)  # Add to the beginning of the list
+
+        self.STATIC_ROUTES = docs_routes
 
     def _parse_dev_selections(self):
         """Parse development selections from environment variables."""
@@ -474,7 +416,7 @@ class ApplicationExporter:
         """Add all static routes from configuration."""
         for route_config in self.config.STATIC_ROUTES:
             self._add_page(
-                app, route_config.component(), route_config.path, route_config.title
+                app, route_config.component, route_config.path, route_config.title
             )
 
     def _add_page(
