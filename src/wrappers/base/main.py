@@ -12,6 +12,7 @@ from src.wrappers.base.utils.routes import base_content_path_ui
 from src.landing.hero import doc_icon_svg
 from src.components.github import github_link
 from src.components.theme import theme_button
+from src.config_generator import get_component_config
 from src.templates.navbar import doc_navbar
 
 # ============================================================================
@@ -24,12 +25,7 @@ Chart_Theme = ClientStateVar.create("chart_theme", "")
 # CONSTANTS & CONFIGURATION
 # ============================================================================
 
-CHART_CONFIGS = {
-    "Bar Charts": {"url": "/charts/bar-charts", "id_prefix": "bar", "quantity": 10},
-    "Area Charts": {"url": "/charts/area-charts", "id_prefix": "area", "quantity": 8},
-    "Line Charts": {"url": "/charts/line-charts", "id_prefix": "line", "quantity": 8},
-    "Pie Charts": {"url": "/charts/pie-charts", "id_prefix": "pie", "quantity": 6},
-}
+COMPONENT_CONFIGS = get_component_config()
 
 THEME_OPTIONS = [
     ("Feyrouz", "فيْروز", "theme-blue"),
@@ -285,17 +281,17 @@ def create_footer_section():
 # ============================================================================
 
 
-def _generate_chart_links(chart_data: dict, name: str):
-    """Generate chart variant links."""
+def _generate_component_links(component_data: dict, name: str):
+    """Generate component variant links."""
+    base_name = name.replace(" Charts", "")
     return [
         rx.el.a(
-            f"{name} v{i + 1}",
-            href=f"{chart_data['url']}#{chart_data['id_prefix']}-v{i + 1}",
-            id=f"{chart_data['id_prefix']}-v{i + 1}",
+            f"{base_name} v{i + 1}",
+            href=f"#{component_data['id_prefix']}-v{i + 1}",
             color=rx.color("slate", 11),
             class_name="cursor-pointer text-sm font-regular hover:underline",
         )
-        for i in range(chart_data["quantity"])
+        for i in range(component_data["quantity"])
     ]
 
 
@@ -349,7 +345,7 @@ def _create_reflex_build_link():
     )
 
 
-def _create_toc_content(chart_links: List):
+def _create_toc_content(component_links: List):
     """Create table of contents content."""
     return rx.box(
         rx.el.label(
@@ -357,7 +353,7 @@ def _create_toc_content(chart_links: List):
             color=rx.color("slate", 12),
             class_name="text-sm font-bold",
         ),
-        *chart_links,
+        *component_links,
         _create_reflex_build_link(),
         class_name="flex flex-col w-full gap-y-2 p-4",
     )
@@ -374,15 +370,14 @@ def _create_empty_toc():
 
 def table_of_content(name: str):
     """Create table of contents component."""
-    if name not in CHART_CONFIGS:
+    if name not in COMPONENT_CONFIGS:
         return _create_empty_toc()
 
-    chart_data = CHART_CONFIGS[name]
-    chart_links = _generate_chart_links(chart_data, name)
+    component_data = COMPONENT_CONFIGS[name]
+    component_links = _generate_component_links(component_data, name)
 
     return rx.box(
-        # rx.el.div(class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99]"),
-        _create_toc_content(chart_links),
+        _create_toc_content(component_links),
         height="100vh",
         class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} self-start",
     )
@@ -425,25 +420,6 @@ def base(url: str, page_name: str, dir_meta: List[str | int] = []):
                 ),
                 bg=rx.color("slate", 2),
                 class_name="w-full h-screen flex flex-col gap-y-0",
-            )
-
-            # Create the main layout
-            return rx.box(
-                sidemenu(),
-                rx.scroll_area(
-                    create_header(url),
-                    rx.box(
-                        rx.box(
-                            content_section,
-                            create_footer_section(),
-                            class_name="flex flex-col w-full max-lg:max-w-[60rem] mx-auto",
-                        ),
-                        table_of_content(name=page_name),
-                        class_name="items-start relative flex flex-row gap-x-0",
-                    ),
-                    class_name="h-screen w-full overflow-y-auto [&_.rt-ScrollAreaScrollbar]:mt-[4rem] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
-                ),
-                class_name="w-full h-screen flex flex-row gap-x-0",
             )
 
         return template

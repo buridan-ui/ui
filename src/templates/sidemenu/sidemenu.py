@@ -1,6 +1,5 @@
 import reflex as rx
 from src.config import VERSION
-from src.static.scripts import count_python_files_in_folder
 from src.templates.sidemenu.scripts import SideBarScript
 from src.static.routes import (
     ChartRoutes,
@@ -180,17 +179,10 @@ def _create_getting_started_content():
 
 def _create_chart_components_content():
     """Create chart components section content."""
-    chart_count = count_python_files_in_folder("src/charts")
     return rx.el.div(
         create_section_description(
             [
-                "A collection of ",
-                rx.el.span(
-                    f"{chart_count} ",
-                    class_name="text-sm font-bold",
-                    color=rx.color("slate", 12),
-                ),
-                "chart components to help visualize data, build dashboards, and more.",
+                "A collection of chart components to help visualize data, build dashboards, and more.",
             ]
         ),
         rx.el.div(
@@ -203,17 +195,10 @@ def _create_chart_components_content():
 
 def _create_pantry_components_content():
     """Create pantry components section content."""
-    pantry_count = count_python_files_in_folder("src/pantry")
     return rx.el.div(
         create_section_description(
             [
-                "A set of ",
-                rx.el.span(
-                    f"{pantry_count} ",
-                    class_name="text-sm font-bold",
-                    color=rx.color("slate", 12),
-                ),
-                "components to help build and customize your interface with ease.",
+                "A set of components to help build and customize your interface with ease.",
             ]
         ),
         rx.el.div(

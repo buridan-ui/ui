@@ -426,44 +426,49 @@ class ApplicationExporter:
         """Export the complete application with all routes and configurations."""
         # Import required metadata and routes
         from src.static.routes import ChartRoutes, PantryRoutes
-        from src.static.meta import ChartMetaData, PantryMetaData
 
         # Generate all exports
         pantry_exports = self.generator.generate_pantry_exports()
         chart_exports = self.generator.generate_chart_exports()
 
         # Add dynamic routes
-        self._add_dynamic_routes(
-            app, ChartRoutes, chart_exports, ChartMetaData, "charts"
-        )
-        self._add_dynamic_routes(
-            app, PantryRoutes, pantry_exports, PantryMetaData, "pantry"
-        )
+        self.add_pages(app, ChartRoutes, chart_exports)
+        self.add_pages(app, PantryRoutes, pantry_exports)
 
         # Add static routes
         self._add_static_routes(app)
 
-    def _add_dynamic_routes(
-        self,
-        app: rx.App,
-        routes: List[Dict[str, str]],
-        export_config: Dict[str, List],
-        metadata_source: Dict,
-        parent_dir: str,
-    ):
-        """Add dynamic routes based on configuration."""
-        filtered_routes = self.route_manager.filter_routes(routes)
+    def add_pages(self, app, routes, exports):
+        """Helper function to add pages with consistent metadata."""
+        from src.config_generator import get_component_config
 
-        for route in filtered_routes:
-            dir_meta = metadata_source[route["dir"]]
+        all_configs = get_component_config()
 
-            @base(route["path"], route["name"], dir_meta)
-            def export_page(directory=route["dir"]) -> List:
-                return export_config[directory]
+        for route in routes:
+            if route["dir"] in exports:
 
-            self._add_page(
-                app, export_page(), route["path"], f"{route['name']} - Buridan UI"
-            )
+                def build_page(current_route, component):
+                    @base(
+                        url=current_route["path"],
+                        page_name=current_route["name"],
+                        dir_meta=all_configs.get(current_route["name"], {}).get(
+                            "meta", []
+                        ),
+                    )
+                    def page_fn():
+                        return component
+
+                    return page_fn
+
+                page_component = exports[route["dir"]]
+                page_function = build_page(route, page_component)
+
+                app.add_page(
+                    page_function,
+                    route=route["path"],
+                    title=route["name"],
+                    meta=SITE_META_TAGS,
+                )
 
     def _add_static_routes(self, app: rx.App):
         """Add all static routes from configuration."""
