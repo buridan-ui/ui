@@ -274,7 +274,7 @@ def component_wrapper(path: str):
                     active_tab.value == 0,
                 ),
                 border=f"1px dashed {rx.color('gray', 5)}",
-                class_name="rounded-xl shadow-sm size-full flex flex-col p-1 "
+                class_name="rounded-xl size-full flex flex-col p-1 "
                 + Chart_Theme.value.to(str),
             )
 

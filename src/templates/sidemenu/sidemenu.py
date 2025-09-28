@@ -229,17 +229,22 @@ def sidemenu(in_drawer=False):
 
     # Main content
     content = rx.el.div(
-        _create_header(),
+        # _create_header(),
         side_bar_wrapper("Getting Started", _create_getting_started_content()),
         side_bar_wrapper("Chart Components", _create_chart_components_content()),
         side_bar_wrapper("Pantry Components", _create_pantry_components_content()),
-        class_name="flex flex-col w-full h-full pt-12",
+        class_name="flex flex-col w-full h-full",
     )
 
     # Wrap in scroll area
-    return rx.scroll_area(
-        content,
-        height="100vh",
-        class_name=SIDEBAR_CLASSES,
-        on_mount=rx.call_script(SideBarScript),
+    return rx.box(
+        rx.scroll_area(
+            content,
+            # height="100vh",
+            # class_name=SIDEBAR_CLASSES,
+            on_mount=rx.call_script(SideBarScript),
+            class_name="flex flex-col items-center gap-y-4",
+        ),
+        # class_name="sticky top-0 left-0 h-screen",
+        class_name="hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5",
     )

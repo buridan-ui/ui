@@ -12,7 +12,7 @@ from src.wrappers.base.utils.routes import base_content_path_ui
 from src.landing.hero import doc_icon_svg
 from src.components.github import github_link
 from src.components.theme import theme_button
-
+from src.templates.navbar import doc_navbar
 
 # ============================================================================
 # CLIENT STATE VARIABLES
@@ -40,7 +40,7 @@ THEME_OPTIONS = [
 ]
 
 # Common CSS classes
-SIDEBAR_TOC_CLASSES = "flex flex-col max-w-[300px] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
+SIDEBAR_TOC_CLASSES = "flex flex-col max-w-[18rem] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
 
 
 # ============================================================================
@@ -381,10 +381,10 @@ def table_of_content(name: str):
     chart_links = _generate_chart_links(chart_data, name)
 
     return rx.box(
-        rx.el.div(class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99]"),
+        # rx.el.div(class_name="w-full h-12 px-4 py-3 absolute top-0 left-0 z-[99]"),
         _create_toc_content(chart_links),
         height="100vh",
-        class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} self-start top-8",
+        class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} self-start",
     )
 
 
@@ -408,6 +408,24 @@ def base(url: str, page_name: str, dir_meta: List[str | int] = []):
             # Create title section with content items
             content_section = create_title_section(page_name, meta)
             content_section.children.extend(contents)
+
+            return rx.box(
+                doc_navbar(),
+                rx.scroll_area(
+                    rx.box(
+                        sidemenu(),
+                        rx.box(
+                            content_section,
+                            class_name="flex w-full min-h-screen",
+                        ),
+                        table_of_content(name=page_name),
+                        class_name="xl:max-w-[80rem] 2xl:max-w-[75rem] w-full mx-auto h-full flex flex-row gap-x-0",
+                    ),
+                    class_name="px-4 xl:px-0 pt-12 h-screen w-full overflow-y-auto [&_.rt-ScrollAreaScrollbar]:mt-[4rem] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
+                ),
+                bg=rx.color("slate", 2),
+                class_name="w-full h-screen flex flex-col gap-y-0",
+            )
 
             # Create the main layout
             return rx.box(
