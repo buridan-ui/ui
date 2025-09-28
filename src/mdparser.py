@@ -1,19 +1,96 @@
 import reflex as rx
 import re
 import inspect
+import os
+import importlib
 from typing import List, Dict, Callable
 
 markdown_component_map = {
-    "h1": lambda t: rx.heading(t, class_name="text-3xl py-1", id=t),
-    "h2": lambda t: rx.heading(t, class_name="text-2xl py-1", id=t),
+    "h1": lambda t: rx.heading(t, class_name="text-xl py-2", id=t),
+    "h2": lambda t: rx.heading(t, class_name="text-lg py-1", id=t),
+    "p": lambda t: rx.text(
+        t,
+        class_name="text-sm leading-6 pb-4",
+    ),
+    "li": lambda t: rx.list_item(
+        rx.text(t, color=rx.color("slate", 11), class_name="text-sm"),
+    ),
+    "codeblock": lambda c, **p: rx.hstack(
+        rx.code_block(
+            c,
+            width="100%",
+            font_size="12px",
+            language="bash",
+            wrap_long_lines=True,
+            scrollbar_width="none",
+            code_tag_props={
+                "pre": "transparent",
+                "background": "transparent",
+            },
+            custom_attrs={
+                "background": "transparent !important",
+                "pre": {"background": "transparent !important"},
+                "code": {"background": "transparent !important"},
+            },
+            background="transparent !important",
+            class_name="rounded-md shadow-sm !bg-transparent",
+            border=f"1px dashed {rx.color('gray', 5)}",
+        ),
+        rx.el.button(
+            rx.icon(tag="copy", size=13),
+            cursor="pointer",
+            position="absolute",
+            right="15px",
+            top="20px",
+            on_click=[
+                rx.toast("Command copied"),
+                rx.set_clipboard(c),
+            ],
+        ),
+        width="100%",
+        align="center",
+        position="relative",
+    ),
+    "a": lambda t, **p: rx.link(t, color=rx.color("accent", 8), **p),
 }
 
 
 class DelimiterParser:
     """Parser that can render components or display their source code."""
 
-    def __init__(self, components_registry: Dict[str, Callable]):
-        self.components_registry = components_registry
+    def __init__(
+        self,
+        components_registry: Dict[str, Callable] = None,
+        dynamic_load_dir: str = None,
+    ):
+        self.components_registry = components_registry or {}
+        if dynamic_load_dir:
+            self.components_registry.update(self._dynamic_load(dynamic_load_dir))
+
+    def _dynamic_load(self, directory: str) -> Dict[str, Callable]:
+        """Dynamically loads components from a given directory."""
+        registry = {}
+        module_base_path = directory.replace("/", ".")
+
+        if not os.path.isdir(directory):
+            print(f"Warning: Dynamic load directory not found: {directory}")
+            return {}
+
+        for filename in os.listdir(directory):
+            if filename.endswith(".py") and not filename.startswith("__"):
+                module_name = filename[:-3]
+                module_path = f"{module_base_path}.{module_name}"
+
+                try:
+                    module = importlib.import_module(module_path)
+                    for name, obj in inspect.getmembers(module):
+                        if (
+                            inspect.isfunction(obj) or inspect.isclass(obj)
+                        ) and obj.__module__ == module.__name__:
+                            registry[name] = obj
+                except Exception as e:
+                    print(f"Error loading components from module {module_path}: {e}")
+        return registry
 
     def parse_and_render(self, content: str) -> List[rx.Component]:
         """Parse content with --component-- or --show_code(component)-- delimiters."""
@@ -44,7 +121,11 @@ class DelimiterParser:
         for section in sections:
             if section["type"] == "content":
                 components.append(
-                    rx.markdown(section["value"], component_map=markdown_component_map)
+                    rx.markdown(
+                        section["value"],
+                        component_map=markdown_component_map,
+                        class_name="px-4",
+                    )
                 )
             elif section["type"] == "command":
                 command = section["command"]
@@ -52,12 +133,16 @@ class DelimiterParser:
 
                 if command == "show_code":
                     if argument and argument in self.components_registry:
-                        file_path = inspect.getfile(self.components_registry[argument])
-                        with open(file_path, "r") as f:
-                            source_code = f.read()
+                        source_code = inspect.getsource(
+                            self.components_registry[argument]
+                        )
                         md_code = f"```python\n{source_code}```"
                         components.append(
-                            rx.markdown(md_code, component_map=markdown_component_map)
+                            rx.markdown(
+                                md_code,
+                                component_map=markdown_component_map,
+                                class_name="px-4",
+                            )
                         )
                     else:
                         components.append(
