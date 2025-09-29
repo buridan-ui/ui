@@ -1,4 +1,4 @@
-# 1. Introduction
+# Introduction
 This walkthrough helps you scaffold the foundational layout for a dashboard-style Reflex app. While dashboards vary in content and complexity, their layout structure is almost always the same:
 
 - A **sidebar** for navigation (often fixed)
@@ -8,7 +8,7 @@ This walkthrough helps you scaffold the foundational layout for a dashboard-styl
 
 This guide walks through building that exact foundation — a reusable layout skeleton you can plug your own pages and components into. It’s meant to save you time, enforce consistency, and give you a solid base to build from.
 
-# 2. Project Setup
+# Project Setup
 
 To begin, create a new Reflex project using the CLI:
 
@@ -33,7 +33,7 @@ To run the development server and see the app in your browser, use:
 
 This will start a local server, usually at http://localhost:3000, where you can preview your dashboard as you build it.
 
-# 3. Creating the Main Layout Component
+# Creating the Main Layout Component
 
 To keep your dashboard clean and maintainable, it’s best to separate each layout section into its own component file.
 Here’s a recommended structure for your `app/` directory:
@@ -59,7 +59,7 @@ Then in your `app.py`, use it as the root of your page:
 
 --show_code(app_py_example)--
 
-# 4. Building the Sidebar
+# Building the Sidebar
 
 The sidebar is a key part of the dashboard layout. It typically contains navigation, branding, or user context and stays fixed on the left side of the screen. We'll start by creating a reusable `sidebar()` component inside `app/layout/sidebar.py`.
 
@@ -75,7 +75,7 @@ The sidebar is a key part of the dashboard layout. It typically contains navigat
 
 Next, we’ll build the **sticky sidebar header** — a small top section inside the sidebar that stays fixed even when you scroll the rest of the sidebar contents.
 
-# 5. Adding the Sticky Sidebar Header
+# Adding the Sticky Sidebar Header
 
 The sidebar header sits at the top of the sidebar and remains fixed while the rest of the sidebar content scrolls. It's ideal for branding, a dashboard title, or user profile info.
 
@@ -86,7 +86,7 @@ Here's the component definition:
 Once this header is in place, your sidebar becomes more polished and ready for interactive content. Next, we’ll focus on the main content area, including its own sticky header and scrollable body.
 
 
-# 6. Defining the Main Content Header
+# Defining the Main Content Header
 
 Just like the sidebar has a sticky top section, the main content area also benefits from a persistent header. This can hold breadcrumbs, context info, or action buttons relevant to the current page or dashboard section.
 
@@ -96,7 +96,7 @@ Here’s the header component:
 
 This header is used inside the scroll area of your `dashboard_layout()`. This ensures the content header stays in view as users scroll down the main area of the dashboard. Next, we’ll create the actual main content section — where all your page content, cards, tables, and graphs will appear.
 
-# 7. Main Content Section: Where Everything Goes
+# Main Content Section: Where Everything Goes
 
 With the layout now complete, this is where you’ll add the actual content of your dashboard — charts, tables, cards, forms, and any interactive components. This content should go **inside the scrollable main area**, *beneath* the `content_header()`. In your `dashboard_layout()`, that means placing components after `content_header()` and before the end of the scroll area.
 
@@ -104,7 +104,7 @@ For example, if you have a chart or a card component, you would import it and pl
 
 --show_code(main_content_section_example)--
 
-# 8. Final Words
+# Final Words
 
 You now have a clean, modular dashboard layout built with Reflex — complete with a sticky sidebar, a sticky main header, and a scrollable content area. This layout is designed to be reused across different pages or apps. Whether you're building a data dashboard, admin panel, or internal tool, the structure remains the same — giving you a rock-solid foundation to build on.
 

@@ -1,9 +1,12 @@
 from pathlib import Path
 from typing import List
+import re
 
 from src.mdparser import DelimiterParser
 from src.wrappers.base.main import base
 from src.types import RouteConfig
+from src.utils.text_helpers import slugify
+
 
 # Path to the top-level docs directory
 DOCS_BASE_DIR = Path("docs")
@@ -38,9 +41,55 @@ def generate_docs_routes() -> List[RouteConfig]:
         with open(md_file_path, "r") as f:
             md_content = f.read()
 
+        # Extract headings for TOC
+        toc_data = []
+
+        # Store original heading lines and their corresponding slug_ids for replacement
+        heading_replacements = []
+
+        # Match markdown headings: one or more #, followed by space, then the heading text
+        heading_pattern = r"^(#{1,2})\s+(.+)$"
+
+        for match in re.finditer(heading_pattern, md_content, re.MULTILINE):
+            level = len(match.group(1))  # Count the # characters (1-6)
+            heading_text = match.group(2).strip()  # Get the heading text
+            slug_id = slugify(heading_text)  # Generate slug from heading text
+
+            toc_data.append(
+                {
+                    "text": heading_text,
+                    "id": heading_text,
+                    # "id": slug_id,
+                    "level": level,
+                }
+            )
+
+            # Store the original heading line for replacement
+            original_heading_line = match.group(0)
+            heading_replacements.append((original_heading_line, slug_id))
+
+        # # Pre-process md_content to inject IDs into headings
+
+        # processed_md_content = md_content
+
+        # # Apply replacements from bottom up to avoid issues with changing string length
+
+        # for original_heading_line, slug_id in reversed(heading_replacements):
+
+        #     # Inject {id="slug_id"} after the heading text
+
+        #     # This assumes the heading doesn't already have an ID or other attributes
+
+        #     new_heading_line = f"{original_heading_line} {{id=\"{slug_id}\"}}"
+
+        #     processed_md_content = processed_md_content.replace(original_heading_line, new_heading_line, 1) # Replace only first occurrence
         # Generate the page component using the DelimiterParser
-        @base(url=url_path, page_name=relative_path.stem.replace("_", " ").title())
-        def doc_page_component(content=md_content):  # Capture md_content in closure
+        @base(
+            url=url_path,
+            page_name=relative_path.stem.replace("_", " ").title(),
+            toc_data=toc_data,  # Pass toc_data here
+        )
+        def doc_page_component(content=md_content):  # Use processed_md_content
             return md_parser.parse_and_render(content)
 
         # Create a RouteConfig object
@@ -49,6 +98,7 @@ def generate_docs_routes() -> List[RouteConfig]:
                 path=url_path,
                 component=doc_page_component,
                 title=relative_path.stem.replace("_", " ").title(),
+                toc_data=toc_data,  # Pass toc_data here
             )
         )
     return docs_routes

@@ -211,10 +211,11 @@ def _create_pantry_components_content():
 
 def sidemenu(in_drawer=False):
     """Main sidemenu component."""
-
+    # from src.wrappers.base.main import _create_reflex_build_link
     # Main content
     content = rx.el.div(
         # _create_header(),
+        # _create_reflex_build_link(),
         side_bar_wrapper("Getting Started", _create_getting_started_content()),
         side_bar_wrapper("Chart Components", _create_chart_components_content()),
         side_bar_wrapper("Pantry Components", _create_pantry_components_content()),

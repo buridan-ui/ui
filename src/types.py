@@ -1,4 +1,4 @@
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Dict
 from dataclasses import dataclass
 
 
@@ -10,6 +10,7 @@ class RouteConfig:
     component: Callable
     title: str
     dir_meta: Optional[List] = None
+    toc_data: Optional[List[Dict[str, str]]] = None
 
 
 @dataclass

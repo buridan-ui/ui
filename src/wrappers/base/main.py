@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Dict
 
 import reflex as rx
 
@@ -242,7 +242,6 @@ def _create_reflex_build_link():
         width="100%",
         color=rx.color("slate", 12),
         _hover={"color": rx.color("slate", 12)},
-        class_name="-translate-x-3",
         is_external=True,
     )
 
@@ -270,8 +269,48 @@ def _create_empty_toc():
     )
 
 
-def table_of_content(name: str):
+def _create_markdown_toc_links(toc_data: List[Dict[str, str]]) -> rx.Component:
+    """Create markdown TOC links."""
+    return rx.box(
+        *[
+            rx.link(
+                rx.text(
+                    entry["text"],
+                    class_name=f"text-sm font-regular hover:underline{' pl-4' if entry['level'] > 1 else ''}",
+                ),
+                href=f"#{entry['id']}",
+                color=rx.color("slate", 11),
+                text_decoration="none",
+            )
+            for entry in toc_data
+        ],
+        class_name="flex flex-col w-full gap-y-2",
+    )
+
+
+def table_of_content(name: str, toc_data: Optional[List[Dict[str, str]]] = None):
     """Create table of contents component."""
+    if toc_data:  # Markdown TOC
+        return rx.box(
+            rx.scroll_area(
+                rx.box(  # New wrapper box for consistency
+                    rx.el.label(
+                        "Table of Content",
+                        color=rx.color("slate", 12),
+                        class_name="text-sm font-bold pb-2",
+                    ),
+                    _create_markdown_toc_links(toc_data),
+                    # _create_reflex_build_link(),
+                    # class_name="flex flex-col w-full gap-y-2 p-4",
+                    class_name="flex flex-col w-full h-full p-4",
+                ),
+                class_name="flex flex-col items-center gap-y-4",
+            ),
+            # height="100vh",
+            # class_name=f"{SIDEBAR_TOC_CLASSES} self-start",
+            class_name="hidden lg:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5",
+        )
+
     if name not in COMPONENT_CONFIGS:
         return _create_empty_toc()
 
@@ -285,12 +324,12 @@ def table_of_content(name: str):
     )
 
 
-# ============================================================================
-# MAIN TEMPLATE DECORATOR
-# ============================================================================
-
-
-def base(url: str, page_name: str, dir_meta: List[str | int] = []):
+def base(
+    url: str,
+    page_name: str,
+    dir_meta: List[str | int] = [],
+    toc_data: Optional[List[Dict[str, str]]] = None,
+):
     """Create a base page template decorator."""
 
     def decorator(content: Callable[[], List[rx.Component]]):
@@ -315,10 +354,11 @@ def base(url: str, page_name: str, dir_meta: List[str | int] = []):
                             content_section,
                             class_name="flex w-full min-h-screen",
                         ),
-                        table_of_content(name=page_name),
+                        table_of_content(name=page_name, toc_data=toc_data),
                         class_name="xl:max-w-[80rem] 2xl:max-w-[75rem] w-full mx-auto h-full flex flex-row gap-x-0",
                     ),
-                    class_name="px-4 xl:px-0 pt-12 h-screen w-full overflow-y-auto [&_.rt-ScrollAreaScrollbar]:mt-[4rem] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]",
+                    class_name="px-4 xl:px-0 pt-12 h-screen w-full overflow-y-auto",
+                    style={"scroll-padding-top": "4rem"},
                 ),
                 bg=rx.color("slate", 2),
                 class_name="w-full h-screen flex flex-col gap-y-0",

@@ -1,7 +1,7 @@
-# 1. Introduction
+# Introduction
 ClientStateVar is Reflex's solution for frontend-only state management, modeled after React's familiar useState hook. It enables responsive UI updates directly in the browser without requiring a round trip to the backend server. This makes ClientStateVar perfect for interactive elements like active tabs, toggles, form inputs, modals, and any UI state that doesn't need server persistence.
 
-# 2. What is ClientStateVar?
+# What is ClientStateVar?
 Unlike regular Reflex **State** variables which are backend-driven and persistent across sessions, ClientStateVar exists only in the browser's memory and updates instantly. This separation enables:
 
 - **Instant UI Updates**: No network latency for immediate visual feedback
@@ -11,7 +11,7 @@ Unlike regular Reflex **State** variables which are backend-driven and persisten
 
 ClientStateVar integrates seamlessly into Reflex components and can optionally be made globally accessible across your entire application.
 
-# 3. Creating Your First ClientStateVar
+# Creating Your First ClientStateVar
 To create a ClientStateVar, import it from `reflex.experimental` and use the `create` method:
 
 ```python
@@ -32,7 +32,7 @@ is_open = ClientStateVar.create("modal_open", False)
 - `default`: Initial value for the state variable
 - `global_ref`: Whether the state should be accessible across components (default: True)
 
-# 4. API Reference & Methods
+# API Reference & Methods
 ClientStateVar provides several methods for different use cases:
 
 <div  style="overflow-x: scroll;">
@@ -53,7 +53,7 @@ ClientStateVar provides several methods for different use cases:
 - Use `.retrieve()` to get client state values in backend event handlers
 - Use `.push()` to update client state from backend event handlers
 
-# 5. Simple Example: Tab Navigation
+# Simple Example: Tab Navigation
 Here's a basic implementation showing tab switching functionality:
 
 
@@ -64,7 +64,7 @@ Here's a basic implementation showing tab switching functionality:
 - `rx.cond()` conditionally applies styles based on the current state
 
 
-# 6. Complex Example: Session Management
+# Complex Example: Session Management
 Here's an advanced example showing editable session names with backend integration:
 
 ```python
@@ -133,7 +133,7 @@ def create_session(session: Session, index: int):
 - **Event Chaining**: Multiple actions triggered on `on_blur`
 - **Backend Communication**: Using custom JavaScript to retrieve edited content
 
-# 7. Best Practices & Patterns
+# Best Practices & Patterns
 
 ## When to Use ClientStateVar
 - **UI State**: Active tabs, modal visibility, form input states
@@ -167,7 +167,7 @@ def safe_retrieve_handler(self):
         yield rx.toast(f"Error retrieving client state: {e}")
 ```
 
-# 8. Advanced Usage: Backend Integration
+# Advanced Usage: Backend Integration
 
 ## Retrieving Client State in Backend
 Use `.retrieve()` to pull client-side values into backend event handlers:
@@ -200,7 +200,7 @@ class MyState(rx.State):
         yield form_data.push(saved_data)
 ```
 
-# 9. Common Patterns
+# Common Patterns
 
 ## Toggle Pattern
 --show_code(toggle_pattern_example)--
@@ -211,7 +211,7 @@ class MyState(rx.State):
 ## Conditional Rendering Pattern
 --show_code(conditional_rendering_pattern_example)--
 
-# 10. Final Thoughts
+# Final Thoughts
 ClientStateVar bridges the gap between Reflex's backend-focused architecture and modern frontend interactivity needs. By understanding when and how to use client-side state, you can build responsive, performant applications that feel native to users while maintaining clean separation between UI logic and business logic.
 
 - Use ClientStateVar for ephemeral UI state that doesn't need server persistence

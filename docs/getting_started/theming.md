@@ -1,4 +1,4 @@
-# 1. Introduction
+# Introduction
 
 Buridan UI includes built-in support for **chart theming** using CSS variables and the `oklch()` color format — giving you full control over chart palettes in both light and dark modes. Themes are defined at the CSS level and can be easily extended or customized.
 
@@ -10,7 +10,7 @@ This guide explains how to:
 
 Whether you're building dashboards, reports, or data apps — theming helps you keep things consistent and beautiful across the board.
 
-# 2. Adding the Theme CSS File
+# Adding the Theme CSS File
 
 To use Buridan's chart themes, you need to include the theme CSS in your project. Here's how to do it:
 
@@ -31,7 +31,7 @@ Import this CSS file in your **rx.App** declaration. Once imported, your app wil
 
 --show_code(app_stylesheets_example)--
 
-# 3. Usage Example: Using Chart Colors in Components
+# Usage Example: Using Chart Colors in Components
 
 After importing the theme, any component that supports inline styles or Tailwind class bindings can access the chart colors via:
 
@@ -52,13 +52,13 @@ This will set the fill color to the default value and theme (from inside the **.
 
 The theme system is fully CSS-based, so switching themes won’t trigger any extra rendering — it’s instant, clean, and declarative.
 
-# 4. Customizing or Extending Themes
+# Customizing or Extending Themes
 
 Want to create your own chart palette? Just define a new theme block in theme.css:
 
 --show_code(custom_theme_css_example)--
 
-# 7. Summary
+# Summary
 
 Buridan UI’s theming system gives you centralized control over color palettes, built-in support for light and dark modes, and simple switching between blue, red, green, amber, and purple themes. Designed with CSS-native flexibility, it works seamlessly across components, charts, and any custom UI elements. Add the CSS file once, and your entire app stays visually consistent and easy to style.
 
