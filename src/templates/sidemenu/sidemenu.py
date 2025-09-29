@@ -1,6 +1,5 @@
 import reflex as rx
 from src.config import VERSION
-from src.templates.sidemenu.scripts import SideBarScript
 from src.static.routes import (
     ChartRoutes,
     PantryRoutes,
@@ -228,7 +227,7 @@ def sidemenu(in_drawer=False):
             content,
             # height="100vh",
             # class_name=SIDEBAR_CLASSES,
-            on_mount=rx.call_script(SideBarScript),
+            # on_mount=rx.call_script(SideBarScript),
             class_name="flex flex-col items-center gap-y-4",
         ),
         # class_name="sticky top-0 left-0 h-screen",

@@ -273,14 +273,10 @@ def _create_markdown_toc_links(toc_data: List[Dict[str, str]]) -> rx.Component:
     """Create markdown TOC links."""
     return rx.box(
         *[
-            rx.link(
-                rx.text(
-                    entry["text"],
-                    class_name=f"text-sm font-regular hover:underline{' pl-4' if entry['level'] > 1 else ''}",
-                ),
+            rx.el.a(
+                entry["text"],
                 href=f"#{entry['id']}",
-                color=rx.color("slate", 11),
-                text_decoration="none",
+                className=f"text-sm font-regular text-slate-11 hover:underline no-underline{' pl-4' if entry['level'] > 1 else ''}",
             )
             for entry in toc_data
         ],
