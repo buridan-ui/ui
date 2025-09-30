@@ -22,12 +22,7 @@ from src.templates.navbar import doc_navbar
 COMPONENT_CONFIGS = get_component_config()
 
 # Common CSS classes
-SIDEBAR_TOC_CLASSES = "flex flex-col max-w-[18rem] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mr-[0.1875rem] [&_.rt-ScrollAreaScrollbar]:mt-[4rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[1rem]"
-
-
-# ============================================================================
-# UTILITY FUNCTIONS
-# ============================================================================
+SIDEBAR_TOC_CLASSES = "flex flex-col max-w-[18rem] w-full gap-y-2 align-start sticky top-0 left-0 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] z-[10] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]"
 
 
 def create_responsive_display(
@@ -255,7 +250,7 @@ def _create_toc_content(component_links: List):
             class_name="text-sm font-bold",
         ),
         *component_links,
-        _create_reflex_build_link(),
+        # _create_reflex_build_link(),
         class_name="flex flex-col w-full gap-y-2 p-4",
     )
 
@@ -276,7 +271,7 @@ def _create_markdown_toc_links(toc_data: List[Dict[str, str]]) -> rx.Component:
             rx.el.a(
                 entry["text"],
                 href=f"#{entry['id']}",
-                className=f"text-sm font-regular text-slate-11 hover:underline no-underline{' pl-4' if entry['level'] > 1 else ''}",
+                class_name=f"cursor-pointer text-sm font-regular hover:underline no-underline{' pl-4' if entry['level'] > 1 else ''}",
             )
             for entry in toc_data
         ],
@@ -300,7 +295,7 @@ def table_of_content(name: str, toc_data: Optional[List[Dict[str, str]]] = None)
                     # class_name="flex flex-col w-full gap-y-2 p-4",
                     class_name="flex flex-col w-full h-full p-4",
                 ),
-                class_name="flex flex-col items-center gap-y-4",
+                class_name="flex flex-col items-center gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",
             ),
             # height="100vh",
             # class_name=f"{SIDEBAR_TOC_CLASSES} self-start",
