@@ -1,3 +1,10 @@
+---
+name: "Installation"
+dir: "installation"
+description: "Steps to install and start using Buridan in your project."
+order: 2
+---
+
 # Step 1: Check your Python version
 
 To use Reflex you need to have Python version 3.9 or above installed on your system.

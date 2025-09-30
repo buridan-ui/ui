@@ -17,6 +17,38 @@ COMPONENTS_DIR = "src/docs/components"
 md_parser = DelimiterParser(dynamic_load_dir=COMPONENTS_DIR)
 
 
+def _parse_frontmatter(content: str) -> tuple[dict, str]:
+    """A simple frontmatter parser."""
+    metadata = {}
+    if not content.startswith("---"):
+        return metadata, content
+
+    parts = content.split("---", 2)
+    if len(parts) < 3:
+        return metadata, content
+
+    frontmatter = parts[1]
+    rest_of_content = parts[2]
+
+    for line in frontmatter.strip().split("\n"):
+        if ":" in line:
+            key, value = line.split(":", 1)
+            key = key.strip()
+            value = value.strip()
+
+            if (value.startswith('"') and value.endswith('"')) or (
+                value.startswith("'") and value.endswith("'")
+            ):
+                value = value[1:-1]
+
+            if key == "order" and value.isdigit():
+                value = int(value)
+
+            metadata[key] = value
+
+    return metadata, rest_of_content.lstrip()
+
+
 def generate_docs_routes() -> List[RouteConfig]:
     """
     Scans the DOCS_BASE_DIR for markdown files, parses them, and
@@ -40,6 +72,9 @@ def generate_docs_routes() -> List[RouteConfig]:
         # Read the markdown content
         with open(md_file_path, "r") as f:
             md_content = f.read()
+
+        metadata, md_content = _parse_frontmatter(md_content)
+        page_name = metadata.get("name", relative_path.stem.replace("_", " ").title())
 
         # Extract headings for TOC
         toc_data = []
@@ -86,7 +121,7 @@ def generate_docs_routes() -> List[RouteConfig]:
         # Generate the page component using the DelimiterParser
         @base(
             url=url_path,
-            page_name=relative_path.stem.replace("_", " ").title(),
+            page_name=page_name,
             toc_data=toc_data,  # Pass toc_data here
         )
         def doc_page_component(content=md_content):  # Use processed_md_content
@@ -97,7 +132,7 @@ def generate_docs_routes() -> List[RouteConfig]:
             RouteConfig(
                 path=url_path,
                 component=doc_page_component,
-                title=relative_path.stem.replace("_", " ").title(),
+                title=page_name,
                 toc_data=toc_data,  # Pass toc_data here
             )
         )

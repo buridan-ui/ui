@@ -1,3 +1,10 @@
+---
+name: "Charting Walkthrough"
+dir: "charting"
+description: "Step-by-step guide to building charts using Buridan."
+order: 4
+---
+
 # Introduction
 Reflex chart components compile to Recharts under the hood, making them highly customizable and easy to integrate with your data. By leveraging Reflex, you can effortlessly create interactive, dynamic charts with minimal configuration. Whether you're building line charts, bar charts, or complex data visualizations, Reflex streamlines the process while offering the flexibility of Recharts' robust features.
 

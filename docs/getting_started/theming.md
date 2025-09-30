@@ -1,3 +1,10 @@
+---
+name: "Theming"
+dir: "theming"
+description: "Customize your app’s appearance using themes and tokens."
+order: 3
+---
+
 # Introduction
 
 Buridan UI includes built-in support for **chart theming** using CSS variables and the `oklch()` color format — giving you full control over chart palettes in both light and dark modes. Themes are defined at the CSS level and can be easily extended or customized.

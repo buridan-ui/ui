@@ -1,3 +1,10 @@
+---
+name: "ClientStateVar"
+dir: "clientstate"
+description: "Use client-side state variables to manage local interactivity."
+order: 6
+---
+
 # Introduction
 ClientStateVar is Reflex's solution for frontend-only state management, modeled after React's familiar useState hook. It enables responsive UI updates directly in the browser without requiring a round trip to the backend server. This makes ClientStateVar perfect for interactive elements like active tabs, toggles, form inputs, modals, and any UI state that doesn't need server persistence.
 

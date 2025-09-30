@@ -1,3 +1,10 @@
+---
+name: "Who is Buridan?"
+dir: "buridan"
+description: "A brief backstory on Buridan and the philosophy behind the framework."
+order: 1
+---
+
 # Who is Buridan?
 
 Jean Buridan was a 14th-century French philosopher and logician, widely regarded for his contributions to the study of free will, determinism, and ethics. While his works span various domains of thought, one of his most well-known contributions is the famous `Buridan's Ass` paradox—a thought experiment that delves into the complexities of decision-making in the face of equal options.

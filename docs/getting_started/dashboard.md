@@ -1,3 +1,10 @@
+---
+name: "Dashboard Walkthrough"
+dir: "dashboard"
+description: "Build a full dashboard UI using Buridan components."
+order: 5
+---
+
 # Introduction
 This walkthrough helps you scaffold the foundational layout for a dashboard-style Reflex app. While dashboards vary in content and complexity, their layout structure is almost always the same:
 

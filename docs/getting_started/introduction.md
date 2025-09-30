@@ -1,3 +1,10 @@
+---
+name: "Introduction"
+dir: "introduction"
+description: "Overview of what Buridan UI is and how it works."
+order: 0
+---
+
 # Introduction
 
 Welcome to a carefully curated collection of beautifully designed, highly accessible, and fully customizable components that you can effortlessly integrate into your applications. Whether you're a beginner or a seasoned developer, our components are built to be intuitive, scalable, and easy to use. Best of all, everything is open-source, meaning you have the freedom to modify and extend the components as needed. No more reliance on bulky libraries—just pure, flexible code at your fingertips.
