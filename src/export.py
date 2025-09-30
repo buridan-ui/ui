@@ -2,9 +2,9 @@ import os
 import inspect
 import importlib
 import reflex as rx
-from typing import Callable, Dict, List, Any, Optional
-from dataclasses import dataclass
+from typing import Callable, Dict, List, Any
 
+from src.config_generator import get_component_config
 from src.config import (
     BASE_PANTRY_PATH,
     BASE_CHART_PATH,
@@ -16,31 +16,9 @@ from src.wrappers.component.wrapper import (
     component_wrapper,
 )
 from src.wrappers.base.main import base
-
-
-# ============================================================================
-# CONFIGURATION DATA STRUCTURES
-# ============================================================================
-
-
-@dataclass
-class ComponentConfig:
-    """Configuration for a component or chart type."""
-
-    versions: range | List[int]
-    func_prefix: str
-    flexgen_url: str = ""
-    has_api_reference: bool = False
-
-
-@dataclass
-class RouteConfig:
-    """Configuration for a static route."""
-
-    path: str
-    component: Callable
-    title: str
-    dir_meta: Optional[List] = None
+from src.docs.docs_generator import generate_docs_routes
+from src.types import RouteConfig, ComponentConfig
+from src.landing.hero import hero
 
 
 class ExportConfig:
@@ -53,41 +31,22 @@ class ExportConfig:
 
     def _init_configurations(self):
         """Initialize all component, chart, and pro configurations."""
-        self.COMPONENTS = {
-            "stats": ComponentConfig(range(1, 3), "stat"),
-            "tabs": ComponentConfig(range(1, 4), "tab"),
-            "sidebars": ComponentConfig(range(1, 2), "sidebar"),
-            "accordions": ComponentConfig(range(1, 2), "accordion"),
-            "animations": ComponentConfig(range(1, 4), "animation"),
-            "backgrounds": ComponentConfig(range(1, 5), "background"),
-            "cards": ComponentConfig(range(1, 5), "card"),
-            "faq": ComponentConfig([1], "faq"),
-            "featured": ComponentConfig(range(1, 3), "featured"),
-            "footers": ComponentConfig(range(1, 3), "footer"),
-            "forms": ComponentConfig(range(1, 4), "forms"),
-            "inputs": ComponentConfig(range(1, 6), "input"),
-            "lists": ComponentConfig([1], "lists"),
-            "logins": ComponentConfig(range(1, 3), "logins"),
-            "menus": ComponentConfig([1], "menus"),
-            "onboardings": ComponentConfig([1], "onboardings"),
-            "payments": ComponentConfig([1], "payments"),
-            "popups": ComponentConfig(range(1, 3), "popups"),
-            "pricing": ComponentConfig(range(1, 4), "pricing"),
-            "prompts": ComponentConfig(range(1, 3), "prompt"),
-            "subscribe": ComponentConfig(range(1, 4), "subscribe"),
-            "tables": ComponentConfig(range(1, 5), "tables"),
-            "timeline": ComponentConfig(range(1, 3), "timeline"),
-        }
+        all_components_config = get_component_config()
 
-        self.CHARTS = {
-            "area": ComponentConfig(range(1, 9), "areachart"),
-            "bar": ComponentConfig(range(1, 11), "barchart"),
-            "line": ComponentConfig(range(1, 9), "linechart"),
-            "pie": ComponentConfig(range(1, 7), "piechart"),
-            "radar": ComponentConfig(range(1, 7), "radar"),
-            "scatter": ComponentConfig([1], "scatterchart"),
-            "doughnut": ComponentConfig(range(1, 3), "doughnutchart"),
-        }
+        self.COMPONENTS = {}
+        self.CHARTS = {}
+
+        for config in all_components_config.values():
+            component_name = config["dir"]
+            versions = range(1, config["quantity"] + 1)
+            func_prefix = config["func_prefix"]
+
+            config_obj = ComponentConfig(versions=versions, func_prefix=func_prefix)
+
+            if config["group"] == "Pantry":
+                self.COMPONENTS[component_name] = config_obj
+            elif config["group"] == "Charts":
+                self.CHARTS[component_name] = config_obj
 
         # Grid configurations for custom layouts
         self.GRID_CONFIGS = {}
@@ -114,48 +73,13 @@ class ExportConfig:
 
     def _init_getting_started_routes(self):
         """Initialize all getting started route configurations."""
-        # Import all getting started components
-        from src.landing.hero import hero
-        from src.start.buridan import buridan
-        from src.start.theming import theming
-        from src.start.charting import charting
-        from src.start.dashboard import dashboard
-        from src.start.installation import installation
-        from src.start.introduction import introduction
-        from src.start.changelog import changelog
-        from src.start.clientstate import client_state_var
+        docs_routes = generate_docs_routes()
 
-        self.STATIC_ROUTES = [
-            RouteConfig("/", hero, "Buridan Stack"),
-            RouteConfig(
-                "/getting-started/who-is-buridan",
-                buridan,
-                "Who Is Buridan - Buridan UI",
-            ),
-            RouteConfig(
-                "/getting-started/changelog", changelog, "Changelog - Buridan UI"
-            ),
-            RouteConfig(
-                "/getting-started/introduction",
-                introduction,
-                "Introduction - Buridan UI",
-            ),
-            RouteConfig(
-                "/getting-started/installation",
-                installation,
-                "Installation - Buridan UI",
-            ),
-            RouteConfig("/getting-started/theming", theming, "Theming - Buridan UI"),
-            RouteConfig("/getting-started/charting", charting, "Charting - Buridan UI"),
-            RouteConfig(
-                "/getting-started/dashboard", dashboard, "Dashboard - Buridan UI"
-            ),
-            RouteConfig(
-                "/getting-started/client-state-var",
-                client_state_var,
-                "ClientStateVar - Buridan UI",
-            ),
-        ]
+        # Add the landing page explicitly
+        landing_page_route = RouteConfig("/", hero, "Buridan Stack")
+        docs_routes.insert(0, landing_page_route)  # Add to the beginning of the list
+
+        self.STATIC_ROUTES = docs_routes
 
     def _parse_dev_selections(self):
         """Parse development selections from environment variables."""
@@ -426,50 +350,55 @@ class ApplicationExporter:
         """Export the complete application with all routes and configurations."""
         # Import required metadata and routes
         from src.static.routes import ChartRoutes, PantryRoutes
-        from src.static.meta import ChartMetaData, PantryMetaData
 
         # Generate all exports
         pantry_exports = self.generator.generate_pantry_exports()
         chart_exports = self.generator.generate_chart_exports()
 
         # Add dynamic routes
-        self._add_dynamic_routes(
-            app, ChartRoutes, chart_exports, ChartMetaData, "charts"
-        )
-        self._add_dynamic_routes(
-            app, PantryRoutes, pantry_exports, PantryMetaData, "pantry"
-        )
+        self.add_pages(app, ChartRoutes, chart_exports)
+        self.add_pages(app, PantryRoutes, pantry_exports)
 
         # Add static routes
         self._add_static_routes(app)
 
-    def _add_dynamic_routes(
-        self,
-        app: rx.App,
-        routes: List[Dict[str, str]],
-        export_config: Dict[str, List],
-        metadata_source: Dict,
-        parent_dir: str,
-    ):
-        """Add dynamic routes based on configuration."""
-        filtered_routes = self.route_manager.filter_routes(routes)
+    def add_pages(self, app, routes, exports):
+        """Helper function to add pages with consistent metadata."""
+        from src.config_generator import get_component_config
 
-        for route in filtered_routes:
-            dir_meta = metadata_source[route["dir"]]
+        all_configs = get_component_config()
 
-            @base(route["path"], route["name"], dir_meta)
-            def export_page(directory=route["dir"]) -> List:
-                return export_config[directory]
+        for route in routes:
+            if route["dir"] in exports:
 
-            self._add_page(
-                app, export_page(), route["path"], f"{route['name']} - Buridan UI"
-            )
+                def build_page(current_route, component):
+                    @base(
+                        url=current_route["path"],
+                        page_name=current_route["name"],
+                        dir_meta=all_configs.get(current_route["name"], {}).get(
+                            "meta", []
+                        ),
+                    )
+                    def page_fn():
+                        return component
+
+                    return page_fn
+
+                page_component = exports[route["dir"]]
+                page_function = build_page(route, page_component)
+
+                app.add_page(
+                    page_function,
+                    route=route["path"],
+                    title=route["name"],
+                    meta=SITE_META_TAGS,
+                )
 
     def _add_static_routes(self, app: rx.App):
         """Add all static routes from configuration."""
         for route_config in self.config.STATIC_ROUTES:
             self._add_page(
-                app, route_config.component(), route_config.path, route_config.title
+                app, route_config.component, route_config.path, route_config.title
             )
 
     def _add_page(

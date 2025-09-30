@@ -22,12 +22,11 @@ def drawer():
         rx.drawer.portal(
             rx.drawer.content(
                 sidemenu(True),
-                **{
-                    "top": "auto",
-                    "right": "auto",
-                    "height": "100%",
-                    "background": "var(--background)",
-                },
+                bg=rx.color("slate", 2),
+                width="18rem",
+                top="0",
+                right="0",
+                height="100%",
             ),
         ),
         direction="left",

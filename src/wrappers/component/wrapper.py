@@ -6,7 +6,7 @@ import reflex as rx
 
 from reflex.components.datadisplay.code import Theme
 from reflex.experimental import ClientStateVar
-from src.wrappers.base.main import Chart_Theme
+from src.templates.navbar import Chart_Theme
 
 import random
 import string
@@ -214,7 +214,7 @@ def extract_chart_info(path):
     import re
 
     # Regex pattern to match both 'charts' and 'pantry' base paths
-    match = re.search(r"(charts|pantry)/([a-zA-Z]+)/v(\d+)", path)
+    match = re.search(r"(charts|pantry)/([a-zA-Z_-]+)/v(\d+)", path)
     if match:
         chart_name = match.group(2)  # 'area', 'animations', etc.
         version = match.group(3)  # Version number
@@ -255,6 +255,16 @@ def component_wrapper(path: str):
         def wrapper():
             component, component_code, flexgen_path = func()
 
+            import re
+
+            anchor_id = ""
+            # The path can be absolute, so we search for the relevant part
+            match = re.search(r"src/(charts|pantry)/([a-zA-Z_]+)/v(\d+)", path)
+            if match:
+                component_name = match.group(2)
+                version = match.group(3)
+                anchor_id = f"{component_name}-v{version}"
+
             return rx.box(
                 rx.box(
                     rx.el.label(extract_chart_info(path), class_name="text-sm"),
@@ -273,9 +283,11 @@ def component_wrapper(path: str):
                     ),
                     active_tab.value == 0,
                 ),
+                id=anchor_id,
                 border=f"1px dashed {rx.color('gray', 5)}",
-                class_name="rounded-xl shadow-sm size-full flex flex-col p-1 "
+                class_name="rounded-xl size-full flex flex-col p-1 "
                 + Chart_Theme.value.to(str),
+                scroll_margin_top="20",
             )
 
         return wrapper

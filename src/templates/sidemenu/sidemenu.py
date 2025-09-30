@@ -1,7 +1,5 @@
 import reflex as rx
 from src.config import VERSION
-from src.static.scripts import count_python_files_in_folder
-from src.templates.sidemenu.scripts import SideBarScript
 from src.static.routes import (
     ChartRoutes,
     PantryRoutes,
@@ -180,17 +178,10 @@ def _create_getting_started_content():
 
 def _create_chart_components_content():
     """Create chart components section content."""
-    chart_count = count_python_files_in_folder("src/charts")
     return rx.el.div(
         create_section_description(
             [
-                "A collection of ",
-                rx.el.span(
-                    f"{chart_count} ",
-                    class_name="text-sm font-bold",
-                    color=rx.color("slate", 12),
-                ),
-                "chart components to help visualize data, build dashboards, and more.",
+                "A collection of chart components to help visualize data, build dashboards, and more.",
             ]
         ),
         rx.el.div(
@@ -203,17 +194,10 @@ def _create_chart_components_content():
 
 def _create_pantry_components_content():
     """Create pantry components section content."""
-    pantry_count = count_python_files_in_folder("src/pantry")
     return rx.el.div(
         create_section_description(
             [
-                "A set of ",
-                rx.el.span(
-                    f"{pantry_count} ",
-                    class_name="text-sm font-bold",
-                    color=rx.color("slate", 12),
-                ),
-                "components to help build and customize your interface with ease.",
+                "A set of components to help build and customize your interface with ease.",
             ]
         ),
         rx.el.div(
@@ -226,20 +210,29 @@ def _create_pantry_components_content():
 
 def sidemenu(in_drawer=False):
     """Main sidemenu component."""
-
+    # from src.wrappers.base.main import _create_reflex_build_link
     # Main content
     content = rx.el.div(
-        _create_header(),
+        # _create_header(),
+        # _create_reflex_build_link(),
         side_bar_wrapper("Getting Started", _create_getting_started_content()),
         side_bar_wrapper("Chart Components", _create_chart_components_content()),
         side_bar_wrapper("Pantry Components", _create_pantry_components_content()),
-        class_name="flex flex-col w-full h-full pt-12",
+        class_name="flex flex-col w-full h-full",
     )
 
     # Wrap in scroll area
-    return rx.scroll_area(
-        content,
-        height="100vh",
-        class_name=SIDEBAR_CLASSES,
-        on_mount=rx.call_script(SideBarScript),
+    return rx.box(
+        rx.scroll_area(
+            content,
+            # height="100vh",
+            # class_name=SIDEBAR_CLASSES,
+            # on_mount=rx.call_script(SideBarScript),
+            class_name="flex flex-col items-center gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",
+        ),
+        # class_name="sticky top-0 left-0 h-screen",
+        # class_name="hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5",
+        class_name="flex flex-col max-w-[18rem] h-full"
+        if in_drawer
+        else "hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5",
     )

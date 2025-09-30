@@ -84,14 +84,12 @@ def search_trigger():
                 + "rounded-md bg-transparent "
                 + "focus:outline-none focus:border-none cursor-pointer",
             ),
-            _hover={"bg": rx.color("gray", 3)},
-            class_name="relative focus:outline-none rounded-md w-full",
-            style={
-                "display": "inline-flex",
-                "height": "1.925rem",
-                "padding": "0.25rem",
-            },
-            border=f"1px solid {rx.color('gray', 3)}",
+            _hover={"color": rx.color("slate", 12), "background": rx.color("gray", 3)},
+            border=f"1px solid {rx.color('gray', 5)}",
+            class_name=(
+                "relative focus:outline-none inline-flex items-center justify-center gap-x-2 rounded-lg text-sm font-semibold "
+                "cursor-pointer h-[1.925rem] w-full cursor-pointer"
+            ),
         ),
     )
 

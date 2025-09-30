@@ -185,5 +185,6 @@ def hero():
             class_name="w-full h-screen flex flex-col items-center justify-center divide-dashed divide-neutral-500/50",
             max_width="calc(1234px)",
         ),
+        bg=rx.color("slate", 2),
         class_name="w-full h-screen flex flex-col items-center justify-center",
     )

@@ -118,7 +118,11 @@ The metadata for components is managed through a script. To update metadata afte
    # charts_exports_config = generate_chart_exports()
    ```
 
+<<<<<<< HEAD
+2. In `src/static/scripts.py`, run the `get_directory_meta_data()` function.
+=======
 2. In `src/static/scripts.py`, run the `get_directory_meta_data()` function. 
+>>>>>>> origin/main
 This updates `src/static/meta.py` with new metadata for all files and folders.
 
 3. Make sure to uncomment the export generation lines after you run the script.

@@ -1,8 +1,10 @@
-import reflex as rx
-from src.wrappers.base.main import base
-from src.start.style import markdown_component_map
+---
+name: "Introduction"
+dir: "introduction"
+description: "Overview of what Buridan UI is and how it works."
+order: 0
+---
 
-md_content = """
 # Introduction
 
 Welcome to a carefully curated collection of beautifully designed, highly accessible, and fully customizable components that you can effortlessly integrate into your applications. Whether you're a beginner or a seasoned developer, our components are built to be intuitive, scalable, and easy to use. Best of all, everything is open-source, meaning you have the freedom to modify and extend the components as needed. No more reliance on bulky libraries—just pure, flexible code at your fingertips.
@@ -28,14 +30,3 @@ For more details on how to integrate the components into your project, check out
 Think of this collection as not just a set of components but as a valuable resource to inspire and guide you in creating your own component libraries. It provides clear, understandable examples of how reusable UI elements can be structured, customized, and adapted for various applications. It’s a great starting point if you're looking to build something from the ground up or enhance an existing project.
 
 By using this as your foundation, you can avoid reinventing the wheel while still maintaining full creative control over your project’s UI. Happy coding, and enjoy the process of building clean, well-designed applications!
-"""
-
-
-@base("/getting-started/introduction", "Introduction")
-def introduction():
-    return [
-        rx.box(
-            rx.markdown(md_content, component_map=markdown_component_map),
-            class_name="p-4",
-        )
-    ]
