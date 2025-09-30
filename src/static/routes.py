@@ -1,4 +1,5 @@
 import os
+import glob
 from src.config_generator import get_component_config
 
 
@@ -36,7 +37,8 @@ def _parse_frontmatter(content: str) -> tuple[dict, str]:
 
 def _generate_doc_routes(section_folder, base_path):
     """
-    Generates routes for a documentation section by reading frontmatter from markdown files.
+    Generates routes for a documentation section by recursively reading
+    frontmatter from markdown files.
 
     Args:
         section_folder: The folder name inside 'docs/' (e.g., 'getting_started').
@@ -47,15 +49,15 @@ def _generate_doc_routes(section_folder, base_path):
     """
     routes = []
     docs_path = f"docs/{section_folder}"
+    search_path = os.path.join(docs_path, "**/*.md")
 
-    try:
-        filenames = [f for f in os.listdir(docs_path) if f.endswith(".md")]
-    except FileNotFoundError:
-        print(f"Warning: Documentation directory not found at '{docs_path}'")
+    md_files = glob.glob(search_path, recursive=True)
+
+    if not md_files:
+        print(f"Warning: No markdown files found in '{docs_path}'")
         return []
 
-    for filename in filenames:
-        file_path = os.path.join(docs_path, filename)
+    for file_path in md_files:
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
@@ -67,11 +69,15 @@ def _generate_doc_routes(section_folder, base_path):
         if not metadata or "name" not in metadata:
             continue
 
-        path_slug = filename.replace(".md", "").replace("_", "-")
+        # Create a URL slug from the file path relative to the section folder.
+        # e.g., docs/getting_started/a/b.md -> a/b
+        relative_path = os.path.relpath(file_path, docs_path)
+        path_slug = relative_path.replace(".md", "").replace("_", "-")
+
         route_info = {
             "name": metadata["name"],
             "path": f"{base_path}{path_slug}",
-            "dir": metadata.get("dir", path_slug),
+            "dir": metadata.get("dir", path_slug.split("/")[-1]),
             "description": metadata.get("description", ""),
             "order": metadata.get("order", 99),
         }
@@ -91,6 +97,7 @@ GettingStartedRoutes = _generate_doc_routes(
     section_folder="getting_started",
     base_path="/getting-started/",
 )
+
 
 # --- Component Routes (Pantry & Charts) ---
 
