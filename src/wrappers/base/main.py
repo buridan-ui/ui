@@ -15,10 +15,6 @@ from src.config_generator import get_component_config
 from src.templates.navbar import doc_navbar
 
 
-# ============================================================================
-# CONSTANTS & CONFIGURATION
-# ============================================================================
-
 COMPONENT_CONFIGS = get_component_config()
 
 # Common CSS classes

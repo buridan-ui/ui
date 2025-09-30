@@ -1,16 +1,6 @@
 from src.config_generator import get_component_config
 
 _GS_Base = "/getting-started/"
-_Pro = "/pro/"
-
-BuridanProRoutes = [
-    {
-        "name": "Integrated Tables",
-        "path": f"{_Pro}integrated-tables",
-        "dir": "table",
-        "description": "Advanced table layout with dynamic data integration.",
-    },
-]
 
 GettingStartedRoutes = [
     {
