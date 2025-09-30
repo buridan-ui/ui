@@ -4,6 +4,7 @@ import importlib
 import reflex as rx
 from typing import Callable, Dict, List, Any
 
+from src.config_generator import get_component_config
 from src.config import (
     BASE_PANTRY_PATH,
     BASE_CHART_PATH,
@@ -30,41 +31,22 @@ class ExportConfig:
 
     def _init_configurations(self):
         """Initialize all component, chart, and pro configurations."""
-        self.COMPONENTS = {
-            "stats": ComponentConfig(range(1, 3), "stat"),
-            "tabs": ComponentConfig(range(1, 4), "tab"),
-            "sidebars": ComponentConfig(range(1, 2), "sidebar"),
-            "accordions": ComponentConfig(range(1, 2), "accordion"),
-            "animations": ComponentConfig(range(1, 4), "animation"),
-            "backgrounds": ComponentConfig(range(1, 5), "background"),
-            "cards": ComponentConfig(range(1, 5), "card"),
-            "faq": ComponentConfig([1], "faq"),
-            "featured": ComponentConfig(range(1, 3), "featured"),
-            "footers": ComponentConfig(range(1, 3), "footer"),
-            "forms": ComponentConfig(range(1, 4), "forms"),
-            "inputs": ComponentConfig(range(1, 6), "input"),
-            "lists": ComponentConfig([1], "lists"),
-            "logins": ComponentConfig(range(1, 3), "logins"),
-            "menus": ComponentConfig([1], "menus"),
-            "onboardings": ComponentConfig([1], "onboardings"),
-            "payments": ComponentConfig([1], "payments"),
-            "popups": ComponentConfig(range(1, 3), "popups"),
-            "pricing": ComponentConfig(range(1, 4), "pricing"),
-            "prompts": ComponentConfig(range(1, 3), "prompt"),
-            "subscribe": ComponentConfig(range(1, 4), "subscribe"),
-            "tables": ComponentConfig(range(1, 5), "tables"),
-            "timeline": ComponentConfig(range(1, 3), "timeline"),
-        }
+        all_components_config = get_component_config()
 
-        self.CHARTS = {
-            "area": ComponentConfig(range(1, 9), "areachart"),
-            "bar": ComponentConfig(range(1, 11), "barchart"),
-            "line": ComponentConfig(range(1, 9), "linechart"),
-            "pie": ComponentConfig(range(1, 7), "piechart"),
-            "radar": ComponentConfig(range(1, 7), "radar"),
-            "scatter": ComponentConfig([1], "scatterchart"),
-            "doughnut": ComponentConfig(range(1, 3), "doughnutchart"),
-        }
+        self.COMPONENTS = {}
+        self.CHARTS = {}
+
+        for config in all_components_config.values():
+            component_name = config["dir"]
+            versions = range(1, config["quantity"] + 1)
+            func_prefix = config["func_prefix"]
+
+            config_obj = ComponentConfig(versions=versions, func_prefix=func_prefix)
+
+            if config["group"] == "Pantry":
+                self.COMPONENTS[component_name] = config_obj
+            elif config["group"] == "Charts":
+                self.CHARTS[component_name] = config_obj
 
         # Grid configurations for custom layouts
         self.GRID_CONFIGS = {}

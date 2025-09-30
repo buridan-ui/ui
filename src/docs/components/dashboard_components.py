@@ -38,12 +38,8 @@ def dashboard_layout_example():
 
 # Used in --show_code(app_py_example)--
 def app_py_example():
-    # Assuming dashboard_layout is defined elsewhere
-    def dashboard_layout():
-        return rx.box("Dashboard Layout")
-
     return rx.markdown(
-        """```python
+        r"""```
 # app/app.py
 
 import reflex as rx
@@ -54,7 +50,6 @@ def index() -> rx.Component:
 
 app = rx.App()
 app.add_page(index)
-
 ```"""
     )
 

@@ -1,6 +1,7 @@
 from pathlib import Path
 from functools import lru_cache
 import datetime
+import json
 
 
 def get_formatted_date(timestamp):
@@ -36,6 +37,14 @@ def get_component_config():
             component_name = component_dir.name
             group = base_path.name
 
+            # Read meta.json for func_prefix and other metadata
+            func_prefix = component_name  # Default to component name
+            meta_file = component_dir / "meta.json"
+            if meta_file.exists():
+                with open(meta_file, "r") as f:
+                    meta_data = json.load(f)
+                    func_prefix = meta_data.get("func_prefix", func_prefix)
+
             display_name = component_name.replace("_", " ").replace("-", " ").title()
 
             url_prefix = f"/{group}"
@@ -55,6 +64,7 @@ def get_component_config():
                 "quantity": len(versions),
                 "group": group.title(),
                 "dir": component_name,
+                "func_prefix": func_prefix,
                 "meta": [
                     get_formatted_date(creation_time),
                     get_formatted_date(last_update_time),

@@ -231,5 +231,8 @@ def sidemenu(in_drawer=False):
             class_name="flex flex-col items-center gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",
         ),
         # class_name="sticky top-0 left-0 h-screen",
-        class_name="hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5",
+        # class_name="hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5",
+        class_name="flex flex-col max-w-[18rem] h-full"
+        if in_drawer
+        else "hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5",
     )

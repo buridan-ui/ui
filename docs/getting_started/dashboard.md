@@ -19,7 +19,9 @@ This guide walks through building that exact foundation — a reusable layout sk
 
 To begin, create a new Reflex project using the CLI:
 
---show_code(project_setup_init_example)--
+```bash
+reflex init --name app
+```
 
 When prompted, select: **Blank Reflex App**
 This will generate the following project structure:
@@ -36,7 +38,9 @@ This will generate the following project structure:
 ```
 
 To run the development server and see the app in your browser, use:
---show_code(project_setup_run_example)--
+```bash
+reflex run
+```
 
 This will start a local server, usually at http://localhost:3000, where you can preview your dashboard as you build it.
 

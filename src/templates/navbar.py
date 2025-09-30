@@ -2,6 +2,7 @@ import reflex as rx
 from reflex.experimental import ClientStateVar
 from src.config import VERSION
 from src.templates.search.search import search
+from src.templates.drawer.drawer import drawer
 
 # Chart Theme Components
 Chart_Theme = ClientStateVar.create("chart_theme", "")
@@ -75,7 +76,7 @@ def theme_select_menu():
             ),
             rx.popover.content(
                 _create_theme_content(),
-                side="left",
+                side="bottom",
                 side_offset=15,
                 class_name="items-center bg-transparent !shadow-none !p-0 border-none w-auto overflow-visible font-sans pointer-events-auto",
             ),
@@ -136,10 +137,11 @@ def site_theme() -> rx.Component:
         ),
         class_name=(
             "inline-flex items-center justify-center gap-x-2 rounded-lg text-sm font-semibold "
-            "cursor-pointer h-[1.625rem] w-[1.625rem]"
+            "cursor-pointer h-[1.925rem] w-[1.925rem]"
         ),
         border=f"1px solid {rx.color('gray', 5)}",
         on_click=rx.toggle_color_mode,
+        _hover={"color": rx.color("slate", 12), "background": rx.color("gray", 3)},
     )
 
 
@@ -152,8 +154,9 @@ def site_github() -> rx.Component:
         border=f"1px solid {rx.color('gray', 5)}",
         class_name=(
             "inline-flex items-center justify-center gap-x-2 rounded-lg text-sm font-semibold "
-            "cursor-pointer h-[1.625rem] w-[1.625rem] cursor-pointer"
+            "cursor-pointer h-[1.925rem] w-[1.925rem] cursor-pointer"
         ),
+        _hover={"color": rx.color("slate", 12), "background": rx.color("gray", 3)},
     )
 
 
@@ -161,8 +164,9 @@ def doc_navbar(url: str):
     return rx.el.div(
         rx.el.div(
             rx.el.div(
+                rx.box(drawer(), class_name="flex xl:hidden"),
                 buridan_doc_navbar_header(),
-                class_name="max-w-[18rem] w-full flex items-center justify-start px-4",
+                class_name="max-w-[18rem] w-full flex flex-row gap-x-2 xl:gap-x-0 items-center justify-start px-4",
             ),
             rx.el.div(
                 rx.box(theme_select_menu(), class_name="hidden md:flex")

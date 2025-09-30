@@ -5,16 +5,9 @@ import os
 import importlib
 from typing import List, Dict, Callable
 
-
-def slugify(text: str) -> str:
-    """Converts text to a URL-friendly slug."""
-    text = re.sub(r"[^a-z0-9]+", "-", text).strip("-")
-    return text.lower()
-
-
 markdown_component_map = {
-    "h1": lambda t: rx.heading(t, class_name="text-3xl py-1", id=t),
-    "h2": lambda t: rx.heading(t, class_name="text-2xl py-1", id=t),
+    "h1": lambda t: rx.heading(t, class_name="text-2xl py-1", id=t),
+    "h2": lambda t: rx.heading(t, class_name="text-xl py-1", id=t),
     "p": lambda t: rx.text(
         t,
         class_name="text-sm leading-6 pb-4",

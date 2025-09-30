@@ -48,11 +48,6 @@ def create_divider():
     return rx.divider(border_bottom=create_border(), bg="transparent")
 
 
-# ============================================================================
-# COMPONENT BUILDERS
-# ============================================================================
-
-
 def create_meta_item(icon_tag: str, label_text: str, title: Optional[str] = None):
     """Create a metadata item with icon and label."""
     return rx.el.div(
@@ -82,11 +77,6 @@ def base_footer_responsive(
         display=create_responsive_display(small_screens, large_screens),
         width="100%",
     )
-
-
-# ============================================================================
-# HEADER COMPONENTS
-# ============================================================================
 
 
 def _create_logo():
@@ -142,17 +132,12 @@ def create_header(url: str):
     )
 
 
-# ============================================================================
-# LAYOUT COMPONENTS
-# ============================================================================
-
-
 def create_title_section(page_name: str, meta_component: rx.Component):
     """Create the title section component."""
     return rx.el.div(
         rx.el.div(
             rx.el.label(page_name, class_name="text-4xl sm:4xl font-bold py-6"),
-            meta_component,
+            # meta_component,
             class_name="w-full justify-start flex flex-col pb-9 pl-4",
         ),
         class_name="flex flex-col p-0 gap-y-2 min-h-[100vh] w-full",
@@ -307,7 +292,7 @@ def table_of_content(name: str, toc_data: Optional[List[Dict[str, str]]] = None)
     return rx.box(
         _create_toc_content(component_links),
         height="100vh",
-        class_name=f"hidden xl:flex {SIDEBAR_TOC_CLASSES} self-start",
+        class_name=f"hidden lg:flex {SIDEBAR_TOC_CLASSES} self-start",
     )
 
 
@@ -342,10 +327,10 @@ def base(
                             class_name="flex w-full min-h-screen",
                         ),
                         table_of_content(name=page_name, toc_data=toc_data),
-                        class_name="xl:max-w-[80rem] 2xl:max-w-[75rem] w-full mx-auto h-full flex flex-row gap-x-0",
+                        class_name="xl:max-w-[80rem] 2xl:max-w-[75rem] w-full mx-auto min-h-screen flex flex-row gap-x-0 pb-6",
                     ),
-                    class_name="px-4 xl:px-0 pt-12 h-screen w-full overflow-y-auto",
-                    style={"scroll-padding-top": "4rem"},
+                    footer(),
+                    class_name="px-2 xl:px-0 pt-12 h-screen w-full overflow-y-auto",
                 ),
                 bg=rx.color("slate", 2),
                 class_name="w-full h-screen flex flex-col gap-y-0",
