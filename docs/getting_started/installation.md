@@ -9,23 +9,31 @@ order: 2
 
 To use Reflex you need to have Python version 3.9 or above installed on your system.
 
---show_code(python_version_check_example)--
+```bash
+python3 --version
+```
 
 # Step 2: PIP install the Reflex framework
 
 Use the following command to install Reflex:
 
---show_code(install_reflex_example)--
+```bash
+pip3 install reflex
+```
 
 Make sure the latest version of Reflex is installed:
 
---show_code(reflex_version_check_example)--
+```bash
+reflex --version
+```
 
 # Step 3: Create a new Reflex Web Application
 
 Inside your root directory, run the following command to create a new app:
 
---show_code(create_reflex_app_example)--
+```bash
+reflex init
+```
 
 # Step 4: Copy & paste a pantry item directly into your app
 
