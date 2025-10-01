@@ -5,6 +5,19 @@ from src.docs.components.changelog_components import changelog_wrapper
 def changelog_page_component():
     return rx.box(
         changelog_wrapper(
+            title="Site Updates & UI Refinements",
+            date="October 1, 2025",
+            version="buridan/ui v0.7.3-beta",
+            log="""
+- Updated **site documentation** and released changes. [#55](https://github.com/buridan-ui/ui/pull/55)
+- Bumped dependency to `reflex==0.8.9` and updated `uv.lock`. [#56](https://github.com/buridan-ui/ui/pull/56)
+- Applied several **UI patches** across components. [#57](https://github.com/buridan-ui/ui/pull/57)
+- Refined **footer layout** and additional UI adjustments. [#58](https://github.com/buridan-ui/ui/pull/58)
+- Added **Korean export documentation** and fixed typos. [#59](https://github.com/buridan-ui/ui/pull/59)
+- Performed broader **site UI refactoring** for consistency. [#60](https://github.com/buridan-ui/ui/pull/60)
+""",
+        ),
+        changelog_wrapper(
             title="Updates & Site Enhancements",
             date="August 31, 2025",
             version="buridan/ui v0.7.2",
