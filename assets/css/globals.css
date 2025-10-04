@@ -5,11 +5,11 @@
 :root {
     --background: oklch(0.985 0 0);
     --foreground: oklch(0.145 0 0);
-    --chart-1: oklch(0.81 0.1 252);
-    --chart-2: oklch(0.62 0.19 260);
-    --chart-3: oklch(0.55 0.22 263);
-    --chart-4: oklch(0.49 0.22 264);
-    --chart-5: oklch(0.42 0.18 266);
+    --chart-1: oklch(0.87 0.14 154);
+    --chart-2: oklch(0.72 0.19 150);
+    --chart-3: oklch(0.63 0.17 149);
+    --chart-4: oklch(0.53 0.14 150);
+    --chart-5: oklch(0.45 0.11 151);
     --pattern-ui: oklch(0.715 0.143 215.221);
     --pattern-lab: oklch(0.696 0.17 162.48);
 }
@@ -17,11 +17,19 @@
 .dark {
     --background: oklch(0.16 0 0);
     --foreground: oklch(0.985 0 0);
-    --chart-1: oklch(0.81 0.1 252);
-    --chart-2: oklch(0.62 0.19 260);
-    --chart-3: oklch(0.55 0.22 263);
-    --chart-4: oklch(0.49 0.22 264);
-    --chart-5: oklch(0.42 0.18 266);
+    --chart-1: oklch(0.87 0.14 154);
+    --chart-2: oklch(0.72 0.19 150);
+    --chart-3: oklch(0.63 0.17 149);
+    --chart-4: oklch(0.53 0.14 150);
+    --chart-5: oklch(0.45 0.11 151);
+}
+
+.theme-retro {
+    --border-radius: 0px;
+}
+
+.theme-normal {
+    --border-radius: 10px;
 }
 
 /* Blue theme */
