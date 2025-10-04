@@ -4,6 +4,7 @@ from src.static.routes import (
     ChartRoutes,
     PantryRoutes,
     GettingStartedRoutes,
+    ComponentRoutes,
 )
 
 ICON_BOX_STYLE = {
@@ -208,6 +209,22 @@ def _create_pantry_components_content():
     )
 
 
+def _create_components_content():
+    """Create pantry components section content."""
+    return rx.el.div(
+        create_section_description(
+            [
+                "Some descition here ...",
+            ]
+        ),
+        rx.el.div(
+            create_sidebar_menu_items(ComponentRoutes),
+            class_name="flex flex-row h-full w-full gap-x-2",
+        ),
+        class_name="flex flex-col p-0 m-0",
+    )
+
+
 def sidemenu(in_drawer=False):
     """Main sidemenu component."""
     # from src.wrappers.base.main import _create_reflex_build_link
@@ -216,6 +233,7 @@ def sidemenu(in_drawer=False):
         # _create_header(),
         # _create_reflex_build_link(),
         side_bar_wrapper("Getting Started", _create_getting_started_content()),
+        side_bar_wrapper("Components", _create_components_content()),
         side_bar_wrapper("Chart Components", _create_chart_components_content()),
         side_bar_wrapper("Pantry Components", _create_pantry_components_content()),
         class_name="flex flex-col w-full h-full",

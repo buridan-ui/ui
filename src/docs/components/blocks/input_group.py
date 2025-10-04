@@ -122,10 +122,8 @@ def textarea_with_footer(
     )
 
 
-# Example usage
-
-
-def areachart_v11():
+# Example usagag
+def input_group():
     """Examples showing all the different input styles"""
     return rx.box(
         rx.button("Retro", on_click=border.set_value("theme-retro")),

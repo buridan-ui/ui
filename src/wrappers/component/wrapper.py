@@ -253,7 +253,7 @@ def component_wrapper(path: str):
     def decorator(func: Callable[[], list[rx.Component | str | int]]):
         @wraps(func)
         def wrapper():
-            component, component_code, flexgen_path = func()
+            component, component_code = func()
 
             import re
 

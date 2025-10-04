@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import List
 import re
+import os
 
 from src.mdparser import DelimiterParser
 from src.wrappers.base.main import base
@@ -11,10 +12,20 @@ from src.utils.text_helpers import slugify
 # Path to the top-level docs directory
 DOCS_BASE_DIR = Path("docs")
 # Path to the components directory for the DelimiterParser
-COMPONENTS_DIR = "src/docs/components"
+DOCS_COMPONENTS_ROOT = "src/docs/components"
+
+
+def get_all_subdirectories(path: str) -> List[str]:
+    """Returns a list of all subdirectories in a given path."""
+    if not os.path.isdir(path):
+        return []
+    return [dirpath for dirpath, _, _ in os.walk(path)]
+
 
 # Instantiate the parser with the dynamic load directory
-md_parser = DelimiterParser(dynamic_load_dir=COMPONENTS_DIR)
+md_parser = DelimiterParser(
+    dynamic_load_dirs=get_all_subdirectories(DOCS_COMPONENTS_ROOT)
+)
 
 
 def _parse_frontmatter(content: str) -> tuple[dict, str]:

@@ -60,12 +60,13 @@ class DelimiterParser:
 
     def __init__(
         self,
-        components_registry: Dict[str, Callable] = None,
-        dynamic_load_dir: str = None,
+        components_registry: Dict[str, Callable] | None = None,
+        dynamic_load_dirs: List[str] | None = None,
     ):
         self.components_registry = components_registry or {}
-        if dynamic_load_dir:
-            self.components_registry.update(self._dynamic_load(dynamic_load_dir))
+        if dynamic_load_dirs:
+            for directory in dynamic_load_dirs:
+                self.components_registry.update(self._dynamic_load(directory))
 
     def _dynamic_load(self, directory: str) -> Dict[str, Callable]:
         """Dynamically loads components from a given directory."""
