@@ -3,33 +3,25 @@
 @tailwind utilities;
 
 :root {
-    --background: oklch(0.985 0 0);
-    --foreground: oklch(0.145 0 0);
     --chart-1: oklch(0.87 0.14 154);
     --chart-2: oklch(0.72 0.19 150);
     --chart-3: oklch(0.63 0.17 149);
     --chart-4: oklch(0.53 0.14 150);
     --chart-5: oklch(0.45 0.11 151);
-    --pattern-ui: oklch(0.715 0.143 215.221);
-    --pattern-lab: oklch(0.696 0.17 162.48);
+    --radius: 0.5rem;
+    --focus-border: oklch(0.62 0.19 260);
+    --focus-ring: oklch(0.62 0.19 260 / 20%);
 }
 
 .dark {
-    --background: oklch(0.16 0 0);
-    --foreground: oklch(0.985 0 0);
     --chart-1: oklch(0.87 0.14 154);
     --chart-2: oklch(0.72 0.19 150);
     --chart-3: oklch(0.63 0.17 149);
     --chart-4: oklch(0.53 0.14 150);
     --chart-5: oklch(0.45 0.11 151);
-}
-
-.theme-retro {
-    --border-radius: 0px;
-}
-
-.theme-normal {
-    --border-radius: 10px;
+    --radius: 0.5rem;
+    --focus-border: oklch(0.62 0.19 260);
+    --focus-ring: oklch(0.62 0.19 260 / 20%);
 }
 
 /* Blue theme */
@@ -39,6 +31,8 @@
     --chart-3: oklch(0.55 0.22 263);
     --chart-4: oklch(0.49 0.22 264);
     --chart-5: oklch(0.42 0.18 266);
+    --focus-border: oklch(0.62 0.19 260);
+    --focus-ring: oklch(0.62 0.19 260 / 20%);
 }
 
 /* Red theme */
@@ -48,6 +42,8 @@
     --chart-3: oklch(0.58 0.22 27);
     --chart-4: oklch(0.51 0.19 28);
     --chart-5: oklch(0.44 0.16 27);
+    --focus-border: oklch(0.64 0.21 25);
+    --focus-ring: oklch(0.64 0.21 25 / 20%);
 }
 
 /* Green theme */
@@ -57,6 +53,8 @@
     --chart-3: oklch(0.63 0.17 149);
     --chart-4: oklch(0.53 0.14 150);
     --chart-5: oklch(0.45 0.11 151);
+    --ring: oklch(0.7 0.15 162);
+    --ring-within: oklch(0.7 0.15 162/20%);
 }
 
 /* Amber theme */

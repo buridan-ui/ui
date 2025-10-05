@@ -243,6 +243,37 @@ def tab_selector(tabs=["Preview", "Code"], component_id=None, source_code=""):
     )
 
 
+def component_wrapper_docs(
+    component: rx.Component, component_code: str
+) -> rx.Component:
+    # Generate a single random ID for this component
+    component_id = generate_component_id()
+
+    # Create a unique client state variable for this component's preview/code toggle
+    active_tab = ClientStateVar.create(f"active_tab_{component_id}", 0)
+
+    return rx.box(
+        rx.box(
+            rx.box(
+                tab_selector(["Preview", "Code"], component_id, component_code),
+                class_name="flex align-center gap-2",
+            ),
+            class_name="h-14 px-4 py-4 w-full flex align-center justify-end items-center rounded-xl",
+        ),
+        create_content_wrapper(
+            rx.cond(
+                active_tab.value == 0,  # 0 = Preview, 1 = Code
+                component,
+                create_code_block(component_code),
+            ),
+            active_tab.value == 0,
+        ),
+        border=f"1px dashed {rx.color('gray', 5)}",
+        class_name="rounded-xl size-full flex flex-col p-1 "
+        + Chart_Theme.value.to(str),
+    )
+
+
 def component_wrapper(path: str):
     # Generate a single random ID for this component
     component_id = generate_component_id()
@@ -272,8 +303,7 @@ def component_wrapper(path: str):
                         tab_selector(["Preview", "Code"], component_id, component_code),
                         class_name="flex align-center gap-2",
                     ),
-                    class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center rounded-xl "
-                    + rx.cond(active_tab.value == 1, "sticky top-0", "").to(str),
+                    class_name="h-14 px-4 py-4 w-full flex align-center justify-between items-center rounded-xl",
                 ),
                 create_content_wrapper(
                     rx.cond(

@@ -4,6 +4,7 @@ import inspect
 import os
 import importlib
 from typing import List, Dict, Callable
+from src.wrappers.component.wrapper import component_wrapper_docs
 
 markdown_component_map = {
     "h1": lambda t: rx.heading(t, class_name="text-2xl py-1", id=t),
@@ -149,6 +150,21 @@ class DelimiterParser:
                         components.append(
                             rx.box(
                                 f"Missing component for show_code: {argument}",
+                                color="red",
+                            )
+                        )
+                elif command == "component_wrapper":
+                    if argument and argument in self.components_registry:
+                        component_func = self.components_registry[argument]
+                        source_code = inspect.getsource(component_func)
+                        component_instance = component_func()
+                        components.append(
+                            component_wrapper_docs(component_instance, source_code)
+                        )
+                    else:
+                        components.append(
+                            rx.box(
+                                f"Missing component for component_wrapper: {argument}",
                                 color="red",
                             )
                         )
