@@ -3,7 +3,7 @@ from typing import Callable, List, Optional, Dict
 
 import reflex as rx
 
-from src.templates.search.search import search
+# from src.templates.search.search import search
 from src.templates.drawer.drawer import drawer
 from src.templates.footer.footer import desktop_footer, footer
 from src.templates.sidemenu.sidemenu import sidemenu
@@ -110,7 +110,7 @@ def _create_header_actions(url: str):
         # rx.box(theme_select_menu(), class_name="hidden md:flex")
         # if url.startswith("/charts/")
         # else rx.box(class_name="hidden"),
-        search(),
+        # search(),
         github_link(),
         theme_button(),
         rx.box(drawer(), class_name="flex md:hidden"),
