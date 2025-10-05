@@ -49,26 +49,19 @@ def avatar(
 # Example matching the shadcn AvatarDemo
 
 
-def avatar_demo():
-    """
-    Example matching the shadcn AvatarDemo component.
-    Shows basic avatar, rounded square variant, and overlapping group.
-    """
+def avatar_example():
     return rx.box(
-        # Basic circular avatar
         avatar(
             src="https://github.com/shadcn.png",
             alt="@shadcn",
             fallback="CN",
         ),
-        # Rounded square avatar
         avatar(
             src="https://github.com/evilrabbit.png",
             alt="@evilrabbit",
             fallback="ER",
             class_name="rounded-lg",
         ),
-        # Overlapping avatar group with grayscale and rings
         rx.box(
             avatar(
                 src="https://github.com/shadcn.png",
@@ -93,9 +86,6 @@ def avatar_demo():
         ),
         class_name="flex flex-row flex-wrap items-center gap-12 p-8",
     )
-
-
-# Additional examples
 
 
 def avatar_sizes():

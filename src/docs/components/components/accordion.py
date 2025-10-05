@@ -1,38 +1,5 @@
 import reflex as rx
 
-# -----------------------------
-# Abstracted Accordion Components (unstyled)
-# -----------------------------
-
-
-def accordion_root(*children, **props):
-    return rx.accordion.root(*children, **props)
-
-
-def accordion_item(*children, **props):
-    return rx.accordion.item(*children, **props)
-
-
-def accordion_header(*children, **props):
-    return rx.accordion.header(*children, **props)
-
-
-def accordion_trigger(*children, **props):
-    return rx.accordion.trigger(*children, **props)
-
-
-def accordion_content(*children, **props):
-    return rx.accordion.content(*children, **props)
-
-
-def accordion_icon(**props):
-    return rx.accordion.icon(**props)
-
-
-# -----------------------------
-# Demo Example with Tailwind Styling
-# -----------------------------
-
 items1 = [
     "01. Genesis launched a new era of exploration.",
     "02. Explorer uncovered new planets beyond our reach.",
@@ -55,10 +22,7 @@ items3 = [
 ]
 
 
-def accordion_demo():
-    # -----------------------------
-    # Common Tailwind class names
-    # -----------------------------
+def accordion_example():
     trigger_class = "py-2 px-1 hover:bg-transparent"
     trigger_text_class = "text-sm font-medium"
     icon_class = "w-3.5 h-3.5 transition-transform duration-200"
@@ -66,18 +30,17 @@ def accordion_demo():
     content_vstack_class = "flex flex-col space-y-2"
     item_border_class = "border-b border-[var(--input)] last:border-b-0"
 
-    return rx.box(
-        accordion_root(
-            # Item 1
-            accordion_item(
-                accordion_header(
-                    accordion_trigger(
+    return rx.el.div(
+        rx.accordion.root(
+            rx.accordion.item(
+                rx.accordion.header(
+                    rx.accordion.trigger(
                         rx.el.p("Models", class_name=trigger_text_class),
-                        accordion_icon(class_name=icon_class),
+                        rx.accordion.icon(class_name=icon_class),
                         class_name=trigger_class,
                     )
                 ),
-                accordion_content(
+                rx.accordion.content(
                     rx.el.div(
                         rx.foreach(items1, lambda i: rx.el.p(i, class_name="text-sm")),
                         class_name=content_vstack_class,
@@ -86,16 +49,15 @@ def accordion_demo():
                 ),
                 class_name=item_border_class,
             ),
-            # Item 2
-            accordion_item(
-                accordion_header(
-                    accordion_trigger(
+            rx.accordion.item(
+                rx.accordion.header(
+                    rx.accordion.trigger(
                         rx.el.p("Spacecraft", class_name=trigger_text_class),
-                        accordion_icon(class_name=icon_class),
+                        rx.accordion.icon(class_name=icon_class),
                         class_name=trigger_class,
                     )
                 ),
-                accordion_content(
+                rx.accordion.content(
                     rx.el.div(
                         rx.foreach(items2, lambda i: rx.el.p(i, class_name="text-sm")),
                         class_name=content_vstack_class,
@@ -104,16 +66,15 @@ def accordion_demo():
                 ),
                 class_name=item_border_class,
             ),
-            # Item 3
-            accordion_item(
-                accordion_header(
-                    accordion_trigger(
+            rx.accordion.item(
+                rx.accordion.header(
+                    rx.accordion.trigger(
                         rx.el.p("Space Discoveries", class_name=trigger_text_class),
-                        accordion_icon(class_name=icon_class),
+                        rx.accordion.icon(class_name=icon_class),
                         class_name=trigger_class,
                     )
                 ),
-                accordion_content(
+                rx.accordion.content(
                     rx.el.div(
                         rx.foreach(items3, lambda i: rx.el.p(i, class_name="text-sm")),
                         class_name=content_vstack_class,

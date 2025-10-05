@@ -1,5 +1,5 @@
 import reflex as rx
-from src.docs.components.changelog_components import changelog_wrapper
+from src.docs.components.getting_started.changelog_components import changelog_wrapper
 
 
 def changelog_page_component():

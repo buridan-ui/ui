@@ -91,7 +91,7 @@ class DelimiterParser:
                         ) and obj.__module__ == module.__name__:
                             registry[name] = obj
                 except Exception as e:
-                    print(f"Error loading components from module {module_path}: {e}")
+                    print(f"jError loading components from module {module_path}: {e}")
         return registry
 
     def parse_and_render(self, content: str) -> List[rx.Component]:
@@ -159,7 +159,10 @@ class DelimiterParser:
                         source_code = inspect.getsource(component_func)
                         component_instance = component_func()
                         components.append(
-                            component_wrapper_docs(component_instance, source_code)
+                            rx.el.div(
+                                component_wrapper_docs(component_instance, source_code),
+                                class_name="px-4 pb-6",
+                            )
                         )
                     else:
                         components.append(
