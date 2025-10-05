@@ -214,7 +214,7 @@ def _create_components_content():
     return rx.el.div(
         create_section_description(
             [
-                "Some descition here ...",
+                "Core components to help you build interactive, responsive, and visually consistent applications.",
             ]
         ),
         rx.el.div(

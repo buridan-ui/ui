@@ -9,6 +9,12 @@ order: 1
 
 An image element with a fallback for representing the user.
 
+# Installation
+
+Copy the following code into your app directory.
+
+--show_page_code(avatar)--
+
 # Examples
 
 ## General

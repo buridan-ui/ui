@@ -12,7 +12,7 @@ from src.utils.text_helpers import slugify
 # Path to the top-level docs directory
 DOCS_BASE_DIR = Path("docs")
 # Path to the components directory for the DelimiterParser
-DOCS_COMPONENTS_ROOT = "src/docs/components"
+DOCS_COMPONENTS_ROOT = "src/docs/code"
 
 
 def get_all_subdirectories(path: str) -> List[str]:

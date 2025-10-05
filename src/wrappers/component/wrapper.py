@@ -155,7 +155,7 @@ def create_tab_button(tab, index, active_tab):
 
 def create_code_block(code_content):
     """Create a standardized code block component."""
-    return rx.code_block(code_content, **CODE_BLOCK_PROPS)
+    return rx.code_block(code_content, wrap_long_lines=True, **CODE_BLOCK_PROPS)
 
 
 def create_expandable_code_block(code_content, component_id=None):

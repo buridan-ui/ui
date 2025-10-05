@@ -21,7 +21,7 @@ markdown_component_map = {
             c,
             width="100%",
             font_size="12px",
-            language="bash",
+            language="python",
             wrap_long_lines=True,
             scrollbar_width="none",
             code_tag_props={
@@ -150,6 +150,26 @@ class DelimiterParser:
                         components.append(
                             rx.box(
                                 f"Missing component for show_code: {argument}",
+                                color="red",
+                            )
+                        )
+                elif command == "show_page_code":
+                    if argument and argument in self.components_registry:
+                        component_func = self.components_registry[argument]
+                        module = inspect.getmodule(component_func)
+                        source_code = inspect.getsource(module)
+                        md_code = f"```python\n{source_code}```"
+                        components.append(
+                            rx.markdown(
+                                md_code,
+                                component_map=markdown_component_map,
+                                class_name="px-4",
+                            )
+                        )
+                    else:
+                        components.append(
+                            rx.box(
+                                f"Missing component for show_page_code: {argument}",
                                 color="red",
                             )
                         )
