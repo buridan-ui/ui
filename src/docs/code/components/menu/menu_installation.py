@@ -120,7 +120,6 @@ def dropdown_menu_sub_trigger(
 
     return rx.menu.sub_trigger(
         *children,
-        # rx.html("›", class_name="ml-auto text-lg"),
         data_slot="dropdown-menu-sub-trigger",
         data_inset=inset,
         class_name=f"[&_.rt-BaseMenuSubTriggerIcon.rt-DropdownMenuSubtriggerIcon]:!size-2 [&_.rt-BaseMenuSubTriggerIcon.rt-DropdownMenuSubtriggerIcon]:!shrink-0 {base_classes} {class_name}".strip(),
@@ -143,80 +142,4 @@ def dropdown_menu_sub_content(*children, class_name: str = "", **props):
         data_slot="dropdown-menu-sub-content",
         class_name=f"{base_classes} {class_name}".strip(),
         **props,
-    )
-
-
-# Example matching the shadcn DropdownMenuDemo
-
-
-def dropdown_menu_demo():
-    """
-    Example matching the shadcn DropdownMenuDemo component.
-    Shows a complete dropdown menu with groups, shortcuts, and submenu.
-    """
-    return rx.box(
-        dropdown_menu_root(
-            dropdown_menu_trigger(
-                rx.el.button(
-                    "Open",
-                    class_name=(
-                        "inline-flex items-center justify-center gap-2 rounded-md "
-                        "border bg-[var(--background)] shadow-xs hover:bg-[var(--accent)] "
-                        "hover:text-[var(--accent-foreground)] "
-                        "dark:bg-[var(--input)]/30 dark:border-[var(--input)] "
-                        "dark:hover:bg-[var(--input)]/50 "
-                        "h-9 px-4 py-2 text-sm font-medium transition-all outline-none"
-                    ),
-                )
-            ),
-            dropdown_menu_content(
-                dropdown_menu_label("My Account"),
-                # First group
-                dropdown_menu_item(
-                    "Profile",
-                    dropdown_menu_shortcut("⇧⌘P"),
-                ),
-                dropdown_menu_item(
-                    "Billing",
-                    dropdown_menu_shortcut("⌘B"),
-                ),
-                dropdown_menu_item(
-                    "Settings",
-                    dropdown_menu_shortcut("⌘S"),
-                ),
-                dropdown_menu_item(
-                    "Keyboard shortcuts",
-                    dropdown_menu_shortcut("⌘K"),
-                ),
-                dropdown_menu_separator(),
-                # Second group with submenu
-                dropdown_menu_item("Team"),
-                rx.menu.sub(
-                    dropdown_menu_sub_trigger("Invite users"),
-                    dropdown_menu_sub_content(
-                        dropdown_menu_item("Email"),
-                        dropdown_menu_item("Message"),
-                        dropdown_menu_separator(),
-                        dropdown_menu_item("More..."),
-                    ),
-                ),
-                dropdown_menu_item(
-                    "New Team",
-                    dropdown_menu_shortcut("⌘+T"),
-                ),
-                dropdown_menu_separator(),
-                # Third group
-                dropdown_menu_item("GitHub"),
-                dropdown_menu_item("Support"),
-                dropdown_menu_item("API", disabled=True),
-                dropdown_menu_separator(),
-                dropdown_menu_item(
-                    "Log out",
-                    dropdown_menu_shortcut("⇧⌘Q"),
-                ),
-                class_name="w-56",
-                size="1",
-            ),
-        ),
-        class_name="p-8",
     )

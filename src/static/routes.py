@@ -104,7 +104,7 @@ ComponentRoutes = _generate_doc_routes(
     section_folder="components",
     base_path="/components/",
 )
-
+ComponentRoutes = sorted(ComponentRoutes, key=lambda x: x["name"])
 
 # --- Component Routes (Pantry & Charts) ---
 

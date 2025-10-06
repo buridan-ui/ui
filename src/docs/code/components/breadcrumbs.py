@@ -67,7 +67,6 @@ def breadcrumb_separator(*children, class_name: str = "", **props):
     """Separator between breadcrumb items"""
     base_classes = "[&>svg]:size-3.5"
 
-    # If no children provided, use chevron as default
     if not children:
         children = (rx.icon(tag="chevron-right", size=14),)
 

@@ -1,65 +1,12 @@
 import reflex as rx
-
-
-def popover_root(*children, **props):
-    """
-    Root popover container.
-    Uses Reflex's built-in popover component.
-    """
-    return rx.popover.root(*children, data_slot="popover", **props)
-
-
-def popover_trigger(*children, **props):
-    """Trigger element for the popover"""
-    return rx.popover.trigger(*children, data_slot="popover-trigger", **props)
-
-
-def popover_content(*children, class_name: str = "", **props):
-    """
-    Popover content container.
-    Uses CSS variables from your shadcn theme.
-    """
-    base_classes = (
-        "bg-[var(--popover)] text-[var(--popover-foreground)] "
-        "data-[state=open]:animate-in data-[state=closed]:animate-out "
-        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 "
-        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 "
-        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 "
-        "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 "
-        "z-50 w-72 rounded-md border dark:border-[var(--input)] p-4 shadow-md outline-none"
-    )
-
-    return rx.popover.content(
-        *children,
-        data_slot="popover-content",
-        class_name=f"{base_classes} {class_name}".strip(),
-        **props,
-    )
-
-
-# Example matching the shadcn PopoverDemo
+from .popover_installation import popover_root, popover_trigger, popover_content
+from ..button.button_examples import button
 
 
 def popover_demo():
-    """
-    Example matching the shadcn PopoverDemo component.
-    Shows a popover with dimension inputs.
-    """
-    return rx.box(
+    return rx.el.div(
         popover_root(
-            popover_trigger(
-                rx.el.button(
-                    "Open popover",
-                    class_name=(
-                        "inline-flex items-center justify-center gap-2 rounded-md "
-                        "border bg-[var(--background)] shadow-xs hover:bg-[var(--accent)] "
-                        "hover:text-[var(--accent-foreground)] "
-                        "dark:bg-[var(--input)]/30 dark:border-[var(--input)] "
-                        "dark:hover:bg-[var(--input)]/50 "
-                        "h-9 px-4 py-2 text-sm font-medium transition-all outline-none"
-                    ),
-                )
-            ),
+            popover_trigger(button("Click Me", variant="outline")),
             popover_content(
                 rx.el.div(
                     # Header section
