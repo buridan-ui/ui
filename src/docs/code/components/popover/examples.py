@@ -1,6 +1,6 @@
 import reflex as rx
-from .popover_installation import popover_root, popover_trigger, popover_content
-from ..button.button_examples import button
+from .popover import popover_root, popover_trigger, popover_content
+from ..button.button import button
 
 
 def popover_demo():

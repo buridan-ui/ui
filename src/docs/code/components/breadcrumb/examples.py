@@ -1,5 +1,5 @@
 import reflex as rx
-from .breadcrumb_installation import (
+from .breadcrumb import (
     breadcrumb,
     breadcrumb_ellipsis,
     breadcrumb_item,

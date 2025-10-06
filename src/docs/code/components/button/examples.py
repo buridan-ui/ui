@@ -1,5 +1,5 @@
 import reflex as rx
-from .button_installation import button
+from .button import button
 
 
 def button_size_examples():

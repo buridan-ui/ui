@@ -1,5 +1,5 @@
 import reflex as rx
-from .avatar_installation import avatar
+from .avatar import avatar
 
 
 def avatar_example():

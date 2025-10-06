@@ -1,6 +1,6 @@
 import reflex as rx
-from ..button.button_installation import button
-from .menu_installation import (
+from ..button.button import button
+from .menu import (
     dropdown_menu_root,
     dropdown_menu_trigger,
     dropdown_menu_content,

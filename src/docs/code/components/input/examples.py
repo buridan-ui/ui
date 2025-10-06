@@ -1,5 +1,5 @@
 import reflex as rx
-from .input_installation import input
+from .input import input
 
 
 def input_demo():

@@ -1,5 +1,5 @@
 import reflex as rx
-from .typography_installation import (
+from .typography import (
     typography_h1,
     typography_h2,
     typography_h3,

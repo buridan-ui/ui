@@ -1,5 +1,5 @@
 import reflex as rx
-from .badge_installation import badge
+from .badge import badge
 
 
 def badge_demo():
@@ -52,7 +52,7 @@ def badge_with_icons():
             variant="destructive",
         ),
         badge(
-            rx.icon(tag="alert-circle"),
+            rx.icon(tag="triangle-alert"),
             "Warning",
             variant="secondary",
             class_name="bg-yellow-500 text-white dark:bg-yellow-600",
