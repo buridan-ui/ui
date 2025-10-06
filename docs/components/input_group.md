@@ -1,30 +1,33 @@
 ---
 name: "Input Group"
 dir: "input_group"
-description: "Input Group Description"
-order: 1
+description: "Combines inputs with prefixes, suffixes, or footers for structured data entry."
 ---
 
 # Input Group
 
+Combines inputs with prefixes, suffixes, or footers for structured data entry.
 
---component_wrapper(kbd_demo)--
+# Installation
 
---component_wrapper(breadcrumb_demo)--
+Copy the following code into your app directory.
 
---component_wrapper(badge_demo)--
---component_wrapper(badge_with_icons)--
+--show_page_code(input_with_addons)--
 
---component_wrapper(avatar_demo)--
+# Examples
 
---component_wrapper(accordion_demo)--
+## Price Input
 
---component_wrapper(input_group)--
+--component_wrapper(input_price)--
 
---component_wrapper(button_examples)--
+## URL Input
 
---component_wrapper(input_examples)--
+--component_wrapper(input_url)--
 
---component_wrapper(popover_demo)--
+## Email Input
 
---component_wrapper(dropdown_menu_demo)--
+--component_wrapper(input_email)--
+
+## Textarea with Footer
+
+--component_wrapper(input_textarea)--

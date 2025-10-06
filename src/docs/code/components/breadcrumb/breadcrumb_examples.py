@@ -11,18 +11,13 @@ from .breadcrumb_installation import (
 
 
 def breadcrumb_demo():
-    """
-    Example matching the shadcn BreadcrumbDemo component.
-    Shows breadcrumb with links, ellipsis dropdown, and current page.
-    """
-    return rx.box(
+    return rx.el.div(
         breadcrumb(
             breadcrumb_list(
                 breadcrumb_item(
                     breadcrumb_link("Home", href="#"),
                 ),
                 breadcrumb_separator(),
-                # Dropdown menu for collapsed items
                 breadcrumb_item(
                     rx.menu.root(
                         rx.menu.trigger(
@@ -42,7 +37,7 @@ def breadcrumb_demo():
                 ),
                 breadcrumb_separator(),
                 breadcrumb_item(
-                    breadcrumb_link("Components", href="/docs/components"),
+                    breadcrumb_link("Components", href="#"),
                 ),
                 breadcrumb_separator(),
                 breadcrumb_item(
@@ -54,24 +49,20 @@ def breadcrumb_demo():
     )
 
 
-# Additional examples
-
-
 def breadcrumb_simple():
-    """Simple breadcrumb without dropdown"""
     return rx.box(
         breadcrumb(
             breadcrumb_list(
                 breadcrumb_item(
-                    breadcrumb_link("Home", href="/"),
+                    breadcrumb_link("Home", href="#"),
                 ),
                 breadcrumb_separator(),
                 breadcrumb_item(
-                    breadcrumb_link("Products", href="/products"),
+                    breadcrumb_link("Products", href="#"),
                 ),
                 breadcrumb_separator(),
                 breadcrumb_item(
-                    breadcrumb_link("Electronics", href="/products/electronics"),
+                    breadcrumb_link("Electronics", href="#"),
                 ),
                 breadcrumb_separator(),
                 breadcrumb_item(
@@ -84,15 +75,15 @@ def breadcrumb_simple():
 
 
 def breadcrumb_with_icons():
-    """Breadcrumb with icons"""
-    return rx.box(
+    return rx.el.div(
         breadcrumb(
             breadcrumb_list(
                 breadcrumb_item(
                     breadcrumb_link(
                         rx.icon(tag="home", size=14),
                         "Home",
-                        href="/",
+                        href="#",
+                        class_name="flex flex-row gap-x-1 items-center",
                     ),
                 ),
                 breadcrumb_separator(),
@@ -100,7 +91,8 @@ def breadcrumb_with_icons():
                     breadcrumb_link(
                         rx.icon(tag="folder", size=14),
                         "Documents",
-                        href="/documents",
+                        href="#",
+                        class_name="flex flex-row gap-x-1 items-center",
                     ),
                 ),
                 breadcrumb_separator(),
@@ -108,6 +100,7 @@ def breadcrumb_with_icons():
                     breadcrumb_page(
                         rx.icon(tag="file-text", size=14),
                         "README.md",
+                        class_name="flex flex-row gap-x-1 items-center",
                     ),
                 ),
             ),
@@ -117,18 +110,17 @@ def breadcrumb_with_icons():
 
 
 def breadcrumb_custom_separator():
-    """Breadcrumb with custom separator"""
-    return rx.box(
+    return rx.el.div(
         breadcrumb(
             breadcrumb_list(
                 breadcrumb_item(
-                    breadcrumb_link("Home", href="/"),
+                    breadcrumb_link("Home", href="#"),
                 ),
                 breadcrumb_separator(
                     rx.text("/", class_name="text-[var(--muted-foreground)]")
                 ),
                 breadcrumb_item(
-                    breadcrumb_link("Blog", href="/blog"),
+                    breadcrumb_link("Blog", href="#"),
                 ),
                 breadcrumb_separator(
                     rx.text("/", class_name="text-[var(--muted-foreground)]")
