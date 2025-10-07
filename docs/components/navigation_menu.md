@@ -12,6 +12,6 @@ A collection of links for navigating websites.
 
 --show_page_code(NavigationMenuPrimitive)--
 
---show_page_code(@keyframes slideFromRight)--
+--show_file_content(src/docs/code/components/navigation_menu/navigation_menu.css)--
 
 # Example

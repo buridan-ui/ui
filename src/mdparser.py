@@ -6,6 +6,7 @@ import importlib
 from typing import List, Dict, Callable
 from src.wrappers.component.wrapper import component_wrapper_docs
 
+
 markdown_component_map = {
     "h1": lambda t: rx.heading(t, class_name="text-2xl py-1", id=t),
     "h2": lambda t: rx.heading(t, class_name="text-xl py-1", id=t),
@@ -97,7 +98,7 @@ class DelimiterParser:
     def parse_and_render(self, content: str) -> List[rx.Component]:
         """Parse content with --component-- or --show_code(component)-- delimiters."""
 
-        delimiter_pattern = r"--(\w+)(?:\((\w+)\))?--"
+        delimiter_pattern = r"--(\w+)(?:\(([^)]+)\))?--"
         sections = []
         current_pos = 0
 
@@ -170,6 +171,55 @@ class DelimiterParser:
                         components.append(
                             rx.box(
                                 f"Missing component for show_page_code: {argument}",
+                                color="red",
+                            )
+                        )
+                elif command == "show_file_content":
+                    if argument:
+                        try:
+                            filepath = argument.strip()
+                            if filepath.startswith("@/"):
+                                filepath = filepath[2:]
+                            with open(filepath, "r") as f:
+                                file_content = f.read()
+                            language = ""
+                            extension = os.path.splitext(filepath)[1]
+                            if extension == ".css":
+                                language = "css"
+                            elif extension == ".py":
+                                language = "python"
+                            elif extension == ".js":
+                                language = "javascript"
+                            elif extension == ".ts":
+                                language = "typescript"
+                            elif extension == ".html":
+                                language = "html"
+                            md_code = f"```{language}\n{file_content}```"
+                            components.append(
+                                rx.markdown(
+                                    md_code,
+                                    component_map=markdown_component_map,
+                                    class_name="px-4",
+                                )
+                            )
+                        except FileNotFoundError:
+                            components.append(
+                                rx.box(
+                                    f"File not found: {argument}",
+                                    color="red",
+                                )
+                            )
+                        except Exception as e:
+                            components.append(
+                                rx.box(
+                                    f"Error reading file {argument}: {e}",
+                                    color="red",
+                                )
+                            )
+                    else:
+                        components.append(
+                            rx.box(
+                                "Missing file path for show_file_content",
                                 color="red",
                             )
                         )
