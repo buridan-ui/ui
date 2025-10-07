@@ -11,6 +11,7 @@ from src.utils.text_helpers import slugify
 
 # Path to the top-level docs directory
 DOCS_BASE_DIR = Path("docs")
+
 # Path to the components directory for the DelimiterParser
 DOCS_COMPONENTS_ROOT = "src/docs/code"
 
@@ -105,7 +106,6 @@ def generate_docs_routes() -> List[RouteConfig]:
                 {
                     "text": heading_text,
                     "id": heading_text,
-                    # "id": slug_id,
                     "level": level,
                 }
             )
