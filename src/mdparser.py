@@ -4,6 +4,8 @@ import inspect
 import os
 import importlib
 from typing import List, Dict, Callable
+from src.wrappers.component.wrapper import component_wrapper_docs
+from src import constants
 
 markdown_component_map = {
     "h1": lambda t: rx.heading(t, class_name="text-2xl py-1", id=t),
@@ -20,7 +22,7 @@ markdown_component_map = {
             c,
             width="100%",
             font_size="12px",
-            language="bash",
+            language="python",
             wrap_long_lines=True,
             scrollbar_width="none",
             code_tag_props={
@@ -60,12 +62,13 @@ class DelimiterParser:
 
     def __init__(
         self,
-        components_registry: Dict[str, Callable] = None,
-        dynamic_load_dir: str = None,
+        components_registry: Dict[str, Callable] | None = None,
+        dynamic_load_dirs: List[str] | None = None,
     ):
         self.components_registry = components_registry or {}
-        if dynamic_load_dir:
-            self.components_registry.update(self._dynamic_load(dynamic_load_dir))
+        if dynamic_load_dirs:
+            for directory in dynamic_load_dirs:
+                self.components_registry.update(self._dynamic_load(directory))
 
     def _dynamic_load(self, directory: str) -> Dict[str, Callable]:
         """Dynamically loads components from a given directory."""
@@ -89,13 +92,13 @@ class DelimiterParser:
                         ) and obj.__module__ == module.__name__:
                             registry[name] = obj
                 except Exception as e:
-                    print(f"Error loading components from module {module_path}: {e}")
+                    print(f"jError loading components from module {module_path}: {e}")
         return registry
 
     def parse_and_render(self, content: str) -> List[rx.Component]:
         """Parse content with --component-- or --show_code(component)-- delimiters."""
 
-        delimiter_pattern = r"--(\w+)(?:\((\w+)\))?--"
+        delimiter_pattern = r"--([\w_]+)(?:\(([^)]+)\))?--"
         sections = []
         current_pos = 0
 
@@ -131,7 +134,7 @@ class DelimiterParser:
                 command = section["command"]
                 argument = section["argument"]
 
-                if command == "show_code":
+                if command.lower() == constants.SHOW_CODE:
                     if argument and argument in self.components_registry:
                         source_code = inspect.getsource(
                             self.components_registry[argument]
@@ -151,8 +154,95 @@ class DelimiterParser:
                                 color="red",
                             )
                         )
-                elif command in self.components_registry and argument is None:
-                    components.append(self.components_registry[command]())
+                elif command.lower() == constants.SHOW_PAGE_CODE:
+                    if argument and argument in self.components_registry:
+                        component_func = self.components_registry[argument]
+                        module = inspect.getmodule(component_func)
+                        source_code = inspect.getsource(module)
+                        md_code = f"```python\n{source_code}```"
+                        components.append(
+                            rx.markdown(
+                                md_code,
+                                component_map=markdown_component_map,
+                                class_name="px-4",
+                            )
+                        )
+                    else:
+                        components.append(
+                            rx.box(
+                                f"Missing component for show_page_code: {argument}",
+                                color="red",
+                            )
+                        )
+                elif command.lower() == constants.SHOW_FILE_CONTENT:
+                    if argument:
+                        try:
+                            filepath = argument.strip()
+                            if filepath.startswith("@/"):
+                                filepath = filepath[2:]
+                            with open(filepath, "r") as f:
+                                file_content = f.read()
+                            language = ""
+                            extension = os.path.splitext(filepath)[1]
+                            if extension == ".css":
+                                language = "css"
+                            elif extension == ".py":
+                                language = "python"
+                            elif extension == ".js":
+                                language = "javascript"
+                            elif extension == ".ts":
+                                language = "typescript"
+                            elif extension == ".html":
+                                language = "html"
+                            md_code = f"```{language}\n{file_content}```"
+                            components.append(
+                                rx.markdown(
+                                    md_code,
+                                    component_map=markdown_component_map,
+                                    class_name="px-4",
+                                )
+                            )
+                        except FileNotFoundError:
+                            components.append(
+                                rx.box(
+                                    f"File not found: {argument}",
+                                    color="red",
+                                )
+                            )
+                        except Exception as e:
+                            components.append(
+                                rx.box(
+                                    f"Error reading file {argument}: {e}",
+                                    color="red",
+                                )
+                            )
+                    else:
+                        components.append(
+                            rx.box(
+                                "Missing file path for show_file_content",
+                                color="red",
+                            )
+                        )
+                elif command.lower() == constants.COMPONENT_WRAPPER:
+                    if argument and argument in self.components_registry:
+                        component_func = self.components_registry[argument]
+                        source_code = inspect.getsource(component_func)
+                        component_instance = component_func()
+                        components.append(
+                            rx.el.div(
+                                component_wrapper_docs(component_instance, source_code),
+                                class_name="px-4 pb-6",
+                            )
+                        )
+                    else:
+                        components.append(
+                            rx.box(
+                                f"Missing component for component_wrapper: {argument}",
+                                color="red",
+                            )
+                        )
+                elif command.lower() in self.components_registry and argument is None:
+                    components.append(self.components_registry[command.lower()]())
                 else:
                     components.append(
                         rx.box(f"Unknown component or command: {command}", color="red")

@@ -1,7 +1,8 @@
 import reflex as rx
 from reflex.experimental import ClientStateVar
 from src.config import VERSION
-from src.templates.search.search import search
+
+# from src.templates.search.search import search
 from src.templates.drawer.drawer import drawer
 
 # Chart Theme Components
@@ -172,7 +173,7 @@ def doc_navbar(url: str):
                 rx.box(theme_select_menu(), class_name="hidden md:flex")
                 if url.startswith("/charts/")
                 else rx.box(class_name="hidden"),
-                search(),
+                # search(),
                 site_github(),
                 site_theme(),
                 class_name="w-full flex flex-row gap-x-2 items-center justify-end px-4",

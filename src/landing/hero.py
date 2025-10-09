@@ -1,6 +1,6 @@
 import reflex as rx
 
-from ..templates.search.search import search
+# from ..templates.search.search import search
 from src.components.github import github_link
 from src.components.theme import theme_button
 
@@ -64,7 +64,7 @@ def navbar():
             class_name="flex flex-row items-baseline gap-x-8",
         ),
         rx.box(
-            rx.box(search(), class_name="hidden lg:flex"),
+            # rx.box(search(), class_name="hidden lg:flex"),
             rx.link(
                 rx.el.button(
                     rx.color_mode_cond(

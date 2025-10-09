@@ -5,7 +5,7 @@ def capitalize_words(segment: str) -> str:
     return " ".join(word.lower() for word in segment.replace("-", " ").split())
 
 
-def base_content_path_ui(route: str) -> rx.hstack:
+def base_content_path_ui(route: str):
     segments = route.strip("/").split("/")
     path_names = [
         item for segment in segments[:-1] for item in [capitalize_words(segment), "›"]

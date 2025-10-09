@@ -1,6 +1,6 @@
 import os
 
-VERSION = "v0.7.3-beta"
+VERSION = "v0.7.4-beta"
 NAME = "buridan_ui"
 
 BURIDAN_URL = "https://buridan-ui.reflex.run/"

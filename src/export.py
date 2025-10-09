@@ -6,8 +6,6 @@ from typing import Callable, Dict, List, Any
 
 from src.config_generator import get_component_config
 from src.config import (
-    BASE_PANTRY_PATH,
-    BASE_CHART_PATH,
     SITE_LOGO_URL,
     SITE_META_TAGS,
 )
@@ -174,17 +172,11 @@ class ExportFactory:
             "src.pantry", directory, version, config.func_prefix
         )
 
-        flexgen_url = (
-            config.flexgen_url
-            or "https://reflex.build/gen/85caad0f-95d1-4180-b4eb-fc72edafdc9a/"
-        )
-
-        @component_wrapper(f"{BASE_PANTRY_PATH}{directory}/v{version}.py")
+        @component_wrapper(f"pantry/{directory}/v{version}.py")
         def export():
             return [
                 component_func(),
                 SourceRetriever.get_pantry_source(directory, f"v{version}.py"),
-                flexgen_url,
             ]
 
         return export
@@ -198,12 +190,11 @@ class ExportFactory:
             "src.charts", directory, version, config.func_prefix
         )
 
-        @component_wrapper(f"{BASE_CHART_PATH}{directory}/v{version}.py")
+        @component_wrapper(f"charts/{directory}/v{version}.py")
         def chart_export():
             return [
                 chart_func(),
                 SourceRetriever.get_chart_source(chart_func),
-                config.flexgen_url,
             ]
 
         return chart_export

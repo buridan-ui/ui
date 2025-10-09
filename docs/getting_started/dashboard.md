@@ -64,17 +64,17 @@ app/
 
 We’ll start by building the top-level layout component that wraps all other parts.
 
---show_code(dashboard_layout_example)--
+--SHOW_CODE(dashboard_layout_example)--
 
 Then in your `app.py`, use it as the root of your page:
 
---show_code(app_py_example)--
+--SHOW_CODE(app_py_example)--
 
 # Building the Sidebar
 
 The sidebar is a key part of the dashboard layout. It typically contains navigation, branding, or user context and stays fixed on the left side of the screen. We'll start by creating a reusable `sidebar()` component inside `app/layout/sidebar.py`.
 
---show_code(sidebar_example)--
+--SHOW_CODE(sidebar_example)--
 
 - `rx.scroll_area(...)` lets the sidebar scroll independently if its content exceeds the viewport height.
 - `sidebar_header()` is a separate component that we'll define next — it's used for a logo, app title, or profile section.
@@ -92,7 +92,7 @@ The sidebar header sits at the top of the sidebar and remains fixed while the re
 
 Here's the component definition:
 
---show_code(sidebar_header_example)--
+--SHOW_CODE(sidebar_header_example)--
 
 Once this header is in place, your sidebar becomes more polished and ready for interactive content. Next, we’ll focus on the main content area, including its own sticky header and scrollable body.
 
@@ -103,7 +103,7 @@ Just like the sidebar has a sticky top section, the main content area also benef
 
 Here’s the header component:
 
---show_code(content_header_example)--
+--SHOW_CODE(content_header_example)--
 
 This header is used inside the scroll area of your `dashboard_layout()`. This ensures the content header stays in view as users scroll down the main area of the dashboard. Next, we’ll create the actual main content section — where all your page content, cards, tables, and graphs will appear.
 
@@ -113,7 +113,7 @@ With the layout now complete, this is where you’ll add the actual content of y
 
 For example, if you have a chart or a card component, you would import it and place it like this:
 
---show_code(main_content_section_example)--
+--SHOW_CODE(main_content_section_example)--
 
 # Final Words
 

@@ -1,0 +1,66 @@
+@keyframes slideFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideToRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+@keyframes slideToLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}
+
+/* Viewport scale animations */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: rotateX(-30deg) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: rotateX(0deg) scale(1);
+    }
+}
+
+@keyframes scaleOut {
+    from {
+        opacity: 1;
+        transform: rotateX(0deg) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: rotateX(-10deg) scale(0.95);
+    }
+}

@@ -98,6 +98,13 @@ GettingStartedRoutes = _generate_doc_routes(
     base_path="/getting-started/",
 )
 
+# --- New Section ---
+
+ComponentRoutes = _generate_doc_routes(
+    section_folder="components",
+    base_path="/components/",
+)
+ComponentRoutes = sorted(ComponentRoutes, key=lambda x: x["name"])
 
 # --- Component Routes (Pantry & Charts) ---
 

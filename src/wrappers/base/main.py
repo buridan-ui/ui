@@ -3,7 +3,7 @@ from typing import Callable, List, Optional, Dict
 
 import reflex as rx
 
-from src.templates.search.search import search
+# from src.templates.search.search import search
 from src.templates.drawer.drawer import drawer
 from src.templates.footer.footer import desktop_footer, footer
 from src.templates.sidemenu.sidemenu import sidemenu
@@ -110,7 +110,7 @@ def _create_header_actions(url: str):
         # rx.box(theme_select_menu(), class_name="hidden md:flex")
         # if url.startswith("/charts/")
         # else rx.box(class_name="hidden"),
-        search(),
+        # search(),
         github_link(),
         theme_button(),
         rx.box(drawer(), class_name="flex md:hidden"),
@@ -135,12 +135,12 @@ def create_header(url: str):
 def create_title_section(page_name: str, meta_component: rx.Component):
     """Create the title section component."""
     return rx.el.div(
-        rx.el.div(
-            rx.el.label(page_name, class_name="text-4xl sm:4xl font-bold py-6"),
-            # meta_component,
-            class_name="w-full justify-start flex flex-col pb-9 pl-4",
-        ),
-        class_name="flex flex-col p-0 gap-y-2 min-h-[100vh] w-full",
+        # rx.el.div(
+        #     rx.el.label(page_name, class_name="text-4xl sm:4xl font-bold py-6"),
+        #     # meta_component,
+        #     class_name="w-full justify-start flex flex-col pb-9 pl-4",
+        # ),
+        class_name="flex flex-col p-0 gap-y-2 min-h-[100vh] w-full pt-4",
     )
 
 
@@ -310,10 +310,7 @@ def base(
             # Get the page content
             contents = content()
 
-            # Create metadata component or hidden div
             meta = page_meta(*dir_meta) if dir_meta else rx.el.div(class_name="hidden")
-
-            # Create title section with content items
             content_section = create_title_section(page_name, meta)
             content_section.children.extend(contents)
 
@@ -323,6 +320,7 @@ def base(
                     rx.box(
                         sidemenu(),
                         rx.box(
+                            # content_section,
                             content_section,
                             class_name="flex w-full min-h-screen",
                         ),

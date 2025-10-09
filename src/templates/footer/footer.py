@@ -2,7 +2,6 @@ import reflex as rx
 
 
 from .style import FooterStyle
-from src.static.routes import GettingStartedRoutes, ChartRoutes, PantryRoutes
 
 
 def create_footer_item(title: str, routes: list[dict[str, str]]):
@@ -54,19 +53,19 @@ def title():
 
 def footer():
     return rx.el.div(
-        rx.el.div(
-            create_footer_item("Home", GettingStartedRoutes),
-            create_footer_item("Charts UI", ChartRoutes),
-            create_footer_item("Pantry UI", PantryRoutes),
-            class_name="w-full h-full py-6 flex flex-col",
-        ),
+        # rx.el.div(
+        #     create_footer_item("Home", GettingStartedRoutes),
+        #     create_footer_item("Charts UI", ChartRoutes),
+        #     create_footer_item("Pantry UI", PantryRoutes),
+        #     class_name="w-full h-full py-6 flex flex-col",
+        # ),
         rx.el.div(
             title(),
             rx.el.label(
                 "© 2024 - 2025 Ahmad Hakim. All rights reserved.",
                 class_name="text-sm font-light",
             ),
-            class_name="flex flex-col gap-y-2 py-6",
+            class_name="flex flex-col sm:flex-row gap-y-2 py-6 items-center sm:justify-between",
             border_top=f"0.90px solid {rx.color('gray', 5)}",
         ),
         border_top=f"0.90px solid {rx.color('gray', 5)}",
