@@ -10,8 +10,10 @@ A collection of links for navigating websites.
 
 # Usage
 
---show_page_code(NavigationMenuPrimitive)--
+--SHOW_PAGE_CODE(NavigationMenuPrimitive)--
 
---show_file_content(src/docs/code/components/navigation_menu/navigation_menu.css)--
+--SHOW_FILE_CONTENT(src/docs/code/components/navigation_menu/navigation_menu.css)--
 
 # Example
+
+--COMPONENT_WRAPPER(navigation_example)--

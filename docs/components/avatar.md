@@ -13,18 +13,18 @@ An image element with a fallback for representing the user.
 
 Copy the following code into your app directory.
 
---show_page_code(avatar)--
+--SHOW_PAGE_CODE(avatar)--
 
 # Examples
 
 ## General
 
---component_wrapper(avatar_example)--
+--COMPONENT_WRAPPER(avatar_example)--
 
 ## Sizes
 
---component_wrapper(avatar_sizes)--
+--COMPONENT_WRAPPER(avatar_sizes)--
 
 ## With Badges
 
---component_wrapper(avatar_with_badge)--
+--COMPONENT_WRAPPER(avatar_with_badge)--

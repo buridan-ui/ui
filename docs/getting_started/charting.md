@@ -14,12 +14,12 @@ If you haven't done so already, make sure you have the latest version of Reflex 
 # Data & State Management
 Most charts in this guide use static data as an example. This approach helps keep the UI simple, clean, and the site fast. However, real-world applications will likely require the use of Reflex's **state** to build full-stack data applications, or any application that involves dynamic data handling.
 
---show_code(charting_state_example)--
+--SHOW_CODE(charting_state_example)--
 
 # Creating Your Chart
 The Buridan UI library includes 7 chart types: [Area](/charts/area-charts), [Bar](/charts/bar-charts), [Line](/charts/line-charts), [Pie](/charts/pie-charts), [Doughnut](/charts/doughnut-charts), [Radar](/charts/radar-charts), and [Scatter](/charts/scatter-charts). For this walkthrough, we’ll focus on **Area Charts**. To set up the area chart, import your state class inside the file that will contain your area chart component, then create the following function:
 
---show_code(area_chart_example)--
+--SHOW_CODE(area_chart_example)--
 
 - `data_key`: Defines which field will be used for y-axis values.
 - `data`: Links the chart to your state data array.
@@ -29,7 +29,7 @@ The Cartesian Grid component in Reflex allows you to customize the grid of your 
 
 To add a customized Cartesian grid to your chart, use the following code snippet:
 
---show_code(cartesian_grid_example)--
+--SHOW_CODE(cartesian_grid_example)--
 
 - `horizontal=True`: Enable horizontal lines.
 - `vertical=False`: Disable vertical lines.
@@ -40,7 +40,7 @@ The XAxis component in Reflex allows you to customize the appearance and behavio
 
 To customize the X Axis, you can use the following code snippet:
 
---show_code(xaxis_example)--
+--SHOW_CODE(xaxis_example)--
 
 - `axis_line=False`: Hide the axis line.
 - `tick_line=False`: Hide tick marks.
@@ -51,7 +51,7 @@ The ToolTip component in Reflex is highly customizable and allows you to create 
 
 To customize the tooltip with a dictionary, use the following code snippet:
 
---show_code(tooltip_example)--
+--SHOW_CODE(tooltip_example)--
 
 In this example, we are using a dictionary to define various style properties for the tooltip, such as `item_style`, `label_style`, and `content_style`. These properties control the look and feel of the tooltip, from the color of the text to the layout of the content. The `general_style` prop is used to apply additional custom styles to specific parts of the tooltip.
 

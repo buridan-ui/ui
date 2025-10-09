@@ -64,7 +64,7 @@ ClientStateVar provides several methods for different use cases:
 Here's a basic implementation showing tab switching functionality:
 
 
---show_code(tab_navigation_example)--
+--SHOW_CODE(tab_navigation_example)--
 
 - `ActiveTab.value` renders the current selected tab index
 - `ActiveTab.set_value(i)` creates an event handler that updates the active tab
@@ -210,13 +210,13 @@ class MyState(rx.State):
 # Common Patterns
 
 ## Toggle Pattern
---show_code(toggle_pattern_example)--
+--SHOW_CODE(toggle_pattern_example)--
 
 ## Form State Pattern
---show_code(form_state_pattern_example)--
+--SHOW_CODE(form_state_pattern_example)--
 
 ## Conditional Rendering Pattern
---show_code(conditional_rendering_pattern_example)--
+--SHOW_CODE(conditional_rendering_pattern_example)--
 
 # Final Thoughts
 ClientStateVar bridges the gap between Reflex's backend-focused architecture and modern frontend interactivity needs. By understanding when and how to use client-side state, you can build responsive, performant applications that feel native to users while maintaining clean separation between UI logic and business logic.

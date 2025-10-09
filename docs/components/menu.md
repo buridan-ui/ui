@@ -9,8 +9,8 @@ Displays a menu to the user — such as a set of actions or functions — trigge
 
 # Usage
 
---show_page_code(dropdown_menu_root)--
+--SHOW_PAGE_CODE(dropdown_menu_root)--
 
 # Example
 
---component_wrapper(dropdown_menu_demo)--
+--COMPONENT_WRAPPER(dropdown_menu_demo)--

@@ -12,22 +12,22 @@ Displays a badge or a component that looks like a badge.
 
 Copy the following code into your app directory.
 
---show_page_code(badge)--
+--SHOW_PAGE_CODE(badge)--
 
 # Examples
 
 ## Default
 
---component_wrapper(badge_demo)--
+--COMPONENT_WRAPPER(badge_demo)--
 
 ## With Icons
 
---component_wrapper(badge_with_icons)--
+--COMPONENT_WRAPPER(badge_with_icons)--
 
 ## Status
 
---component_wrapper(badge_status_examples)--
+--COMPONENT_WRAPPER(badge_status_examples)--
 
 ## Notification Count
 
---component_wrapper(badge_notification_count)--
+--COMPONENT_WRAPPER(badge_notification_count)--

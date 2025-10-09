@@ -12,18 +12,18 @@ Displays a form textarea or a component that looks like a textarea.
 
 Copy the following code into your app directory.
 
---show_page_code(textarea)--
+--SHOW_PAGE_CODE(textarea)--
 
 # Examples
 
 ## Basic Demo
 
---component_wrapper(textarea_demo)--
+--COMPONENT_WRAPPER(textarea_demo)--
 
 ## Disabled
 
---component_wrapper(textarea_disabled)--
+--COMPONENT_WRAPPER(textarea_disabled)--
 
 ## Custom Text Area
 
---component_wrapper(textarea_custom)--
+--COMPONENT_WRAPPER(textarea_custom)--

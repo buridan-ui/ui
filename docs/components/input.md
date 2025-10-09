@@ -12,30 +12,30 @@ Displays a form input field or a component that looks like an input field.
 
 Copy the following code into your app directory.
 
---show_page_code(input)--
+--SHOW_PAGE_CODE(input)--
 
 # Examples
 
 ## Basic Demo
 
---component_wrapper(input_demo)--
+--COMPONENT_WRAPPER(input_demo)--
 
 ## Email
 
---component_wrapper(input_email)--
+--COMPONENT_WRAPPER(input_email)--
 
 ## Password
 
---component_wrapper(input_password)--
+--COMPONENT_WRAPPER(input_password)--
 
 ## Disabled
 
---component_wrapper(input_disabled)--
+--COMPONENT_WRAPPER(input_disabled)--
 
 ## File Input
 
---component_wrapper(input_file)--
+--COMPONENT_WRAPPER(input_file)--
 
 ## Custom Input
 
---component_wrapper(input_custom_width)--
+--COMPONENT_WRAPPER(input_custom_width)--

@@ -5,7 +5,7 @@ import os
 import importlib
 from typing import List, Dict, Callable
 from src.wrappers.component.wrapper import component_wrapper_docs
-
+from src import constants
 
 markdown_component_map = {
     "h1": lambda t: rx.heading(t, class_name="text-2xl py-1", id=t),
@@ -98,7 +98,7 @@ class DelimiterParser:
     def parse_and_render(self, content: str) -> List[rx.Component]:
         """Parse content with --component-- or --show_code(component)-- delimiters."""
 
-        delimiter_pattern = r"--(\w+)(?:\(([^)]+)\))?--"
+        delimiter_pattern = r"--([\w_]+)(?:\(([^)]+)\))?--"
         sections = []
         current_pos = 0
 
@@ -134,7 +134,7 @@ class DelimiterParser:
                 command = section["command"]
                 argument = section["argument"]
 
-                if command == "show_code":
+                if command.lower() == constants.SHOW_CODE:
                     if argument and argument in self.components_registry:
                         source_code = inspect.getsource(
                             self.components_registry[argument]
@@ -154,7 +154,7 @@ class DelimiterParser:
                                 color="red",
                             )
                         )
-                elif command == "show_page_code":
+                elif command.lower() == constants.SHOW_PAGE_CODE:
                     if argument and argument in self.components_registry:
                         component_func = self.components_registry[argument]
                         module = inspect.getmodule(component_func)
@@ -174,7 +174,7 @@ class DelimiterParser:
                                 color="red",
                             )
                         )
-                elif command == "show_file_content":
+                elif command.lower() == constants.SHOW_FILE_CONTENT:
                     if argument:
                         try:
                             filepath = argument.strip()
@@ -223,7 +223,7 @@ class DelimiterParser:
                                 color="red",
                             )
                         )
-                elif command == "component_wrapper":
+                elif command.lower() == constants.COMPONENT_WRAPPER:
                     if argument and argument in self.components_registry:
                         component_func = self.components_registry[argument]
                         source_code = inspect.getsource(component_func)
@@ -241,8 +241,8 @@ class DelimiterParser:
                                 color="red",
                             )
                         )
-                elif command in self.components_registry and argument is None:
-                    components.append(self.components_registry[command]())
+                elif command.lower() in self.components_registry and argument is None:
+                    components.append(self.components_registry[command.lower()]())
                 else:
                     components.append(
                         rx.box(f"Unknown component or command: {command}", color="red")

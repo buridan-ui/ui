@@ -12,7 +12,7 @@ A drawer component in React made for Reflex.
 
 Copy the following code into your app directory.
 
---show_page_code(VaulComponent)--
+--SHOW_PAGE_CODE(VaulComponent)--
 
 # About
 
@@ -22,4 +22,4 @@ Drawer is wrapped for Reflex and is based on [Vaul](https://github.com/emilkowal
 
 ## Basic Demo
 
---component_wrapper(drawer_demo)--
+--COMPONENT_WRAPPER(drawer_demo)--

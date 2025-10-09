@@ -30,13 +30,13 @@ assets/
 
 Paste the following content into **theme.css**:
 
---show_code(theme_css_example)--
+--SHOW_CODE(theme_css_example)--
 
 You can copy the full content from the chart theme [source](https://github.com/buridan-ui/ui/blob/main/assets/css/globals.css).
 
 Import this CSS file in your **rx.App** declaration. Once imported, your app will automatically apply the default :root colors for charts:
 
---show_code(app_stylesheets_example)--
+--SHOW_CODE(app_stylesheets_example)--
 
 # Usage Example: Using Chart Colors in Components
 
@@ -51,11 +51,11 @@ var(--chart-2)
 
 For example, in a chart that takes in **fill** prop (such as that in area charts or bar charts):
 
---show_code(fill_prop_example)--
+--SHOW_CODE(fill_prop_example)--
 
 This will set the fill color to the default value and theme (from inside the **.root**). Buridan ships with multiple pre-defined color themes for charts. To switch themes, apply one of the pre-defined theme system crated inside your **theme.css** file. For example, the following will set the **--chart-1** color to the **red theme** if we apply that theme to an outter component:
 
---show_code(theme_red_example)--
+--SHOW_CODE(theme_red_example)--
 
 The theme system is fully CSS-based, so switching themes won’t trigger any extra rendering — it’s instant, clean, and declarative.
 
@@ -63,7 +63,7 @@ The theme system is fully CSS-based, so switching themes won’t trigger any ext
 
 Want to create your own chart palette? Just define a new theme block in theme.css:
 
---show_code(custom_theme_css_example)--
+--SHOW_CODE(custom_theme_css_example)--
 
 # Summary
 

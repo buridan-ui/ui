@@ -12,26 +12,26 @@ Display keyboard keys and shortcuts with proper styling.
 
 Copy the following code into your app directory.
 
---show_page_code(kbd)--
+--SHOW_PAGE_CODE(kbd)--
 
 # Examples
 
 ## Default
 
---component_wrapper(kbd_demo)--
+--COMPONENT_WRAPPER(kbd_demo)--
 
 ## Common Shortcuts
 
---component_wrapper(kbd_shortcuts)--
+--COMPONENT_WRAPPER(kbd_shortcuts)--
 
 ## Special Keys
 
---component_wrapper(kbd_special_keys)--
+--COMPONENT_WRAPPER(kbd_special_keys)--
 
 ## Complex Shortcuts
 
---component_wrapper(kbd_complex_shortcuts)--
+--COMPONENT_WRAPPER(kbd_complex_shortcuts)--
 
 ## With Icons
 
---component_wrapper(kbd_with_icons)--
+--COMPONENT_WRAPPER(kbd_with_icons)--

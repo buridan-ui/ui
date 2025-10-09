@@ -5,31 +5,31 @@ from .avatar import avatar
 def avatar_example():
     return rx.box(
         avatar(
-            src="https://github.com/shadcn.png",
-            alt="@shadcn",
+            src="https://avatars.githubusercontent.com/u/84860195?v=4",
+            alt="@LineIndent",
             fallback="CN",
         ),
         avatar(
-            src="https://github.com/evilrabbit.png",
-            alt="@evilrabbit",
-            fallback="ER",
+            src="https://avatars.githubusercontent.com/u/198465274?s=200&v=4",
+            alt="@buridan-ui",
+            fallback="BUI",
             class_name="rounded-lg",
         ),
         rx.box(
             avatar(
-                src="https://github.com/shadcn.png",
-                alt="@shadcn",
-                fallback="CN",
+                src="https://avatars.githubusercontent.com/u/198465274?s=200&v=4",
+                alt="@buridan-ui",
+                fallback="BUI",
             ),
             avatar(
-                src="https://github.com/maxleiter.png",
-                alt="@maxleiter",
-                fallback="LR",
+                src="https://avatars.githubusercontent.com/u/84860195?v=4",
+                alt="@buridan-ui",
+                fallback="BUI",
             ),
             avatar(
-                src="https://github.com/evilrabbit.png",
-                alt="@evilrabbit",
-                fallback="ER",
+                src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+                alt="@reflex",
+                fallback="RE",
             ),
             class_name=(
                 "flex -space-x-2 "
@@ -46,37 +46,37 @@ def avatar_sizes():
     return rx.box(
         # Extra small
         avatar(
-            src="https://github.com/shadcn.png",
-            alt="@shadcn",
-            fallback="CN",
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
             class_name="size-6",
         ),
         # Small
         avatar(
-            src="https://github.com/shadcn.png",
-            alt="@shadcn",
-            fallback="CN",
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
             class_name="size-8",
         ),
         # Medium
         avatar(
-            src="https://github.com/shadcn.png",
-            alt="@shadcn",
-            fallback="CN",
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
             class_name="size-10",
         ),
         # Large
         avatar(
-            src="https://github.com/shadcn.png",
-            alt="@shadcn",
-            fallback="CN",
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
             class_name="size-12",
         ),
         # Extra large
         avatar(
-            src="https://github.com/shadcn.png",
-            alt="@shadcn",
-            fallback="CN",
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
             class_name="size-16",
         ),
         class_name="flex items-center gap-4 p-8",
@@ -88,8 +88,8 @@ def avatar_with_badge():
     return rx.box(
         rx.box(
             avatar(
-                src="https://github.com/shadcn.png",
-                alt="@shadcn",
+                src="https://avatars.githubusercontent.com/u/84860195?v=4",
+                alt="@LineIndent",
                 fallback="CN",
                 class_name="size-12",
             ),

@@ -12,22 +12,22 @@ Displays the path to the current resource using a hierarchy of links.
 
 Copy the following code into your app directory.
 
---show_page_code(breadcrumb)--
+--SHOW_PAGE_CODE(breadcrumb)--
 
 # Examples
 
 ## Basic Demo
 
---component_wrapper(breadcrumb_demo)--
+--COMPONENT_WRAPPER(breadcrumb_demo)--
 
 ## Simple Breadcrumb
 
---component_wrapper(breadcrumb_simple)--
+--COMPONENT_WRAPPER(breadcrumb_simple)--
 
 ## Icon Breadcrumb
 
---component_wrapper(breadcrumb_with_icons)--
+--COMPONENT_WRAPPER(breadcrumb_with_icons)--
 
 ## Custom Separator
 
---component_wrapper(breadcrumb_custom_separator)--
+--COMPONENT_WRAPPER(breadcrumb_custom_separator)--

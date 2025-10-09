@@ -9,4 +9,4 @@ A vertically stacked set of interactive headings that each reveal a section of c
 
 # Usage
 
---component_wrapper(accordion_example)--
+--COMPONENT_WRAPPER(accordion_example)--

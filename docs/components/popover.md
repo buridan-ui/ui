@@ -12,8 +12,8 @@ Displays rich content in a portal, triggered by a button.
 
 Copy the following code into your app directory.
 
---show_page_code(popover_root)--
+--SHOW_PAGE_CODE(popover_root)--
 
 # Example
 
---component_wrapper(popover_demo)--
+--COMPONENT_WRAPPER(popover_demo)--
