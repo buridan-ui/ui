@@ -23,7 +23,7 @@ def docs_navbar():
             ),
             class_name="xl:max-w-[80rem] 2xl:max-w-[75rem] w-full mx-auto flex flex-row items-center",
         ),
-        class_name="w-full h-12 py-1",
+        class_name="bg-background w-full h-12 py-1",
     )
 
 
