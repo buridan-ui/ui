@@ -1,16 +1,20 @@
 ---
-name: "Dropdown Menu"
-dir: "menu"
+title: "Dropdown Menu"
 description: "Displays a menu to the user — such as a set of actions or functions — triggered by a button."
+order: 0
 ---
+
 # Dropdown Menu
 
 Displays a menu to the user — such as a set of actions or functions — triggered by a button.
 
-# Usage
+# Installation
 
---SHOW_PAGE_CODE(dropdown_menu_root)--
+Copy the following code into your app directory.
+
+--FULL_SOURCE_PAGE_OF_COMPONENT(dropdown_menu_root)--
 
 # Example
+A basic dropdown menu that opens when the user clicks a trigger button.
 
---COMPONENT_WRAPPER(dropdown_menu_demo)--
+--DEMO_AND_SINGLE_FUNCTION(dropdown_menu_demo)--

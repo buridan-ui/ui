@@ -1,6 +1,5 @@
 ---
-name: "ClientStateVar"
-dir: "clientstate"
+title: "ClientStateVar"
 description: "Use client-side state variables to manage local interactivity."
 order: 6
 ---
@@ -64,7 +63,7 @@ ClientStateVar provides several methods for different use cases:
 Here's a basic implementation showing tab switching functionality:
 
 
---SHOW_CODE(tab_navigation_example)--
+--SHOW_CODE_WITH_LANGUAGE(["tab_navigation_example", ""])--
 
 - `ActiveTab.value` renders the current selected tab index
 - `ActiveTab.set_value(i)` creates an event handler that updates the active tab
@@ -85,7 +84,7 @@ class SessionState(rx.State):
     sessions: list[Session] = []
     _id: str
 
-    def change_name(self, name: str):
+    def change_name(self, title: str):
         self.sessions = [
             (
                 session
@@ -210,13 +209,13 @@ class MyState(rx.State):
 # Common Patterns
 
 ## Toggle Pattern
---SHOW_CODE(toggle_pattern_example)--
+--SHOW_CODE_WITH_LANGUAGE(["toggle_pattern_example", ""])--
 
 ## Form State Pattern
---SHOW_CODE(form_state_pattern_example)--
+--SHOW_CODE_WITH_LANGUAGE(["form_state_pattern_example", ""])--
 
 ## Conditional Rendering Pattern
---SHOW_CODE(conditional_rendering_pattern_example)--
+--SHOW_CODE_WITH_LANGUAGE(["conditional_rendering_pattern_example", ""])--
 
 # Final Thoughts
 ClientStateVar bridges the gap between Reflex's backend-focused architecture and modern frontend interactivity needs. By understanding when and how to use client-side state, you can build responsive, performant applications that feel native to users while maintaining clean separation between UI logic and business logic.

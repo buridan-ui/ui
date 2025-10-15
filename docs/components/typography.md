@@ -1,7 +1,7 @@
 ---
-name: "Typography"
-dir: "typography"
+title: "Typography"
 description: "Styles for headings, paragraphs, lists, and other text elements."
+order: 0
 ---
 
 # Typography
@@ -12,58 +12,71 @@ Styles for headings, paragraphs, lists, and other text elements using Tailwind u
 
 Copy the following code into your app directory.
 
---SHOW_PAGE_CODE(typography_h1)--
+--FULL_SOURCE_PAGE_OF_COMPONENT(typography_h1)--
 
 # Examples
 
 ## All Styles
+A showcase of all typography styles in one example.
 
---COMPONENT_WRAPPER(typography_demo)--
+--DEMO_AND_SINGLE_FUNCTION(typography_demo)--
 
 ## H1
+An example of a large primary heading style.
 
---COMPONENT_WRAPPER(typography_h1_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_h1_example)--
 
 ## H2
+A secondary heading with slightly smaller text.
 
---COMPONENT_WRAPPER(typography_h2_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_h2_example)--
 
 ## H3
+A tertiary heading for subsection titles.
 
---COMPONENT_WRAPPER(typography_h3_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_h3_example)--
 
 ## H4
+A small heading used for minor sections or labels.
 
---COMPONENT_WRAPPER(typography_h4_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_h4_example)--
 
 ## Paragraph
+A standard paragraph text style for body content.
 
---COMPONENT_WRAPPER(typography_p_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_p_example)--
 
 ## Blockquote
+A styled blockquote element for quoted text.
 
---COMPONENT_WRAPPER(typography_blockquote_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_blockquote_example)--
 
 ## List
+A demonstration of styled ordered and unordered lists.
 
---COMPONENT_WRAPPER(typography_list_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_list_example)--
 
 ## Inline Code
+Inline code styling for short snippets within text.
 
---COMPONENT_WRAPPER(typography_inline_code_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_inline_code_example)--
 
 ## Lead
+A larger, attention-grabbing paragraph for introductions.
 
---COMPONENT_WRAPPER(typography_lead_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_lead_example)--
 
 ## Large
+An example of text with a slightly larger font size.
 
---COMPONENT_WRAPPER(typography_large_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_large_example)--
 
 ## Small
+A smaller, subdued text style for fine print or notes.
 
---COMPONENT_WRAPPER(typography_small_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_small_example)--
 
 ## Muted
+A muted text style with reduced contrast for secondary information.
 
---COMPONENT_WRAPPER(typography_muted_example)--
+--DEMO_AND_SINGLE_FUNCTION(typography_muted_example)--

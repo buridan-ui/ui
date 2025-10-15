@@ -1,6 +1,5 @@
 ---
-name: "Who is Buridan?"
-dir: "buridan"
+title: "Who is Buridan?"
 description: "A brief backstory on Buridan and the philosophy behind the framework."
 order: 1
 ---

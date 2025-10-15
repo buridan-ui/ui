@@ -1,10 +1,10 @@
 ---
-name: "Input"
-dir: "input"
+title: "Input"
 description: "Displays a form input field or a component that looks like an input field."
+order: 0
 ---
 
-# Badge
+# Input
 
 Displays a form input field or a component that looks like an input field.
 
@@ -12,30 +12,36 @@ Displays a form input field or a component that looks like an input field.
 
 Copy the following code into your app directory.
 
---SHOW_PAGE_CODE(input)--
+--FULL_SOURCE_PAGE_OF_COMPONENT(input)--
 
 # Examples
 
 ## Basic Demo
+A simple text input demonstrating the default appearance and behavior.
 
---COMPONENT_WRAPPER(input_demo)--
+--DEMO_AND_SINGLE_FUNCTION(input_demo)--
 
 ## Email
+An input field optimized for email address entry.
 
---COMPONENT_WRAPPER(input_email)--
+--DEMO_AND_SINGLE_FUNCTION(input_email)--
 
 ## Password
+An input field that hides characters for secure password entry.
 
---COMPONENT_WRAPPER(input_password)--
+--DEMO_AND_SINGLE_FUNCTION(input_password)--
 
 ## Disabled
+An example of an input field in a disabled state.
 
---COMPONENT_WRAPPER(input_disabled)--
+--DEMO_AND_SINGLE_FUNCTION(input_disabled)--
 
 ## File Input
+An input field for selecting and uploading files.
 
---COMPONENT_WRAPPER(input_file)--
+--DEMO_AND_SINGLE_FUNCTION(input_file)--
 
 ## Custom Input
+An input field with a custom width and styling.
 
---COMPONENT_WRAPPER(input_custom_width)--
+--DEMO_AND_SINGLE_FUNCTION(input_custom_width)--

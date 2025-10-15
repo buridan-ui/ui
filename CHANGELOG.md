@@ -1,124 +1,239 @@
-# Buridan UI Changelog
+# Site Updates & UI Refinements
+**Date:** October 1, 2025
+**Version:** buridan/ui v0.7.3-beta
 
-All notable changes to this project will be documented in this file.
+- Updated **site documentation** and released changes. [#55](https://github.com/buridan-ui/ui/pull/55)
+- Bumped dependency to `reflex==0.8.9` and updated `uv.lock`. [#56](https://github.com/buridan-ui/ui/pull/56)
+- Applied several **UI patches** across components. [#57](https://github.com/buridan-ui/ui/pull/57)
+- Refined **footer layout** and additional UI adjustments. [#58](https://github.com/buridan-ui/ui/pull/58)
+- Added **Korean export documentation** and fixed typos. [#59](https://github.com/buridan-ui/ui/pull/59)
+- Performed broader **site UI refactoring** for consistency. [#60](https://github.com/buridan-ui/ui/pull/60)
 
+# Updates & Site Enhancements
+**Date:** August 31, 2025
+**Version:** buridan/ui v0.7.2
 
-## buridan/ui@0.4.0
-### Added
+- Introduced new Pantry component: **Timeline v2**. [#50](https://github.com/buridan-ui/ui/pull/50)
+- Added updated & new **Pricing components** for expanded options. [#51](https://github.com/buridan-ui/ui/pull/51)
+- Renamed project structure folder from `source` to `src`. [#52](https://github.com/buridan-ui/ui/pull/52)
+- Performed general **chore & cleanup** tasks. [#53](https://github.com/buridan-ui/ui/pull/53)
+- Released a **minor patch to the landing page**. [#54](https://github.com/buridan-ui/ui/pull/54)
+
+# Updates & Site Enhancements
+**Date:** August 3, 2025
+**Version:** buridan/ui v0.7.1
+
+- Updated Reflex version and configuration file for latest compatibility. [#47](https://github.com/buridan-ui/ui/pull/47)
+- Integrated GoatTracker for privacy-friendly site analytics. [#46](https://github.com/buridan-ui/ui/pull/46)
+- Added Reflex Build link to the site TOC for easier access to the AI builder. [#49](https://github.com/buridan-ui/ui/pull/49)
+- General code cleanup and maintenance improvements. [#48](https://github.com/buridan-ui/ui/pull/48)
+
+# Search Feature For Buridan UI Site
+**Date:** July 13, 2025
+**Version:** buridan/ui v0.7.0-beta.2
+
+- Added search functionality to the Buridan UI site for enhanced user experience.
+- Added a fast, client-side search function using ClientStateVar for ultra-responsive results.
+- This ensures fast, real-time search results with no server-side delay, improving user experience.
+
+# Major API Revamp & Foundation for v0.7.0-beta.1 Release
+**Date:** July 6, 2025
+**Version:** buridan/ui v0.7.0-beta.1
+
+- Introduced brand new fluent APIs for core chart types: AreaChart, BarChart, LineChart, and PieChart.
+- Redesigned internal charting references and hooks to improve extensibility and performance.
+- Implemented breaking changes to component refs to simplify and standardize usage.
+- Updated all chart components to support custom legends, dynamic series, and enhanced theming.
+- Refined the documentation to reflect the new APIs and usage patterns.
+- Upgraded build and deployment scripts to streamline beta releases.
+- This beta version signals that v0.7.0 is feature-complete and ready for broader testing and feedback.
+
+# Enhanced Charting Experience & Theming Overhaul
+**Date:** June 1, 2025
+**Version:** buridan/ui v0.6.7
+
+- Introduced a centralized theming system for consistent chart styling.
+- Enhanced Recharts with smooth animations and improved responsiveness.
+- Added subtle hover effects to theme selection for better UX.
+- Updated documentation for theming and charting components.
+
+# Minor Updates and Docs Enhancements
+**Date:** May 30, 2025
+**Version:** buridan/ui v0.6.6
+
+- Patch error for sidebar visibility feature.
+- Support for uv package manager.
+- Client State Var documentation.
+- Dashboard documentation.
+
+# Sidebar Changes and Doc Improvement
+**Date:** May 22, 2025
+**Version:** buridan/ui v0.6.5
+
+- New changelog UI design page.
+- Update sidebar with new visibility feature.
+- Improved charting walkthrough documentation.
+
+# New Sidebar UX and Menu Structure
+**Date:** May 18, 2025
+**Version:** buridan/ui v0.6.4
+
+- New component wrapper menu bar.
+- Updated chart structure: Area, Bar, Line.
+- Bumped Reflex version and related files.
+- New UX for sidebar.
+
+# Component Refinements and Bug Fixes
+**Date:** May 04, 2025
+**Version:** buridan/ui v0.6.3
+
+- Fixed issues in several components to enhance stability.
+- Restored missing exports.py file.
+- Performed code cleanup for improved maintainability.
+
+# New Features, Pro Tier, and Improvements
+**Date:** April 20, 2025
+**Version:** buridan/ui v0.6.2
+
+- Introduced Buridan Pro — gated access to premium components.
+- Added development helper script: dev.sh for local testing & filtering.
+- Implemented active sidebar highlighting based on current route.
+- Improved layout: breadcrumb in main content, version in left sidebar.
+- Right sidebar now includes a persistent header and optional callouts.
+- Refined styling and responsiveness across components.
+- Minor bug fixes and performance improvements.
+
+# Site Refactoring & Major Changes
+**Date:** March 22, 2025
+**Version:** buridan/ui v0.6.1
+
+- Major site refactoring of the codebase.
+- Major updates to site UI & UX.
+- Several sections have been removed or added elsewhere.
+- Landing page has been removed.
+- New landing page routes to either UI or Lab apps.
+- New charts: Doughnut and Scatter Charts.
+- New feature: Download repo directly from the site.
+- New feature: Code view now separate from tab.
+- Site is almost completely stateless (aim to make site static in the near future).
+
+# Buridan Dev Labs: Charts
+**Date:** December 17, 2024
+**Version:** buridan/ui v0.4.2
+
+- New `Dev Lab` for charts. Easily generate charts with your own data.
+- Updated charts theme colors.
+- Fixed Area Charts stacking options.
+
+# Site Patches and Updates
+**Date:** December 13, 2024
+**Version:** buridan/ui v0.4.1
+
+- Added GitHub workflow for Reflex Cloud Deploy automation.
+- Code base cleanup and code refactoring.
+- Live code editor (experimental) has been deployed (buridan-ui.reflex.run/buridan-sandbox).
+
+# Buridan Charts
+**Date:** December 02, 2024
+**Version:** buridan/ui v0.4.0
+
 - New charts landing page.
+- New chart item: Radar Charts.
 - New chart theme color: purple.
 - New chart tooltip style sheet.
-- New dynamic charting for area, bar, and line charts.
-  
-### Changed
-- Significant UI update to entire chart codebase.
-
-### Fixed
 - Updated responsive logic for mobile view.
 - Significant UI update to entire chart codebase.
+- New dynamic charting for area, bar, and line charts.
 
----
+# Site patches and New Blueprint Items
+**Date:** November 26, 2024
+**Version:** buridan/ui v0.3.4
 
-## buridan/ui@v0.3.4 - 2024-11-26
-### Added
-- **New `blueprint` wrapper**: Currently excludes code preview; app preview only (WIP for code preview).
-- **Additional blueprint items**: Dashboard and Layouts are live.
+- New blueprint items: Dashboards & Layouts.
+- Major code refactoring for pantry, charts, and blueprint wrappers.
 
-### Changed
-- **Base wrapper refactored** and separated from other wrappers.
-- **Excess component nesting refactored** in base wrapper for better readability and performance.
-- **Refactoring of item wrappers** (pantry, charts, blueprints) to improve modularity.
-- **Further code refactoring** in progress, including reorganizing wrappers and components.
+# New library feature: Blueprint Templates
+**Date:** November 20, 2024
+**Version:** buridan/ui v0.3.3
 
-### Fixed
-- General **site patches** and smaller fixes for various components.
-  
----
+- Blueprints templates consist of in-depth, more well-rounded apps that can be used out of the box with minor changes.
+- Authentication
 
-## buridan/ui@0.3.3 - 2024-11-20
-### Added
-- **Blueprint Templates**: Includes advanced app templates (front-end code, styles, and state code), which can be used out of the box with minimal changes.
+# New Site Landing Page and UI Changes
+**Date:** November 17, 2024
+**Version:** buridan/ui v0.3.2
 
-### Changed
-- **Fixed border issue** with `@component_wrappers` for a more consistent design.
-- **Minor code refactoring** for wrappers and templates to improve readability and maintainability.
-- **Mobile view adjustments** for `rx.tabs.trigger` styling to improve responsiveness.
-- Enhanced the **landing page UI** with a refreshed layout and more polished styling.
+- New site landing page with animation!
+- Fixed UI scaling issue for site: functional.
+- Updated many site components (nav, side menu, etc...)
 
-### Fixed
-- Various **small UI improvements** and bug fixes across the site.
+# Small Patch for Site Scaling UI
+**Date:** November 15, 2024
+**Version:** buridan/ui v0.3.1
 
----
+- Fixed UI scaling issue for site: operational.
 
-## buridan/ui@0.3.2 - 2024-11-17
-### Added
-- **New site landing page** with animation to enhance user experience and aesthetics.
+# New Apps and Site UI Changes
+**Date:** November 13, 2024
+**Version:** buridan/ui v0.3.0
 
-### Changed
-- Fixed **UI scaling issue** for the site, ensuring it displays correctly on all screen sizes.
-- **Updated navigation**, side menu, and other components for better user interaction and consistency across the site.
+- New pantry: Footers!
+- New chart item: Pie Charts!
+- New interactive app: PubMed A.I.
+- UI changes to site landing page.
 
----
+# Site Refinement and UI Updates
+**Date:** November 08, 2024
+**Version:** buridan/ui v0.2.0
 
-## buridan/ui@0.3.1 - 2024-11-15
-### Fixed
-- **Patched scaling issue** with site UI to ensure proper layout on different screen resolutions.
+- Changes to Charts component wrapper.
+- Codebase refactor and state changes.
+- Changes to code block theme and font size.
+- Major changes to @DEMO_AND_SINGLE_FUNCTION menu items.
 
-### Changed
-- **General UI improvements**, including some visual tweaks and optimizations for smoother user experience.
+# New Components and Improvements to Pantry Items
+**Date:** October 21, 2024
+**Version:** buridan/ui v0.1.0
 
----
+- Accordions
+- Animations
+- Backgrounds
+- Cards
+- Descriptive Lists
+- Featured
+- Footers
+- Frequently Asked Questions
+- Inputs
+- Logins
+- Menus
+- Onboarding & Progress
+- Payments & Billing
+- Popups
+- Pricing Sections
+- Prompt Boxes
+- Sidebars
+- Standard Forms
+- Standard Tables
+- Stats
+- Subscribe
+- Tabs
+- Timeline
 
-## buridan/ui@0.3.0 - 2024-11-13
-### Added
-- **New Pantry Item**: Inputs, with a patch for a typo on the site changelog.
-- **New Chart Item**: Pie Chart added to enhance data visualization capabilities.
-- **New Interactive App**: PubMed A.I. for improved functionality and user interaction.
+# New Library Component: Charts
+**Date:** October 18, 2024
+**Version:** buridan/ui v0.1.0
 
-### Changed
-- **UI changes** to the site landing page, including layout and styling adjustments for a modern look.
-- **In-page navigation** added to the charts section to improve user navigation and usability.
-- New **JavaScript key bindings** for repo cloning and Reflex site functionality to enhance productivity.
+- Area Charts
+- Bar Charts
+- Doughnut Charts
+- Line Charts
+- Pie Charts
+- Radar Charts
+- Scatter Charts
 
-### Fixed
-- Continued **code refactoring**, including cleanup of the codebase and enhancements to the responsive menu, which now includes three different selections for mobile, tablet, and desktop views.
+# buridan/ui v0.0.1 Deployed to Reflex
+**Date:** October 16, 2024
+**Version:** buridan/ui v0.0.1
 
----
-
-## buridan/ui@0.2.0 - 2024-11-08
-### Added
-- **Changes to Charts component wrapper**: Enhanced structure and features for more flexibility.
-- **Refactor of codebase and state changes**: Simplifying the overall code structure for easier maintainability.
-
-### Changed
-- **Code block theme** and font size updated for better visual consistency.
-- **Major changes** to `@component_wrapper` menu items, adding new options and refactoring old ones.
-- **Updates to the chart collection**: Additional charts and new features added for data presentation.
-
----
-
-## buridan/ui@0.1.1 - 2024-11-03
-### Added
-- **Major changes** to site directories and files, improving overall structure.
-- **Moved style props into Python dataclasses** for better readability and maintainability of code.
-
-### Changed
-- **New landing page** introduced, with improved layout and visuals.
-
----
-
-## buridan/ui@0.1.0 - 2024-10-30
-### Added
-- **New interactive app**: RAG AI Application, a new feature for advanced data processing.
-  
-### Changed
-- **Minor changes to styling** of pantry apps; work in progress for better integration and UI consistency.
-- **Library build pass with reflex==0.6.4** confirmed as OK, ensuring stability and compatibility.
-
----
-
-## buridan/ui@0.0.1 - 2024-10-16
-### Added
-- **First stable release** of `buridan-ui`.
-- Initial features and basic components released for use.
-
+# Initial Release
+**Date:** October 5, 2024

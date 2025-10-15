@@ -1,6 +1,5 @@
 ---
-name: "Introduction"
-dir: "introduction"
+title: "Introduction"
 description: "Overview of what Buridan UI is and how it works."
 order: 0
 ---

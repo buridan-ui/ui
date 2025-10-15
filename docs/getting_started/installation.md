@@ -1,6 +1,5 @@
 ---
-name: "Installation"
-dir: "installation"
+title: "Installation"
 description: "Steps to install and start using Buridan in your project."
 order: 2
 ---
