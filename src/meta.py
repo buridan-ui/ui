@@ -5,7 +5,7 @@ BURIDAN_SLOGAN = (
 BURIDAN_KEY_WORDS = (
     "buridan, ui, web apps, framework, open source, frontend, backend, full stack"
 )
-SITE_LOGO_URL = "https://raw.githubusercontent.com/buridan-ui/ui/refs/heads/main/assets/site/github_readme.webp"
+SITE_LOGO_URL = "https://raw.githubusercontent.com/buridan-ui/ui/refs/heads/main/assets/site/site_preview.webp"
 
 SITE_META_TAGS = [
     {"name": "application-name", "content": "Buridan UI"},
