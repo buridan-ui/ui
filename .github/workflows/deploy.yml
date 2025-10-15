@@ -27,7 +27,7 @@ jobs:
       - name: Generate Markdown Files
         run: python scripts/generate_markdown.py
 
-      - name: Deploy to Reflex Cloud
-        with:
-          auth_token: ${{ secrets.REFLEX_AUTH_TOKEN }}
-          project_id: ${{ secrets.REFLEX_PROJECT_ID }}
+      - name: Deploy to Reflex
+        id: deploy
+        run: |
+          reflex deploy --project ${{ secrets.REFLEX_PROJECT_ID }} --token ${{ secrets.REFLEX_AUTH_TOKEN }} --no-interactive
