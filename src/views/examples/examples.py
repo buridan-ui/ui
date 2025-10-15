@@ -257,7 +257,7 @@ def checkout_form():
                     rx.el.div(
                         button("Submit"),
                         button("Cancel", variant="outline"),
-                        class_name="flex-row items-center [&>[data-slot=field-label]]:flex-auto has-[>[data-slot=field-content]]:items-start has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px",
+                        class_name="flex flex-row items-center gap-x-4 [&>[data-slot=field-label]]:flex-auto has-[>[data-slot=field-content]]:items-start has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px",
                     ),
                     data_slot="field-group",
                     class_name="group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4",
@@ -1325,34 +1325,73 @@ def areachart_v5():
 
 
 def examples_page():
+    # Define column groups for better organization
+    column_one = [
+        checkout_form(),
+    ]
+
+    column_two = [
+        component(),
+        loading_badges(),
+        input_type_one(),
+        barchart_v9(),
+        input_type_two(),
+        input_type_three(),
+    ]
+
+    column_three = [
+        linechart_v8(),
+        component_two(),
+        loading_empty_state(),
+    ]
+
+    column_four = [
+        input_group(),
+        checkbox_form(),
+        areachart_v5(),
+        pagination_button_groups(),
+    ]
+
     return rx.el.div(
         rx.el.div(
-            checkout_form(),
+            # Column 1
             rx.el.div(
-                component(),
-                loading_badges(),
-                input_type_one(),
-                barchart_v9(),
-                input_type_two(),
-                input_type_three(),
+                *column_one,
                 class_name="w-full flex flex-col gap-6",
             ),
+            # Column 2
             rx.el.div(
-                linechart_v8(),
-                component_two(),
-                loading_empty_state(),
+                *column_two,
                 class_name="w-full flex flex-col gap-6",
             ),
+            # Column 3
             rx.el.div(
-                input_group(),
-                checkbox_form(),
-                areachart_v5(),
-                pagination_button_groups(),
+                *column_three,
                 class_name="w-full flex flex-col gap-6",
             ),
-            class_name="mx-auto grid gap-8 py-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-6 2xl:gap-8",
+            # Column 4
+            rx.el.div(
+                *column_four,
+                class_name="w-full flex flex-col gap-6",
+            ),
+            class_name=" ".join(
+                [
+                    "mx-auto",
+                    "grid gap-6",
+                    "grid-cols-1",  # Mobile: 1 column
+                    "sm:grid-cols-2",  # Small: 2 columns
+                    "md:grid-cols-2",  # Medium: 2 columns (2x2 layout)
+                    "lg:grid-cols-3",  # Large: 3 columns
+                    "xl:grid-cols-4",  # XL: 4 columns
+                    "sm:gap-6",  # Responsive gaps
+                    "lg:gap-8",
+                    "xl:gap-6",
+                    "2xl:gap-8",
+                    "py-1",
+                ]
+            ),
         ),
-        class_name="w-full overflow-hidden p-8 "
+        class_name="w-full overflow-hidden p-4 sm:p-6 lg:p-8 "  # Responsive padding
         + rx.color_mode_cond(
             f"theme-{hooks.current_theme.value}",
             f"theme-{hooks.current_theme.value}-dark",

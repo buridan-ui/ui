@@ -4,6 +4,7 @@ from src.docs.library.components.button.button import button
 from src.templates.navbar import main_navbar
 from src.views.examples.examples import examples_page
 from src.components.ui.themes import theme_buttons
+import src.routes as routes
 
 
 def header():
@@ -33,15 +34,20 @@ def sub_header():
             letter_spacing="-0.01em",
             line_height="1.8",
         ),
-        class_name="w-full max-w-[750px] flex text-center",
+        class_name="w-full max-w-[750px] flex text-center px-2",
     )
 
 
 def landing_buttons():
     return rx.el.div(
         rx.el.div(
-            button("Get Started", size="sm"),
-            button("View Components", variant="ghost", size="sm"),
+            rx.el.a(
+                button("Get Started", size="sm"), to=routes.GET_STARTED_URLS[0]["url"]
+            ),
+            rx.el.a(
+                button("View Components", variant="ghost", size="sm"),
+                to=routes.COMPONENTS_URLS[0]["url"],
+            ),
             class_name="w-full max-w-[5rem] flex flex-row items-center justify-center gap-x-4",
         ),
         class_name="w-full flex justify-center",
@@ -59,11 +65,11 @@ def site_landing_page():
                 rx.el.div(
                     theme_buttons(),
                     examples_page(),
-                    class_name="flex flex-col gap-y-0 w-full pt-12",
+                    class_name="flex flex-col gap-y-0 w-full pt-[7rem]",
                 ),
-                class_name="w-full min-h-screen flex flex-col gap-y-6 items-center justify-start pt-[11rem]",
+                class_name="w-full min-h-screen flex flex-col gap-y-6 items-center justify-start pt-[7rem]",
             ),
             class_name="xl:max-w-[90rem] 2xl:max-w-[85rem] w-full mx-auto flex-col",
         ),
-        class_name="w-full min-h-screen flex flex-col gap-y-6 items-center justify-center",
+        class_name="bg-background w-full min-h-screen flex flex-col gap-y-6 items-center justify-center",
     )
