@@ -4,6 +4,7 @@ import pathlib
 import importlib
 import sys
 import ast
+import shutil
 
 # Add the project root to the Python path to allow imports from 'src'
 ROOT_DIR = pathlib.Path(__file__).parent.parent
@@ -11,7 +12,7 @@ sys.path.append(str(ROOT_DIR))
 
 # --- PATHS ---
 DOCS_SOURCE_DIR = ROOT_DIR / "docs"
-MARKDOWN_OUTPUT_DIR = ROOT_DIR / "markdown"
+MARKDOWN_OUTPUT_DIR = ROOT_DIR / "assets" / "docs"  # Updated output directory
 COMPONENTS_LIBRARY_DIR = ROOT_DIR / "src" / "docs" / "library"
 
 
@@ -25,8 +26,6 @@ def dynamic_load_components(directory: pathlib.Path) -> dict:
         if py_file.name.startswith("__"):
             continue
 
-        # Construct the module path from the file path
-        # e.g., /path/to/project/src/docs/library/button.py -> src.docs.library.button
         relative_py_file = py_file.relative_to(ROOT_DIR)
         module_path = ".".join(relative_py_file.with_suffix("").parts)
 
@@ -58,12 +57,10 @@ def get_source_code(
     func_name = None
     language = "python"
 
-    # Determine the function name from the command/argument
     if command_lower in ["demo_and_single_function", "full_source_page_of_component"]:
         func_name = arg_lower
     elif command_lower == "show_code_with_language":
         try:
-            # Safely evaluate something like "['my_func', 'python']"
             args = ast.literal_eval(argument)
             if isinstance(args, list) and len(args) > 0:
                 func_name = args[0].lower()
@@ -78,13 +75,7 @@ def get_source_code(
     elif arg_lower is None and command_lower in registry:
         func_name = command_lower
 
-    if not func_name:
-        return None
-
-    if func_name not in registry:
-        print(
-            f"Warning: Component '{func_name}' not found in registry.", file=sys.stderr
-        )
+    if not func_name or func_name not in registry:
         return None
 
     func_obj = registry[func_name]
@@ -96,18 +87,6 @@ def get_source_code(
         else:
             code = inspect.getsource(func_obj)
         return code, language
-    except TypeError:
-        # This can happen if the object is a class defined in another function, etc.
-        # We try to get the module source as a fallback.
-        try:
-            source_file = inspect.getfile(func_obj)
-            code = pathlib.Path(source_file).read_text()
-            return code, "python"
-        except Exception as e:
-            print(
-                f"Warning: Could not get source for '{func_name}'. Error: {e}",
-                file=sys.stderr,
-            )
     except Exception as e:
         print(
             f"Warning: Could not get source for '{func_name}'. Error: {e}",
@@ -119,25 +98,19 @@ def get_source_code(
 
 def convert_to_pure_markdown(content: str, registry: dict) -> str:
     """
-    Replaces custom component delimiters in markdown content with
-    formatted code blocks.
+    Replaces custom component delimiters in markdown content with formatted code blocks.
     """
     delimiter_pattern = r"--([\w_]+)(?:\(([^)]+)\))?--"
 
     def replacer(match):
         command = match.group(1)
         argument = match.group(2)
-
         source_info = get_source_code(command, argument, registry)
-
         if source_info:
             code, language = source_info
             return f"\n```{language}\n{code.strip()}\n```\n"
-
-        # If the delimiter cannot be resolved, remove it from the final output.
         return ""
 
-    # First, remove frontmatter
     if content.startswith("---"):
         parts = content.split("---", 2)
         if len(parts) > 2:
@@ -147,41 +120,47 @@ def convert_to_pure_markdown(content: str, registry: dict) -> str:
 
 
 def main():
-    """
-    Main function to generate pure markdown files from the docs directory.
-    """
+    """Main function to generate pure markdown files from the docs directory."""
     print("Starting markdown generation process...")
 
-    # 1. Load all available components from the library
+    # Clean up old output directories
+    print("Cleaning up old output directories...")
+    dirs_to_clean = [
+        ROOT_DIR / "markdown",
+        ROOT_DIR / "assets" / "markdown",
+        MARKDOWN_OUTPUT_DIR,
+    ]
+    for d in dirs_to_clean:
+        if d.exists():
+            shutil.rmtree(d)
+            print(f"Removed old directory: {d}")
+
+    # Load components
     print(f"Loading components from: {COMPONENTS_LIBRARY_DIR}")
     component_registry = dynamic_load_components(COMPONENTS_LIBRARY_DIR)
     print(f"Successfully loaded {len(component_registry)} components.")
 
-    # 2. Ensure the main output directory exists
-    MARKDOWN_OUTPUT_DIR.mkdir(exist_ok=True)
+    # Ensure output directory exists
+    MARKDOWN_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     print(f"Output directory set to: {MARKDOWN_OUTPUT_DIR}")
 
-    # 3. Process each markdown file found in the source directory
+    # Process markdown files
     print(f"Processing markdown files from: {DOCS_SOURCE_DIR}")
     file_count = 0
     for md_file in DOCS_SOURCE_DIR.rglob("*.md"):
         file_count += 1
         print(f"  -> Processing: {md_file.relative_to(ROOT_DIR)}")
 
-        # Read original content
         original_content = md_file.read_text()
-
-        # Convert to pure markdown
         pure_md_content = convert_to_pure_markdown(original_content, component_registry)
 
-        # Determine the correct output path, preserving directory structure
+        # Create new path with hyphens
         relative_path = md_file.relative_to(DOCS_SOURCE_DIR)
-        output_path = MARKDOWN_OUTPUT_DIR / relative_path
+        hyphenated_parts = [part.replace("_", "-") for part in relative_path.parts]
+        hyphenated_relative_path = pathlib.Path(*hyphenated_parts)
+        output_path = MARKDOWN_OUTPUT_DIR / hyphenated_relative_path
 
-        # Create subdirectories in the output folder if they don't exist
         output_path.parent.mkdir(parents=True, exist_ok=True)
-
-        # Write the transformed content to the new file
         output_path.write_text(pure_md_content)
         print(f"     \- Saved to: {output_path.relative_to(ROOT_DIR)}")
 
