@@ -22,7 +22,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Set environment URL
         id: set_url
@@ -32,7 +32,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install uv
+          uv venv
+          source .venv/bin/activate
           uv pip install -e .
-          reflex run &  # Run in background mode
-          sleep 10  # Give it time to start up
+          nohup reflex run > reflex.log 2>&1 &
+          sleep 10
           echo "Development environment is running for PR #${{ github.event.pull_request.number }}"
