@@ -1,8 +1,7 @@
 ---
-name: "Avatar"
-dir: "avatar"
+title: "Avatar"
 description: "An image element with a fallback for representing the user."
-order: 1
+order: 0
 ---
 
 # Avatar
@@ -13,18 +12,24 @@ An image element with a fallback for representing the user.
 
 Copy the following code into your app directory.
 
---SHOW_PAGE_CODE(avatar)--
+--FULL_SOURCE_PAGE_OF_COMPONENT(avatar)--
 
 # Examples
 
 ## General
 
---COMPONENT_WRAPPER(avatar_example)--
+Displays a basic avatar with either a user image or a fallback placeholder.
+
+--DEMO_AND_SINGLE_FUNCTION(avatar_example)--
 
 ## Sizes
 
---COMPONENT_WRAPPER(avatar_sizes)--
+Demonstrates how to scale the avatar component using Tailwind utility classes.
 
-## With Badges
+--DEMO_AND_SINGLE_FUNCTION(avatar_sizes)--
 
---COMPONENT_WRAPPER(avatar_with_badge)--
+## With Badge
+
+Shows how to combine an avatar with status or notification badges for added context.
+
+--DEMO_AND_SINGLE_FUNCTION(avatar_with_badge)--

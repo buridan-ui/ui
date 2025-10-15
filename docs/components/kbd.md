@@ -1,7 +1,7 @@
 ---
-name: "Kbd"
-dir: "kbd"
+title: "Kbd"
 description: "Display keyboard keys and shortcuts with proper styling."
+order: 0
 ---
 
 # Kbd
@@ -12,26 +12,31 @@ Display keyboard keys and shortcuts with proper styling.
 
 Copy the following code into your app directory.
 
---SHOW_PAGE_CODE(kbd)--
+--FULL_SOURCE_PAGE_OF_COMPONENT(kbd)--
 
 # Examples
 
 ## Default
+A basic example showing a single styled keyboard key.
 
---COMPONENT_WRAPPER(kbd_demo)--
+--DEMO_AND_SINGLE_FUNCTION(kbd_demo)--
 
 ## Common Shortcuts
+Displays familiar keyboard shortcuts like copy or paste.
 
---COMPONENT_WRAPPER(kbd_shortcuts)--
+--DEMO_AND_SINGLE_FUNCTION(kbd_shortcuts)--
 
 ## Special Keys
+Shows styling for special keys such as Enter, Tab, or Esc.
 
---COMPONENT_WRAPPER(kbd_special_keys)--
+--DEMO_AND_SINGLE_FUNCTION(kbd_special_keys)--
 
 ## Complex Shortcuts
+Demonstrates multi-key combinations for advanced shortcuts.
 
---COMPONENT_WRAPPER(kbd_complex_shortcuts)--
+--DEMO_AND_SINGLE_FUNCTION(kbd_complex_shortcuts)--
 
 ## With Icons
+Displays keyboard shortcuts paired with icons for clarity.
 
---COMPONENT_WRAPPER(kbd_with_icons)--
+--DEMO_AND_SINGLE_FUNCTION(kbd_with_icons)--

@@ -1,7 +1,7 @@
 ---
-name: "Input Group"
-dir: "input_group"
+title: "Input Group"
 description: "Combines inputs with prefixes, suffixes, or footers for structured data entry."
+order: 0
 ---
 
 # Input Group
@@ -12,22 +12,26 @@ Combines inputs with prefixes, suffixes, or footers for structured data entry.
 
 Copy the following code into your app directory.
 
---SHOW_PAGE_CODE(input_with_addons)--
+--FULL_SOURCE_PAGE_OF_COMPONENT(input_with_addons)--
 
 # Examples
 
 ## Price Input
+An input field with a currency prefix for entering prices.
 
---COMPONENT_WRAPPER(input_price)--
+--DEMO_AND_SINGLE_FUNCTION(input_price)--
 
 ## URL Input
+An input field with a prefixed URL scheme for web addresses.
 
---COMPONENT_WRAPPER(input_url)--
+--DEMO_AND_SINGLE_FUNCTION(input_url)--
 
 ## Email Input
+An input field that appends a fixed domain for email entry.
 
---COMPONENT_WRAPPER(input_email)--
+--DEMO_AND_SINGLE_FUNCTION(input_email)--
 
 ## Textarea with Footer
+A multiline input with a footer displaying additional information or controls.
 
---COMPONENT_WRAPPER(input_textarea)--
+--DEMO_AND_SINGLE_FUNCTION(input_textarea)--

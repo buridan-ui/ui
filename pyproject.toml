@@ -1,13 +1,12 @@
 [project]
 name = "buridan-ui"
-version = "0.7.2"
+version = "0.7.5-beta"
 description = "Buridan UI – A Reflex-based UI component library"
 authors = [{ name = "Ahmad Al Hakim", email = "ahmad@reflex.dev" }]
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "reflex>=0.8.14",
+    "reflex>=0.8.15",
     "pre-commit>=4.2.0",
     "black>=25.1.0",
-    "pytest>=8.3.5",
 ]
