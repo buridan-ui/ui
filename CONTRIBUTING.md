@@ -1,6 +1,6 @@
 # Buridan UI Contribution Guide
 
-Thank you for your interest in contributing to Buridan UI! This guide will help you understand how to add components, routes, exports, and other features to the project.
+Thank you for your interest in contributing to Buridan UI! This guide will help you understand how to add new components and documentation to the project.
 
 ## Getting Started
 
@@ -8,222 +8,196 @@ Thank you for your interest in contributing to Buridan UI! This guide will help 
 
 - Python 3.10 or higher
 - Git
-- Basic knowledge of Reflex and React
+- Basic knowledge of Reflex
 
 ### Setting Up Development Environment
 
-1. Fork the repository and clone it to your local machine
-2. Create a virtual environment:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
-3. Install dependencies:
-   ```bash
-   pip install reflex
-   ```
-
-### Development Mode
-
-Buridan UI has a development mode that allows you to work on specific components without loading the entire library. Use the provided `dev.sh` script:
-
-```bash
-# Work on specific components
-./dev.sh components sidebar cards
-
-# Work on specific charts
-./dev.sh charts line bar
-
-# Work on both components and charts
-./dev.sh both sidebar line
-
-# Work on pro components
-./dev.sh pro table
-
-# Disable development mode (load everything)
-./dev.sh off
-```
+1.  Fork the repository and clone it to your local machine.
+2.  Install [uv](https://github.com/astral-sh/uv) if you don't have it already. It is a fast Python package installer.
+    ```bash
+    pip install uv
+    ```
+3.  Create a virtual environment and install dependencies:
+    ```bash
+    uv venv
+    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+    uv pip install -e .
+    ```
+4.  Set up pre-commit hooks to automatically format your code.
+    ```bash
+    pre-commit install
+    ```
 
 ## Project Structure
 
-- `buridan_ui/`: Main package directory
-  - `pantry/`: UI components organized by category (cards, sidebars, etc.)
-  - `charts/`: Chart components (bar, line, pie, etc.)
-  - `pro/`: Pro components for paid/premium features
-  - `static/`: Static routes and metadata
-  - `export.py`: Manages dynamic export of components
-  - `templates/`: Base templates and layouts
+The project is organized as follows:
+
+-   `src/`: The main source directory for the application.
+    -   `components/`: Core UI components and wrappers for the documentation site itself.
+    -   `docs/`: Contains the logic for parsing and generating documentation.
+        -   `library/`: **This is where component source code lives.** Components are organized into subdirectories by category (e.g., `components`, `charts`).
+    -   `hooks.py`: Global client-side state management.
+    -   `routes.py`: Dynamically generates documentation routes from markdown files.
+    -   `templates/`: Contains the main layouts for the website (sidebar, navbar, etc.).
+    -   `utils/`: Shared utility functions.
+    -   `views/`: High-level page components, like the main landing page.
+    -   `src.py`: The main Reflex application entry point.
+-   `docs/`: Contains the markdown files for the documentation pages. Each subdirectory corresponds to a section in the sidebar.
 
 ## Adding New Components
 
-### 1. Creating a Component
+The process for adding new components is streamlined to keep code and documentation in sync.
 
-Components are organized by category (e.g., sidebars, cards) and version number.
+### 1. Create the Component File
 
-1. Identify the category for your component
-2. Create a new version file in the appropriate directory:
+1.  Identify the correct category for your component under `src/docs/library/`. Common categories are `components`, `charts`, and `wrapped_components`. If a new category is needed, create a new subdirectory.
+2.  Create a new Python file for your component (e.g., `src/docs/library/components/my_component/my_component.py`) and a file for examples (`.../my_component/examples.py`).
+3.  Write your component as a Python function that returns a `reflex.Component`. It's best practice to create multiple functions in the `examples.py` file to showcase different variations of your component.
+
+**Example Component (`.../my_component/my_component.py`):**
 
 ```python
-# Example: buridan_ui/pantry/sidebars/v3.py
-
 import reflex as rx
 
-def sidebar_v3():
-    """A sidebar component - version 3."""
+def my_component(*children, **props):
     return rx.box(
-        # Your component implementation
-        rx.text("Sidebar v3"),
-        # Component content
+        "My new component!",
+        *children,
+        **props
     )
 ```
 
-### 2. Register the Component in Export Configuration
-
-Update the `ExportConfig` class in `export.py` to include your new component version:
+**Example for Docs (`.../my_component/examples.py`):**
 
 ```python
-# For a new version of an existing component:
-self.COMPONENTS = {
-    "sidebars": {"versions": range(1, 4), "func_prefix": "sidebar"},  # Update range to include your version
-    # Other components...
-}
-
-# For a completely new component category:
-self.COMPONENTS = {
-    # Existing components...
-    "new_category": {"versions": range(1, 2), "func_prefix": "new_category"},
-}
-```
-
-### 3. Add Route and Metadata
-
-1. Add a route to the appropriate route collection in `static/routes.py`:
-
-```python
-PantryRoutes = [
-    # Existing routes...
-    {"name": "New Category", "path": "/pantry/new-category", "dir": "new_category"},
-]
-```
-
-### 4. Update Metadata
-
-The metadata for components is managed through a script. To update metadata after adding new components:
-
-1. Temporarily comment out the three export generation lines at the end of `export.py`:
-   ```python
-   # Comment these lines out temporarily
-   # pro_exports_config = generate_pro_exports()
-   # pantry_exports_config = generate_pantry_exports()
-   # charts_exports_config = generate_chart_exports()
-   ```
-
-<<<<<<< HEAD
-2. In `src/static/scripts.py`, run the `get_directory_meta_data()` function.
-=======
-2. In `src/static/scripts.py`, run the `get_directory_meta_data()` function. 
->>>>>>> origin/main
-This updates `src/static/meta.py` with new metadata for all files and folders.
-
-3. Make sure to uncomment the export generation lines after you run the script.
-
-
-## Adding Charts
-
-The process for adding charts is similar to adding components:
-
-1. Create your chart in `buridan_ui/charts/[chart_type]/v[number].py`
-2. Update the chart configuration in `export.py`
-3. Add routes and metadata for your chart
-
-```python
-# Example: buridan_ui/charts/new_chart/v1.py
 import reflex as rx
+from .my_component import my_component
 
-def new_chart_v1():
-    """A new chart type - version 1."""
-    # Chart implementation
-    return rx.recharts.line_chart(
-        # Chart configuration
-    )
+def my_component_demo():
+    return my_component()
+
+def my_component_with_style():
+    return my_component(style={"border": "1px solid red"})
 ```
 
-## Adding Pro Components
+### 2. Create the Documentation Page
 
-Pro components follow a similar pattern but go in the `pro/` directory:
+1.  Create a new markdown file in the corresponding `docs/` subdirectory. For example, `docs/components/my_component.md`.
+2.  Add frontmatter to the top of the file to configure its title and order in the sidebar.
 
-1. Create your component in `buridan_ui/pro/[component_type]/v[number].py`
-2. Update the PRO configuration in `export.py`
-3. Add routes and metadata for your pro component
+    ```yaml
+    ---
+    title: My Component
+    order: 10
+    ---
+    ```
+
+### 3. Display the Component in Docs
+
+Use the custom markdown commands to render your component and its code. The parser automatically discovers any function in the `src/docs/library/` directory.
+
+-   To show a live demo and its complete file source code:
+    `--demo_and_code_single_file(my_component_demo)--`
+
+-   To show a live demo and only the source code of the specific function:
+    `--demo_and_single_function(my_component_with_style)--`
+
+-   To show only the source code of a function:
+    `--show_code_with_language([my_component_demo, 'python'])--`
+
+-   To render a component directly without code:
+    `--my_component_demo--`
+
+**Example Markdown (`docs/components/my_component.md`):**
+
+    ---
+    title: My Component
+    order: 10
+    ---
+
+    # My Component
+
+    This is a great new component.
+
+    ## Basic Example
+
+    --demo_and_single_function(my_component_demo)--
+
+    ## Styled Example
+
+    Here is a component with a style.
+
+    --demo_and_single_function(my_component_with_style)--
+
+    ## Full Source Code
+
+    You can also view the full source code of the module.
+
+    --full_source_page_of_component(my_component_demo)--
+
+The routing and sidebar navigation will be updated automatically based on the new markdown file.
 
 ## Testing Your Changes
 
-1. Run the development server with your specific component:
-   ```bash
-   ./dev.sh components your_component
-   ```
-
-2. Visit `http://localhost:3000` to see your component in action
-
-3. Verify that your component renders correctly and works as expected
+1.  Run the development server:
+    ```bash
+    reflex run
+    ```
+2.  Visit `http://localhost:3000` and navigate to your new documentation page to see your component in action.
+3.  Verify that your component renders correctly and works as expected.
 
 ## Submitting Your Contribution
 
-1. Create a new branch for your feature:
-   ```bash
-   git checkout -b feature/new-component
-   ```
-
-2. Commit your changes with clear, descriptive commit messages
-
-3. Push your branch to your fork:
-   ```bash
-   git push origin feature/new-component
-   ```
-
-4. Create a pull request to the main repository
-
-5. In your PR description, include:
-   - A clear description of what you added
-   - Screenshots if applicable
-   - Any special considerations or notes for reviewers
+1.  Create a new branch for your feature:
+    ```bash
+    git checkout -b feature/new-component
+    ```
+2.  Commit your changes with clear, descriptive commit messages.
+3.  Push your branch to your fork:
+    ```bash
+    git push origin feature/new-component
+    ```
+4.  Create a pull request to the main repository.
+5.  In your PR description, include:
+    -   A clear description of what you added.
+    -   Screenshots if applicable.
+    -   Any special considerations or notes for reviewers.
 
 ## Best Practices
 
 ### Component Design
 
-- Follow existing component patterns for consistency
-- Use responsive design principles
-- Comment your code, especially complex logic
-- Provide reasonable default values for all props
+-   Follow existing component patterns for consistency.
+-   Use responsive design principles.
+-   Comment your code, especially complex logic.
+-   Provide reasonable default values for all props.
 
 ### Naming Conventions
 
-- Component functions: `[component_type]_v[version]` (e.g., `sidebar_v1`)
-- Directory names: plural form for categories (e.g., `sidebars`, `cards`)
-- File names: `v[version].py` for version files
+-   Component files and functions should use `snake_case`.
+-   Directory names for component categories should be plural (e.g., `components`, `charts`).
 
 ### Code Style
 
-- Follow PEP 8 guidelines
-- Use type hints where possible
-- Format your code with Black before submitting
+-   Follow PEP 8 guidelines.
+-   Use type hints where possible.
+-   Format your code with `black` and `ruff`. The pre-commit hooks should handle this automatically.
 
 ## Troubleshooting
 
 ### Common Issues
 
-- **KeyError for a component**: Make sure your component is properly registered in the export configuration and has corresponding metadata
-- **Component not showing up**: Verify that the route is correctly added and the component is exported properly
-- **Development mode not working**: Check that your component name in the dev script matches the directory name exactly
+-   **Component not found in markdown**: Ensure your component function is located within the `src/docs/library/` directory and that you are using the correct function name in the markdown command.
+-   **Component not showing up**: Verify that the route is correctly generated by checking the `docs/` path and the frontmatter in your `.md` file.
+-   **Styling issues**: The project uses Tailwind CSS. Check `tailwind.config.js` and existing components for styling conventions.
 
 If you encounter issues not covered here, please open an issue on the repository.
 
 ## Need Help?
 
 If you need assistance or have questions about contributing, please:
-- Open an issue on the repository
-- Reach out to the maintainers
-- Check existing documentation and examples
+- Open an issue on the repository.
+- Reach out to the maintainers.
+- Check existing documentation and examples.
 
 Thank you for contributing to Buridan UI!
