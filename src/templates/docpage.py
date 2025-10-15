@@ -8,7 +8,7 @@ from src.hooks import selected_page
 
 def docpage(match_cases, toc_mapping):
     toc_cases = [
-        (url, table_of_content(toc_data)) for url, toc_data in toc_mapping.items()
+        (url, table_of_content(url, toc_data)) for url, toc_data in toc_mapping.items()
     ]
 
     return rx.el.body(
