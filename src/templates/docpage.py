@@ -2,15 +2,10 @@ import reflex as rx
 
 from src.templates.sidebar import sidebar
 from src.templates.navbar import docs_navbar
-from src.templates.toc import table_of_content
-from src.hooks import selected_page
 
 
-def docpage(match_cases, toc_mapping):
-    toc_cases = [
-        (url, table_of_content(url, toc_data)) for url, toc_data in toc_mapping.items()
-    ]
-
+def docpage(main_content, toc_content):
+    """The template for all documentation pages."""
     return rx.el.body(
         rx.el.div(
             rx.el.header(docs_navbar(), class_name="sticky top-0 z-50"),
@@ -25,24 +20,10 @@ def docpage(match_cases, toc_mapping):
                     ),
                     rx.el.div(
                         rx.el.div(
-                            rx.match(
-                                selected_page.value,
-                                *match_cases,
-                                rx.box(
-                                    rx.heading("Page not found", size="9"),
-                                    rx.text(
-                                        "The page you're looking for doesn't exist."
-                                    ),
-                                    class_name="p-4",
-                                ),
-                            ),
+                            main_content,
                             class_name="flex-1 min-w-0 py-6",
                         ),
-                        rx.match(
-                            selected_page.value,
-                            *toc_cases,
-                            rx.el.div(),
-                        ),
+                        toc_content,
                         class_name="flex items-start w-full flex-1 min-w-0",
                     ),
                     class_name="flex w-full gap-x-8 xl:max-w-[80rem] 2xl:max-w-[85rem] mx-auto",

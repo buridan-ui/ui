@@ -74,10 +74,6 @@ def create_menu_item(data: dict):
             ),
             href=f"/{data['url']}",
             text_decoration="none",
-            on_click=rx.call_script(
-                f"window.history.pushState({{page: '{data['url']}'}}, '', '/{data['url']}'); "
-                f"refs['_client_state_setSelected_page']('{data['url']}')"
-            ),
         ),
         class_name="w-full",
         id=data["url"],
@@ -141,34 +137,4 @@ def sidebar(in_drawer=False):
             class_name="flex flex-col items-center gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",
         ),
         class_name=drawer_classes if in_drawer else default_classes,
-        on_mount=rx.call_script(
-            """
-            // Get initial page from URL path
-            const pathParts = window.location.pathname.split('/').filter(p => p);
-            const initialPage = pathParts.join('/') || 'docs/get-started/overview';  // Default to docs/overview
-            console.log('Initial page from URL:', initialPage);
-
-            // Set the page immediately on mount
-            if (refs['_client_state_setSelected_page']) {
-                refs['_client_state_setSelected_page'](initialPage);
-            }
-
-            // Handle browser back/forward buttons
-            window.addEventListener('popstate', (event) => {
-                if (event.state && event.state.page) {
-                    refs['_client_state_setSelected_page'](event.state.page);
-                } else {
-                    const pathParts = window.location.pathname.split('/').filter(p => p);
-                    const page = pathParts.join('/') || 'docs/overview';
-                    refs['_client_state_setSelected_page'](page);
-                }
-            });
-
-            // Set initial history state
-            if (!window.history.state) {
-                window.history.replaceState({page: initialPage}, '', '/' + initialPage);
-            }
-
-        """
-        ),
     )
