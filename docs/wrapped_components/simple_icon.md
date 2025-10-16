@@ -84,12 +84,18 @@ from components.simple_icon import simple_icon
 
 ## Simple Icon Example
 
+Basic usage of the simple icon component
+
 --DEMO_AND_SINGLE_FUNCTION(simple_icon_v1)--
 
 ## Simple Icon Colors
 
+Customize icon colors by passing a color prop
+
 --DEMO_AND_SINGLE_FUNCTION(simple_icon_v2)--
 
 ## Simple Icon Sizes
+
+Control icon sizes using the size prop
 
 --DEMO_AND_SINGLE_FUNCTION(simple_icon_v3)--
