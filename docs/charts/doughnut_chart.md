@@ -14,10 +14,10 @@ Doughnut Charts are ideal for showing changes over time or the magnitude of mult
 
 # Examples
 
-## Custom Doughnut Chart
+## Doughnut Chart
 A customizable doughnut chart with flexible styling and data visualization options.
 --DEMO_AND_SINGLE_FUNCTION(doughnutchart_v1)--
 
-## Custom Doughnut Chart with Label
+## Doughnut Chart with Label
 Displays a doughnut chart with centered label text for enhanced data presentation.
 --DEMO_AND_SINGLE_FUNCTION(doughnutchart_v2)--
