@@ -8,16 +8,7 @@ from src.docs.parser import DocParser
 from src.utils.frontmatter import parse_frontmatter
 
 
-def get_all_subdirectories(path: str) -> List[str]:
-    """Returns a list of all subdirectories in a given path."""
-    if not os.path.isdir(path):
-        return []
-    return [dirpath for dirpath, _, _ in os.walk(path)]
-
-
-parser = DocParser(
-    dynamic_load_dirs=get_all_subdirectories(constants.DOCS_LIBRARY_ROOT)
-)
+parser = DocParser(dynamic_load_dirs=[constants.DOCS_LIBRARY_ROOT])
 
 
 def generate_docs_library() -> List[constants.DocDataStruct]:

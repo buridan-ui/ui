@@ -28,6 +28,9 @@ jobs:
         id: set_url
         run: echo "env_url=https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
 
+      - name: Generate Markdown Files
+        run: python -m scripts.generate_markdown
+
       - name: Install dependencies and run app
         run: |
           python -m pip install --upgrade pip

@@ -25,7 +25,7 @@ jobs:
           uv pip install --system -e .
 
       - name: Generate Markdown Files
-        run: python scripts/generate_markdown.py
+        run: python -m scripts.generate_markdown
 
       - name: Deploy to Reflex
         id: deploy

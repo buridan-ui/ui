@@ -1,3 +1,5 @@
+
+
 # Simple Icon
 
 A lightweight Reflex wrapper for icons from the [`@icons-pack/react-simple-icons`](https://www.npmjs.com/package/@icons-pack/react-simple-icons) React package, perfect for easily rendering brand icons with custom colors and sizes.
@@ -5,6 +7,7 @@ A lightweight Reflex wrapper for icons from the [`@icons-pack/react-simple-icons
 # Installation
 
 Add the following wrapped react code in Reflex inside your app.
+
 ```python
 """Simple Icon component wrapper for @icons-pack/react-simple-icons."""
 
@@ -67,6 +70,7 @@ def simple_icon(icon_name: str, **props) -> rx.Component:
 # Usage
 
 Make sure you use the correct imports inside your application.
+
 ```python
 import reflex as rx
 from components.simple_icon import simple_icon
@@ -76,7 +80,9 @@ from components.simple_icon import simple_icon
 
 ## Simple Icon Example
 
-Basic usage of the simple icon component:
+Basic usage of the simple icon component
+
+
 ```python
 def simple_icon_v1() -> rx.Component:
     return rx.el.div(
@@ -85,9 +91,12 @@ def simple_icon_v1() -> rx.Component:
     )
 ```
 
+
 ## Simple Icon Colors
 
-Customize icon colors by passing a color prop:
+Customize icon colors by passing a color prop
+
+
 ```python
 def simple_icon_v2() -> rx.Component:
     return rx.el.div(
@@ -98,9 +107,12 @@ def simple_icon_v2() -> rx.Component:
     )
 ```
 
+
 ## Simple Icon Sizes
 
-Control icon sizes using the size prop:
+Control icon sizes using the size prop
+
+
 ```python
 def simple_icon_v3() -> rx.Component:
     return rx.el.div(
@@ -110,3 +122,4 @@ def simple_icon_v3() -> rx.Component:
         class_name="w-full h-full p-8 flex flex-row items-center justify-center gap-x-4",
     )
 ```
+
