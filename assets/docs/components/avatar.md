@@ -1,3 +1,5 @@
+
+
 # Avatar
 
 An image element with a fallback for representing the user.
@@ -178,3 +180,4 @@ def avatar_with_badge():
         class_name="p-8",
     )
 ```
+

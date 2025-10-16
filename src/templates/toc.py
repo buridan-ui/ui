@@ -66,7 +66,8 @@ Help me understand how to use it. Be ready to explain concepts, give examples, o
             icon_light="/svg/markdown/md_light.svg",
             icon_dark="/svg/markdown/md_dark.svg",
             text="View as Markdown",
-            href=f"https://raw.githubusercontent.com/buridan-ui/ui/refs/heads/main/assets/{url}.md",
+            # https://raw.githubusercontent.com/buridan-ui/ui/refs/heads/main/assets/
+            href=f"/{url}.md",
         ),
         # ChatGPT link
         external_link(
