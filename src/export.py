@@ -50,7 +50,8 @@ def export(app: rx.App):
         ),
         route="/docs/[[...splat]]",
         meta=meta.SITE_META_TAGS,
-        on_load=rx.call_script(r"""
+        on_load=rx.call_script(
+            r"""
             function updateDocTitle() {
                 const path = window.location.pathname.replace(/^\/docs\//, '');
                 const segments = path.split('/').filter(Boolean);
@@ -79,5 +80,6 @@ def export(app: rx.App):
 
             // Handle back/forward navigation
             window.addEventListener('popstate', updateDocTitle);
-        """),
+        """
+        ),
     )
