@@ -5,6 +5,8 @@ import ast
 import subprocess
 
 app = typer.Typer()
+add_app = typer.Typer()
+app.add_typer(add_app, name="add")
 
 # --- Constants ---
 REPO_URL = "https://github.com/buridan-ui/ui.git"
@@ -12,6 +14,7 @@ CACHE_DIR = pathlib.Path.home() / ".buridan" / "repo"
 
 # Correctly define source directories based on the CACHE_DIR
 COMPONENTS_DIR = CACHE_DIR / "src" / "docs" / "library" / "components"
+WRAPPED_COMPONENTS_DIR = CACHE_DIR / "src" / "docs" / "library" / "wrapped_components"
 UTILS_DIR = CACHE_DIR / "src" / "utils"
 
 
@@ -83,6 +86,54 @@ def _add_component(component_name: str, added_items: set, app_root_dir: pathlib.
     dependencies = _find_util_imports(dest_file)
     for util_name in set(dependencies):
         _add_utility(util_name, added_items, app_root_dir)
+
+
+def _add_wrapped_react(
+    component_name: str, added_items: set, app_root_dir: pathlib.Path
+):
+    """Adds a single wrapped react component and its utility dependencies."""
+    if component_name in added_items:
+        return
+    added_items.add(component_name)
+
+    source_file = WRAPPED_COMPONENTS_DIR / component_name / f"{component_name}.py"
+    if not source_file.exists():
+        typer.secho(
+            f"Wrapped React component '{component_name}' not found in repository.",
+            fg=typer.colors.RED,
+        )
+        return
+
+    dest_file = app_root_dir / "components" / "ui" / f"{component_name}.py"
+    dest_file.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(source_file, dest_file)
+    typer.secho(
+        f"  - Added wrapped react component '{component_name}' to {dest_file.relative_to(pathlib.Path.cwd())}",
+        fg=typer.colors.CYAN,
+    )
+
+    dependencies = _find_util_imports(dest_file)
+    for util_name in set(dependencies):
+        _add_utility(util_name, added_items, app_root_dir)
+
+
+@add_app.command("wrapped-react")
+def add_wrapped_react(component: str):
+    """
+    Add a wrapped React component and its dependencies to your Reflex project.
+    """
+    _check_reflex_project()
+    app_name = _get_app_name()
+    app_root_dir = pathlib.Path.cwd() / app_name
+
+    _update_repo()
+    _ensure_package_structure(app_root_dir)
+    typer.secho(
+        f"Adding wrapped React component: '{component}'...", fg=typer.colors.GREEN
+    )
+    added_items = set()
+    _add_wrapped_react(component, added_items, app_root_dir)
+    typer.secho("Done.", fg=typer.colors.GREEN)
 
 
 def _add_utility(util_name: str, added_items: set, app_root_dir: pathlib.Path):
@@ -159,8 +210,8 @@ def _check_reflex_project():
         raise typer.Exit(1)
 
 
-@app.command("add")
-def add(component: str):
+@add_app.command("component")
+def add_component(component: str):
     """
     Add a component and its dependencies to your Reflex project.
     """
@@ -184,7 +235,14 @@ def list_components():
     _update_repo()
     typer.echo("Listing available components from repository...")
     components = [p.name for p in COMPONENTS_DIR.iterdir() if p.is_dir()]
+    wrapped_components = [
+        p.name for p in WRAPPED_COMPONENTS_DIR.iterdir() if p.is_dir()
+    ]
+    typer.echo("\n--- Standard Components ---")
     for component in sorted(components):
+        typer.echo(f"- {component}")
+    typer.echo("\n--- Wrapped React Components ---")
+    for component in sorted(wrapped_components):
         typer.echo(f"- {component}")
 
 

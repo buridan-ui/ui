@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.scripts]
-buridan = "buridan_cli.main:app"
+buridan = "cli.main:app"
 
 [tool.setuptools.packages.find]
 where = ["."]
