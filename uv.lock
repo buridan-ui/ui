@@ -88,7 +88,7 @@ wheels = [
 [[package]]
 name = "buridan-ui"
 version = "0.7.5b0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "black" },
     { name = "pre-commit" },
@@ -99,6 +99,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "black", specifier = ">=25.1.0" },
+    { name = "buridan-ui", specifier = ">=0.7.5b0" },
     { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "reflex", specifier = ">=0.8.15" },
     { name = "typer", specifier = ">=0.12.3" },
