@@ -8,3 +8,5 @@
 __pycache__/
 assets/external/
 .vercel
+dist/
+buridan_ui.egg-info
