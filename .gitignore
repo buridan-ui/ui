@@ -7,3 +7,4 @@
 .web
 __pycache__/
 assets/external/
+.vercel

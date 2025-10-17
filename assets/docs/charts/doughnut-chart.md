@@ -78,7 +78,7 @@ def get_x_axis(data_key: str):
 
 # Examples
 
-## Custom Doughnut Chart
+## Doughnut Chart
 A customizable doughnut chart with flexible styling and data visualization options.
 
 ```python
@@ -138,7 +138,7 @@ def doughnutchart_v1():
 ```
 
 
-## Custom Doughnut Chart with Label
+## Doughnut Chart with Label
 Displays a doughnut chart with centered label text for enhanced data presentation.
 
 ```python

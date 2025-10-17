@@ -8,26 +8,47 @@ from src.docs.parser import DocParser
 from src.utils.frontmatter import parse_frontmatter
 
 
-def get_all_subdirectories(path: str) -> List[str]:
-    """Returns a list of all subdirectories in a given path."""
-    if not os.path.isdir(path):
-        return []
-    return [dirpath for dirpath, _, _ in os.walk(path)]
-
-
-parser = DocParser(
-    dynamic_load_dirs=get_all_subdirectories(constants.DOCS_LIBRARY_ROOT)
-)
+parser = DocParser(dynamic_load_dirs=[constants.DOCS_LIBRARY_ROOT])
 
 
 def generate_docs_library() -> List[constants.DocDataStruct]:
     docs = []
+    dev_mode = os.environ.get("BURIDAN_DEV_MODE") == "true"
 
     if not constants.DOCS_BASE_DIR.exists():
         print(f"Warning: Docs base directory not found: {constants.DOCS_BASE_DIR}")
         return []
 
-    for md_file_path in constants.DOCS_BASE_DIR.glob("**/*.md"):
+    # Create a mapping from URL slug to file path for all markdown files
+    all_md_files = list(constants.DOCS_BASE_DIR.glob("**/*.md"))
+    slug_to_path_map = {}
+    for md_file in all_md_files:
+        relative_path = md_file.relative_to(constants.DOCS_BASE_DIR)
+        slug = "/".join(
+            [part.replace("_", "-") for part in relative_path.with_suffix("").parts]
+        )
+        slug_to_path_map[slug] = md_file
+
+    md_files_to_process = []
+    if dev_mode:
+        print("--- Development Mode Enabled ---")
+        pages_str = os.environ.get("BURIDAN_DEV_PAGES", "")
+        if not pages_str:
+            print("Warning: BURIDAN_DEV_PAGES is not set. Loading no pages.")
+            return []
+
+        page_slugs = [slug.strip() for slug in pages_str.split(",")]
+        print(f"Loading specified pages: {page_slugs}")
+
+        for slug in page_slugs:
+            if slug in slug_to_path_map:
+                md_files_to_process.append(slug_to_path_map[slug])
+            else:
+                print(f"Warning: Markdown file not found for slug: {slug}")
+    else:
+        md_files_to_process = all_md_files
+
+    for md_file_path in md_files_to_process:
         relative_path = md_file_path.relative_to(constants.DOCS_BASE_DIR)
         url_path_parts = [part.replace("_", "-") for part in relative_path.parts]
         url_path = "docs/" + "/".join(url_path_parts).replace(".md", "")

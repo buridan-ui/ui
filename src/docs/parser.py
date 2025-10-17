@@ -1,4 +1,3 @@
-import os
 import re
 import ast
 import inspect
@@ -64,26 +63,29 @@ class DocParser:
     def _dynamic_load(self, directory: str) -> Dict[str, Callable]:
         """Dynamically loads components from a given directory."""
         registry = {}
-        module_base_path = directory.replace("/", ".")
+        root_dir = pathlib.Path(__file__).parent.parent.parent
+        search_path = root_dir / directory
 
-        if not os.path.isdir(directory):
+        if not search_path.is_dir():
             print(f"Warning: Dynamic load directory not found: {directory}")
             return {}
 
-        for filename in os.listdir(directory):
-            if filename.endswith(".py") and not filename.startswith("__"):
-                module_name = filename[:-3]
-                module_path = f"{module_base_path}.{module_name}"
+        for py_file in search_path.rglob("*.py"):
+            if py_file.name.startswith("__"):
+                continue
 
-                try:
-                    module = importlib.import_module(module_path)
-                    for name, obj in inspect.getmembers(module):
-                        if (
-                            inspect.isfunction(obj) or inspect.isclass(obj)
-                        ) and obj.__module__ == module.__name__:
-                            registry[name] = obj
-                except Exception as e:
-                    print(f"Error loading components from module {module_path}: {e}")
+            # Create module path for importlib
+            relative_py_file = py_file.relative_to(root_dir)
+            module_path = ".".join(relative_py_file.with_suffix("").parts)
+            try:
+                module = importlib.import_module(module_path)
+                for name, obj in inspect.getmembers(module):
+                    if (
+                        inspect.isfunction(obj) or inspect.isclass(obj)
+                    ) and obj.__module__ == module.__name__:
+                        registry[name.lower()] = obj
+            except Exception as e:
+                print(f"Error loading components from module {module_path}: {e}")
         return registry
 
     def _parse_sections(self, content: str) -> List[Dict]:
@@ -128,10 +130,11 @@ class DocParser:
         if not argument:
             return render_parse_error(msg="Missing argument for full source view")
 
-        if argument not in self.components_registry:
+        arg_lower = argument.lower()
+        if arg_lower not in self.components_registry:
             return render_parse_error(msg=f"Component not found: {argument}")
 
-        func = self.components_registry[argument]
+        func = self.components_registry[arg_lower]
 
         try:
             file_path = inspect.getfile(func)
@@ -151,18 +154,19 @@ class DocParser:
         try:
             args = ast.literal_eval(argument)
 
-            if not (args, List) or len(args) == 0:
+            if not isinstance(args, list) or len(args) == 0:
                 return render_parse_error(
                     msg="Invalid argument format. Expected a list. Example: [function_name, code_block_langauge]"
                 )
 
-            if args[0] not in self.components_registry:
+            arg_lower = args[0].lower()
+            if arg_lower not in self.components_registry:
                 return render_parse_error(
                     msg=f"Missing component for show_code_with_language: {args[0]}"
                 )
 
             return self._create_code_block_markdown(
-                inspect.getsource(self.components_registry[args[0]]), args[1]
+                inspect.getsource(self.components_registry[arg_lower]), args[1]
             )
 
         except (ValueError, SyntaxError):
@@ -176,18 +180,19 @@ class DocParser:
                 msg="Missing arguments for demo_and_code_single_file"
             )
 
+        arg_lower = argument.lower()
         try:
-            if not (argument, str):
+            if not isinstance(arg_lower, str):
                 return render_parse_error(
                     msg="Invalid argument format. Expected a string. Example: function_name"
                 )
 
-            if argument not in self.components_registry:
+            if arg_lower not in self.components_registry:
                 return render_parse_error(
                     msg=f"Missing component for demo_and_code_single_file: {argument}"
                 )
 
-            component = self.components_registry[argument]
+            component = self.components_registry[arg_lower]
             module = inspect.getmodule(component)
             source_code = inspect.getsource(module)
 
@@ -204,18 +209,19 @@ class DocParser:
                 msg="Missing arguments for demo_and_single_function"
             )
 
+        arg_lower = argument.lower()
         try:
-            if not (argument, str):
+            if not isinstance(arg_lower, str):
                 return render_parse_error(
                     msg="Invalid argument format. Expected a string. Example: function_name"
                 )
 
-            if argument not in self.components_registry:
+            if arg_lower not in self.components_registry:
                 return render_parse_error(
                     msg=f"Missing component for demo_and_single_function: {argument}"
                 )
 
-            component = self.components_registry[argument]
+            component = self.components_registry[arg_lower]
             source_code = inspect.getsource(component)
 
             return demo_and_code_single_file_wrapper(component(), source_code)

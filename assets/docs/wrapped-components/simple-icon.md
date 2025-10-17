@@ -80,6 +80,8 @@ from components.simple_icon import simple_icon
 
 ## Simple Icon Example
 
+Basic usage of the simple icon component
+
 
 ```python
 def simple_icon_v1() -> rx.Component:
@@ -91,6 +93,8 @@ def simple_icon_v1() -> rx.Component:
 
 
 ## Simple Icon Colors
+
+Customize icon colors by passing a color prop
 
 
 ```python
@@ -105,6 +109,8 @@ def simple_icon_v2() -> rx.Component:
 
 
 ## Simple Icon Sizes
+
+Control icon sizes using the size prop
 
 
 ```python
