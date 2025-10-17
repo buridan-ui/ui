@@ -3,6 +3,7 @@ import pathlib
 import shutil
 import ast
 import subprocess
+import re
 
 app = typer.Typer()
 add_app = typer.Typer()
@@ -15,6 +16,7 @@ CACHE_DIR = pathlib.Path.home() / ".buridan" / "repo"
 # Correctly define source directories based on the CACHE_DIR
 COMPONENTS_DIR = CACHE_DIR / "src" / "docs" / "library" / "components"
 WRAPPED_COMPONENTS_DIR = CACHE_DIR / "src" / "docs" / "library" / "wrapped_components"
+THEMES_CSS_FILE = CACHE_DIR / "assets" / "css" / "wrapper.css"
 UTILS_DIR = CACHE_DIR / "src" / "utils"
 
 
@@ -59,6 +61,55 @@ def _find_util_imports(file_path: pathlib.Path) -> list[str]:
                 util_name = node.module.split(".")[2]
                 dependencies.append(util_name)
     return list(set(dependencies))
+
+
+def _extract_theme_css(theme_name: str) -> str:
+    """Extracts the CSS for a given theme and its dark variant from wrapper.css."""
+    if not THEMES_CSS_FILE.exists():
+        typer.secho(
+            f"Error: Theme CSS file not found at {THEMES_CSS_FILE}.",
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(1)
+
+    content = THEMES_CSS_FILE.read_text()
+    extracted_css = []
+
+    # Regex to find the light theme block
+    light_theme_pattern = re.compile(
+        rf"(\.theme-{re.escape(theme_name)})\s*{{([^}}]+)}}", re.DOTALL
+    )
+    # Regex to find the dark theme block
+    dark_theme_pattern = re.compile(
+        rf"(\.theme-{re.escape(theme_name)}-dark)\s*{{([^}}]+)}}", re.DOTALL
+    )
+
+    light_match = light_theme_pattern.search(content)
+    if light_match:
+        extracted_css.append(f"{light_match.group(1)} {{{light_match.group(2)}}}")
+    else:
+        typer.secho(
+            f"Warning: Light theme '.theme-{theme_name}' not found in wrapper.css.",
+            fg=typer.colors.YELLOW,
+        )
+
+    dark_match = dark_theme_pattern.search(content)
+    if dark_match:
+        extracted_css.append(f"{dark_match.group(1)} {{{dark_match.group(2)}}}")
+    else:
+        typer.secho(
+            f"Warning: Dark theme '.theme-{theme_name}-dark' not found in wrapper.css.",
+            fg=typer.colors.YELLOW,
+        )
+
+    if not extracted_css:
+        typer.secho(
+            f"Error: No CSS found for theme '{theme_name}' or its dark variant.",
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(1)
+
+    return "\\n\\n".join(extracted_css)
 
 
 def _add_component(component_name: str, added_items: set, app_root_dir: pathlib.Path):
@@ -136,6 +187,31 @@ def add_wrapped_react(component: str):
     typer.secho("Done.", fg=typer.colors.GREEN)
 
 
+@add_app.command("theme")
+def add_theme(theme_name: str):
+    """
+    Add a theme (light and dark variants) to your Reflex project.
+    """
+    _check_reflex_project()
+    project_root_dir = pathlib.Path.cwd()
+
+    _update_repo()
+    typer.secho(f"Adding theme: '{theme_name}'...", fg=typer.colors.GREEN)
+
+    theme_css_content = _extract_theme_css(theme_name)
+
+    dest_css_dir = project_root_dir / "assets" / "css"
+    dest_css_dir.mkdir(parents=True, exist_ok=True)
+
+    dest_file = dest_css_dir / f"{theme_name}.css"
+    dest_file.write_text(theme_css_content)
+    typer.secho(
+        f"  - Added theme '{theme_name}' to {dest_file.relative_to(pathlib.Path.cwd())}",
+        fg=typer.colors.CYAN,
+    )
+    typer.secho("Done.", fg=typer.colors.GREEN)
+
+
 def _add_utility(util_name: str, added_items: set, app_root_dir: pathlib.Path):
     """Adds a single utility file from the cache."""
     if util_name in added_items:
@@ -178,16 +254,16 @@ def _get_app_name() -> str:
 
     app_name = None
     for node in ast.walk(tree):
-        if isinstance(node, ast.Call):
-            # Check if it's a call to rx.Config
-            if isinstance(node.func, ast.Attribute) and node.func.attr == "Config":
-                if isinstance(node.func.value, ast.Name) and node.func.value.id == "rx":
-                    # Find the app_name keyword argument
-                    for keyword in node.keywords:
-                        if keyword.arg == "app_name":
-                            if isinstance(keyword.value, ast.Constant):
-                                app_name = keyword.value.value
-                                break
+        if isinstance(node, ast.Assign):
+            if isinstance(node.targets[0], ast.Name) and node.targets[0].id == "config":
+                if isinstance(node.value, ast.Call):
+                    # Check if it's a call to a Config class (e.g., BuridanuiConfig or rx.Config)
+                    if isinstance(node.value.func, (ast.Name, ast.Attribute)):
+                        for keyword in node.value.keywords:
+                            if keyword.arg == "app_name":
+                                if isinstance(keyword.value, ast.Constant):
+                                    app_name = keyword.value.value
+                                    break
             if app_name:
                 break
 
@@ -228,22 +304,38 @@ def add_component(component: str):
 
 
 @app.command("list")
-def list_components():
+def list_all():
     """
-    List available components in the Buridan UI library.
+    List all available items (components, wrapped React components, themes) in the Buridan UI library.
     """
     _update_repo()
-    typer.echo("Listing available components from repository...")
+    typer.echo("Listing available items from repository...")
+
+    # List Standard Components
     components = [p.name for p in COMPONENTS_DIR.iterdir() if p.is_dir()]
-    wrapped_components = [
-        p.name for p in WRAPPED_COMPONENTS_DIR.iterdir() if p.is_dir()
-    ]
     typer.echo("\n--- Standard Components ---")
     for component in sorted(components):
         typer.echo(f"- {component}")
+
+    # List Wrapped React Components
+    wrapped_components = [
+        p.name for p in WRAPPED_COMPONENTS_DIR.iterdir() if p.is_dir()
+    ]
     typer.echo("\n--- Wrapped React Components ---")
     for component in sorted(wrapped_components):
         typer.echo(f"- {component}")
+
+    # List Themes
+    themes = set()
+    if THEMES_CSS_FILE.exists():
+        content = THEMES_CSS_FILE.read_text()
+        # Regex to find base theme names (e.g., .theme-blue, ignoring -dark suffix)
+        theme_pattern = re.compile(r"\.theme-([a-zA-Z0-9-]+?)(?:-dark)?\s*{")
+        for match in theme_pattern.finditer(content):
+            themes.add(match.group(1))
+    typer.echo("\n--- Themes ---")
+    for theme in sorted(list(themes)):
+        typer.echo(f"- {theme}")
 
 
 if __name__ == "__main__":

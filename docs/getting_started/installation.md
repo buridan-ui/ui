@@ -45,42 +45,6 @@ reflex init my_app_name
 cd my_app_name
 ```
 
-# Add Buridan UI Components
+# Using the Buridan UI CLI
 
-Now you can use the `buridan add` command to add components to your project. The CLI will automatically place the components in the correct location within your app's source directory (e.g., `my_app_name/components/ui/`).
-
-## Add a standard component (e.g., `button`)
-  ```bash
-  buridan add component button
-  ```
-  This command will:
-  *   Ensure your local component library cache is up-to-date.
-  *   Validate that you are in a Reflex project.
-  *   Add the `button.py` component and its necessary utility dependencies (like `twmerge.py`) to your project.
-
-## Add a wrapped React component (e.g., `simple_icon`)
-  ```bash
-  buridan add wrapped-react simple_icon
-  ```
-  This command will:
-  *   Ensure your local component library cache is up-to-date.
-  *   Validate that you are in a Reflex project.
-  *   Add the `simple_icon.py` component and its necessary utility dependencies to your project.
-
-## **List available components:**
-  ```bash
-  buridan list
-  ```
-This command will show you all the components available in the Buridan UI library, categorized into standard and wrapped React components.
-
-# Use the Components in Your App
-
-Once components are added, you can import and use them in your Reflex application files. For example, if you added the `button` component:
-
-```python
-from your_app_name.components.ui.button import button
-
-def index():
-    return button("Click Me!")
-```
-(Note: `your_app_name` would be replaced by the actual `app_name` from your `rxconfig.py`.)
+For detailed instructions on how to use the Buridan UI CLI to add components, wrapped React components, and themes to your project, please refer to the [CLI Documentation](/getting-started/cli).

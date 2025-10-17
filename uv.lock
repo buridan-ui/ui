@@ -87,7 +87,7 @@ wheels = [
 
 [[package]]
 name = "buridan-ui"
-version = "0.7.5b0"
+version = "0.7.6b0"
 source = { editable = "." }
 dependencies = [
     { name = "black" },
