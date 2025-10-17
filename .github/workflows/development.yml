@@ -1,4 +1,4 @@
-name: Development Environment
+name: Development Preview
 
 on:
   pull_request:
@@ -7,13 +7,9 @@ on:
       - main
 
 jobs:
-  setup_dev_environment:
-    name: Setup Dev Environment
+  preview:
+    name: Run Dev Preview
     runs-on: ubuntu-latest
-
-    environment:
-      name: development
-      url: ${{ steps.set_url.outputs.env_url }}
 
     steps:
       - name: Checkout code
@@ -24,20 +20,18 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Set environment URL
-        id: set_url
-        run: echo "env_url=https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
-
-      - name: Generate Markdown Files
-        run: python -m scripts.generate_markdown
-
-      - name: Install dependencies and run app
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install uv
-          uv venv
-          source .venv/bin/activate
-          uv pip install -e .
-          nohup reflex run > reflex.log 2>&1 &
-          sleep 10
-          echo "Development environment is running for PR #${{ github.event.pull_request.number }}"
+          uv pip install --system -e .
+
+      - name: Generate Markdown Files
+        run: |
+          python -m scripts.generate_markdown
+
+      - name: Run Reflex App (prod env)
+        run: |
+          nohup reflex run --env prod > reflex.log 2>&1 &
+          sleep 15
+          echo "Reflex app started for PR #${{ github.event.pull_request.number }}"
