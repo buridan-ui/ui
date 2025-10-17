@@ -8,7 +8,7 @@ import reflex as rx
 from typing import Dict, Callable, List
 from src.docs.constants import DocParserCommands
 from src.docs.style import render_parse_error, markdown_component_map
-from src.components.docs.wrapper import demo_and_code_single_file_wrapper
+from src.comps.docs.wrapper import demo_and_code_single_file_wrapper
 
 
 class DocParser:

@@ -3,7 +3,7 @@ import reflex as rx
 from src.docs.library.components.button.button import button
 from src.templates.navbar import main_navbar
 from src.views.examples.examples import examples_page
-from src.components.ui.themes import theme_buttons
+from src.comps.ui.themes import theme_buttons
 import src.routes as routes
 
 

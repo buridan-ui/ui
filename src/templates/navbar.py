@@ -3,9 +3,9 @@ import reflex as rx
 import src.routes as routes
 
 from src.templates.drawer import drawer
-from src.components.ui.titles import site_title
+from src.comps.ui.titles import site_title
 from src.docs.library.components.button.button import button
-from src.components.ui.buttons import site_github, site_theme, site_reflex_build
+from src.comps.ui.buttons import site_github, site_theme, site_reflex_build
 
 
 def docs_navbar():
