@@ -7,7 +7,6 @@ from src.docs.generator import generate_docs_library
 from src.views.landing.landing import site_landing_page
 from src.templates.docpage import docpage
 from src.templates.toc import table_of_content
-from src.hooks import selected_page
 
 
 landing = site_landing_page()
@@ -42,5 +41,5 @@ def export(app: rx.App):
             route=f"/{doc.url}",
             title=title,
             meta=meta.SITE_META_TAGS,
-            on_load=selected_page.set_value(doc.url),
+            # on_load=rx.call_script(selected_page.set_value(doc.url))
         )

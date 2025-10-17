@@ -61,7 +61,6 @@ def create_section_description(text: str):
 
 def create_menu_item(data: dict):
     """Create a single menu item."""
-
     return rx.el.div(
         rx.link(
             rx.el.label(
