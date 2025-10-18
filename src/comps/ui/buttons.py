@@ -9,11 +9,11 @@ def site_theme() -> rx.Component:
         rx.color_mode.icon(
             light_component=rx.image(
                 "/svg/theme/theme_light.svg",
-                class_name="size-4 !shrink-0",
+                class_name="size-4 !shrink-0 text-neutral-900",
             ),
             dark_component=rx.image(
                 "/svg/theme/theme_dark.svg",
-                class_name="size-4 !shrink-0",
+                class_name="size-4 !shrink-0 text-white invert brightness-0",
             ),
         ),
         on_click=rx.toggle_color_mode,

@@ -12,7 +12,7 @@ from src.comps.ui.buttons import site_github, site_theme
 def main_navbar_nav_link(nav: str, url: str):
     return rx.el.a(
         button(nav, variant="ghost", size="sm", class_name="!text-sm cursor-pointer"),
-        to=url,
+        to=f"/{url}",
         class_name="",
     )
 

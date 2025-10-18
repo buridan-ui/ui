@@ -41,5 +41,4 @@ def export(app: rx.App):
             route=f"/{doc.url}",
             title=title,
             meta=meta.SITE_META_TAGS,
-            # on_load=rx.call_script(selected_page.set_value(doc.url))
         )

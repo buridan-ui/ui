@@ -20,88 +20,6 @@ def _create_markdown_toc_links(toc_data: List[Dict]) -> rx.Component:
     )
 
 
-# def _create_external_tool_links(url: str):
-#     """Create links for viewing documentation in external tools."""
-
-#     # Shared JavaScript for generating AI chat prompts
-#     ai_prompt_script = """
-#         const currentPage = window.location.href;
-#         const markdownFile = currentPage.endsWith('/')
-#             ? currentPage.slice(0, -1) + '.md'
-#             : currentPage + '.md';
-
-#         const prompt = `I'm looking at this documentation markdown file: ${markdownFile}
-# Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.`;
-
-#         const encodedPrompt = encodeURIComponent(prompt);
-#     """
-
-#     # Shared link styles
-#     link_classes = "cursor-pointer text-sm font-regular hover:underline no-underline flex flex-row items-center gap-x-2"
-
-#     def external_link(
-#         icon_light: str,
-#         icon_dark: str,
-#         text: str,
-#         href: str = None,
-#         on_click_script: str = None,
-#     ):
-#         """Create a consistent external link with icon."""
-#         return rx.el.a(
-#             rx.image(
-#                 src=rx.color_mode_cond(icon_light, icon_dark),
-#                 class_name="size-4",
-#             ),
-#             text,
-#             href=href,
-#             target="_blank" if href else None,
-#             rel="noopener noreferrer",
-#             class_name=link_classes,
-#             on_click=rx.call_script(on_click_script) if on_click_script else None,
-#         )
-
-#     return rx.el.div(
-#         # Markdown view link
-#         external_link(
-#             icon_light="/svg/markdown/md_light.svg",
-#             icon_dark="/svg/markdown/md_dark.svg",
-#             text="View as Markdown",
-#             href=f"/{url}.md",
-#         ),
-#         # ChatGPT link
-#         external_link(
-#             icon_light="/svg/openai/ai_light.svg",
-#             icon_dark="/svg/openai/ai_dark.svg",
-#             text="Open in ChatGPT",
-#             on_click_script=ai_prompt_script
-#             + """
-#                 const chatUrl = `https://chatgpt.com/?q=${encodedPrompt}`;
-#                 window.open(chatUrl, "_blank");
-#             """,
-#         ),
-#         # Claude link
-#         external_link(
-#             icon_light="/svg/claude/claude_light.svg",
-#             icon_dark="/svg/claude/claude_dark.svg",
-#             text="Open in Claude",
-#             on_click_script=ai_prompt_script
-#             + """
-#                 const claudeUrl = `https://claude.ai/new?prompt=${encodedPrompt}`;
-#                 window.open(claudeUrl, "_blank");
-#             """,
-#         ),
-
-#         external_link(
-#             icon_light="/svg/reflex/reflex_light.svg",
-#             icon_dark="/svg/reflex/reflex_dark.svg",
-#             text="Open Reflex Build",
-#             on_click_script=...
-#         ),
-
-#         class_name="flex flex-col w-full gap-y-2",
-#     )
-
-
 def _create_external_tool_links(url: str):
     """Create links for viewing documentation in external tools."""
 
@@ -174,7 +92,7 @@ Help me understand how to use it. Be ready to explain concepts, give examples, o
         external_link(
             icon_light="/svg/reflex/reflex_light.svg",
             icon_dark="/svg/reflex/reflex_dark.svg",
-            text="Open in Reflex Build",
+            text="Open Reflex Build",
             on_click_script=ai_prompt_script
             + """
                 const reflexUrl = `https://build.reflex.dev/`;
