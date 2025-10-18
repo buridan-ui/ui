@@ -54,15 +54,14 @@ def create_section_description(text: str):
     """Create a consistent section description."""
     return rx.el.label(
         text,
-        color=rx.color("gray", 12),
-        class_name="text-sm font-medium pt-1 pb-2",
+        class_name="text-sm font-medium pt-1 pb-2 text-muted-foreground",
     )
 
 
 def create_menu_item(data: dict):
     """Create a single menu item."""
     return rx.el.div(
-        rx.link(
+        rx.el.a(
             rx.el.label(
                 data["title"],
                 color=rx.color("slate", 12),
@@ -71,7 +70,7 @@ def create_menu_item(data: dict):
                     selected_page.value == data["url"], "font-bold", "font-regular"
                 ).to(str),
             ),
-            href=f"/{data['url']}",
+            to=f"/{data['url']}",
             text_decoration="none",
         ),
         class_name="w-full",
@@ -130,7 +129,7 @@ def sidebar(in_drawer=False):
         "hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5"
     )
 
-    return rx.box(
+    return rx.el.div(
         rx.scroll_area(
             content,
             class_name="flex flex-col items-center gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",

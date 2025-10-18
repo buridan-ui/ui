@@ -35,3 +35,8 @@ jobs:
           nohup reflex run --env prod > reflex.log 2>&1 &
           sleep 15
           echo "Reflex app started for PR #${{ github.event.pull_request.number }}"
+
+      - name: Deploy to UI-Dev
+        id: deploy
+        run: |
+          reflex deploy --app-name ui-dev --project ${{ secrets.REFLEX_PROJECT_ID }} --token ${{ secrets.REFLEX_AUTH_TOKEN }} --no-interactive
