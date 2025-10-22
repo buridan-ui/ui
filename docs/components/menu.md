@@ -1,20 +1,23 @@
 ---
-title: "Dropdown Menu"
-description: "Displays a menu to the user — such as a set of actions or functions — triggered by a button."
-order: 0
+title: "Menu"
+description: "Custom menu component."
+order: 13
 ---
 
-# Dropdown Menu
+# Menu
 
-Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+Custom menu component.
 
 # Installation
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(dropdown_menu_root)--
+--CLI_AND_MANUAL_INSTALLATION(Menu)--
 
-# Example
-A basic dropdown menu that opens when the user clicks a trigger button.
+# Usage
 
---DEMO_AND_SINGLE_FUNCTION(dropdown_menu_demo)--
+Make sure to correctly set your imports relative to the component
+
+```python
+from components.base_ui.menu import menu
+```

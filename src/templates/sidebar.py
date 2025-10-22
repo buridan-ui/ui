@@ -40,12 +40,12 @@ SIDEBAR_SECTIONS = [
     SidebarSection(
         title="Components",
         description="Core components to help you build beautiful and visually consistent applications.",
-        routes=routes.COMPONENTS_URLS,
+        routes=routes.BASE_UI_COMPONENTS,
     ),
     # SidebarSection(
-    #     title="Blocks",
-    #     description="A set of pre-build blocks to help build and customize your interface with ease.",
-    #     routes=[],
+    #     title="Components",
+    #     description="Core components to help you build beautiful and visually consistent applications.",
+    #     routes=routes.COMPONENTS_URLS,
     # ),
 ]
 
@@ -89,7 +89,7 @@ def create_sidebar_menu_items(routes: List[dict]):
 def create_section_content(section: SidebarSection):
     """Create content for a sidebar section."""
     return rx.el.div(
-        create_section_description(section.description),
+        # create_section_description(section.description),
         rx.el.div(
             create_sidebar_menu_items(section.routes),
             class_name="flex flex-row h-full w-full gap-x-2",

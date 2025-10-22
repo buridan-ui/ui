@@ -26,7 +26,7 @@ def main_navbar():
                 rx.el.div(
                     main_navbar_nav_link("Docs", routes.GET_STARTED_URLS[0]["url"]),
                     main_navbar_nav_link(
-                        "Components", routes.COMPONENTS_URLS[0]["url"]
+                        "Components", routes.BASE_UI_COMPONENTS[0]["url"]
                     ),
                     main_navbar_nav_link("Charts", routes.CHARTS_URLS[0]["url"]),
                     main_navbar_nav_link(

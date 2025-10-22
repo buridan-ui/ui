@@ -14,7 +14,7 @@ search_query = ClientStateVar.create("search_query", "")
 getting_started_cs = ClientStateVar.create(
     "getting_started_cs",
     routes.GET_STARTED_URLS
-    + routes.COMPONENTS_URLS
+    # + routes.COMPONENTS_URLS
     + routes.CHARTS_URLS
     + routes.JS_INTEGRATIONS_URLS
     + routes.WRAPPED_COMPONENTS_URLS,

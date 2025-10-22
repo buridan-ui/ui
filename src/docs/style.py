@@ -7,7 +7,6 @@ HEADING_2_CLASS = "text-xl py-1"
 LIST_ITEM_CLASS = "text-sm text-slate-11"
 LINK_CLASS = "text-accent-8"
 CODE_BLOCK_CLASS = "!rounded-xl !bg-transparent"
-CODE_BLOCK_BORDER = f"1px dashed {rx.color('gray', 5)}"
 
 
 # --- Helper error functions during parsing ---
@@ -38,7 +37,6 @@ def render_codeblock(content: str, **props) -> rx.Component:
     return rx.el.div(
         rx.code_block(
             content,
-            decorations=[{"always_wrap": True}],
             theme=rx.color_mode_cond(
                 rx.code_block.themes.one_light, rx.code_block.themes.vs_dark
             ),
@@ -57,20 +55,19 @@ def render_codeblock(content: str, **props) -> rx.Component:
             },
             background="transparent !important",
             class_name=CODE_BLOCK_CLASS,
-            border=CODE_BLOCK_BORDER,
         ),
         rx.el.button(
             rx.icon(tag="copy", size=13),
             cursor="pointer",
             position="absolute",
             right="15px",
-            top="20px",
+            top="15px",
             on_click=[
                 rx.toast("Command copied"),
                 rx.set_clipboard(content),
             ],
         ),
-        class_name="w-full rounded-[0.625rem] relative",
+        class_name="w-full rounded-[0.625rem] relative bg-input/18",
     )
 
 

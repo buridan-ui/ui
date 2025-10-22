@@ -46,7 +46,7 @@ def landing_buttons():
             ),
             rx.el.a(
                 button("View Components", variant="ghost", size="sm"),
-                to=routes.COMPONENTS_URLS[0]["url"],
+                to=routes.BASE_UI_COMPONENTS[0]["url"],
             ),
             class_name="w-full max-w-[5rem] flex flex-row items-center justify-center gap-x-4",
         ),
