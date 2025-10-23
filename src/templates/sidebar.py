@@ -121,12 +121,12 @@ def sidebar(in_drawer=False):
     """Main sidebar component."""
     content = rx.el.div(
         *[sidebar_section(section) for section in SIDEBAR_SECTIONS],
-        class_name="flex flex-col w-full h-full",
+        class_name="flex flex-col max-w-[18rem] w-full h-full",
     )
 
     drawer_classes = "flex flex-col max-w-[18rem] h-full"
     default_classes = (
-        "hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5"
+        "hidden xl:flex max-w-[18rem] w-full sticky top-12 max-h-[100vh] z-[10] pb-5"
     )
 
     return rx.el.div(
