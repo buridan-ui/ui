@@ -49,7 +49,7 @@ def main_navbar():
                 site_theme(),
                 class_name="flex flex-row items-center gap-x-2",
             ),
-            class_name="xl:max-w-[80rem] 2xl:max-w-[75rem] w-full mx-auto flex flex-row items-center justify-between",
+            class_name="xl:max-w-[80rem] 2xl:max-w-[85rem] w-full mx-auto flex flex-row items-center justify-between",
         ),
         class_name="bg-background w-full h-12 sticky top-0 left-0 px-0 py-7 items-center justify-between flex flex-row z-[15]",
     )

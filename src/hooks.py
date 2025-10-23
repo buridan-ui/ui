@@ -11,10 +11,10 @@ current_theme = ClientStateVar.create("current_theme", "gray")
 search_query = ClientStateVar.create("search_query", "")
 
 # Global state for Getting Started Routes
-getting_started_cs = ClientStateVar.create(
-    "getting_started_cs",
+search_items_cs = ClientStateVar.create(
+    "search_items_cs",
     routes.GET_STARTED_URLS
-    # + routes.COMPONENTS_URLS
+    + routes.BASE_UI_COMPONENTS
     + routes.CHARTS_URLS
     + routes.JS_INTEGRATIONS_URLS
     + routes.WRAPPED_COMPONENTS_URLS,

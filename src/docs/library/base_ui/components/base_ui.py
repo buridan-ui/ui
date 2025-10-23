@@ -1,11 +1,9 @@
 """Base UI component."""
 
-# Based on https://base-ui.com/
-
 from .component import CoreComponent
 
 PACKAGE_NAME = "@base-ui-components/react"
-PACKAGE_VERSION = "1.0.0-beta.3"
+PACKAGE_VERSION = "1.0.0-beta.4"
 
 
 class BaseUIComponent(CoreComponent):

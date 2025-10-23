@@ -1,12 +1,22 @@
+import random
+import string
 import reflex as rx
+
+from reflex.experimental import ClientStateVar
 
 # --- Markdown Styles ---
 PARAGRAPH_CLASS = "text-sm leading-6 pb-4"
 HEADING_1_CLASS = "text-2xl py-1"
-HEADING_2_CLASS = "text-xl py-1"
+HEADING_2_CLASS = "text-xl py-1 mt-[2.5rem]"
 LIST_ITEM_CLASS = "text-sm text-slate-11"
 LINK_CLASS = "text-accent-8"
 CODE_BLOCK_CLASS = "!rounded-xl !bg-transparent"
+
+
+# --- Helper functions to generate ClientStateVar names ---
+def generate_component_id():
+    """Generate a unique component ID."""
+    return "".join(random.choices(string.ascii_letters + string.digits, k=10))
 
 
 # --- Helper error functions during parsing ---
@@ -33,17 +43,37 @@ def render_link(text: str, **props) -> rx.Component:
     return rx.link(text, class_name=LINK_CLASS, **props)
 
 
-def render_codeblock(content: str, **props) -> rx.Component:
+def render_codeblock(
+    content: str,
+    lang: str = "python",
+    copy_button: bool = False,
+    line_num: bool = False,
+    **props,
+) -> rx.Component:
+    # Use the following to make line numbers sticky when horizontally scrolling...
+    # style={
+    #     ".linenumber.react-syntax-highlighter-line-number": {
+    #         "position": "sticky",
+    #         "left": "0",
+    #         "background-color": "var(--input)",
+    #         "zIndex": 1,
+    #         "textAlign": "right",
+    #         "paddingRight": "8px",
+    #         "color": "#999",
+    #         "userSelect": "none",
+    #     }
+    # },
+
+    if copy_button:
+        _id = generate_component_id()
+        is_copied = ClientStateVar.create(var_name=f"is_copied_{_id}", default=False)
+
     return rx.el.div(
         rx.code_block(
             content,
-            theme=rx.color_mode_cond(
-                rx.code_block.themes.one_light, rx.code_block.themes.vs_dark
-            ),
             font_size="13px",
-            language="python",
-            wrap_long_lines=True,
-            scrollbar_width="none",
+            language=lang,
+            show_line_numbers=line_num,
             code_tag_props={
                 "pre": "transparent",
                 "background": "transparent",
@@ -56,18 +86,26 @@ def render_codeblock(content: str, **props) -> rx.Component:
             background="transparent !important",
             class_name=CODE_BLOCK_CLASS,
         ),
-        rx.el.button(
-            rx.icon(tag="copy", size=13),
-            cursor="pointer",
-            position="absolute",
-            right="15px",
-            top="15px",
-            on_click=[
-                rx.toast("Command copied"),
-                rx.set_clipboard(content),
-            ],
+        (
+            rx.el.button(
+                rx.cond(
+                    is_copied.value,
+                    rx.icon("check", size=14),
+                    rx.icon("clipboard", size=14),
+                ),
+                class_name="cursor-pointer flex items-center justify-center absolute top-[15px] right-[15px]",
+                on_click=[
+                    rx.call_function(is_copied.set_value(True)),
+                    rx.set_clipboard(content),
+                ],
+                on_mouse_down=rx.call_function(is_copied.set_value(False)).debounce(
+                    1500
+                ),
+            )
+            if copy_button
+            else rx.el.div(class_name="hidden")
         ),
-        class_name="w-full rounded-[0.625rem] relative bg-input/18",
+        class_name="w-full rounded-[0.625rem] relative bg-input/18 outline outline-input",
     )
 
 

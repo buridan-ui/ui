@@ -16,7 +16,7 @@ Copy the following code into your app directory.
 
 # Usage
 
-Make sure to correctly set your imports relative to the component
+Make sure to correctly set your imports relative to the component.
 
 ```python
 from components.base_ui.switch import switch

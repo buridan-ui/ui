@@ -12,11 +12,11 @@ Custom drawer component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATIONs(Drawer)--
+--CLI_AND_MANUAL_INSTALLATION(Drawer)--
 
 # Usage
 
-Make sure to correctly set your imports relative to the component
+Make sure to correctly set your imports relative to the component.
 
 ```python
 from components.base_ui.drawer import drawer

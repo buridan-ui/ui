@@ -12,11 +12,11 @@ Checkbox component from base-ui components.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(CheckboxNamespace)--
+--CLI_AND_MANUAL_INSTALLATION(checkbox)--
 
 # Usage
 
-Make sure to correctly set your imports relative to the component
+Make sure to correctly set your imports relative to the component.
 
 ```python
 from components.base_ui.checkbox import checkbox

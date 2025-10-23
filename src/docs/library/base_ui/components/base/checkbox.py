@@ -127,7 +127,7 @@ class HighLevelCheckbox(CheckboxRoot):
         )
 
 
-class CheckboxNamespace(ComponentNamespace):
+class Checkbox(ComponentNamespace):
     """Namespace for Checkbox components."""
 
     root = staticmethod(CheckboxRoot.create)
@@ -137,4 +137,4 @@ class CheckboxNamespace(ComponentNamespace):
     __call__ = staticmethod(HighLevelCheckbox.create)
 
 
-checkbox = CheckboxNamespace()
+checkbox = Checkbox()

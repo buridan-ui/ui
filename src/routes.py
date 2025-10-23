@@ -62,9 +62,6 @@ GET_STARTED_URLS = generate_doc_routes("getting_started", "docs/getting-started/
 BASE_UI_COMPONENTS = sorted(
     generate_doc_routes("components", "docs/components/"), key=lambda x: x["title"]
 )
-# COMPONENTS_URLS = sorted(
-#     generate_doc_routes("components", "docs/components/"), key=lambda x: x["title"]
-# )
 CHARTS_URLS = sorted(
     generate_doc_routes("charts", "docs/charts/"), key=lambda x: x["title"]
 )

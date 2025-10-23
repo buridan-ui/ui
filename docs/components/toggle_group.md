@@ -12,11 +12,11 @@ Custom toggle group component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(ToggleGroup)--
+--CLI_AND_MANUAL_INSTALLATION(ToggleGroupRoot)--
 
 # Usage
 
-Make sure to correctly set your imports relative to the component
+Make sure to correctly set your imports relative to the component.
 
 ```python
 from components.base_ui.toggle_group import toggle_group
