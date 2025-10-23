@@ -9,15 +9,16 @@ def drawer():
         rx.drawer.trigger(
             button(rx.icon(tag="menu", size=13), variant="ghost", size="sm"),
         ),
-        rx.drawer.overlay(z_index="9999"),
         rx.drawer.portal(
             rx.drawer.content(
                 sidebar(in_drawer=True),
-                width="18rem",
-                top="0",
+                width="100%",
+                top="3.5rem",
                 right="0",
-                height="100%",
-                class_name="bg-background",
+                height="calc(100% - 3.5rem)",
+                background=rx.color_mode_cond(
+                    "oklch(1 0 0 / 0.95)", "oklch(0.145 0 0 / 0.95)"
+                ),
             ),
         ),
         direction="left",

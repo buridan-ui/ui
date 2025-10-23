@@ -124,7 +124,7 @@ def sidebar(in_drawer=False):
         class_name="flex flex-col max-w-[18rem] w-full h-full",
     )
 
-    drawer_classes = "flex flex-col max-w-[18rem] h-full"
+    drawer_classes = "flex flex-col w-full h-full"
     default_classes = (
         "hidden xl:flex max-w-[18rem] w-full sticky top-12 max-h-[100vh] z-[10] pb-5"
     )
