@@ -16,7 +16,7 @@ def icon_for_url(url: str):
             url.startswith("docs/components/"),
             rx.icon("blocks", size=15, class_name="!text-muted-foreground"),
             rx.cond(
-                url.startswith("docs/wrapped-react/"),
+                url.startswith("docs/wrapped-components/"),
                 rx.icon("cuboid", size=15, class_name="!text-muted-foreground"),
                 rx.cond(
                     url.startswith("docs/js-integrations/"),
