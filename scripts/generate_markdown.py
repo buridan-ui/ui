@@ -57,7 +57,11 @@ def get_source_code(
     func_name = None
     language = "python"
 
-    if command_lower in ["demo_and_single_function", "full_source_page_of_component"]:
+    if command_lower in [
+        "demo_and_single_function",
+        "full_source_page_of_component",
+        "cli_and_manual_installation",
+    ]:
         func_name = arg_lower
     elif command_lower == "show_code_with_language":
         try:
@@ -81,7 +85,10 @@ def get_source_code(
     func_obj = registry[func_name]
 
     try:
-        if command_lower == "full_source_page_of_component":
+        if command_lower in [
+            "full_source_page_of_component",
+            "cli_and_manual_installation",
+        ]:
             source_file = inspect.getfile(func_obj)
             code = pathlib.Path(source_file).read_text()
         else:
@@ -149,8 +156,6 @@ def main():
     file_count = 0
     for md_file in DOCS_SOURCE_DIR.rglob("*.md"):
         file_count += 1
-        print(f"  -> Processing: {md_file.relative_to(ROOT_DIR)}")
-
         original_content = md_file.read_text()
         pure_md_content = convert_to_pure_markdown(original_content, component_registry)
 
@@ -162,7 +167,8 @@ def main():
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(pure_md_content)
-        print(f"     \- Saved to: {output_path.relative_to(ROOT_DIR)}")
+
+        print(f"Processed: {md_file.relative_to(ROOT_DIR)}. Status: OK")
 
     print(f"\nMarkdown generation complete. Processed {file_count} files.")
 

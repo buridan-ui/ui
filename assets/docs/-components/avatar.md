@@ -2,7 +2,7 @@
 
 # Avatar
 
-Displays a user's profile picture, initials, or fallback icon.
+An image element with a fallback for representing the user.
 
 # Installation
 
@@ -137,10 +137,129 @@ avatar = Avatar()
 ```
 
 
-# Usage
+# Examples
 
-Make sure to correctly set your imports relative to the component.
+## General
+
+Displays a basic avatar with either a user image or a fallback placeholder.
+
 
 ```python
-from components.base_ui.avatar import avatar
+def avatar_example():
+    return rx.box(
+        avatar(
+            src="https://avatars.githubusercontent.com/u/84860195?v=4",
+            alt="@LineIndent",
+            fallback="CN",
+        ),
+        avatar(
+            src="https://avatars.githubusercontent.com/u/198465274?s=200&v=4",
+            alt="@buridan-ui",
+            fallback="BUI",
+            class_name="rounded-lg",
+        ),
+        rx.box(
+            avatar(
+                src="",
+                alt="@buridan-ui",
+                fallback="BU",
+            ),
+            avatar(
+                src="https://avatars.githubusercontent.com/u/84860195?v=4",
+                alt="@buridan-ui",
+                fallback="BUI",
+            ),
+            avatar(
+                src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+                alt="@reflex",
+                fallback="RE",
+            ),
+            class_name=(
+                "flex -space-x-2 "
+                "*:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-[var(--background)] "
+                "*:data-[slot=avatar]:grayscale"
+            ),
+        ),
+        class_name="flex flex-row flex-wrap items-center gap-12 p-8",
+    )
 ```
+
+
+## Sizes
+
+Demonstrates how to scale the avatar component using Tailwind utility classes.
+
+
+```python
+def avatar_sizes():
+    """Example showing different avatar sizes"""
+    return rx.box(
+        # Extra small
+        avatar(
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
+            class_name="size-6",
+        ),
+        # Small
+        avatar(
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
+            class_name="size-8",
+        ),
+        # Medium
+        avatar(
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
+            class_name="size-10",
+        ),
+        # Large
+        avatar(
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
+            class_name="size-12",
+        ),
+        # Extra large
+        avatar(
+            src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
+            alt="@reflex",
+            fallback="RE",
+            class_name="size-16",
+        ),
+        class_name="flex items-center gap-4 p-8",
+    )
+```
+
+
+## With Badge
+
+Shows how to combine an avatar with status or notification badges for added context.
+
+
+```python
+def avatar_with_badge():
+    """Example showing avatar with status badge"""
+    return rx.box(
+        rx.box(
+            avatar(
+                src="https://avatars.githubusercontent.com/u/84860195?v=4",
+                alt="@LineIndent",
+                fallback="CN",
+                class_name="size-12",
+            ),
+            # Online indicator
+            rx.box(
+                class_name=(
+                    "absolute bottom-0 right-0 size-3 rounded-full "
+                    "bg-green-500 border-2 border-[var(--background)]"
+                ),
+            ),
+            class_name="relative inline-block",
+        ),
+        class_name="p-8",
+    )
+```
+

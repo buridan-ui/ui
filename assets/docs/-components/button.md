@@ -2,7 +2,7 @@
 
 # Button
 
-A custom button component.
+Displays a button or a component that looks like a button.
 
 # Installation
 
@@ -125,10 +125,100 @@ button = Button.create
 ```
 
 
-# Usage
+# Examples
 
-Make sure to correctly set your imports relative to the component.
+## Sizes
+
+Showcases buttons in different predefined sizes (default, small, large, icon, etc).
+
 
 ```python
-from components.base_ui.button import button
+def button_size_examples():
+    return rx.el.div(
+        button("Small", size="sm"),
+        button("Default", size="default"),
+        button("Large", size="lg"),
+        class_name="flex items-center gap-3",
+    )
 ```
+
+
+## Default
+
+The default visual style for buttons with standard background and hover effects.
+
+
+```python
+def button_default_example():
+    return rx.el.div(button("Default", variant="default"))
+```
+
+
+## Secondary
+
+A more muted alternative to the default button, useful for less prominent actions.
+
+
+```python
+def button_secondary_example():
+    return rx.el.div(button("Secondary", variant="secondary"))
+```
+
+
+## Outline
+
+Buttons with a bordered outline, blending well with minimal UIs or light themes.
+
+
+```python
+def button_outline_example():
+    return rx.el.div(button("Outline", variant="outline"))
+```
+
+
+## Ghost
+
+A button style with no background or border, ideal for subtle UI actions.
+
+
+```python
+def button_ghost_example():
+    return rx.el.div(button("Ghost", variant="ghost"))
+```
+
+
+## Link
+
+A button styled to look like a hyperlink — useful for inline actions or navigation.
+
+
+```python
+def button_link_example():
+    return rx.el.div(button("Link", variant="link"))
+```
+
+
+## Destructive
+
+A bold style used for destructive or dangerous actions like “Delete”.
+
+
+```python
+def button_destructive_example():
+    return rx.el.div(button("Destructive", variant="destructive"))
+```
+
+
+## Icon
+
+Examples showing icon-only buttons with varying sizes for compact UI elements.
+
+
+```python
+def button_icon_examples():
+    return rx.el.div(
+        button(rx.icon("mail", class_name="size-4"), variant="outline", size="icon-sm"),
+        class_name="flex items-center gap-3",
+    )
+```
+

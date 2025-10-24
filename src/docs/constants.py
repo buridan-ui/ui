@@ -12,7 +12,7 @@ class DocParserCommands(str, Enum):
     SHOW_CODE_WITH_LANGUAGE = "show_code_with_language"
     DEMO_AND_SINGLE_FUNCTION = "demo_and_single_function"
     FULL_SOURCE_PAGE_OF_COMPONENT = "full_source_page_of_component"
-    CLI_AND_MANUAL_INSTALLATION = ("cli_and_manual_installation",)
+    CLI_AND_MANUAL_INSTALLATION = "cli_and_manual_installation"
 
 
 # --- Generated Doc Type ---

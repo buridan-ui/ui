@@ -2,7 +2,7 @@
 
 # Input
 
-Custom input component.
+Displays a form input field or a component that looks like an input field.
 
 # Installation
 
@@ -208,10 +208,106 @@ input = Input()
 ```
 
 
-# Usage
+# Examples
 
-Make sure to correctly set your imports relative to the component.
+## Basic Demo
+A simple text input demonstrating the default appearance and behavior.
+
 
 ```python
-from components.base_ui.input import input
+def input_demo():
+    return rx.el.div(
+        rx.text("Text Input", class_name="text-sm font-medium mb-2"),
+        input(
+            type="text",
+            placeholder="Enter your name",
+        ),
+        class_name="w-full max-w-md p-8",
+    )
 ```
+
+
+## Email
+An input field optimized for email address entry.
+
+
+```python
+def input_email():
+    return rx.el.div(
+        input_with_addons(
+            placeholder="Enter your username",
+            suffix="@company.com",
+        ),
+        class_name="w-full max-w-sm mx-auto py-6",
+    )
+```
+
+
+## Password
+An input field that hides characters for secure password entry.
+
+
+```python
+def input_password():
+    return rx.el.div(
+        rx.el.p("Password Input", class_name="text-sm font-medium mb-2"),
+        input(
+            type="password",
+            placeholder="Enter your password",
+        ),
+        class_name="w-full max-w-md p-8",
+    )
+```
+
+
+## Disabled
+An example of an input field in a disabled state.
+
+
+```python
+def input_disabled():
+    return rx.el.div(
+        rx.el.p("Disabled Input", class_name="text-sm font-medium mb-2"),
+        input(
+            type="text",
+            placeholder="Disabled input",
+            disabled=True,
+        ),
+        class_name="w-full max-w-md p-8",
+    )
+```
+
+
+## File Input
+An input field for selecting and uploading files.
+
+
+```python
+def input_file():
+    return rx.el.div(
+        rx.el.p("File Input", class_name="text-sm font-medium mb-2"),
+        input(
+            type="file",
+        ),
+        class_name="w-full max-w-md p-8",
+    )
+```
+
+
+## Custom Input
+An input field with a custom width and styling.
+
+
+```python
+def input_custom_width():
+    return rx.el.div(
+        rx.el.p("Custom Width", class_name="text-sm font-medium mb-2"),
+        input(
+            type="text",
+            placeholder="Max width 300px",
+            class_name="max-w-[300px]",
+        ),
+        class_name="w-full max-w-md p-8",
+    )
+```
+
