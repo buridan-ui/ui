@@ -40,14 +40,18 @@ def demo_and_code_single_file_wrapper(
             styled_tab_trigger("Source Code", "source-code"),
             style=tab_list_style,
         ),
-        rx.tabs.content(component, value="preview", class_name="mt-6"),
+        rx.tabs.content(
+            component,
+            value="preview",
+            class_name="mt-6 min-h-[250px] flex items-center",
+        ),
         rx.tabs.content(
             render_codeblock(content=source, copy_button=True, line_num=True),
             value="source-code",
             class_name="mt-6",
         ),
         default_value="preview",
-        class_name="px-4 min-h-[450px]",
+        class_name="px-4",
     )
 
 
@@ -71,6 +75,7 @@ def cli_and_manual_installation_wrapper(
                 content=f"buridan add component {component_name}",
                 lang="bash",
                 copy_button=True,
+                line_num=False,
             ),
             value="cli",
             class_name="mt-6",
