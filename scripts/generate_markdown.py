@@ -60,7 +60,6 @@ def get_source_code(
     if command_lower in [
         "demo_and_single_function",
         "full_source_page_of_component",
-        "cli_and_manual_installation",
     ]:
         func_name = arg_lower
     elif command_lower == "show_code_with_language":
@@ -85,10 +84,7 @@ def get_source_code(
     func_obj = registry[func_name]
 
     try:
-        if command_lower in [
-            "full_source_page_of_component",
-            "cli_and_manual_installation",
-        ]:
+        if command_lower == "full_source_page_of_component":
             source_file = inspect.getfile(func_obj)
             code = pathlib.Path(source_file).read_text()
         else:
@@ -107,11 +103,46 @@ def convert_to_pure_markdown(content: str, registry: dict) -> str:
     """
     Replaces custom component delimiters in markdown content with formatted code blocks.
     """
-    delimiter_pattern = r"--([\w_]+)(?:\(([^)]+)\))?--"
+    delimiter_pattern = r"--([\w_]+)(?:\((.*)\))?--"
 
     def replacer(match):
         command = match.group(1)
         argument = match.group(2)
+
+        if command.lower() == "cli_and_manual_installation":
+            if not argument:
+                return "Error: Missing argument for CLI_AND_MANUAL_INSTALLATION"
+
+            try:
+                args = ast.literal_eval(argument)
+                if not isinstance(args, list) or len(args) != 2:
+                    return (
+                        "Error: Invalid argument format for CLI_AND_MANUAL_INSTALLATION"
+                    )
+
+                component_name, cli_command = args
+                component_name_lower = component_name.lower()
+
+                if component_name_lower not in registry:
+                    return f"Error: Component '{component_name}' not found in registry."
+
+                func = registry[component_name_lower]
+                source_file = inspect.getfile(func)
+                source_code = pathlib.Path(source_file).read_text()
+
+                cli_section = f"### CLI\n\n```bash\n{cli_command}\n```"
+                manual_section = (
+                    f"### Manual Installation\n\n```python\n{source_code.strip()}\n```"
+                )
+
+                return f"\n{cli_section}\n\n{manual_section}\n"
+
+            except (ValueError, SyntaxError, IndexError) as e:
+                return f"Error parsing arguments for CLI_AND_MANUAL_INSTALLATION: {e}"
+            except Exception as e:
+                return f"Error processing CLI_AND_MANUAL_INSTALLATION: {e}"
+
+        # Fallback to old logic for other commands
         source_info = get_source_code(command, argument, registry)
         if source_info:
             code, language = source_info

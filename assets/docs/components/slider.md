@@ -9,6 +9,14 @@ Custom Slider component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component slider
+```
+
+### Manual Installation
+
 ```python
 """Custom Slider component."""
 

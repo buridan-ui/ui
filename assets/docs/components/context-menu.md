@@ -9,6 +9,14 @@ Custom context menu component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component context_menu
+```
+
+### Manual Installation
+
 ```python
 """Custom context menu component."""
 

@@ -9,6 +9,14 @@ A card component that displays content in a card format.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component card
+```
+
+### Manual Installation
+
 ```python
 """Custom card component."""
 

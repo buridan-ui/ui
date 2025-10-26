@@ -9,6 +9,14 @@ Custom toggle component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component toggle
+```
+
+### Manual Installation
+
 ```python
 """Custom toggle component."""
 

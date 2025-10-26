@@ -9,6 +9,14 @@ Custom menu component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component menu
+```
+
+### Manual Installation
+
 ```python
 """Custom menu component."""
 

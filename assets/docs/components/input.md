@@ -9,6 +9,14 @@ Custom input component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component input
+```
+
+### Manual Installation
+
 ```python
 """Custom input component."""
 

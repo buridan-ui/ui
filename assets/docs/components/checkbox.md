@@ -9,6 +9,14 @@ Checkbox component from base-ui components.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component checkbox
+```
+
+### Manual Installation
+
 ```python
 """Checkbox component from base-ui components."""
 

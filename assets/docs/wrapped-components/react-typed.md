@@ -8,11 +8,21 @@ A lightweight Reflex wrapper for the [`react-typed`](https://www.npmjs.com/packa
 
 Add the following wrapped react code in Reflex inside your app.
 
+
+### CLI
+
+```bash
+buridan add wrapped-react react_typed
+```
+
+### Manual Installation
+
 ```python
 """Typed component wrapper for react-typed."""
 
 import reflex as rx
 from reflex.utils.imports import ImportVar
+
 
 class Typed(rx.Component):
     """Typed component for typewriter animation effects."""
@@ -51,9 +61,8 @@ class Typed(rx.Component):
 
     def add_imports(self) -> rx.ImportDict:
         """Add the Typed component import."""
-        return {
-            self.library: ImportVar(tag=self.tag, is_default=False)
-        }
+        return {self.library: ImportVar(tag=self.tag, is_default=False)}
+
 
 def typed(**props) -> rx.Component:
     """Create a typewriter animation component.
@@ -83,6 +92,7 @@ def typed(**props) -> rx.Component:
     """
     return Typed.create(**props)
 ```
+
 
 # Usage
 

@@ -9,6 +9,14 @@ Custom dialog component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component dialog
+```
+
+### Manual Installation
+
 ```python
 """Custom dialog component."""
 

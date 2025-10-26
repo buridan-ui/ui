@@ -9,6 +9,14 @@ A set of collapsible panels with headings.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component accordion
+```
+
+### Manual Installation
+
 ```python
 """Custom Accordion component."""
 

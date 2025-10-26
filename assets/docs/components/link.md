@@ -9,6 +9,14 @@ Custom link component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component link
+```
+
+### Manual Installation
+
 ```python
 """Custom link component."""
 

@@ -9,6 +9,14 @@ Custom popover component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component popover
+```
+
+### Manual Installation
+
 ```python
 """Custom popover component."""
 

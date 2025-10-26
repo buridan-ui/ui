@@ -9,6 +9,14 @@ Displays a user's profile picture, initials, or fallback icon.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component avatar
+```
+
+### Manual Installation
+
 ```python
 """Custom avatar component."""
 

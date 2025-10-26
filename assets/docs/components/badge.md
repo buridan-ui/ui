@@ -9,6 +9,14 @@ A badge component that displays a label.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component badge
+```
+
+### Manual Installation
+
 ```python
 """Badge component."""
 

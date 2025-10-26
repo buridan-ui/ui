@@ -9,6 +9,14 @@ Custom drawer component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component drawer
+```
+
+### Manual Installation
+
 ```python
 """Custom drawer component."""
 

@@ -9,6 +9,14 @@ Custom navigation menu component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component navigation_menu
+```
+
+### Manual Installation
+
 ```python
 """Custom navigation menu component."""
 

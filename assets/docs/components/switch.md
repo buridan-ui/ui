@@ -9,6 +9,14 @@ Custom switch component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component switch
+```
+
+### Manual Installation
+
 ```python
 """Custom switch component."""
 

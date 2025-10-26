@@ -8,7 +8,7 @@ Theme switcher component.
 
 Copy the following code into your app directory.
 
-
+Error: Component 'ThemeSwitcher' not found in registry.
 
 # Usage
 

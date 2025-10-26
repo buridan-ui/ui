@@ -9,6 +9,14 @@ Custom collapsible component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component collapsible
+```
+
+### Manual Installation
+
 ```python
 """Custom collapsible component."""
 

@@ -9,6 +9,14 @@ Tooltip component from base-ui components.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component tooltip
+```
+
+### Manual Installation
+
 ```python
 """Tooltip component from base-ui components."""
 

@@ -9,6 +9,14 @@ Custom tabs component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component tabs
+```
+
+### Manual Installation
+
 ```python
 """Custom tabs component."""
 

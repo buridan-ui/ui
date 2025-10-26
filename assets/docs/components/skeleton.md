@@ -9,6 +9,14 @@ Custom skeleton component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component skeleton
+```
+
+### Manual Installation
+
 ```python
 """Custom skeleton component."""
 

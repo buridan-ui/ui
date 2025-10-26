@@ -9,6 +9,14 @@ Custom scroll area component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component scroll_area
+```
+
+### Manual Installation
+
 ```python
 """Custom scroll area component."""
 

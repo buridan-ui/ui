@@ -8,11 +8,21 @@ A lightweight Reflex wrapper for spinners from the [`react-spinners`](https://ww
 
 Add the following wrapped react code in Reflex inside your app.
 
+
+### CLI
+
+```bash
+buridan add wrapped-react react_spinner
+```
+
+### Manual Installation
+
 ```python
 """Spinner component wrapper for react-spinners."""
 
 import reflex as rx
 from reflex.utils.imports import ImportVar
+
 
 class Spinner(rx.Component):
     """React Spinner component."""
@@ -34,14 +44,14 @@ class Spinner(rx.Component):
         return instance
 
     def add_imports(self):
-        return {
-            self.library: ImportVar(tag=self.tag, is_default=False)
-        }
+        return {self.library: ImportVar(tag=self.tag, is_default=False)}
+
 
 def spinner(spinner_type: str = "ClipLoader", **props):
     """Create a spinner. Types: ClipLoader, BeatLoader, CircleLoader, etc."""
     return Spinner.create(spinner_type, **props)
 ```
+
 
 # Usage
 

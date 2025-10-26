@@ -9,6 +9,14 @@ A custom button component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component button
+```
+
+### Manual Installation
+
 ```python
 """Custom button component."""
 

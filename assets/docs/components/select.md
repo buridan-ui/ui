@@ -9,6 +9,14 @@ Custom select component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component select
+```
+
+### Manual Installation
+
 ```python
 """Custom select component."""
 

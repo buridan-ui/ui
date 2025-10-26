@@ -9,6 +9,14 @@ Custom Textarea component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component textarea
+```
+
+### Manual Installation
+
 ```python
 """Custom Textarea component."""
 

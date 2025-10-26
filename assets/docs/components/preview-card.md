@@ -9,6 +9,14 @@ Custom preview card component.
 Copy the following code into your app directory.
 
 
+### CLI
+
+```bash
+buridan add component preview_card
+```
+
+### Manual Installation
+
 ```python
 """Custom preview card component."""
 
