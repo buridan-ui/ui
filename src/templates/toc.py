@@ -88,7 +88,7 @@ Help me understand how to use it. Be ready to explain concepts, give examples, o
             text="Open in Claude",
             on_click_script=ai_prompt_script
             + """
-                const claudeUrl = `https://claude.ai/new?prompt=${encodedPrompt}`;
+                const claudeUrl = `https://claude.ai/new?q=${encodedPrompt}`;
                 window.open(claudeUrl, "_blank");
             """,
         ),
