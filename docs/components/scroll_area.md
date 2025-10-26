@@ -12,7 +12,7 @@ Custom scroll area component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(ScrollArea)--
+--CLI_AND_MANUAL_INSTALLATION(["ScrollArea", "buridan add component scroll_area"])--
 
 # Usage
 

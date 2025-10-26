@@ -12,7 +12,7 @@ A custom button component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Button)--
+--CLI_AND_MANUAL_INSTALLATION(["Button", "buridan add component button"])--
 
 # Usage
 

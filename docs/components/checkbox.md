@@ -12,7 +12,7 @@ Checkbox component from base-ui components.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(checkbox)--
+--CLI_AND_MANUAL_INSTALLATION(["checkbox", "buridan add component checkbox"])--
 
 # Usage
 

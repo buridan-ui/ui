@@ -12,7 +12,7 @@ A set of collapsible panels with headings.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Accordion)--
+--CLI_AND_MANUAL_INSTALLATION(["Accordion", "buridan add component accordion"])--
 
 # Usage
 

@@ -55,9 +55,7 @@ def demo_and_code_single_file_wrapper(
     )
 
 
-def cli_and_manual_installation_wrapper(
-    component_name: str, source: str
-) -> rx.Component:
+def cli_and_manual_installation_wrapper(cli_command: str, source: str) -> rx.Component:
     tab_list_style = {
         "border": "none",
         "boxShadow": "none",
@@ -72,7 +70,7 @@ def cli_and_manual_installation_wrapper(
         ),
         rx.tabs.content(
             render_codeblock(
-                content=f"buridan add component {component_name}",
+                content=cli_command,
                 lang="bash",
                 copy_button=True,
                 line_num=False,

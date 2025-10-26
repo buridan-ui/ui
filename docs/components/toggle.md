@@ -12,7 +12,7 @@ Custom toggle component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Toggle)--
+--CLI_AND_MANUAL_INSTALLATION(["Toggle", "buridan add component toggle"])--
 
 # Usage
 

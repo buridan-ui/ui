@@ -12,7 +12,7 @@ Custom input component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Input)--
+--CLI_AND_MANUAL_INSTALLATION(["Input", "buridan add component input"])--
 
 # Usage
 

@@ -12,7 +12,7 @@ Theme switcher component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(ThemeSwitcher)--
+--CLI_AND_MANUAL_INSTALLATION(["ThemeSwitcher", "buridan add component theme_switcher"])--
 
 # Usage
 

@@ -12,7 +12,7 @@ Custom dialog component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Dialog)--
+--CLI_AND_MANUAL_INSTALLATION(["Dialog", "buridan add component dialog"])--
 
 # Usage
 

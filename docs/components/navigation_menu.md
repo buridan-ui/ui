@@ -12,7 +12,7 @@ Custom navigation menu component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(NavigationMenu)--
+--CLI_AND_MANUAL_INSTALLATION(["NavigationMenu", "buridan add component navigation_menu"])--
 
 # Usage
 

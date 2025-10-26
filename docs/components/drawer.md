@@ -12,7 +12,7 @@ Custom drawer component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Drawer)--
+--CLI_AND_MANUAL_INSTALLATION(["Drawer", "buridan add component drawer"])--
 
 # Usage
 

@@ -11,7 +11,7 @@ def site_title():
         ),
         rx.el.p(
             ".UI",
-            font_size="0.6rem",
+            font_size="0.50rem",
             position="relative",
             font_weight="600",
         ),

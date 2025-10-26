@@ -12,7 +12,7 @@ Custom context menu component.
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(ContextMenu)--
+--CLI_AND_MANUAL_INSTALLATION(["ContextMenu", "buridan add component context_menu"])--
 
 # Usage
 

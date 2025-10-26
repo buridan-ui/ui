@@ -12,7 +12,7 @@ Custom collapsible component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Collapsible)--
+--CLI_AND_MANUAL_INSTALLATION(["Collapsible", "buridan add component collapsible"])--
 
 # Usage
 

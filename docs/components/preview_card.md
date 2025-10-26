@@ -12,7 +12,7 @@ Custom preview card component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(PreviewCard)--
+--CLI_AND_MANUAL_INSTALLATION(["PreviewCard", "buridan add component preview_card"])--
 
 # Usage
 

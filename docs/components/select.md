@@ -12,7 +12,7 @@ Custom select component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Select)--
+--CLI_AND_MANUAL_INSTALLATION(["Select", "buridan add component select"])--
 
 # Usage
 

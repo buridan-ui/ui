@@ -12,7 +12,7 @@ A card component that displays content in a card format.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Card)--
+--CLI_AND_MANUAL_INSTALLATION(["Card", "buridan add component card"])--
 
 # Usage
 

@@ -12,7 +12,7 @@ Displays a user's profile picture, initials, or fallback icon.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Avatar)--
+--CLI_AND_MANUAL_INSTALLATION(["Avatar", "buridan add component avatar"])--
 
 # Usage
 

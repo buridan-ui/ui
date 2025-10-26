@@ -12,7 +12,7 @@ Custom popover component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Popover)--
+--CLI_AND_MANUAL_INSTALLATION(["Popover", "buridan add component popover"])--
 
 # Usage
 

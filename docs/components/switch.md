@@ -12,7 +12,7 @@ Custom switch component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Switch)--
+--CLI_AND_MANUAL_INSTALLATION(["Switch", "buridan add component switch"])--
 
 # Usage
 

@@ -12,7 +12,7 @@ Custom toggle group component.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(ToggleGroupRoot)--
+--CLI_AND_MANUAL_INSTALLATION(["ToggleGroupRoot", "buridan add component toggle_group"])--
 
 # Usage
 

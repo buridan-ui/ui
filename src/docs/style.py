@@ -105,7 +105,7 @@ def render_codeblock(
             if copy_button
             else rx.el.div(class_name="hidden")
         ),
-        class_name="w-full rounded-[0.625rem] relative bg-input/18 outline outline-input",
+        class_name="w-full rounded-[0.625rem] relative bg-input/18 outline outline-input mb-4",
     )
 
 

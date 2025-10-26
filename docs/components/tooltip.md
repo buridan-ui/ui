@@ -12,7 +12,7 @@ Tooltip component from base-ui components.
 
 Copy the following code into your app directory.
 
---CLI_AND_MANUAL_INSTALLATION(Tooltip)--
+--CLI_AND_MANUAL_INSTALLATION(["Tooltip", "buridan add component tooltip"])--
 
 # Usage
 

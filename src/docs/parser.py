@@ -134,18 +134,29 @@ class DocParser:
                 msg="Missing argument for cli_and_manual_installation"
             )
 
-        arg_lower = argument.lower()
-        if arg_lower not in self.components_registry:
-            return render_parse_error(msg=f"Component not found: {argument}")
-
-        func = self.components_registry[arg_lower]
-
         try:
+            args = ast.literal_eval(argument)
+            if not isinstance(args, list) or len(args) != 2:
+                return render_parse_error(
+                    msg='Invalid argument format for CLI_AND_MANUAL_INSTALLATION. Expected ["ComponentName", "cli command"]'
+                )
+
+            component_name, cli_command = args
+            component_name_lower = component_name.lower()
+
+            if component_name_lower not in self.components_registry:
+                return render_parse_error(msg=f"Component not found: {component_name}")
+
+            func = self.components_registry[component_name_lower]
             file_path = inspect.getfile(func)
             full_source = pathlib.Path(file_path).read_text()
 
-            return cli_and_manual_installation_wrapper(arg_lower, full_source)
+            return cli_and_manual_installation_wrapper(cli_command, full_source)
 
+        except (ValueError, SyntaxError, IndexError) as e:
+            return render_parse_error(
+                msg=f"Error parsing arguments for CLI_AND_MANUAL_INSTALLATION: {e}"
+            )
         except Exception as e:
             return render_parse_error(msg=f"Error loading source: {e}")
 
