@@ -21,3 +21,13 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.accordion import accordion
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+Displays a basic avatar with either a user image or a fallback placeholder.
+
+--DEMO_AND_SINGLE_FUNCTION(accordion_example)--

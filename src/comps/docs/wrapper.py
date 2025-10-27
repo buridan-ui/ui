@@ -43,7 +43,7 @@ def demo_and_code_single_file_wrapper(
         rx.tabs.content(
             component,
             value="preview",
-            class_name="mt-6 min-h-[250px] flex items-center",
+            class_name="mt-6 min-h-[250px] flex items-center justify-center outline outline-input rounded-default",
         ),
         rx.tabs.content(
             render_codeblock(content=source, copy_button=True, line_num=True),

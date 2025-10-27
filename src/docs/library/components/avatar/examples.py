@@ -1,5 +1,5 @@
 import reflex as rx
-from .avatar import avatar
+from ...base_ui.components.base.avatar import avatar
 
 
 def avatar_example():
@@ -44,35 +44,30 @@ def avatar_example():
 def avatar_sizes():
     """Example showing different avatar sizes"""
     return rx.box(
-        # Extra small
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
             fallback="RE",
             class_name="size-6",
         ),
-        # Small
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
             fallback="RE",
             class_name="size-8",
         ),
-        # Medium
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
             fallback="RE",
             class_name="size-10",
         ),
-        # Large
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
             fallback="RE",
             class_name="size-12",
         ),
-        # Extra large
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
@@ -93,7 +88,6 @@ def avatar_with_badge():
                 fallback="CN",
                 class_name="size-12",
             ),
-            # Online indicator
             rx.box(
                 class_name=(
                     "absolute bottom-0 right-0 size-3 rounded-full "

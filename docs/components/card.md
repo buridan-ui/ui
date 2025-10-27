@@ -21,3 +21,14 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.card import card
 ```
+
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## String
+
+Displays a basic avatar with either a user image or a fallback placeholder.
+
+--DEMO_AND_SINGLE_FUNCTION(card_low_level)--

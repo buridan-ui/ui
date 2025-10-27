@@ -1,5 +1,6 @@
 import reflex as rx
-from .badge import badge
+
+from ...base_ui.components.base.badge import badge
 
 
 def badge_demo():

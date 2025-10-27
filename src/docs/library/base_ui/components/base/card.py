@@ -10,12 +10,12 @@ from ..component import CoreComponent
 class ClassNames:
     """Class names for the card component."""
 
-    ROOT = "rounded-ui-xl border border-secondary-a4 bg-secondary-1 shadow-small"
-    HEADER = "flex flex-col gap-2 p-6"
-    TITLE = "text-2xl font-semibold text-secondary-12"
-    DESCRIPTION = "text-sm text-secondary-11 font-[450]"
-    CONTENT = "flex flex-col gap-4 px-6 pb-6"
-    FOOTER = "flex flex-row justify-between items-center px-6 pb-6"
+    ROOT = "rounded-default border border-input bg-secondary"
+    HEADER = "flex flex-col gap-2 p-4"
+    TITLE = "text-2xl font-semibold text-secondary-foreground"
+    DESCRIPTION = "text-sm text-secondary-foreground/80 font-[450]"
+    CONTENT = "flex flex-col gap-4 px-4 pb-4"
+    FOOTER = "flex flex-row justify-between items-center px-4 pb-4"
 
 
 class CardComponent(Div, CoreComponent):

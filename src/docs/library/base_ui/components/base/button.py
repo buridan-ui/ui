@@ -1,5 +1,3 @@
-"""Custom button component."""
-
 from typing import Literal
 
 from reflex.components.core.cond import cond
@@ -16,29 +14,43 @@ LiteralButtonSize = Literal[
     "xs", "sm", "md", "lg", "xl", "icon-xs", "icon-sm", "icon-md", "icon-lg", "icon-xl"
 ]
 
-DEFAULT_CLASS_NAME = "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:border disabled:border-secondary-4/80 disabled:bg-secondary-3 disabled:text-secondary-8 shrink-0 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-medium cursor-pointer box-border"
+DEFAULT_CLASS_NAME = (
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap "
+    "rounded-md text-sm font-medium transition-all "
+    "disabled:pointer-events-none disabled:opacity-50 outline-none "
+    "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 "
+    "[&_svg]:shrink-0 shrink-0"
+)
 
 BUTTON_VARIANTS = {
     "variant": {
-        "primary": "bg-primary-9 text-white hover:bg-primary-10",
-        "destructive": "bg-destructive-9 hover:bg-destructive-10 text-white",
-        "outline": "border border-secondary-a4 bg-secondary-1 hover:bg-secondary-3 text-secondary-12",
-        "secondary": "bg-secondary-4 text-secondary-12 hover:bg-secondary-5",
-        "ghost": "hover:bg-secondary-3 text-secondary-11",
-        "link": "text-secondary-12 underline-offset-4 hover:underline",
-        "dark": "bg-secondary-12 text-secondary-1 hover:bg-secondary-12/80",
+        "default": "bg-primary text-primary-foreground hover:bg-primary/90",
+        "destructive": (
+            "bg-[var(--destructive)] text-white hover:bg-[var(--destructive)]/90 "
+            "focus-visible:ring-[var(--destructive)]/20 "
+            "dark:focus-visible:ring-[var(--destructive)]/40 "
+            "dark:bg-[var(--destructive)]/60"
+        ),
+        "outline": (
+            "border border-input bg-background shadow-xs "
+            "hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)] "
+            "dark:bg-[var(--input)]/30 dark:border-input "
+            "dark:hover:bg-[var(--input)]/50"
+        ),
+        "secondary": ("bg-secondary text-secondary-foreground hover:bg-secondary/80"),
+        "ghost": (
+            "hover:bg-accent hover:text-accent-foreground "
+            "dark:hover:bg-[var(--accent)]/50"
+        ),
+        "link": "text-primary underline-offset-4 hover:underline",
     },
     "size": {
-        "xs": "px-1.5 h-7 rounded-ui-xs gap-1.5",
-        "sm": "px-2 h-8 rounded-ui-sm gap-2",
-        "md": "px-2.5 h-9 rounded-ui-md gap-2",
-        "lg": "px-3 h-10 rounded-ui-lg gap-2.5",
-        "xl": "px-3.5 h-12 rounded-ui-xl gap-3",
-        "icon-xs": "size-7 rounded-ui-xs",
-        "icon-sm": "size-8 rounded-ui-sm",
-        "icon-md": "size-9 rounded-ui-md",
-        "icon-lg": "size-10 rounded-ui-lg",
-        "icon-xl": "size-12 rounded-ui-xl",
+        "default": "h-9 px-4 py-2 has-[>svg]:px-3",
+        "sm": "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+        "lg": "h-10 rounded-md px-6 has-[>svg]:px-4",
+        "icon": "size-9",
+        "icon-sm": "size-8",
+        "icon-lg": "size-10",
     },
 }
 
@@ -58,10 +70,10 @@ class Button(BaseButton, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> BaseButton:
         """Create the button component."""
-        variant = props.pop("variant", "primary")
+        variant = props.pop("variant", "default")
         cls.validate_variant(variant)
 
-        size = props.pop("size", "md")
+        size = props.pop("size", "default")
         cls.validate_size(size)
 
         loading = props.pop("loading", False)

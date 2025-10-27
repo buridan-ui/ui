@@ -21,12 +21,16 @@ ITEMS_TYPE = list[dict[str, str | Component]]
 class ClassNames:
     """Class names for accordion components."""
 
-    ROOT = "flex flex-col justify-center shadow-small border border-secondary-a4 divide-y divide-secondary-a4 overflow-hidden rounded-xl"
+    ROOT = "flex flex-col justify-center overflow-hidden rounded-xl"
     ITEM = ""
     HEADER = ""
-    TRIGGER = "group relative flex w-full items-center justify-between gap-4 bg-secondary-1 hover:bg-secondary-3 px-6 py-4 text-md font-semibold text-secondary-12 transition-colors disabled:cursor-not-allowed disabled:bg-secondary-3 disabled:text-secondary-8 disabled:[&_svg]:text-secondary-8 [&_svg]:text-secondary-11"
-    PANEL = "h-[var(--accordion-panel-height)] overflow-hidden text-base text-secondary-11 font-medium transition-[height] ease-out data-[ending-style]:h-0 data-[starting-style]:h-0 border-t border-secondary-a4"
-    PANEL_DIV = "py-4 px-6"
+    TRIGGER = "group relative flex w-full items-center justify-between gap-4 px-4 py-2 text-md font-semibold"
+    PANEL = (
+        "overflow-hidden text-sm text-foreground font-medium "
+        "transition-all duration-300 ease-out "
+        "data-[ending-style]:h-0 data-[starting-style]:h-0"
+    )
+    PANEL_DIV = "py-2 px-4"
     TRIGGER_ICON = "size-4 shrink-0 transition-all ease-out group-data-[panel-open]:scale-110 group-data-[panel-open]:rotate-45"
 
 

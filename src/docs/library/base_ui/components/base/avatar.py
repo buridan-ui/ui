@@ -11,9 +11,9 @@ from ..base_ui import PACKAGE_NAME, BaseUIComponent
 class ClassNames:
     """Class names for avatar components."""
 
-    ROOT = "shrink-0 inline-flex size-6 items-center justify-center overflow-hidden rounded-full bg-secondary-1 align-middle text-base font-medium text-secondary-12 select-none"
+    ROOT = "shrink-0 inline-flex size-8 items-center justify-center overflow-hidden rounded-full align-middle text-base font-medium select-none"
     IMAGE = "size-full object-cover shrink-0"
-    FALLBACK = "flex size-full items-center justify-center text-sm animate-pulse bg-secondary-6"
+    FALLBACK = "flex size-full items-center justify-center text-sm bg-muted"
 
 
 class AvatarBaseComponent(BaseUIComponent):
@@ -103,9 +103,11 @@ class HighLevelAvatar(AvatarRoot):
         image_props = {k: props.pop(k) for k in cls._image_props & props.keys()}
         fallback_props = {k: props.pop(k) for k in cls._fallback_props & props.keys()}
 
+        fallback_content = props.pop("fallback", "")
+
         return AvatarRoot.create(
             AvatarImage.create(**image_props),
-            AvatarFallback.create(**fallback_props),
+            AvatarFallback.create(fallback_content, **fallback_props),
             *children,
             **props,
         )

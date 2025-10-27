@@ -21,3 +21,13 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.checkbox import checkbox
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## Label
+
+Displays a basic avatar with either a user image or a fallback placeholder.
+
+--DEMO_AND_SINGLE_FUNCTION(checkbox_example)--
