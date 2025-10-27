@@ -21,3 +21,19 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.collapsible import collapsible
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## High Level Demo
+
+Uses the simplified collapsible() API with trigger and content props for quick implementation.
+
+--DEMO_AND_SINGLE_FUNCTION(collapsible_example)--
+
+## Low Level Demo
+
+Uses the low-level collapsible.root(), collapsible.panel(), and ClientStateVar for full control over state and structure.
+
+--DEMO_AND_SINGLE_FUNCTION(collapsible_demo)--
