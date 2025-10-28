@@ -4,16 +4,13 @@ from ...base_ui.components.base.context_menu import context_menu
 
 def context_menu_demo():
     return context_menu.root(
-        # Trigger
         context_menu.trigger(
             "Right click here",
             class_name="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed border-input text-sm",
         ),
-        # Portal and Content
         context_menu.portal(
             context_menu.positioner(
                 context_menu.popup(
-                    # Back item with shortcut
                     context_menu.item(
                         rx.flex(
                             "Back",
@@ -23,9 +20,8 @@ def context_menu_demo():
                             ),
                             class_name="w-full justify-between items-center",
                         ),
-                        class_name="pl-8",  # inset
+                        class_name="pl-8",
                     ),
-                    # Forward item (disabled) with shortcut
                     context_menu.item(
                         rx.flex(
                             "Forward",
@@ -36,9 +32,8 @@ def context_menu_demo():
                             class_name="w-full justify-between items-center",
                         ),
                         disabled=True,
-                        class_name="pl-8",  # inset
+                        class_name="pl-8",
                     ),
-                    # Reload item with shortcut
                     context_menu.item(
                         rx.flex(
                             "Reload",
@@ -48,9 +43,8 @@ def context_menu_demo():
                             ),
                             class_name="w-full justify-between items-center",
                         ),
-                        class_name="pl-8",  # inset
+                        class_name="pl-8",
                     ),
-                    # Submenu
                     context_menu.submenu_root(
                         context_menu.submenu_trigger(
                             rx.flex(
@@ -61,7 +55,7 @@ def context_menu_demo():
                                 ),
                                 class_name="w-full justify-between items-center",
                             ),
-                            class_name="pl-8",  # inset
+                            class_name="pl-8",
                         ),
                         context_menu.portal(
                             context_menu.positioner(
@@ -82,7 +76,6 @@ def context_menu_demo():
                         ),
                     ),
                     context_menu.separator(),
-                    # Checkbox items
                     context_menu.checkbox_item(
                         context_menu.checkbox_item_indicator(
                             rx.icon(tag="check", class_name="size-4"),
@@ -96,12 +89,11 @@ def context_menu_demo():
                         "Show Full URLs",
                     ),
                     context_menu.separator(),
-                    # Radio group wrapped in a group
                     context_menu.radio_group(
                         context_menu.group(
                             context_menu.group_label(
                                 "People",
-                                class_name="pl-8",  # inset
+                                class_name="pl-8",
                             ),
                             context_menu.radio_item(
                                 context_menu.radio_item_indicator(

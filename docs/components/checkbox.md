@@ -28,6 +28,6 @@ Below are examples demonstrating how the component can be used.
 
 ## Label
 
-Displays a basic avatar with either a user image or a fallback placeholder.
+Displays a simple checkbox with a label.
 
 --DEMO_AND_SINGLE_FUNCTION(checkbox_example)--

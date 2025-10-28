@@ -5,7 +5,7 @@ import src.routes as routes
 from src.templates.drawer import drawer
 from src.templates.search import site_search
 from src.comps.ui.titles import site_title
-from src.docs.library.components.button.button import button
+from src.docs.library.base_ui.components.base.button import button
 from src.comps.ui.buttons import site_github, site_theme
 
 

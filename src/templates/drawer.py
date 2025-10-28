@@ -1,7 +1,7 @@
 import reflex as rx
 
 from src.templates.sidebar import sidebar
-from src.docs.library.components.button.button import button
+from src.docs.library.base_ui.components.base.button import button
 
 
 def drawer():

@@ -1,6 +1,6 @@
 import reflex as rx
 
-from src.docs.library.components.button.button import button
+from src.docs.library.base_ui.components.base.button import button
 from src.templates.navbar import main_navbar
 from src.views.examples.examples import examples_page
 from src.comps.ui.themes import theme_buttons

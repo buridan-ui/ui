@@ -1,8 +1,8 @@
 import reflex as rx
 
-from src.docs.library.components.button.button import button
-from src.docs.library.components.input_group.input_group import input_with_addons
-from src.docs.library.components.kbd.kbd import kbd_group, kbd
+from src.docs.library.base_ui.components.base.button import button
+from src.docs.library.examples.input_group.input_group import input_with_addons
+from src.docs.library.examples.kbd.kbd import kbd_group, kbd
 
 import src.hooks as hooks
 

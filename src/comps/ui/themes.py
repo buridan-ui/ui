@@ -1,5 +1,5 @@
 import reflex as rx
-from src.docs.library.components.button.button import button
+from src.docs.library.examples.button.button import button
 import src.hooks as hooks
 
 THEME_OPTIONS = [

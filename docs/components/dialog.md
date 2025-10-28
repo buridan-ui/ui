@@ -21,3 +21,19 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.dialog import dialog
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## High Level
+
+Uses the simplified dialog() API with trigger, title, description, and content props for quick implementation.
+
+--DEMO_AND_SINGLE_FUNCTION(dialog_hh)--
+
+## Low Level
+
+Uses the low-level dialog.root(), dialog.trigger(), dialog.portal() etc. for full control over structure and styling
+
+--DEMO_AND_SINGLE_FUNCTION(dialog_ll)--

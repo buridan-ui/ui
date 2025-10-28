@@ -1,6 +1,6 @@
 import reflex as rx
 
-from src.docs.library.components.button.button import button
+from src.docs.library.base_ui.components.base.button import button
 from src.docs.library.wrapped_components.simple_icon.simple_icon import simple_icon
 
 

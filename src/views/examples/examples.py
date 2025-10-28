@@ -1,9 +1,9 @@
 import reflex as rx
 from typing import Literal
 from reflex.experimental import ClientStateVar
-from src.docs.library.components.input_group.input_group import input_with_addons
-from src.docs.library.components.button.button import button
-from src.docs.library.components.badge.badge import badge
+from src.docs.library.examples.input_group.input_group import input_with_addons
+from src.docs.library.examples.button.button import button
+from src.docs.library.examples.badge.badge import badge
 import src.hooks as hooks
 
 selected = ClientStateVar.create("selected", "vm")
