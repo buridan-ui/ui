@@ -9,12 +9,12 @@ order: 0
 Styles for headings, paragraphs, lists, and other text elements using Tailwind utility classes.
 
 # Installation
-
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(typography_h1)--
+--CLI_AND_MANUAL_INSTALLATION(["typography_h1", "buridan add component typography"])--
 
 # Examples
+Below are examples demonstrating how the component can be used.
 
 ## All Styles
 A showcase of all typography styles in one example.

@@ -21,3 +21,7 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.select import select
 ```
+
+# Example
+
+--DEMO_AND_SINGLE_FUNCTION(select_example)--

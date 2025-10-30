@@ -365,3 +365,41 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.navigation_menu import navigation_menu
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def navigation_menu_example():
+    """A basic navigation menu example."""
+    return navigation_menu.root(
+        navigation_menu.list(
+            navigation_menu.item(
+                navigation_menu.trigger("File"),
+                navigation_menu.content(
+                    navigation_menu.link("New File", href="#"),
+                    navigation_menu.link("Open File", href="#"),
+                    navigation_menu.link("Save File", href="#"),
+                ),
+            ),
+            navigation_menu.item(
+                navigation_menu.trigger("Edit"),
+                navigation_menu.content(
+                    navigation_menu.link("Undo", href="#"),
+                    navigation_menu.link("Redo", href="#"),
+                    navigation_menu.link("Cut", href="#"),
+                    navigation_menu.link("Copy", href="#"),
+                    navigation_menu.link("Paste", href="#"),
+                ),
+            ),
+            navigation_menu.item(
+                navigation_menu.link("View", href="#"),
+            ),
+        ),
+    )
+```
+

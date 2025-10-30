@@ -34,11 +34,9 @@ from ...utils.twmerge import cn
 class ClassNames:
     """Class names for the checkbox component."""
 
-    ROOT = "flex size-4 items-center justify-center rounded-[4px] data-[checked]:bg-primary-9 data-[unchecked]:border data-[unchecked]:border-secondary-8 data-[disabled]:cursor-not-allowed data-[disabled]:border data-[disabled]:border-secondary-4 data-[disabled]:bg-secondary-3 hover:bg-secondary-3 transition-colors cursor-default"
-    INDICATOR = (
-        "flex text-white data-[unchecked]:hidden data-[disabled]:text-secondary-8"
-    )
-    LABEL = "text-sm text-secondary-12 font-medium flex items-center gap-2"
+    ROOT = "flex size-4 items-center justify-center rounded-[4px] data-[checked]:bg-primary data-[unchecked]:border data-[unchecked]:border-input data-[disabled]:cursor-not-allowed data-[disabled]:border data-[disabled]:border-input/50 data-[disabled]:bg-secondary hover:bg-secondary transition-colors cursor-default"
+    INDICATOR = "flex text-primary-foreground data-[unchecked]:hidden data-[disabled]:text-secondary-foreground/50"
+    LABEL = "text-sm text-secondary-foreground font-medium flex items-center gap-2"
     CONTAINER = "flex flex-row items-center gap-2"
 
 
@@ -168,3 +166,20 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.checkbox import checkbox
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## Label
+
+Displays a simple checkbox with a label.
+
+
+```python
+def checkbox_example():
+    return checkbox(
+        label="Subscribe to newsletter",
+    )
+```
+

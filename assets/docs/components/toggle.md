@@ -90,3 +90,37 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.toggle import toggle
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def toggle_example():
+    """A basic toggle example."""
+    return toggle(rx.icon("bold"))
+```
+
+
+## Pressed State
+
+
+```python
+def toggle_pressed():
+    """A toggle example with a default pressed state."""
+    return toggle(rx.icon("italic"), default_pressed=True)
+```
+
+
+## Disabled
+
+
+```python
+def toggle_disabled():
+    """A disabled toggle example."""
+    return toggle(rx.icon("underline"), disabled=True)
+```
+

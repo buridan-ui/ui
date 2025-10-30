@@ -309,3 +309,31 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.preview_card import preview_card
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def preview_card_example():
+    """A basic preview card example."""
+    return preview_card(
+        trigger=link("@reflexdev", href="https://github.com/reflex-dev"),
+        content=rx.box(
+            rx.avatar(fallback="R", size="3"),
+            rx.box(
+                rx.text("Reflex", weight="bold"),
+                rx.text("@reflexdev"),
+            ),
+            rx.text("Components, animations. Open source."),
+            rx.box(
+                rx.image(src="/github_readme.webp", width="100%"),
+            ),
+            spacing="2",
+        ),
+    )
+```
+

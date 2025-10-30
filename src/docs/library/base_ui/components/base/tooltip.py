@@ -21,7 +21,7 @@ class ClassNames:
     """Class names for tooltip components."""
 
     TRIGGER = "inline-flex items-center justify-center"
-    POPUP = "rounded-ui-sm bg-secondary-12 px-2.5 py-1.5 text-balance text-sm font-medium text-secondary-1 shadow-small transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0"
+    POPUP = "rounded-sm bg-secondary px-2.5 py-1.5 text-balance text-sm font-medium text-secondary-1 shadow-sm transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0"
     ARROW = "data-[side=bottom]:top-[-7.5px] data-[side=left]:right-[-12.5px] data-[side=left]:rotate-90 data-[side=right]:left-[-12.5px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-7.5px] data-[side=top]:rotate-180"
 
 

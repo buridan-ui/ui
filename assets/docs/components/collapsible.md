@@ -169,3 +169,67 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.collapsible import collapsible
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## High Level Demo
+
+Uses the simplified collapsible() API with trigger and content props for quick implementation.
+
+
+```python
+def collapsible_example():
+    return collapsible(
+        trigger=button(
+            "Trigger",
+            varient="outline",
+            class_name="w-full",
+        ),
+        content=rx.el.p(
+            "This is the collapsible content. You can put anything here!",
+            class_name="py-2 text-center",
+        ),
+        default_open=False,
+        class_name="w-full max-w-xs",
+    )
+```
+
+
+## Low Level Demo
+
+Uses the low-level collapsible.root(), collapsible.panel(), and ClientStateVar for full control over state and structure.
+
+
+```python
+def collapsible_demo():
+    return collapsible.root(
+        collapsible.trigger(
+            button(
+                "Collapsible Trigger",
+                varient="outline",
+                class_name="w-full",
+            ),
+        ),
+        rx.el.div(
+            "@radix-ui/primitives",
+            class_name="rounded-md border border-input px-4 py-2 font-mono text-sm",
+        ),
+        collapsible.panel(
+            rx.el.div(
+                rx.el.div(
+                    "@radix-ui/colors",
+                    class_name="rounded-md border border-input px-4 py-2 font-mono text-sm",
+                ),
+                rx.el.div(
+                    "@stitches/react",
+                    class_name="rounded-md border border-input px-4 py-2 font-mono text-sm",
+                ),
+                class_name="flex flex-col gap-4",
+            ),
+        ),
+        class_name="w-full max-w-xs flex flex-col gap-2",
+    )
+```
+

@@ -309,3 +309,85 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.drawer import drawer
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def drawer_example():
+    """A high-level drawer example."""
+    return drawer(
+        trigger=button("Open Drawer", variant="outline"),
+        title="Drawer Title",
+        description="This is a description of the drawer.",
+        content=rx.box(
+            rx.text("This is the content of the drawer."),
+            class_name="p-4",
+        ),
+    )
+```
+
+
+## Directions
+
+
+```python
+def drawer_directions():
+    """A low-level drawer example with different directions."""
+    return rx.box(
+        drawer.root(
+            drawer.trigger(render_=button("Left", variant="outline")),
+            drawer.portal(
+                drawer.overlay(),
+                drawer.content(
+                    drawer.title("Left Drawer"),
+                    drawer.description("This drawer slides from the left."),
+                    class_name="p-4",
+                ),
+            ),
+            direction="left",
+        ),
+        drawer.root(
+            drawer.trigger(render_=button("Right", variant="outline")),
+            drawer.portal(
+                drawer.overlay(),
+                drawer.content(
+                    drawer.title("Right Drawer"),
+                    drawer.description("This drawer slides from the right."),
+                    class_name="p-4",
+                ),
+            ),
+            direction="right",
+        ),
+        drawer.root(
+            drawer.trigger(render_=button("Top", variant="outline")),
+            drawer.portal(
+                drawer.overlay(),
+                drawer.content(
+                    drawer.title("Top Drawer"),
+                    drawer.description("This drawer slides from the top."),
+                    class_name="p-4 h-1/2",
+                ),
+            ),
+            direction="top",
+        ),
+        drawer.root(
+            drawer.trigger(render_=button("Bottom", variant="outline")),
+            drawer.portal(
+                drawer.overlay(),
+                drawer.content(
+                    drawer.title("Bottom Drawer"),
+                    drawer.description("This drawer slides from the bottom."),
+                    class_name="p-4 h-1/2",
+                ),
+            ),
+            direction="bottom",
+        ),
+        class_name="flex flex-wrap gap-4",
+    )
+```
+

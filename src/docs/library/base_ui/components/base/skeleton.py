@@ -10,7 +10,7 @@ from ...utils.twmerge import cn
 class ClassNames:
     """Class names for skeleton component."""
 
-    ROOT = "animate-pulse bg-secondary-6"
+    ROOT = "animate-pulse bg-secondary"
 
 
 def skeleton_component(

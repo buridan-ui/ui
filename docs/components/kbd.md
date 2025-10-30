@@ -12,9 +12,10 @@ Display keyboard keys and shortcuts with proper styling.
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(kbd)--
+--CLI_AND_MANUAL_INSTALLATION(["kbd", "buridan add component kbd"])--
 
 # Examples
+Below are examples demonstrating how the component can be used.
 
 ## Default
 A basic example showing a single styled keyboard key.

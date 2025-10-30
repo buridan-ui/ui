@@ -344,3 +344,47 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.tooltip import tooltip
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def tooltip_example():
+    """A basic tooltip example."""
+    return tooltip(
+        trigger=button("Hover Me"),
+        content="This is a tooltip!",
+    )
+```
+
+
+## With Long Content
+
+
+```python
+def tooltip_with_long_content():
+    """Tooltip with longer content."""
+    return tooltip(
+        trigger=button("Hover for details"),
+        content="This is a much longer tooltip content that provides more detailed information.",
+    )
+```
+
+
+## Custom Placement
+
+
+```python
+def tooltip_with_custom_placement():
+    """Tooltip with custom placement (e.g., bottom)."""
+    return tooltip(
+        trigger=button("Hover for bottom tooltip"),
+        content="This tooltip appears at the bottom.",
+        side="bottom",
+    )
+```
+

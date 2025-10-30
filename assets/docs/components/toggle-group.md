@@ -97,3 +97,53 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.toggle_group import toggle_group
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def toggle_group_example():
+    """A basic toggle group example."""
+    return toggle_group(
+        toggle(rx.icon("bold"), value="bold"),
+        toggle(rx.icon("italic"), value="italic"),
+        toggle(rx.icon("underline"), value="underline"),
+        default_value=["bold"],
+    )
+```
+
+
+## Multiple Selection
+
+
+```python
+def toggle_group_multiple():
+    """A toggle group example allowing multiple selections."""
+    return toggle_group(
+        toggle(rx.icon("align-left"), value="left"),
+        toggle(rx.icon("align-center"), value="center"),
+        toggle(rx.icon("align-right"), value="right"),
+        toggle_multiple=True,
+        default_value=["left", "right"],
+    )
+```
+
+
+## Disabled
+
+
+```python
+def toggle_group_disabled():
+    """A disabled toggle group example."""
+    return toggle_group(
+        toggle(rx.icon("bold"), value="bold"),
+        toggle(rx.icon("italic"), value="italic"),
+        toggle(rx.icon("underline"), value="underline"),
+        disabled=True,
+    )
+```
+

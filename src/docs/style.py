@@ -7,7 +7,7 @@ from reflex.experimental import ClientStateVar
 # --- Markdown Styles ---
 PARAGRAPH_CLASS = "text-sm leading-6 pb-4"
 HEADING_1_CLASS = "text-2xl py-1"
-HEADING_2_CLASS = "text-xl py-1 mt-[2.5rem]"
+HEADING_2_CLASS = "text-xl py-1"
 LIST_ITEM_CLASS = "text-sm text-slate-11"
 LINK_CLASS = "text-accent-8"
 CODE_BLOCK_CLASS = "!rounded-xl !bg-transparent"

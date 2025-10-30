@@ -1,5 +1,5 @@
 import reflex as rx
-from .input import input
+from src.docs.library.base_ui.components.base.input import input
 
 
 def input_demo():

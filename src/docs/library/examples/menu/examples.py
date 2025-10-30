@@ -1,68 +1,89 @@
 import reflex as rx
-from ..button.button import button
-from .menu import (
-    dropdown_menu_root,
-    dropdown_menu_trigger,
-    dropdown_menu_content,
-    dropdown_menu_label,
-    dropdown_menu_item,
-    dropdown_menu_shortcut,
-    dropdown_menu_sub_trigger,
-    dropdown_menu_separator,
-    dropdown_menu_sub_content,
-)
+from ...base_ui.components.base.button import button
+from ...base_ui.components.base.menu import menu
 
 
 def dropdown_menu_demo():
     return rx.el.div(
-        dropdown_menu_root(
-            dropdown_menu_trigger(
+        menu.root(
+            menu.trigger(
                 button("Click Me!", variant="outline"),
             ),
-            dropdown_menu_content(
-                dropdown_menu_label("My Account"),
-                dropdown_menu_item(
-                    "Profile",
-                    dropdown_menu_shortcut("⇧⌘P"),
-                ),
-                dropdown_menu_item(
-                    "Billing",
-                    dropdown_menu_shortcut("⌘B"),
-                ),
-                dropdown_menu_item(
-                    "Settings",
-                    dropdown_menu_shortcut("⌘S"),
-                ),
-                dropdown_menu_item(
-                    "Keyboard shortcuts",
-                    dropdown_menu_shortcut("⌘K"),
-                ),
-                dropdown_menu_separator(),
-                dropdown_menu_item("Team"),
-                rx.menu.sub(
-                    dropdown_menu_sub_trigger("Invite users"),
-                    dropdown_menu_sub_content(
-                        dropdown_menu_item("Email"),
-                        dropdown_menu_item("Message"),
-                        dropdown_menu_separator(),
-                        dropdown_menu_item("More..."),
+            menu.portal(
+                menu.positioner(
+                    menu.popup(
+                        menu.group(
+                            menu.group_label("My Account"),
+                            menu.item(
+                                "Profile",
+                                rx.text(
+                                    "⇧⌘P",
+                                    class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                                ),
+                            ),
+                            menu.item(
+                                "Billing",
+                                rx.text(
+                                    "⌘B",
+                                    class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                                ),
+                            ),
+                            menu.item(
+                                "Settings",
+                                rx.text(
+                                    "⌘S",
+                                    class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                                ),
+                            ),
+                            menu.item(
+                                "Keyboard shortcuts",
+                                rx.text(
+                                    "⌘K",
+                                    class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                                ),
+                            ),
+                        ),
+                        menu.separator(),
+                        menu.item("Team"),
+                        menu.submenu_root(
+                            menu.submenu_trigger(
+                                "Invite users",
+                                rx.icon("chevron-right", class_name="ml-auto size-4"),
+                            ),
+                            menu.portal(
+                                menu.positioner(
+                                    menu.popup(
+                                        menu.item("Email"),
+                                        menu.item("Message"),
+                                        menu.separator(),
+                                        menu.item("More..."),
+                                        class_name="w-44",
+                                    ),
+                                ),
+                            ),
+                        ),
+                        menu.item(
+                            "New Team",
+                            rx.text(
+                                "⌘+T",
+                                class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                            ),
+                        ),
+                        menu.separator(),
+                        menu.item("GitHub"),
+                        menu.item("Support"),
+                        menu.item("API", disabled=True),
+                        menu.separator(),
+                        menu.item(
+                            "Log out",
+                            rx.text(
+                                "⇧⌘Q",
+                                class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                            ),
+                        ),
+                        class_name="w-56",
                     ),
                 ),
-                dropdown_menu_item(
-                    "New Team",
-                    dropdown_menu_shortcut("⌘+T"),
-                ),
-                dropdown_menu_separator(),
-                dropdown_menu_item("GitHub"),
-                dropdown_menu_item("Support"),
-                dropdown_menu_item("API", disabled=True),
-                dropdown_menu_separator(),
-                dropdown_menu_item(
-                    "Log out",
-                    dropdown_menu_shortcut("⇧⌘Q"),
-                ),
-                class_name="w-56",
-                size="1",
             ),
         ),
         class_name="p-8",

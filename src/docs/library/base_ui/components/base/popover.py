@@ -23,10 +23,18 @@ class ClassNames:
     BACKDROP = ""
     PORTAL = ""
     POSITIONER = ""
-    POPUP = "origin-(--transform-origin) rounded-ui-xl p-1 border border-secondary-a4 bg-secondary-1 shadow-large transition-[transform,scale,opacity] data-[ending-style]:scale-95 data-[starting-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 outline-none min-w-36 flex flex-col gap-2"
+    POPUP = (
+        "bg-[var(--popover)] text-[var(--popover-foreground)] "
+        "data-[state=open]:animate-in data-[state=closed]:animate-out "
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 "
+        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 "
+        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 "
+        "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 "
+        "z-50 w-72 rounded-md border border-input dark:border-[var(--input)] p-4 shadow-md outline-none"
+    )
     ARROW = "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90 data-[side=right]:left-[-13px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180"
-    TITLE = "text-lg font-semibold text-secondary-12"
-    DESCRIPTION = "text-sm text-secondary-11 font-[450]"
+    TITLE = "text-lg font-semibold text-secondary-foreground"
+    DESCRIPTION = "text-sm text-secondary-foreground/80 font-[450]"
     CLOSE = ""
 
 

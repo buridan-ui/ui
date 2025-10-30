@@ -179,3 +179,57 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.tabs import tabs
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def tabs_example():
+    """A basic tabs example."""
+    return tabs.root(
+        tabs.list(
+            tabs.tab("Account", value="account"),
+            tabs.tab("Password", value="password"),
+        ),
+        tabs.panel(
+            rx.text("Make changes to your account here."),
+            value="account",
+        ),
+        tabs.panel(
+            rx.text("Change your password here."),
+            value="password",
+        ),
+        default_value="account",
+        class_name="w-96",
+    )
+```
+
+
+## With Icons
+
+
+```python
+def tabs_with_icons():
+    """Tabs example with icons."""
+    return tabs.root(
+        tabs.list(
+            tabs.tab(rx.icon("user"), "Account", value="account"),
+            tabs.tab(rx.icon("lock"), "Password", value="password"),
+        ),
+        tabs.panel(
+            rx.text("Account settings with icons."),
+            value="account",
+        ),
+        tabs.panel(
+            rx.text("Password settings with icons."),
+            value="password",
+        ),
+        default_value="account",
+        class_name="w-96",
+    )
+```
+

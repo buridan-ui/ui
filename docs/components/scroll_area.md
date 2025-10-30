@@ -21,3 +21,11 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.scroll_area import scroll_area
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+--DEMO_AND_SINGLE_FUNCTION(scroll_area_example)--

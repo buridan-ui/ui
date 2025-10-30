@@ -146,3 +146,41 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.switch import switch
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def switch_example():
+    """A basic switch example."""
+    return switch(default_checked=True)
+```
+
+
+## With Label
+
+
+```python
+def switch_with_label():
+    """A switch example with a label."""
+    return rx.flex(
+        switch(default_checked=False, id="airplane-mode"),
+        rx.el.label("Airplane Mode", html_for="airplane-mode"),
+        spacing="2",
+    )
+```
+
+
+## Disabled
+
+
+```python
+def switch_disabled():
+    """A disabled switch example."""
+    return switch(default_checked=True, disabled=True)
+```
+

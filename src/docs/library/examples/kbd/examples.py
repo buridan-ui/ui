@@ -1,5 +1,5 @@
 import reflex as rx
-from .kbd import kbd_group, kbd
+from ...base_ui.components.base.kbd import kbd_group, kbd
 
 
 def kbd_demo():

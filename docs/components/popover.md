@@ -21,3 +21,8 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.popover import popover
 ```
+
+# Example
+A basic popover that appears when the user clicks the trigger button.
+
+--DEMO_AND_SINGLE_FUNCTION(popover_demo)--

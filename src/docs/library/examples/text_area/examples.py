@@ -1,5 +1,5 @@
 import reflex as rx
-from .text_area import textarea
+from ...base_ui.components.base.textarea import textarea
 
 
 def textarea_demo():

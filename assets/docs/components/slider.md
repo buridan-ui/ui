@@ -260,3 +260,37 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.slider import slider
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def slider_example():
+    """A basic slider example."""
+    return slider(default_value=50)
+```
+
+
+## Range Slider
+
+
+```python
+def slider_range_example():
+    """A slider example with a range."""
+    return slider(default_value=[20, 80])
+```
+
+
+## Min, Max, and Step
+
+
+```python
+def slider_min_max_step():
+    """A slider example with custom min, max, and step values."""
+    return slider(default_value=25, min=0, max=100, step=5)
+```
+

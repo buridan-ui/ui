@@ -21,3 +21,9 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.tabs import tabs
 ```
+
+# Example
+
+Below are examples demonstrating how the component can be used.
+
+--DEMO_AND_SINGLE_FUNCTION(tabs_example)--

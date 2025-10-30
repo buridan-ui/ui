@@ -621,3 +621,51 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.select import select
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def select_example():
+    """A basic select example."""
+    return select(
+        items=["Apple", "Banana", "Orange", "Grape"],
+        placeholder="Select a fruit",
+        class_name="w-48",
+    )
+```
+
+
+## With Default Value
+
+
+```python
+def select_with_default_value():
+    """Select example with a default value."""
+    return select(
+        items=["Apple", "Banana", "Orange", "Grape"],
+        placeholder="Select a fruit",
+        default_value="Banana",
+        class_name="w-48",
+    )
+```
+
+
+## Disabled
+
+
+```python
+def select_disabled():
+    """A disabled select example."""
+    return select(
+        items=["Apple", "Banana", "Orange", "Grape"],
+        placeholder="Select a fruit",
+        disabled=True,
+        class_name="w-48",
+    )
+```
+

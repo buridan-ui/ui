@@ -234,3 +234,22 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.scroll_area import scroll_area
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def scroll_area_example():
+    """A basic scroll area example."""
+    return scroll_area(
+        rx.box(
+            *[rx.text(f"Item {i}", class_name="p-2") for i in range(50)],
+        ),
+        class_name="h-72 w-48 rounded-md border",
+    )
+```
+

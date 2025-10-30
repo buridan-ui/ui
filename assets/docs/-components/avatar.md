@@ -23,9 +23,9 @@ from ..base_ui import PACKAGE_NAME, BaseUIComponent
 class ClassNames:
     """Class names for avatar components."""
 
-    ROOT = "shrink-0 inline-flex size-6 items-center justify-center overflow-hidden rounded-full bg-secondary-1 align-middle text-base font-medium text-secondary-12 select-none"
+    ROOT = "shrink-0 inline-flex size-8 items-center justify-center overflow-hidden rounded-full align-middle text-base font-medium select-none"
     IMAGE = "size-full object-cover shrink-0"
-    FALLBACK = "flex size-full items-center justify-center text-sm animate-pulse bg-secondary-6"
+    FALLBACK = "flex size-full items-center justify-center text-sm bg-muted"
 
 
 class AvatarBaseComponent(BaseUIComponent):
@@ -115,9 +115,11 @@ class HighLevelAvatar(AvatarRoot):
         image_props = {k: props.pop(k) for k in cls._image_props & props.keys()}
         fallback_props = {k: props.pop(k) for k in cls._fallback_props & props.keys()}
 
+        fallback_content = props.pop("fallback", "")
+
         return AvatarRoot.create(
             AvatarImage.create(**image_props),
-            AvatarFallback.create(**fallback_props),
+            AvatarFallback.create(fallback_content, **fallback_props),
             *children,
             **props,
         )
@@ -194,35 +196,30 @@ Demonstrates how to scale the avatar component using Tailwind utility classes.
 def avatar_sizes():
     """Example showing different avatar sizes"""
     return rx.box(
-        # Extra small
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
             fallback="RE",
             class_name="size-6",
         ),
-        # Small
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
             fallback="RE",
             class_name="size-8",
         ),
-        # Medium
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
             fallback="RE",
             class_name="size-10",
         ),
-        # Large
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
             fallback="RE",
             class_name="size-12",
         ),
-        # Extra large
         avatar(
             src="https://avatars.githubusercontent.com/u/104714959?s=200&v=4",
             alt="@reflex",
@@ -250,7 +247,6 @@ def avatar_with_badge():
                 fallback="CN",
                 class_name="size-12",
             ),
-            # Online indicator
             rx.box(
                 class_name=(
                     "absolute bottom-0 right-0 size-3 rounded-full "

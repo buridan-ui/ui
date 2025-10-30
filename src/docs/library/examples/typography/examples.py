@@ -1,5 +1,5 @@
 import reflex as rx
-from .typography import (
+from ...base_ui.components.base.typography import (
     typography_h1,
     typography_h2,
     typography_h3,

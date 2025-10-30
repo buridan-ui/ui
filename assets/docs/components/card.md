@@ -30,12 +30,12 @@ from ..component import CoreComponent
 class ClassNames:
     """Class names for the card component."""
 
-    ROOT = "rounded-ui-xl border border-secondary-a4 bg-secondary-1 shadow-small"
-    HEADER = "flex flex-col gap-2 p-6"
-    TITLE = "text-2xl font-semibold text-secondary-12"
-    DESCRIPTION = "text-sm text-secondary-11 font-[450]"
-    CONTENT = "flex flex-col gap-4 px-6 pb-6"
-    FOOTER = "flex flex-row justify-between items-center px-6 pb-6"
+    ROOT = "rounded-default border border-input bg-secondary"
+    HEADER = "flex flex-col gap-2 p-4"
+    TITLE = "text-2xl font-semibold text-secondary-foreground"
+    DESCRIPTION = "text-sm text-secondary-foreground/80 font-[450]"
+    CONTENT = "flex flex-col gap-4 px-4 pb-4"
+    FOOTER = "flex flex-row justify-between items-center px-4 pb-4"
 
 
 class CardComponent(Div, CoreComponent):
@@ -178,3 +178,41 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.card import card
 ```
+
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## String
+
+Displays a basic avatar with either a user image or a fallback placeholder.
+
+
+```python
+def card_low_level():
+    return rx.el.div(
+        card.root(
+            card.header(
+                rx.el.div(
+                    rx.el.p("Card Title", class_name="text-md"), class_name="w-full p-4"
+                ),
+            ),
+            card.content(
+                rx.el.div(
+                    rx.el.p("Card Content", class_name="text-md"),
+                    class_name="w-full p-4",
+                ),
+            ),
+            card.footer(
+                rx.el.div(
+                    rx.el.p("Card Footer", class_name="text-md"),
+                    class_name="w-full p-4",
+                ),
+            ),
+            class_name="w-full max-w-[35em]",
+        ),
+        class_name="py-8 w-full max-w-[35em]",
+    )
+```
+

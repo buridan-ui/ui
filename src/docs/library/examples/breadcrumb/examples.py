@@ -1,5 +1,5 @@
 import reflex as rx
-from .breadcrumb import (
+from src.docs.library.base_ui.components.base.breadcrumb import (
     breadcrumb,
     breadcrumb_ellipsis,
     breadcrumb_item,

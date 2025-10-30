@@ -36,12 +36,12 @@ from ...icons.hugeicon import hi
 class ClassNames:
     """Class names for dialog components."""
 
-    BACKDROP = "fixed inset-0 bg-black opacity-40 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-80"
-    POPUP = "fixed top-1/2 left-1/2 -mt-8 w-[32rem] max-w-[calc(100vw-3rem)] -translate-x-1/2 -translate-y-1/2 rounded-ui-xl border border-secondary-a4 bg-secondary-1 shadow-large transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0"
-    TITLE = "text-2xl font-semibold text-secondary-12"
-    DESCRIPTION = "text-sm text-secondary-11 font-[450]"
-    HEADER = "flex flex-col gap-2 px-6 pt-6 pb-4"
-    CONTENT = "flex flex-col gap-4 px-6 pb-6"
+    BACKDROP = "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50"
+    POPUP = "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-input p-6 shadow-lg duration-200 sm:max-w-lg"
+    TITLE = "text-lg leading-none font-semibold"
+    DESCRIPTION = "text-muted-foreground text-sm"
+    HEADER = "flex flex-col"
+    CONTENT = "flex flex-col"
     TRIGGER = ""
     CLOSE = ""
 
@@ -305,3 +305,89 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.dialog import dialog
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## High Level
+
+Uses the simplified dialog() API with trigger, title, description, and content props for quick implementation.
+
+
+```python
+def dialog_hh():
+    return dialog(
+        trigger=button("Open Dialog", variant="outline"),
+        title="Are you absolutely sure?",
+        description="This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+        content=rx.flex(
+            button("Cancel", variant="outline", class_name="flex-1"),
+            button("Continue", class_name="flex-1"),
+            class_name="flex gap-2 w-full",
+        ),
+    )
+```
+
+
+## Low Level
+
+Uses the low-level dialog.root(), dialog.trigger(), dialog.portal() etc. for full control over structure and styling
+
+
+```python
+def dialog_ll():
+    return dialog.root(
+        # Trigger button
+        dialog.trigger(
+            render_=button("Open Dialog"),
+        ),
+        # Portal with backdrop and popup
+        dialog.portal(
+            dialog.backdrop(),
+            dialog.popup(
+                # Header section
+                rx.box(
+                    rx.flex(
+                        dialog.title("Edit Profile"),
+                        dialog.close(
+                            render_=button(
+                                rx.icon("x", class_name="size-4"),
+                                variant="ghost",
+                                size="icon-sm",
+                                class_name="text-secondary-11",
+                            ),
+                        ),
+                        class_name="flex justify-between items-baseline gap-1",
+                    ),
+                    dialog.description(
+                        "Make changes to your profile here. Click save when you're done."
+                    ),
+                    class_name="flex flex-col gap-2",
+                ),
+                # Content section
+                rx.box(
+                    rx.box(
+                        rx.text("Name", class_name="text-sm font-medium mb-2"),
+                        input(placeholder="Enter your name"),
+                    ),
+                    rx.box(
+                        rx.text("Email", class_name="text-sm font-medium mb-2"),
+                        input(placeholder="Enter your email", type="email"),
+                    ),
+                    rx.flex(
+                        dialog.close(
+                            render_=button(
+                                "Cancel", variant="outline", class_name="flex-1"
+                            ),
+                        ),
+                        button("Save Changes", class_name="flex-1"),
+                        class_name="flex gap-2 w-full",
+                    ),
+                    class_name="flex flex-col gap-4",
+                ),
+            ),
+        ),
+    )
+```
+

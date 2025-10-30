@@ -51,3 +51,39 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.skeleton import skeleton_component
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## General
+
+
+```python
+def skeleton_example():
+    """A basic skeleton example."""
+    return skeleton_component(class_name="h-8 w-32 rounded-md")
+```
+
+
+## Card Loading State
+
+
+```python
+def skeleton_card_example():
+    """A skeleton example simulating a loading card."""
+    return rx.box(
+        rx.flex(
+            skeleton_component(class_name="h-12 w-12 rounded-full"),
+            rx.flex(
+                skeleton_component(class_name="h-4 w-[250px] rounded-md"),
+                skeleton_component(class_name="h-4 w-[200px] rounded-md"),
+                direction="column",
+                spacing="2",
+            ),
+            spacing="4",
+        ),
+        class_name="flex items-center space-x-4 rounded-md border p-4 w-96",
+    )
+```
+

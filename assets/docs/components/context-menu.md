@@ -54,24 +54,28 @@ LiteralMenuSize = Literal["xs", "sm", "md", "lg", "xl"]
 class ClassNames:
     """Class names for context menu components."""
 
-    TRIGGER = "cursor-context-menu"
-    PORTAL = "relative"
+    TRIGGER = ""
+    PORTAL = ""
     BACKDROP = "fixed inset-0"
-    POPUP = "group/popup max-h-[17.25rem] overflow-y-auto origin-(--transform-origin) p-1 border border-secondary-a4 bg-secondary-1 shadow-large transition-[transform,scale,opacity] data-[ending-style]:scale-95 data-[starting-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 outline-none scrollbar-thin scrollbar-thumb-secondary-9 scrollbar-track-transparent min-w-36"
-    ITEM = "grid w-full items-center gap-2 text-sm select-none font-medium text-secondary-12 cursor-pointer outline-none data-[highlighted]:bg-secondary-3 scroll-m-1 text-start justify-start"
+    POPUP = "z-50 max-h-(--radix-context-menu-content-available-height) min-w-[8rem] origin-(--radix-context-menu-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border border-input p-1 shadow-md bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+    ITEM = "relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground"
     ITEM_INDICATOR = "text-current"
     ITEM_TEXT = "text-start"
-    SEPARATOR = "-mx-1 my-1 h-[0.5px] bg-secondary-a4"
+    SEPARATOR = "bg-border -mx-1 my-1 h-px"
     ARROW = "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90 data-[side=right]:left-[-13px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180"
     POSITIONER = "outline-none"
-    GROUP = "p-1"
-    GROUP_LABEL = "px-2 py-1.5 text-sm font-semibold"
+    GROUP = ""
+    GROUP_LABEL = "text-foreground px-2 py-1.5 text-sm font-medium"
     RADIO_GROUP = ""
-    RADIO_ITEM = "grid min-w-(--anchor-width) grid-cols-[1fr_auto] items-center gap-2 text-sm select-none font-[450] text-secondary-11 cursor-pointer outline-none data-[highlighted]:bg-secondary-3 scroll-m-1"
-    RADIO_ITEM_INDICATOR = "text-current"
-    CHECKBOX_ITEM = "grid min-w-(--anchor-width) grid-cols-[1fr_auto] items-center gap-2 text-sm select-none font-[450] text-secondary-11 cursor-pointer outline-none data-[highlighted]:bg-secondary-3 scroll-m-1"
-    CHECKBOX_ITEM_INDICATOR = "text-current"
-    SUBMENU_TRIGGER = "grid min-w-(--anchor-width) grid-cols-[1fr_auto] items-center gap-2 text-sm select-none font-[450] text-secondary-11 cursor-pointer outline-none data-[highlighted]:bg-secondary-3 scroll-m-1"
+    RADIO_ITEM = "relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+    RADIO_ITEM_INDICATOR = (
+        "absolute left-2 flex size-3.5 items-center justify-center pointer-events-none"
+    )
+    CHECKBOX_ITEM = "relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+    CHECKBOX_ITEM_INDICATOR = (
+        "absolute left-2 flex size-3.5 items-center justify-center pointer-events-none"
+    )
+    SUBMENU_TRIGGER = "relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground"
 
 
 class ContextMenuBaseComponent(BaseUIComponent):
@@ -702,3 +706,135 @@ Make sure to correctly set your imports relative to the component.
 ```python
 from components.base_ui.context_menu import context_menu
 ```
+
+# Examples
+
+Below are examples demonstrating how the component can be used.
+
+## Low Level Demo
+
+Uses the low-level context_menu API for full control over state and structure.
+
+
+```python
+def context_menu_demo():
+    return context_menu.root(
+        context_menu.trigger(
+            "Right click here",
+            class_name="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed border-input text-sm",
+        ),
+        context_menu.portal(
+            context_menu.positioner(
+                context_menu.popup(
+                    context_menu.item(
+                        rx.flex(
+                            "Back",
+                            rx.text(
+                                "⌘[",
+                                class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                            ),
+                            class_name="w-full justify-between items-center",
+                        ),
+                        class_name="pl-8",
+                    ),
+                    context_menu.item(
+                        rx.flex(
+                            "Forward",
+                            rx.text(
+                                "⌘]",
+                                class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                            ),
+                            class_name="w-full justify-between items-center",
+                        ),
+                        disabled=True,
+                        class_name="pl-8",
+                    ),
+                    context_menu.item(
+                        rx.flex(
+                            "Reload",
+                            rx.text(
+                                "⌘R",
+                                class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                            ),
+                            class_name="w-full justify-between items-center",
+                        ),
+                        class_name="pl-8",
+                    ),
+                    context_menu.submenu_root(
+                        context_menu.submenu_trigger(
+                            rx.flex(
+                                "More Tools",
+                                rx.icon(
+                                    "chevron-right",
+                                    class_name="ml-auto text-xs tracking-widest text-muted-foreground",
+                                ),
+                                class_name="w-full justify-between items-center",
+                            ),
+                            class_name="pl-8",
+                        ),
+                        context_menu.portal(
+                            context_menu.positioner(
+                                context_menu.popup(
+                                    context_menu.item("Save Page..."),
+                                    context_menu.item("Create Shortcut..."),
+                                    context_menu.item("Name Window..."),
+                                    context_menu.separator(),
+                                    context_menu.item("Developer Tools"),
+                                    context_menu.separator(),
+                                    context_menu.item(
+                                        "Delete",
+                                        class_name="text-destructive focus:bg-destructive/10 dark:focus:bg-destructive/20 focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive",
+                                    ),
+                                    class_name="w-44",
+                                ),
+                            ),
+                        ),
+                    ),
+                    context_menu.separator(),
+                    context_menu.checkbox_item(
+                        context_menu.checkbox_item_indicator(
+                            rx.icon(tag="check", class_name="size-4"),
+                        ),
+                        "Show Bookmarks",
+                    ),
+                    context_menu.checkbox_item(
+                        context_menu.checkbox_item_indicator(
+                            rx.icon(tag="check", class_name="size-4"),
+                        ),
+                        "Show Full URLs",
+                    ),
+                    context_menu.separator(),
+                    context_menu.radio_group(
+                        context_menu.group(
+                            context_menu.group_label(
+                                "People",
+                                class_name="pl-8",
+                            ),
+                            context_menu.radio_item(
+                                context_menu.radio_item_indicator(
+                                    rx.icon(
+                                        tag="circle", class_name="size-2 fill-current"
+                                    ),
+                                ),
+                                "Pedro Duarte",
+                                value="pedro",
+                            ),
+                            context_menu.radio_item(
+                                context_menu.radio_item_indicator(
+                                    rx.icon(
+                                        tag="circle", class_name="size-2 fill-current"
+                                    ),
+                                ),
+                                "Colm Tuite",
+                                value="colm",
+                            ),
+                        ),
+                        value="pedro",
+                    ),
+                    class_name="w-52",
+                ),
+            ),
+        ),
+    )
+```
+

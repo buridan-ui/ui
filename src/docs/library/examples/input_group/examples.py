@@ -1,5 +1,8 @@
 import reflex as rx
-from .input_group import input_with_addons, textarea_with_footer
+from src.docs.library.base_ui.components.base.input_group import (
+    input_with_addons,
+    textarea_with_footer,
+)
 
 
 def input_price():
