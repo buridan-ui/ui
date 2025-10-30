@@ -4,9 +4,12 @@ from ...base_ui.components.base.scroll_area import scroll_area
 
 def scroll_area_example():
     """A basic scroll area example."""
-    return scroll_area(
-        rx.box(
-            *[rx.text(f"Item {i}", class_name="p-2") for i in range(50)],
+    return rx.el.div(
+        scroll_area(
+            rx.el.div(
+                *[rx.el.p(f"buridan v0.{i}", class_name="p-2") for i in range(30)],
+            ),
+            class_name="h-72 w-48 rounded-md border border-input",
         ),
-        class_name="h-72 w-48 rounded-md border",
+        class_name="py-6",
     )

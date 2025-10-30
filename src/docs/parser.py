@@ -233,8 +233,12 @@ class DocParser:
             component = self.components_registry[arg_lower]
             module = inspect.getmodule(component)
             source_code = inspect.getsource(module)
+            component_file_path = inspect.getfile(component)
+            is_chart_demo = "/src/docs/library/charts/" in component_file_path
 
-            return demo_and_code_single_file_wrapper(component(), source_code)
+            return demo_and_code_single_file_wrapper(
+                component(), source_code, is_chart_demo
+            )
 
         except (ValueError, SyntaxError):
             return render_parse_error(
@@ -261,8 +265,12 @@ class DocParser:
 
             component = self.components_registry[arg_lower]
             source_code = inspect.getsource(component)
+            component_file_path = inspect.getfile(component)
+            is_chart_demo = "/src/docs/library/charts/" in component_file_path
 
-            return demo_and_code_single_file_wrapper(component(), source_code)
+            return demo_and_code_single_file_wrapper(
+                component(), source_code, is_chart_demo
+            )
 
         except (ValueError, SyntaxError):
             return render_parse_error(

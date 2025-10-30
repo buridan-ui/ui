@@ -22,8 +22,8 @@ class ClassNames:
     SCROLLBAR_BASE = "flex touch-none p-0.5 opacity-0 transition-[colors,opacity] delay-200 select-none data-hovering:opacity-100 data-hovering:delay-0 data-hovering:duration-100 data-scrolling:opacity-100 data-scrolling:delay-0 data-scrolling:duration-100"
     SCROLLBAR_VERTICAL = "w-2"
     SCROLLBAR_HORIZONTAL = "h-2"
-    THUMB = "w-full rounded-full bg-secondary-a5"
-    CORNER = "bg-secondary-a3"
+    THUMB = "w-full rounded-full bg-secondary"
+    CORNER = "bg-secondary"
 
 
 class ScrollAreaBaseComponent(BaseUIComponent):

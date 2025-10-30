@@ -26,7 +26,7 @@ def styled_tab_trigger(label: str, value: str) -> rx.Component:
 
 
 def demo_and_code_single_file_wrapper(
-    component: rx.Component, source: str
+    component: rx.Component, source: str, is_chart_demo: bool = False
 ) -> rx.Component:
     tab_list_style = {
         "border": "none",
@@ -34,24 +34,33 @@ def demo_and_code_single_file_wrapper(
         "background": "transparent",
     }
 
-    return rx.tabs.root(
-        rx.tabs.list(
-            styled_tab_trigger("Preview", "preview"),
-            styled_tab_trigger("Source Code", "source-code"),
-            style=tab_list_style,
+    preview_class_name = (
+        "mt-6 min-h-[250px] flex items-center justify-center rounded-default"
+    )
+    if not is_chart_demo:
+        preview_class_name += " outline outline-input"
+
+    return rx.el.div(
+        rx.tabs.root(
+            rx.tabs.list(
+                styled_tab_trigger("Preview", "preview"),
+                styled_tab_trigger("Source Code", "source-code"),
+                style=tab_list_style,
+            ),
+            rx.tabs.content(
+                component,
+                value="preview",
+                class_name=preview_class_name,
+            ),
+            rx.tabs.content(
+                render_codeblock(content=source, copy_button=True, line_num=True),
+                value="source-code",
+                class_name="mt-6",
+            ),
+            default_value="preview",
+            class_name="px-4",
         ),
-        rx.tabs.content(
-            component,
-            value="preview",
-            class_name="mt-6 min-h-[250px] flex items-center justify-center outline outline-input rounded-default",
-        ),
-        rx.tabs.content(
-            render_codeblock(content=source, copy_button=True, line_num=True),
-            value="source-code",
-            class_name="mt-6",
-        ),
-        default_value="preview",
-        class_name="px-4",
+        class_name="w-full pb-[3.5rem]",
     )
 
 
