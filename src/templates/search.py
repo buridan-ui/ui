@@ -1,8 +1,8 @@
 import reflex as rx
 
-from src.docs.library.components.button.button import button
-from src.docs.library.components.input_group.input_group import input_with_addons
-from src.docs.library.components.kbd.kbd import kbd_group, kbd
+from src.docs.library.base_ui.components.base.button import button
+from src.docs.library.base_ui.components.base.input_group import input_with_addons
+from src.docs.library.base_ui.components.base.kbd import kbd_group, kbd
 
 import src.hooks as hooks
 
@@ -16,7 +16,7 @@ def icon_for_url(url: str):
             url.startswith("docs/components/"),
             rx.icon("blocks", size=15, class_name="!text-muted-foreground"),
             rx.cond(
-                url.startswith("docs/wrapped-react/"),
+                url.startswith("docs/wrapped-components/"),
                 rx.icon("cuboid", size=15, class_name="!text-muted-foreground"),
                 rx.cond(
                     url.startswith("docs/js-integrations/"),
@@ -33,13 +33,13 @@ def result_row(value: dict):
     return rx.el.a(
         rx.el.div(
             icon_for_url(value["url"]),
-            rx.el.p(value["title"], class_name="text-sm font-semibold"),
+            rx.el.p(value["title"], class_name="text-sm font-medium"),
             class_name="w-full flex flex-row gap-x-2 items-center",
         ),
         to=f"/{value['url']}",
         class_name=(
-            "w-full flex px-2 py-3 rounded-lg hover:bg-input/40 "
-            "hover:ring-3 hover:ring-input hover:ring-offset-0"
+            "w-full flex px-2 py-1.5 rounded-lg hover:bg-input/40 "
+            "hover:ring-1 hover:ring-input hover:ring-offset-0"
         ),
     )
 
@@ -54,7 +54,7 @@ def result_list(items, condition_fn=None):
                 result_row(value),
             ),
         ),
-        class_name="w-full h-full flex flex-col px-1 py-1",
+        class_name="w-full h-full flex flex-col px-1 py-1 gap-y-2",
     )
 
 
@@ -64,7 +64,7 @@ def search_trigger():
         kbd_group(kbd("⌘"), kbd("K")),
         variant="outline",
         size="sm",
-        class_name="!text-sm flex flex-row items-center justify-between !w-[16rem]",
+        class_name="!text-sm flex flex-row items-center justify-between mr-2",
     )
 
 
@@ -87,13 +87,13 @@ def search_content():
             rx.cond(
                 hooks.search_query.value,
                 result_list(
-                    hooks.getting_started_cs.value.to(list[dict[str, str]]),
+                    hooks.search_items_cs.value.to(list[dict[str, str]]),
                     lambda v: v["title"]
                     .lower()
                     .contains(hooks.search_query.value.to(str).lower()),
                 ),
                 result_list(
-                    hooks.getting_started_cs.value.to(list[dict[str, str]]),
+                    hooks.search_items_cs.value.to(list[dict[str, str]]),
                 ),
             ),
             class_name=(
@@ -113,6 +113,6 @@ def site_search():
         rx.dialog.content(
             search_input(),
             search_content(),
-            class_name="border-2 border-input h-[25rem] w-[32rem] rounded-radius p-2 relative",
+            class_name="outline-2 outline-input h-[25rem] w-[32rem] rounded-radius p-2 relative",
         ),
     )

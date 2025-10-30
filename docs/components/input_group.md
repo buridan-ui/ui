@@ -12,9 +12,10 @@ Combines inputs with prefixes, suffixes, or footers for structured data entry.
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(input_with_addons)--
+--CLI_AND_MANUAL_INSTALLATION(["input_with_addons", "buridan add component input_group"])--
 
 # Examples
+Below are examples demonstrating how the component can be used.
 
 ## Price Input
 An input field with a currency prefix for entering prices.

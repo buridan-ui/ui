@@ -1,6 +1,6 @@
 import reflex as rx
 
-from src.docs.library.components.button.button import button
+from src.docs.library.base_ui.components.base.button import button
 from src.docs.library.wrapped_components.simple_icon.simple_icon import simple_icon
 
 
@@ -27,7 +27,7 @@ def site_github() -> rx.Component:
     return rx.el.a(
         button(
             simple_icon("SiGithub"),
-            rx.el.p("204", class_name="text-xs font-semibold text-muted-foreground"),
+            rx.el.p("221", class_name="text-xs font-semibold text-muted-foreground"),
             class_name="cursor-pointer flex flex-row items-center gap-x-2",
             variant="ghost",
             size="sm",

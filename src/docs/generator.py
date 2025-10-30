@@ -39,8 +39,9 @@ def generate_docs_library() -> List[constants.DocDataStruct]:
 
         page_slugs = [slug.strip() for slug in pages_str.split(",")]
         print(f"Loading specified pages: {page_slugs}")
-
+        print("Loading specified URLs:")
         for slug in page_slugs:
+            print(f"http://localhost:3000/docs/{slug}")
             if slug in slug_to_path_map:
                 md_files_to_process.append(slug_to_path_map[slug])
             else:

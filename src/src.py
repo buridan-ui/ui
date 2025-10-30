@@ -11,6 +11,12 @@ from src.docs.library.javascript_integrations.minisearch.minisearch import (
     custom_minisearch_search_script,
     load_json_file_and_initialize_minisearch,
 )
+from src.docs.library.javascript_integrations.quill.quill import (
+    quill_stylesheet,
+    quill_custom_font,
+    quill_init,
+    quill_lib,
+)
 
 # --- Reflex app init ---
 app = rx.App(
@@ -22,6 +28,10 @@ app = rx.App(
         custom_minisearch_search_script(),
         load_json_file_and_initialize(),
         load_json_file_and_initialize_minisearch(),
+        quill_lib(),
+        quill_stylesheet(),
+        quill_custom_font(),
+        quill_init(),
     ],
 )
 

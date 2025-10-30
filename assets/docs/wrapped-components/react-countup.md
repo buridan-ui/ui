@@ -8,10 +8,20 @@ A lightweight Reflex wrapper for the [`react-countup`](https://www.npmjs.com/pac
 
 Add the following wrapped react code in Reflex inside your app.
 
+
+### CLI
+
+```bash
+buridan add wrapped-react react_countup
+```
+
+### Manual Installation
+
 ```python
 """React CountUp component wrapper for react-countup."""
 
 import reflex as rx
+
 
 class CountUp(rx.Component):
     """CountUp component for animated number counting."""
@@ -20,7 +30,6 @@ class CountUp(rx.Component):
     tag = "CountUp"
     is_default = True
 
-    # Core props
     start: rx.Var[int | float]
     end: rx.Var[int | float]
     duration: rx.Var[int | float]
@@ -81,6 +90,7 @@ def count_up(**props) -> rx.Component:
     """
     return CountUp.create(**props)
 ```
+
 
 # Usage
 

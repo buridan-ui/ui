@@ -8,7 +8,10 @@ import reflex as rx
 from typing import Dict, Callable, List
 from src.docs.constants import DocParserCommands
 from src.docs.style import render_parse_error, markdown_component_map
-from src.comps.docs.wrapper import demo_and_code_single_file_wrapper
+from src.comps.docs.wrapper import (
+    demo_and_code_single_file_wrapper,
+    cli_and_manual_installation_wrapper,
+)
 
 
 class DocParser:
@@ -27,6 +30,7 @@ class DocParser:
             DocParserCommands.SHOW_CODE_WITH_LANGUAGE: self._handle_show_code_with_language,
             DocParserCommands.DEMO_AND_SINGLE_FUNCTION: self._handle_demo_and_single_function,
             DocParserCommands.FULL_SOURCE_PAGE_OF_COMPONENT: self._handel_full_source_page_of_component,
+            DocParserCommands.CLI_AND_MANUAL_INSTALLATION: self._handle_cli_and_manual_installation,
         }
 
     def parse_and_render(self, content: str) -> List[rx.Component]:
@@ -124,11 +128,45 @@ class DocParser:
             class_name="px-4",
         )
 
+    def _handle_cli_and_manual_installation(self, argument: str | None):
+        if not argument:
+            return render_parse_error(
+                msg="Missing argument for cli_and_manual_installation"
+            )
+
+        try:
+            args = ast.literal_eval(argument)
+            if not isinstance(args, list) or len(args) != 2:
+                return render_parse_error(
+                    msg='Invalid argument format for CLI_AND_MANUAL_INSTALLATION. Expected ["ComponentName", "cli command"]'
+                )
+
+            component_name, cli_command = args
+            component_name_lower = component_name.lower()
+
+            if component_name_lower not in self.components_registry:
+                return render_parse_error(msg=f"Component not found: {component_name}")
+
+            func = self.components_registry[component_name_lower]
+            file_path = inspect.getfile(func)
+            full_source = pathlib.Path(file_path).read_text()
+
+            return cli_and_manual_installation_wrapper(cli_command, full_source)
+
+        except (ValueError, SyntaxError, IndexError) as e:
+            return render_parse_error(
+                msg=f"Error parsing arguments for CLI_AND_MANUAL_INSTALLATION: {e}"
+            )
+        except Exception as e:
+            return render_parse_error(msg=f"Error loading source: {e}")
+
     def _handel_full_source_page_of_component(
         self, argument: str | None
     ) -> rx.Component:
         if not argument:
-            return render_parse_error(msg="Missing argument for full source view")
+            return render_parse_error(
+                msg="Missing argument for full_source_page_of_component"
+            )
 
         arg_lower = argument.lower()
         if arg_lower not in self.components_registry:
@@ -195,8 +233,12 @@ class DocParser:
             component = self.components_registry[arg_lower]
             module = inspect.getmodule(component)
             source_code = inspect.getsource(module)
+            component_file_path = inspect.getfile(component)
+            is_chart_demo = "/src/docs/library/charts/" in component_file_path
 
-            return demo_and_code_single_file_wrapper(component(), source_code)
+            return demo_and_code_single_file_wrapper(
+                component(), source_code, is_chart_demo
+            )
 
         except (ValueError, SyntaxError):
             return render_parse_error(
@@ -223,8 +265,12 @@ class DocParser:
 
             component = self.components_registry[arg_lower]
             source_code = inspect.getsource(component)
+            component_file_path = inspect.getfile(component)
+            is_chart_demo = "/src/docs/library/charts/" in component_file_path
 
-            return demo_and_code_single_file_wrapper(component(), source_code)
+            return demo_and_code_single_file_wrapper(
+                component(), source_code, is_chart_demo
+            )
 
         except (ValueError, SyntaxError):
             return render_parse_error(

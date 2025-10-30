@@ -5,6 +5,7 @@
 Pie Charts are ideal for showing changes over time or the magnitude of multiple datasets stacked together. They combine the smoothness of line charts with the visual impact of filled areas.
 
 # Usage
+Copy the following helper functions into your Reflex application.
 
 
 ```python
@@ -77,6 +78,7 @@ def get_x_axis(data_key: str):
 
 
 # Examples
+Below are examples demonstrating how these components and charts can be used.
 
 ## Basic
 A minimal example showing proportional data distribution in a circular format.

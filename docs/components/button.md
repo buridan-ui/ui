@@ -1,20 +1,30 @@
 ---
 title: "Button"
-description: "Displays a button or a component that looks like a button."
-order: 0
+description: "A custom button component."
+order: 3
 ---
 
 # Button
 
-Displays a button or a component that looks like a button.
+A custom button component.
 
 # Installation
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(button)--
+--CLI_AND_MANUAL_INSTALLATION(["Button", "buridan add component button"])--
+
+# Usage
+
+Make sure to correctly set your imports relative to the component.
+
+```python
+from components.base_ui.button import button
+```
 
 # Examples
+
+Below are examples demonstrating how the component can be used.
 
 ## Sizes
 

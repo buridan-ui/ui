@@ -1,19 +1,19 @@
 
 
-# Step 1: Check your Python version
+# Check your Python version
 
-To use Reflex you need to have Python version 3.9 or above installed on your system.
+To use Buridan UI components, you need to have **Python version 3.11 or above** installed on your system.
 
 ```bash
 python3 --version
 ```
 
-# Step 2: PIP install the Reflex framework
+# Install Reflex (if you haven't already)
 
-Use the following command to install Reflex:
+Buridan UI components are built with Reflex. If you don't have Reflex installed, use the following command:
 
 ```bash
-pip3 install reflex
+pip install reflex
 ```
 
 Make sure the latest version of Reflex is installed:
@@ -22,14 +22,25 @@ Make sure the latest version of Reflex is installed:
 reflex --version
 ```
 
-# Step 3: Create a new Reflex Web Application
+# Install the Buridan UI CLI
 
-Inside your root directory, run the following command to create a new app:
+The Buridan UI CLI allows you to easily add components to your Reflex project.
 
 ```bash
-reflex init
+pip install buridan-ui
 ```
 
-# Step 4: Copy & paste a pantry item directly into your app
+# Create or navigate to your Reflex Web Application
 
-You can now easily integrate pantry components within your app and personalize them.
+The `buridan` CLI commands must be run from the root directory of your Reflex project (where your `rxconfig.py` file is located).
+
+If you need to create a new Reflex app:
+
+```bash
+reflex init my_app_name
+cd my_app_name
+```
+
+# Using the Buridan UI CLI
+
+For detailed instructions on how to use the Buridan UI CLI to add components, wrapped React components, and themes to your project, please refer to the [CLI Documentation](/getting-started/cli).

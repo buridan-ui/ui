@@ -1,20 +1,29 @@
 ---
 title: "Input"
-description: "Displays a form input field or a component that looks like an input field."
-order: 0
+description: "Custom input component."
+order: 11
 ---
 
 # Input
 
-Displays a form input field or a component that looks like an input field.
+Custom input component.
 
 # Installation
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(input)--
+--CLI_AND_MANUAL_INSTALLATION(["Input", "buridan add component input"])--
+
+# Usage
+
+Make sure to correctly set your imports relative to the component.
+
+```python
+from components.base_ui.input import input
+```
 
 # Examples
+Below are examples demonstrating how the component can be used.
 
 ## Basic Demo
 A simple text input demonstrating the default appearance and behavior.

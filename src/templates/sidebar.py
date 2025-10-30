@@ -40,12 +40,12 @@ SIDEBAR_SECTIONS = [
     SidebarSection(
         title="Components",
         description="Core components to help you build beautiful and visually consistent applications.",
-        routes=routes.COMPONENTS_URLS,
+        routes=routes.BASE_UI_COMPONENTS,
     ),
     # SidebarSection(
-    #     title="Blocks",
-    #     description="A set of pre-build blocks to help build and customize your interface with ease.",
-    #     routes=[],
+    #     title="Components",
+    #     description="Core components to help you build beautiful and visually consistent applications.",
+    #     routes=routes.COMPONENTS_URLS,
     # ),
 ]
 
@@ -89,7 +89,7 @@ def create_sidebar_menu_items(routes: List[dict]):
 def create_section_content(section: SidebarSection):
     """Create content for a sidebar section."""
     return rx.el.div(
-        create_section_description(section.description),
+        # create_section_description(section.description),
         rx.el.div(
             create_sidebar_menu_items(section.routes),
             class_name="flex flex-row h-full w-full gap-x-2",
@@ -121,12 +121,12 @@ def sidebar(in_drawer=False):
     """Main sidebar component."""
     content = rx.el.div(
         *[sidebar_section(section) for section in SIDEBAR_SECTIONS],
-        class_name="flex flex-col w-full h-full",
+        class_name="flex flex-col max-w-[18rem] w-full h-full",
     )
 
-    drawer_classes = "flex flex-col max-w-[18rem] h-full"
+    drawer_classes = "flex flex-col w-full h-full"
     default_classes = (
-        "hidden xl:flex max-w-[18rem] w-full sticky top-0 max-h-[100vh] z-[10] pb-5"
+        "hidden xl:flex max-w-[18rem] w-full sticky top-12 max-h-[100vh] z-[10] pb-5"
     )
 
     return rx.el.div(

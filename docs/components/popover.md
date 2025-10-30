@@ -1,18 +1,26 @@
 ---
 title: "Popover"
-description: "Displays rich content in a portal, triggered by a button."
-order: 0
+description: "Custom popover component."
+order: 15
 ---
 
 # Popover
 
-Displays rich content in a portal, triggered by a button.
+Custom popover component.
 
 # Installation
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(popover_root)--
+--CLI_AND_MANUAL_INSTALLATION(["Popover", "buridan add component popover"])--
+
+# Usage
+
+Make sure to correctly set your imports relative to the component.
+
+```python
+from components.base_ui.popover import popover
+```
 
 # Example
 A basic popover that appears when the user clicks the trigger button.

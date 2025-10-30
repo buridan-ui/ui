@@ -47,7 +47,7 @@ config = rx.Config(
                             "sidebar-ring": "var(--sidebar-ring)",
                         },
                         "borderRadius": {
-                            "DEFAULT": "var(--radius)",
+                            "default": "var(--radius)",
                         },
                     },
                 },

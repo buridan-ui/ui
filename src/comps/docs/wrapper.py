@@ -1,98 +1,97 @@
-import random
-import string
 import reflex as rx
-
-from reflex.experimental import ClientStateVar
-
-
-def generate_component_id():
-    """Generate a unique component ID."""
-    return "".join(random.choices(string.ascii_letters + string.digits, k=10))
+from src.docs.style import render_codeblock
 
 
-def render_wrapper_code_block(source: str) -> rx.Component:
-    return rx.el.div(
-        rx.code_block(
-            source,
-            width="100%",
-            font_size="12px",
-            language="python",
-            wrap_long_lines=True,
-            scrollbar_width="none",
-            code_tag_props={
-                "pre": "transparent",
-                "background": "transparent",
-            },
-            custom_attrs={
-                "background": "transparent !important",
-                "pre": {"background": "transparent !important"},
-                "code": {"background": "transparent !important"},
-            },
-            background="transparent !important",
-        ),
-        class_name="w-full",
-    )
+def styled_tab_trigger(label: str, value: str) -> rx.Component:
+    base_tab_style = {
+        "border": "none",
+        "background": "transparent",
+        "&[data-state=active]": {
+            "border": "none",
+            "borderBottom": rx.color_mode_cond(
+                "1.25px solid black", "1.25px solid white"
+            ),
+            "background": "transparent",
+        },
+        "&[data-state=inactive]": {
+            "border": "none",
+            "background": "transparent",
+        },
+        "&::before": {
+            "display": "none",
+        },
+    }
 
-
-def preview_toggle_button(label: str, is_active: bool, on_click):
-    return rx.el.button(
-        label,
-        background=rx.cond(is_active, rx.color("gray", 4), ""),
-        class_name=(
-            "text-sm py-1 px-2 rounded-lg cursor-pointer "
-            + rx.cond(
-                is_active, "font-semibold opacity-[1]", "font-normal opacity-[0.8]"
-            ).to(str)
-        ),
-        on_click=on_click,
-    )
+    return rx.tabs.trigger(rx.el.p(label), value=value, style=base_tab_style)
 
 
 def demo_and_code_single_file_wrapper(
-    component: rx.Component, source: str
+    component: rx.Component, source: str, is_chart_demo: bool = False
 ) -> rx.Component:
-    wrapper_id = generate_component_id()
+    tab_list_style = {
+        "border": "none",
+        "boxShadow": "none",
+        "background": "transparent",
+    }
 
-    is_preview = ClientStateVar.create(
-        var_name=f"active_tab_{wrapper_id}", default=True
+    preview_class_name = (
+        "mt-6 min-h-[250px] flex items-center justify-center rounded-default"
     )
-    is_copied = ClientStateVar.create(var_name=f"is_copied_{wrapper_id}", default=False)
+    if not is_chart_demo:
+        preview_class_name += " outline outline-input"
 
     return rx.el.div(
-        rx.el.div(
-            rx.el.div(
-                preview_toggle_button(
-                    "Preview", is_preview.value, is_preview.set_value(True)
-                ),
-                preview_toggle_button(
-                    "Code", ~is_preview.value, is_preview.set_value(False)
-                ),
-                rx.el.button(
-                    rx.cond(
-                        is_copied.value,
-                        rx.icon("check", size=12),
-                        rx.icon("copy", size=12),
-                    ),
-                    class_name="opacity-[0.8] cursor-pointer py-1 px-2 flex items-center justify-center",
-                    on_click=[
-                        rx.call_function(is_copied.set_value(True)),
-                        rx.set_clipboard(source),
-                    ],
-                    on_mouse_down=rx.call_function(is_copied.set_value(False)).debounce(
-                        1500
-                    ),
-                ),
-                class_name="flex flex-row items-center justify-end gap-x-4",
+        rx.tabs.root(
+            rx.tabs.list(
+                styled_tab_trigger("Preview", "preview"),
+                styled_tab_trigger("Source Code", "source-code"),
+                style=tab_list_style,
             ),
-            rx.el.div(
-                rx.cond(
-                    is_preview.value,
-                    component,
-                    render_wrapper_code_block(source),
-                ),
-                class_name="w-full h-full flex items-center justify-center",
+            rx.tabs.content(
+                component,
+                value="preview",
+                class_name=preview_class_name,
             ),
-            class_name="w-full flex flex-col gap-y-0 overflow-hidden border border-dashed border-[var(--input)] px-2 py-4 rounded-xl",
+            rx.tabs.content(
+                render_codeblock(content=source, copy_button=True, line_num=True),
+                value="source-code",
+                class_name="mt-6",
+            ),
+            default_value="preview",
+            class_name="px-4",
         ),
-        class_name="w-full flex py-4 px-4 min-h-[450px]",
+        class_name="w-full pb-[3.5rem]",
+    )
+
+
+def cli_and_manual_installation_wrapper(cli_command: str, source: str) -> rx.Component:
+    tab_list_style = {
+        "border": "none",
+        "boxShadow": "none",
+        "background": "transparent",
+    }
+
+    return rx.tabs.root(
+        rx.tabs.list(
+            styled_tab_trigger("CLI", "cli"),
+            styled_tab_trigger("Manual", "manual"),
+            style=tab_list_style,
+        ),
+        rx.tabs.content(
+            render_codeblock(
+                content=cli_command,
+                lang="bash",
+                copy_button=True,
+                line_num=False,
+            ),
+            value="cli",
+            class_name="mt-6",
+        ),
+        rx.tabs.content(
+            render_codeblock(content=source, copy_button=True, line_num=True),
+            value="manual",
+            class_name="mt-6",
+        ),
+        default_value="cli",
+        class_name="px-4",
     )

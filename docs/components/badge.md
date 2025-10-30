@@ -1,20 +1,30 @@
 ---
 title: "Badge"
-description: "Displays a badge or a component that looks like a badge."
-order: 0
+description: "A badge component that displays a label."
+order: 2
 ---
 
 # Badge
 
-Displays a badge or a component that looks like a badge.
+A badge component that displays a label.
 
 # Installation
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(badge)--
+--CLI_AND_MANUAL_INSTALLATION(["Badge", "buridan add component badge"])--
+
+# Usage
+
+Make sure to correctly set your imports relative to the component.
+
+```python
+from components.base_ui.badge import badge
+```
 
 # Examples
+
+Below are examples demonstrating how the component can be used.
 
 ## Default
 

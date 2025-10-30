@@ -8,6 +8,15 @@ A lightweight Reflex wrapper for icons from the [`@icons-pack/react-simple-icons
 
 Add the following wrapped react code in Reflex inside your app.
 
+
+### CLI
+
+```bash
+buridan add wrapped-react simple_icon
+```
+
+### Manual Installation
+
 ```python
 """Simple Icon component wrapper for @icons-pack/react-simple-icons."""
 
@@ -66,6 +75,7 @@ def simple_icon(icon_name: str, **props) -> rx.Component:
     """
     return SimpleIcon.create(icon_name, **props)
 ```
+
 
 # Usage
 

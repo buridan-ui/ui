@@ -1,6 +1,6 @@
 import reflex as rx
 
-from src.docs.library.components.button.button import button
+from src.docs.library.base_ui.components.base.button import button
 from src.templates.navbar import main_navbar
 from src.views.examples.examples import examples_page
 from src.comps.ui.themes import theme_buttons
@@ -46,7 +46,7 @@ def landing_buttons():
             ),
             rx.el.a(
                 button("View Components", variant="ghost", size="sm"),
-                to=routes.COMPONENTS_URLS[0]["url"],
+                to=routes.BASE_UI_COMPONENTS[0]["url"],
             ),
             class_name="w-full max-w-[5rem] flex flex-row items-center justify-center gap-x-4",
         ),

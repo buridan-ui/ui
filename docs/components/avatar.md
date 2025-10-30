@@ -1,20 +1,30 @@
 ---
 title: "Avatar"
-description: "An image element with a fallback for representing the user."
-order: 0
+description: "Displays a user's profile picture, initials, or fallback icon."
+order: 1
 ---
 
 # Avatar
 
-An image element with a fallback for representing the user.
+Displays a user's profile picture, initials, or fallback icon.
 
 # Installation
 
 Copy the following code into your app directory.
 
---FULL_SOURCE_PAGE_OF_COMPONENT(avatar)--
+--CLI_AND_MANUAL_INSTALLATION(["Avatar", "buridan add component avatar"])--
+
+# Usage
+
+Make sure to correctly set your imports relative to the component.
+
+```python
+from components.base_ui.avatar import avatar
+```
 
 # Examples
+
+Below are examples demonstrating how the component can be used.
 
 ## General
 

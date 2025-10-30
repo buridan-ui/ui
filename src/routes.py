@@ -59,7 +59,7 @@ def generate_doc_routes(section_folder, base_path) -> list[dict]:
 
 # --- Static: Each generation corresponds to a file in the docs/ folder ---
 GET_STARTED_URLS = generate_doc_routes("getting_started", "docs/getting-started/")
-COMPONENTS_URLS = sorted(
+BASE_UI_COMPONENTS = sorted(
     generate_doc_routes("components", "docs/components/"), key=lambda x: x["title"]
 )
 CHARTS_URLS = sorted(

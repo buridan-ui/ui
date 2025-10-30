@@ -5,7 +5,7 @@ import src.routes as routes
 from src.templates.drawer import drawer
 from src.templates.search import site_search
 from src.comps.ui.titles import site_title
-from src.docs.library.components.button.button import button
+from src.docs.library.base_ui.components.base.button import button
 from src.comps.ui.buttons import site_github, site_theme
 
 
@@ -26,7 +26,7 @@ def main_navbar():
                 rx.el.div(
                     main_navbar_nav_link("Docs", routes.GET_STARTED_URLS[0]["url"]),
                     main_navbar_nav_link(
-                        "Components", routes.COMPONENTS_URLS[0]["url"]
+                        "Components", routes.BASE_UI_COMPONENTS[0]["url"]
                     ),
                     main_navbar_nav_link("Charts", routes.CHARTS_URLS[0]["url"]),
                     main_navbar_nav_link(
@@ -49,7 +49,7 @@ def main_navbar():
                 site_theme(),
                 class_name="flex flex-row items-center gap-x-2",
             ),
-            class_name="xl:max-w-[80rem] 2xl:max-w-[75rem] w-full mx-auto flex flex-row items-center justify-between",
+            class_name="xl:max-w-[80rem] 2xl:max-w-[85rem] w-full mx-auto flex flex-row items-center justify-between",
         ),
-        class_name="bg-background w-full h-12 sticky top-0 left-0 px-0 py-7 items-center justify-between flex flex-row z-[15]",
+        class_name="bg-background w-full h-12 sticky top-0 left-0 px-0 py-7 items-center justify-between flex flex-row z-[99999]",
     )
