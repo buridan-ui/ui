@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "buridan-ui"
-version = "0.7.6-beta"
-description = "Buridan UI – A Reflex-based UI component library"
+version = "0.7.7-beta"
+description = "Buridan UI – The UI Library for Reflex Developers"
 authors = [{ name = "Ahmad Al Hakim", email = "ahmad@reflex.dev" }]
 readme = "README.md"
 requires-python = ">=3.11"
