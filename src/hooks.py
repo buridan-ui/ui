@@ -10,7 +10,7 @@ current_theme = ClientStateVar.create("current_theme", "gray")
 # Global state for search query
 search_query = ClientStateVar.create("search_query", "")
 
-# Global state for Getting Started Routes
+# Global state for Search Routes
 search_items_cs = ClientStateVar.create(
     "search_items_cs",
     routes.GET_STARTED_URLS
