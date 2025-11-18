@@ -10,7 +10,7 @@ authors = [{ name = "Ahmad Al Hakim", email = "ahmad@reflex.dev" }]
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "reflex>=0.8.18",
+    "reflex>=0.8.20",
     "pre-commit>=4.2.0",
     "black>=25.1.0",
     "typer>=0.12.3",
