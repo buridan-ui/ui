@@ -37,7 +37,7 @@ def site_github() -> rx.Component:
     )
 
 
-def site_reflex_build():
+def site_reflex_build() -> rx.Component:
     return rx.el.a(
         button(
             rx.el.image(
