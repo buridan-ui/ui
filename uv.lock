@@ -101,7 +101,7 @@ requires-dist = [
     { name = "black", specifier = ">=25.1.0" },
     { name = "buridan-ui", specifier = ">=0.7.5b0" },
     { name = "pre-commit", specifier = ">=4.2.0" },
-    { name = "reflex", specifier = ">=0.8.20" },
+    { name = "reflex", specifier = ">=0.8.24" },
     { name = "typer", specifier = ">=0.12.3" },
 ]
 
@@ -674,7 +674,7 @@ wheels = [
 
 [[package]]
 name = "reflex"
-version = "0.8.20"
+version = "0.8.24.post1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "alembic" },
@@ -695,9 +695,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "wrapt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f1/7a/d1879b8f5c171371ce8fe2765e6699459e4f5b53a262124939dd674cdefe/reflex-0.8.20.tar.gz", hash = "sha256:793fa9132e40564784df898b58162e5346fb17dfb7f9f87f7ba1999eadba8349", size = 563250, upload-time = "2025-11-17T19:47:30.832Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/5f/f9d4880d8de98f7faaf987550384bce52871bf6dd5ae9bd3992f6120578e/reflex-0.8.24.post1.tar.gz", hash = "sha256:a016e844846ffc5ef460ed098a17bcf02b11acc9b15192fa234f29294586b080", size = 571019, upload-time = "2025-12-22T20:22:24.499Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/72/e1/e83147378c3daac289dcd69db63833bf6be6a8f3f69bd9367413f227f69b/reflex-0.8.20-py3-none-any.whl", hash = "sha256:6af2b2ad2f2a97ebeb45370dfbbe76dd4ca24c8cd51227fe4cbe7f15fb672ed5", size = 804436, upload-time = "2025-11-17T19:47:29.195Z" },
+    { url = "https://files.pythonhosted.org/packages/73/ba/2ef17f78a5fcea091fb509a550ae03a93515cd774f969ae89a8b51025e1f/reflex-0.8.24.post1-py3-none-any.whl", hash = "sha256:c1023a754d0eee1161351688dbf9e05d11f570c082859e34c03e354d324deb58", size = 813241, upload-time = "2025-12-22T20:22:26.113Z" },
 ]
 
 [[package]]
