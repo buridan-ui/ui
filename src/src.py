@@ -18,10 +18,21 @@ from src.docs.library.javascript_integrations.quill.quill import (
     quill_lib,
 )
 
+
+def site_tracking_script() -> rx.Script:
+    return rx.script(
+        src="https://gc.zgo.at/count.js",
+        custom_attrs={
+            "data-goatcounter": "https://buridan-ui.goatcounter.com/count",
+        },
+    )
+
+
 # --- Reflex app init ---
 app = rx.App(
     stylesheets=["css/wrapper.css"],
     head_components=[
+        site_tracking_script(),
         fuse_cdn_script(),
         custom_search_script(),
         minisearch_cdn_script(),
@@ -35,5 +46,5 @@ app = rx.App(
     ],
 )
 
-# --- Main export entry ---
+# --- Main export entry function ---
 export(app)
