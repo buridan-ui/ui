@@ -73,7 +73,7 @@ Then in your `app.py`, use it as the root of your page:
 
 The sidebar is a key part of the dashboard layout. It typically contains navigation, branding, or user context and stays fixed on the left side of the screen. We'll start by creating a reusable `sidebar()` component inside `app/layout/sidebar.py`.
 
---SHOW_CODE_WITH_LANGUAGE(sidebar_example)--
+--SHOW_CODE_WITH_LANGUAGE(["sidebar_example", "python"])--
 
 - `rx.scroll_area(...)` lets the sidebar scroll independently if its content exceeds the viewport height.
 - `sidebar_header()` is a separate component that we'll define next — it's used for a logo, app title, or profile section.
