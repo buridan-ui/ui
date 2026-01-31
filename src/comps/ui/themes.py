@@ -1,6 +1,8 @@
 import reflex as rx
-from src.docs.library.base_ui.components.base.button import button
+
 import src.hooks as hooks
+from src.docs.library.base_ui.components.base.select import select
+from src.docs.library.base_ui.icons.hugeicon import hi
 
 THEME_OPTIONS = [
     ("Hematite", "فيْروز", "gray"),
@@ -15,36 +17,46 @@ THEME_OPTIONS = [
 def theme_buttons():
     return rx.el.div(
         rx.el.div(
-            *[
-                rx.el.div(
-                    button(
-                        rx.el.div(
-                            rx.el.div(
-                                class_name=f"w-3 h-3 rounded-sm bg-{theme_class}-500"
-                            ),
-                            rx.el.p(name, class_name="text-sm"),
-                            class_name="flex flex-row items-center gap-x-2",
-                        ),
-                        variant="ghost",
-                        size="sm",
-                        on_click=hooks.current_theme.set_value(theme_class),
+            select.root(
+                select.trigger(
+                    select.value(),
+                    hi(
+                        "Add01Icon",
+                        class_name="size-4 transition-transform duration-50 ease-in-out group-aria-[expanded=true]:rotate-45",
                     ),
-                    class_name="rounded-lg "
-                    + rx.cond(
-                        hooks.current_theme.value == theme_class,
-                        "border border-primary",
-                        "",
-                    ).to(str),
-                )
-                for name, __, theme_class in THEME_OPTIONS
-            ],
+                    class_name="w-[150px] flex items-center justify-between group rounded-lg px-2 py-1.5",
+                ),
+                select.portal(
+                    select.positioner(
+                        select.popup(
+                            select.group(
+                                select.group_label("Theme"),
+                                *[
+                                    select.item(
+                                        select.item_text(theme_class.capitalize()),
+                                        select.item_indicator(
+                                            hi("Tick02Icon", class_name="size-4")
+                                        ),
+                                        value=theme_class.capitalize(),
+                                        class_name="w-full flex flex-row items-center justify-between",
+                                        on_click=hooks.current_theme.set_value(
+                                            theme_class
+                                        ),
+                                    )
+                                    for _, __, theme_class in THEME_OPTIONS
+                                ],
+                            ),
+                            class_name="w-[150px]",
+                        ),
+                        side_offset=4,
+                    ),
+                ),
+                name="theme_select",
+                default_value=hooks.current_theme.value.to(str).capitalize(),
+            ),
             class_name=(
                 "w-full flex flex-row flex-wrap gap-4 items-center "
-                "justify-center md:justify-start px-8 pt-10 "
-                + rx.color_mode_cond(
-                    f"theme-{hooks.current_theme.value}",
-                    f"theme-{hooks.current_theme.value}-dark",
-                ).to(str)
+                "justify-center md:justify-end px-8"
             ),
-        )
+        ),
     )
