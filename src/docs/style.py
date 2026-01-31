@@ -1,7 +1,7 @@
 import random
 import string
-import reflex as rx
 
+import reflex as rx
 from reflex.experimental import ClientStateVar
 
 # --- Markdown Styles ---
@@ -10,7 +10,7 @@ HEADING_1_CLASS = "text-2xl py-1"
 HEADING_2_CLASS = "text-xl py-1"
 LIST_ITEM_CLASS = "text-sm text-slate-11"
 LINK_CLASS = "text-accent-8"
-CODE_BLOCK_CLASS = "!rounded-xl !bg-transparent"
+CODE_BLOCK_CLASS = "!rounded-xl !bg-transparent !overflow-y-auto"
 
 
 # --- Helper functions to generate ClientStateVar names ---
@@ -48,6 +48,7 @@ def render_codeblock(
     lang: str = "python",
     copy_button: bool = False,
     line_num: bool = False,
+    can_scroll: bool = False,
     **props,
 ) -> rx.Component:
     # Use the following to make line numbers sticky when horizontally scrolling...
@@ -69,7 +70,28 @@ def render_codeblock(
         is_copied = ClientStateVar.create(var_name=f"is_copied_{_id}", default=False)
 
     return rx.el.div(
-        rx.code_block(
+        rx.scroll_area(
+            rx.code_block(
+                content,
+                font_size="14px",
+                language=lang,
+                show_line_numbers=line_num,
+                code_tag_props={
+                    "pre": "transparent",
+                    "background": "transparent",
+                },
+                custom_attrs={
+                    "background": "transparent !important",
+                    "pre": {"background": "transparent !important"},
+                    "code": {"background": "transparent !important"},
+                },
+                background="transparent !important",
+                class_name=CODE_BLOCK_CLASS,
+            ),
+            class_name="h-[65vh] overflow-y-scroll",
+        )
+        if can_scroll
+        else rx.code_block(
             content,
             font_size="13px",
             language=lang,
