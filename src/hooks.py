@@ -1,17 +1,12 @@
 from reflex.experimental import ClientStateVar
 
 import src.routes as routes
-from src.comps.ui.stylesheet import THEMES
 
 # Global state for selected page - default to docs overview
 selected_page = ClientStateVar.create("selected_page", "docs/overview")
 
 # Global state for switching theme of components/ui
 current_theme = ClientStateVar.create("current_theme", "gray")
-
-#
-selected_theme_light = ClientStateVar.create("selected_theme_light", THEMES)
-selected_theme_dark = ClientStateVar.create("selected_theme_dark", THEMES["gray-dark"])
 
 # Global state for search query
 search_query = ClientStateVar.create("search_query", "")
