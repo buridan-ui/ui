@@ -1,10 +1,9 @@
 import reflex as rx
 
+import src.hooks as hooks
 from src.docs.library.base_ui.components.base.button import button
 from src.docs.library.base_ui.components.base.input_group import input_with_addons
-from src.docs.library.base_ui.components.base.kbd import kbd_group, kbd
-
-import src.hooks as hooks
+from src.docs.library.base_ui.icons.hugeicon import hi
 
 
 def icon_for_url(url: str):
@@ -60,11 +59,12 @@ def result_list(items, condition_fn=None):
 
 def search_trigger():
     return button(
-        "Search documentation...",
-        kbd_group(kbd("⌘"), kbd("K")),
+        hi("Search01Icon", class_name="size-4"),
+        rx.el.p("Search"),
+        # kbd_group(kbd("⌘"), kbd("K")),
         variant="outline",
         size="sm",
-        class_name="!text-sm flex flex-row items-center justify-between mr-2",
+        class_name="!text-sm !font-medium flex flex-row items-center justify-between mr-2 rounded-lg",
     )
 
 

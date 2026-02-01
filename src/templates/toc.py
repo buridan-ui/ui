@@ -1,5 +1,6 @@
+from typing import Dict, List
+
 import reflex as rx
-from typing import List, Dict
 
 
 def _create_markdown_toc_links(toc_data: List[Dict]) -> rx.Component:
@@ -12,7 +13,7 @@ def _create_markdown_toc_links(toc_data: List[Dict]) -> rx.Component:
             rx.el.a(
                 entry["text"],
                 href=f"#{entry['id']}",
-                class_name=f"cursor-pointer text-sm font-regular hover:underline no-underline{' pl-4' if entry['level'] > 1 else ''}",
+                class_name=f"cursor-pointer text-sm font-[450] hover:text-foreground no-underline{' pl-4' if entry['level'] > 1 else ''}",
             )
             for entry in toc_data
         ],
@@ -119,19 +120,21 @@ def table_of_content(url: str, toc_data: List[Dict]):
         rx.scroll_area(
             rx.el.div(
                 rx.el.div(
-                    rx.el.label(
+                    rx.el.p(
                         "External Tools",
-                        color=rx.color("slate", 12),
-                        class_name="text-sm font-bold pb-2",
+                        # color=rx.color("slate", 12),
+                        # class_name="text-sm font-bold pb-2",
+                        class_name="text-xs text-muted-foreground font-medium pb-2",
                     ),
                     _create_external_tool_links(url),
                     class_name="w-full flex flex-col",
                 ),
                 rx.el.div(
-                    rx.el.label(
-                        "Table of Content",
-                        color=rx.color("slate", 12),
-                        class_name="text-sm font-bold pb-2",
+                    rx.el.p(
+                        "On This Page",
+                        # color=rx.color("slate", 12),
+                        # class_name="text-sm font-bold pb-2",
+                        class_name="text-xs text-muted-foreground font-medium pb-2",
                     ),
                     _create_markdown_toc_links(toc_data),
                     class_name="w-full flex flex-col",
@@ -140,5 +143,5 @@ def table_of_content(url: str, toc_data: List[Dict]):
             ),
             class_name="flex flex-col gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",
         ),
-        class_name="hidden lg:block max-w-[18rem] w-full sticky top-12 h-[calc(100vh-3rem)] shrink-0",
+        class_name="hidden lg:block max-w-[18rem] w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0",
     )
