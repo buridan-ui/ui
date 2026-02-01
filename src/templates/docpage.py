@@ -1,7 +1,7 @@
 import reflex as rx
 
-from src.templates.sidebar import sidebar
 from src.templates.navbar import main_navbar
+from src.templates.sidebar import sidebar
 
 
 def docpage(main_content, toc_content):
@@ -15,7 +15,7 @@ def docpage(main_content, toc_content):
                     rx.el.div(
                         rx.el.div(
                             main_content,
-                            class_name="flex-1 min-w-0 py-6",
+                            class_name="flex-1 min-w-0 pt-6",
                         ),
                         toc_content,
                         class_name="flex items-start w-full flex-1 min-w-0",

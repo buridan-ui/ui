@@ -4,6 +4,8 @@ import string
 import reflex as rx
 from reflex.experimental import ClientStateVar
 
+from src.docs.library.base_ui.icons.hugeicon import hi
+
 # --- Markdown Styles ---
 PARAGRAPH_CLASS = "text-sm leading-6 pb-4"
 HEADING_1_CLASS = "text-2xl py-1"
@@ -112,8 +114,8 @@ def render_codeblock(
             rx.el.button(
                 rx.cond(
                     is_copied.value,
-                    rx.icon("check", size=14),
-                    rx.icon("clipboard", size=14),
+                    hi("Tick01Icon", class_name="size-4"),
+                    hi("Copy01Icon", class_name="size-4"),
                 ),
                 class_name="cursor-pointer flex items-center justify-center absolute top-[15px] right-[15px]",
                 on_click=[

@@ -1,10 +1,9 @@
-import reflex as rx
-import src.routes as routes
-
-from typing import List
 from dataclasses import dataclass
+from typing import List
 
-from src.hooks import selected_page
+import reflex as rx
+
+import src.routes as routes
 
 
 @dataclass
@@ -42,33 +41,16 @@ SIDEBAR_SECTIONS = [
         description="Core components to help you build beautiful and visually consistent applications.",
         routes=routes.BASE_UI_COMPONENTS,
     ),
-    # SidebarSection(
-    #     title="Components",
-    #     description="Core components to help you build beautiful and visually consistent applications.",
-    #     routes=routes.COMPONENTS_URLS,
-    # ),
 ]
-
-
-def create_section_description(text: str):
-    """Create a consistent section description."""
-    return rx.el.label(
-        text,
-        class_name="text-sm font-medium pt-1 pb-2 text-muted-foreground",
-    )
 
 
 def create_menu_item(data: dict):
     """Create a single menu item."""
     return rx.el.div(
         rx.el.a(
-            rx.el.label(
+            rx.el.p(
                 data["title"],
-                color=rx.color("slate", 12),
-                class_name="cursor-pointer text-sm "
-                + rx.cond(
-                    selected_page.value == data["url"], "font-bold", "font-regular"
-                ).to(str),
+                class_name="cursor-pointer text-sm font-[450]",
             ),
             to=f"/{data['url']}",
             text_decoration="none",
@@ -80,16 +62,15 @@ def create_menu_item(data: dict):
 
 def create_sidebar_menu_items(routes: List[dict]):
     """Create menu items from routes."""
-    return rx.box(
+    return rx.el.div(
         *[create_menu_item(route) for route in routes],
-        class_name="w-full flex flex-col gap-y-0",
+        class_name="w-full flex flex-col gap-y-1.5",
     )
 
 
 def create_section_content(section: SidebarSection):
     """Create content for a sidebar section."""
     return rx.el.div(
-        # create_section_description(section.description),
         rx.el.div(
             create_sidebar_menu_items(section.routes),
             class_name="flex flex-row h-full w-full gap-x-2",
@@ -103,10 +84,9 @@ def sidebar_section(section: SidebarSection):
     return rx.el.div(
         rx.el.div(
             rx.el.div(
-                rx.el.label(
+                rx.el.p(
                     section.title,
-                    color=rx.color("slate", 12),
-                    class_name="text-sm font-bold",
+                    class_name="text-xs text-muted-foreground font-medium",
                 ),
                 class_name="flex flex-row items-center gap-x-2",
             ),
@@ -126,7 +106,7 @@ def sidebar(in_drawer=False):
 
     drawer_classes = "flex flex-col w-full h-full"
     default_classes = (
-        "hidden xl:flex max-w-[18rem] w-full sticky top-12 max-h-[100vh] z-[10] pb-5"
+        "hidden xl:flex max-w-[18rem] w-full sticky top-18 max-h-[100vh] z-[10] pb-5"
     )
 
     return rx.el.div(
