@@ -2,11 +2,10 @@ import reflex as rx
 
 import src.meta as meta
 import src.routes as routes
-
 from src.docs.generator import generate_docs_library
-from src.views.landing.landing import site_landing_page
 from src.templates.docpage import docpage
 from src.templates.toc import table_of_content
+from src.views.landing.landing import site_landing_page
 
 # Define the landing page
 landing = site_landing_page()
