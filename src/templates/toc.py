@@ -119,21 +119,33 @@ def table_of_content(url: str, toc_data: List[Dict]):
     return rx.el.div(
         rx.scroll_area(
             rx.el.div(
+                #
                 rx.el.div(
                     rx.el.p(
                         "External Tools",
-                        # color=rx.color("slate", 12),
-                        # class_name="text-sm font-bold pb-2",
                         class_name="text-xs text-muted-foreground font-medium pb-2",
                     ),
                     _create_external_tool_links(url),
                     class_name="w-full flex flex-col",
                 ),
+                #
+                rx.el.div(
+                    rx.el.p(
+                        "Agent Resources",
+                        class_name="text-xs text-muted-foreground font-medium pb-2",
+                    ),
+                    rx.el.a(
+                        rx.el.p("llms.txt", class_name="text-sm font-[450]"),
+                        href="/llms.txt",
+                        target="_blank",
+                        rel="noopener noreferrer",
+                    ),
+                    class_name="w-full flex flex-col",
+                ),
+                #
                 rx.el.div(
                     rx.el.p(
                         "On This Page",
-                        # color=rx.color("slate", 12),
-                        # class_name="text-sm font-bold pb-2",
                         class_name="text-xs text-muted-foreground font-medium pb-2",
                     ),
                     _create_markdown_toc_links(toc_data),
