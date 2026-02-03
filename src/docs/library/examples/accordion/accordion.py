@@ -93,5 +93,5 @@ def accordion_example():
             open_multiple=False,
             default_value=["section-1"],
         ),
-        class_name="h-[45vh] w-full justify-center pt-10",
+        class_name="h-[45vh] w-full justify-center pt-10 px-8",
     )
