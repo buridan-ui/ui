@@ -10,8 +10,9 @@ from reflex.utils.imports import ImportVar
 from reflex.vars.base import Var
 from reflex.vars.object import ObjectVar
 
+from ...icons.hugeicon import hi, icon
+from ..base.button import button
 from ..base_ui import PACKAGE_NAME, BaseUIComponent
-from ...icons.hugeicon import icon
 
 LiteralOrientation = Literal["horizontal", "vertical"]
 
@@ -21,16 +22,14 @@ ITEMS_TYPE = list[dict[str, str | Component]]
 class ClassNames:
     """Class names for accordion components."""
 
-    ROOT = "flex flex-col justify-center overflow-hidden rounded-xl"
-    ITEM = ""
-    HEADER = ""
-    TRIGGER = "group relative flex w-full items-center justify-between gap-4 px-4 py-2 text-md font-semibold"
-    PANEL = (
-        "overflow-hidden text-sm text-foreground font-medium "
-        "transition-all duration-300 ease-out "
-        "data-[ending-style]:h-0 data-[starting-style]:h-0"
+    ROOT = (
+        "flex flex-col justify-center divide-y divide-input overflow-hidden rounded-xl"
     )
-    PANEL_DIV = "py-2 px-4"
+    ITEM = "not-last:border-b"
+    HEADER = ""
+    TRIGGER = "group relative flex w-full items-center justify-between gap-4 bg-secondary-1 hover:bg-secondary-3 py-2 text-md font-semibold text-secondary-12 transition-colors disabled:cursor-not-allowed disabled:bg-secondary-3 disabled:text-secondary-8 disabled:[&_svg]:text-secondary-8 [&_svg]:text-secondary-11"
+    PANEL = "h-[var(--accordion-panel-height)] overflow-hidden transition-[height] ease-out data-[ending-style]:h-0 data-[starting-style]:h-0"
+    PANEL_DIV = ""
     TRIGGER_ICON = "size-4 shrink-0 transition-all ease-out group-data-[panel-open]:scale-110 group-data-[panel-open]:rotate-45"
 
 
@@ -63,13 +62,13 @@ class AccordionRoot(AccordionBaseComponent):
     hidden_until_found: Var[bool]
 
     # Whether multiple items can be open at the same time. Defaults to True.
-    open_multiple: Var[bool]
+    multiple: Var[bool]
 
     # Whether the component should ignore user interaction. Defaults to False.
     disabled: Var[bool]
 
     # Whether to loop keyboard focus back to the first item when the end of the list is reached while using the arrow keys. Defaults to True.
-    loop: Var[bool]
+    loop_focus: Var[bool]
 
     # The visual orientation of the accordion. Controls whether roving focus uses left/right or up/down arrow keys. Defaults to 'vertical'.
     orientation: Var[LiteralOrientation]
@@ -134,17 +133,48 @@ class AccordionTrigger(AccordionBaseComponent):
 
     tag = "Accordion.Trigger"
 
-    # Whether the component renders a native `<button>` element when replacing it via the `render` prop. Set to `false` if the rendered element is not a button (e.g. `<div>`). Defaults to True.
+    title: Var[str]
     native_button: Var[bool]
 
-    # The render prop.
-    render_: Var[Component]
+    # Default is None so we can detect overrides
+    render_: Var[Component] = None
 
     @classmethod
     def create(cls, *children, **props) -> BaseUIComponent:
-        """Create the accordion trigger component."""
         props["data-slot"] = "accordion-trigger"
         cls.set_class_name(ClassNames.TRIGGER, props)
+
+        # 1️⃣ If render_ is NOT provided, we must resolve title
+        if "render_" not in props or props["render_"] is None:
+            if "title" not in props:
+                if len(children) == 1 and isinstance(children[0], str):
+                    props["title"] = children[0]
+                elif children:
+                    raise TypeError(
+                        "AccordionTrigger expects a single string child "
+                        "when used without a `title` prop."
+                    )
+                else:
+                    raise ValueError("AccordionTrigger requires a `title`.")
+
+            # 2️⃣ Generate default render_
+            props["render_"] = button(
+                props["title"],
+                hi(
+                    "Add01Icon",
+                    class_name=(
+                        "size-3 transition-transform duration-50 ease-in-out "
+                        "group-aria-[expanded=true]:rotate-45"
+                    ),
+                ),
+                variant="ghost",
+                class_name=(
+                    "w-full flex items-center justify-between group py-2 "
+                    "font-medium !text-sm hover:bg-transparent !px-0"
+                ),
+            )
+
+        # 3️⃣ render_ was supplied → leave it untouched
         return super().create(*children, **props)
 
 
