@@ -26,8 +26,8 @@ from components.base_ui.accordion import accordion
 
 Below are examples demonstrating how the component can be used.
 
-## General
+## Basic
 
-Displays a basic avatar with either a user image or a fallback placeholder.
+A basic accordion that shows one item at a time. The first item is open by default.
 
 --DEMO_AND_SINGLE_FUNCTION(accordion_example)--
