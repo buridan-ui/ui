@@ -2,6 +2,7 @@ import reflex as rx
 
 import src.meta as meta
 import src.routes as routes
+from src.create.page import create_page
 from src.docs.generator import generate_docs_library
 from src.templates.docpage import docpage
 from src.templates.toc import table_of_content
@@ -9,6 +10,9 @@ from src.views.landing.landing import site_landing_page
 
 # Define the landing page
 landing = site_landing_page()
+
+# Define the create page
+create = create_page()
 
 # Define redirects in one place
 redirect_map = {
@@ -26,6 +30,14 @@ def export(app: rx.App):
     app.add_page(
         landing,
         route="/",
+        title="The UI Library for Reflex Developers - buridan/ui",
+        meta=meta.SITE_META_TAGS,
+    )
+
+    # Create page
+    app.add_page(
+        create,
+        route="/create",
         title="The UI Library for Reflex Developers - buridan/ui",
         meta=meta.SITE_META_TAGS,
     )
