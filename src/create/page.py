@@ -1,6 +1,6 @@
 import reflex as rx
 
-from .ui.menu.select import __
+from .ui.menu.api import select_menu
 
 
 def create_page():
@@ -14,7 +14,11 @@ def create_page():
                     rx.el.div(
                         rx.el.div(
                             # main_content,
-                            __(),
+                            select_menu(
+                                "test",
+                                "Fruit",
+                                [],
+                            ),
                             class_name="flex-1 min-w-0 pt-6",
                         ),
                         # toc_content,
