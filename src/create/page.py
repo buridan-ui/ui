@@ -1,6 +1,7 @@
 import reflex as rx
 
 from src.create.layout.sidebars import component_sidebar, menu_option_sidebar
+from src.docs.library.examples.accordion.accordion import accordion_example
 from src.templates.navbar import navbar
 
 
@@ -15,6 +16,15 @@ def create_page():
                     rx.el.div(
                         rx.el.div(
                             # main_content,
+                            # font-(family-name:--font-jetbrains-mono)
+                            rx.el.div(
+                                accordion_example(),
+                                class_name="style-mira border border-input w-full p-4",
+                            ),
+                            rx.el.div(
+                                accordion_example(),
+                                class_name="style-maia w-full border border-input p-4",
+                            ),
                             class_name="flex-1 min-w-0 pt-6",
                         ),
                         component_sidebar(),
