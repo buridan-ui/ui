@@ -1,22 +1,22 @@
 import reflex as rx
 
-from src.export import export
 from src.docs.library.javascript_integrations.fuse.fuse import (
+    custom_search_script,
     fuse_cdn_script,
     load_json_file_and_initialize,
-    custom_search_script,
 )
 from src.docs.library.javascript_integrations.minisearch.minisearch import (
-    minisearch_cdn_script,
     custom_minisearch_search_script,
     load_json_file_and_initialize_minisearch,
+    minisearch_cdn_script,
 )
 from src.docs.library.javascript_integrations.quill.quill import (
-    quill_stylesheet,
     quill_custom_font,
     quill_init,
     quill_lib,
+    quill_stylesheet,
 )
+from src.export import export
 
 
 def site_tracking_script() -> rx.Script:
@@ -30,7 +30,7 @@ def site_tracking_script() -> rx.Script:
 
 # --- Reflex app init ---
 app = rx.App(
-    stylesheets=["css/wrapper.css"],
+    stylesheets=["css/wrapper.css", "css/themes.css"],
     head_components=[
         site_tracking_script(),
         fuse_cdn_script(),

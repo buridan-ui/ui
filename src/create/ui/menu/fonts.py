@@ -5,61 +5,51 @@ from src.docs.library.base_ui.components.base.button import button
 from src.docs.library.base_ui.components.base.select import select
 from src.docs.library.base_ui.icons.hugeicon import hi
 
-THEMES = [
-    "amber",
-    "blue",
-    "cyan",
-    "emerald",
-    "fuchsia",
-    "gray",
-    "green",
-    "indigo",
-    "lime",
-    "neutral",
-    "orange",
-    "pink",
-    "purple",
-    "red",
-    "rose",
-    "sky",
-    "stone",
-    "teal",
-    "violet",
-    "yellow",
-    "zinc",
+FONTS = [
+    "Inter",
+    "JetBrains Mono",
+    "Geist",
+    "Geist Mono",
+    "Noto Sans",
+    "Nunito Sans",
+    "Figtree",
+    "Roboto",
+    "Raleway",
+    "DM Sans",
+    "Public Sans",
+    "Outfit",
 ]
 
 
-def theme_options(theme: str):
+def font_options(font: str):
+    font_var = f"--font-{font.lower().replace(' ', '-')}"
+
     return select.item(
         rx.el.div(
-            rx.el.div(
-                class_name="size-4 bg-primary rounded-full "
-                + rx.color_mode_cond(
-                    f"{theme}",
-                    f"{theme}-dark",
-                ).to(str),
+            rx.el.p(font, class_name="!text-xs text-muted-foreground capitalize"),
+            select.item_text(
+                "Every test phrase hides a parade of playful symbols.",
+                class_name=f"line-clamp-2 !text-sm font-(family-name:{font_var})",
             ),
-            select.item_text(theme),
-            class_name="flex gap-x-2 w-full items-center capitalize",
+            class_name="flex flex-col gap-y-1 w-full justify-start items-start",
         ),
         select.item_indicator(
             hi("Tick02Icon", class_name="size-4"),
         ),
-        value=theme,
+        value=font,
         class_name="w-full flex items-center justify-between rounded-lg",
-        on_click=hooks.theme.set_value(theme),
+        on_click=rx.call_script(hooks.font_family.set_value(font)),
     )
 
 
-def theme_menu():
+def font_menu():
     return select.root(
         select.trigger(
             render_=button(
                 rx.el.div(
                     rx.el.div(
                         rx.el.p(
-                            "Theme",
+                            "Font",
                             class_name="text-xs text-muted-foreground",
                         ),
                         rx.el.p(
@@ -68,12 +58,9 @@ def theme_menu():
                         ),
                         class_name="flex flex-col items-start",
                     ),
-                    rx.el.div(
-                        class_name="size-4 bg-primary rounded-full "
-                        + rx.color_mode_cond(
-                            f"{hooks.theme.value}",
-                            f"{hooks.theme.value}-dark",
-                        ).to(str),
+                    hi(
+                        "TextFontIcon",
+                        class_name="size-4",
                     ),
                     class_name="!w-full flex items-center justify-between p-2",
                 ),
@@ -85,8 +72,8 @@ def theme_menu():
             select.positioner(
                 select.popup(
                     select.group(
-                        *[theme_options(theme) for theme in THEMES],
-                        class_name="!w-[13rem]",
+                        *[font_options(font) for font in FONTS],
+                        class_name="!w-[18rem]",
                     ),
                     class_name="!rounded-xl h-[50vh] overflow-scroll scrollbar-none",
                 ),
@@ -94,6 +81,6 @@ def theme_menu():
                 side="left",
             ),
         ),
-        name="component_library",
-        default_value="neutral",
+        name="font_selector",
+        default_value="Inter",
     )
