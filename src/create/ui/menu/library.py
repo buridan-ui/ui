@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, TypedDict
 
 import reflex as rx
 
@@ -8,6 +8,18 @@ from src.docs.library.base_ui.components.base.select import select
 from src.docs.library.base_ui.icons.hugeicon import hi
 
 LibraryName = Literal["base-ui", "radix-ui"]
+LibraryValue = Literal["Base UI", "Radix UI"]
+
+
+class Library(TypedDict):
+    value: LibraryValue
+    svg: LibraryName
+
+
+LIBRARIES: list[Library] = [
+    {"value": "Radix UI", "svg": "radix-ui"},
+    {"value": "Base UI", "svg": "base-ui"},
+]
 
 
 def library_svg(lib: LibraryName) -> rx.Component:
@@ -20,7 +32,31 @@ def library_svg(lib: LibraryName) -> rx.Component:
     )
 
 
-def component_library_menu():
+def library_item(lib: Library) -> rx.Component:
+    return select.item(
+        rx.el.div(
+            library_svg(lib["svg"]),
+            select.item_text(lib["value"]),
+            class_name="flex gap-x-1 w-full items-center",
+        ),
+        select.item_indicator(
+            hi("Tick02Icon", class_name="size-4"),
+        ),
+        value=lib["value"],
+        class_name="w-full flex items-center justify-between rounded-lg",
+        on_click=hooks.component_library.set_value(lib["value"]),
+    )
+
+
+def current_library_icon() -> rx.Component:
+    return rx.cond(
+        hooks.component_library.value == "Base UI",
+        library_svg("base-ui"),
+        library_svg("radix-ui"),
+    )
+
+
+def component_library_menu() -> rx.Component:
     return select.root(
         select.trigger(
             render_=button(
@@ -30,55 +66,27 @@ def component_library_menu():
                             "Component Library",
                             class_name="text-xs text-muted-foreground",
                         ),
-                        rx.el.p(select.value(), class_name="text-sm"),
-                        class_name="flex flex-col items-start justify-start",
+                        rx.el.p(select.value(), class_name="text-md font-medium"),
+                        class_name="flex flex-col items-start",
                     ),
-                    rx.cond(
-                        hooks.component_library.value == "Base UI",
-                        library_svg(lib="base-ui"),
-                        library_svg(lib="radix-ui"),
-                    ),
+                    current_library_icon(),
                     class_name="!w-full flex items-center justify-between p-2",
                 ),
                 variant="ghost",
-                class_name="w-full max-w-[180px] !p-0 !shrink-none h-12 rounded-xl",
-            )
+                class_name="w-full !p-0 h-12 rounded-xl",
+            ),
         ),
         select.portal(
             select.positioner(
                 select.popup(
                     select.group(
-                        select.item(
-                            rx.el.div(
-                                library_svg(lib="radix-ui"),
-                                select.item_text("Radix UI"),
-                                class_name="flex flex-row gap-x-1 w-full items-center justify-start",
-                            ),
-                            select.item_indicator(
-                                hi("Tick02Icon", class_name="size-4")
-                            ),
-                            value="Radix UI",
-                            class_name="w-full flex flex-row items-center justify-between rounded-lg",
-                            on_click=hooks.component_library.set_value("Radix UI"),
-                        ),
-                        select.item(
-                            rx.el.div(
-                                library_svg(lib="base-ui"),
-                                select.item_text("Base UI"),
-                                class_name="flex flex-row gap-x-1 w-full items-center justify-start",
-                            ),
-                            select.item_indicator(
-                                hi("Tick02Icon", class_name="size-4")
-                            ),
-                            value="Base UI",
-                            class_name="w-full flex flex-row items-center justify-between rounded-lg",
-                            on_click=hooks.component_library.set_value("Base UI"),
-                        ),
+                        *[library_item(lib) for lib in LIBRARIES],
                         class_name="!w-[13rem]",
                     ),
                     class_name="!rounded-xl",
                 ),
                 side_offset=4,
+                side="left",
             ),
         ),
         name="component_library",
