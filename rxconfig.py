@@ -9,7 +9,7 @@ config = rx.Config(
         rx.plugins.TailwindV4Plugin(
             TailwindConfig(
                 darkMode="class",
-                plugins=["@tailwindcss/typography"],
+                plugins=["@tailwindcss/typography", "tailwind-scrollbar"],
                 theme={
                     "extend": {
                         "colors": {

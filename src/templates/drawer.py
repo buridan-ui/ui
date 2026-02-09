@@ -31,7 +31,6 @@ def drawer():
                 width="100%",
                 top="3.5rem",
                 right="0",
-                # height="calc(100% - 3.5rem)",
                 background=rx.color_mode_cond(
                     "oklch(1 0 0 / 0.99)", "oklch(0.145 0 0 / 0.99)"
                 ),

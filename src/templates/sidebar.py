@@ -112,9 +112,9 @@ def sidebar(in_drawer=False):
     )
 
     return rx.el.div(
-        rx.scroll_area(
+        rx.el.div(
             content,
-            class_name="flex flex-col items-center gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",
+            class_name="flex flex-col items-center gap-y-4 overflow-scroll scrollbar-none justify-start items-start",
         ),
         class_name=drawer_classes if in_drawer else default_classes,
     )

@@ -62,6 +62,7 @@ def theme_buttons():
                             class_name="w-[150px]",
                         ),
                         side_offset=4,
+                        align_item_with_trigger=True,
                     ),
                 ),
                 name="theme_select",
