@@ -117,7 +117,7 @@ def table_of_content(url: str, toc_data: List[Dict]):
     """
 
     return rx.el.div(
-        rx.scroll_area(
+        rx.el.div(
             rx.el.div(
                 #
                 rx.el.div(
@@ -153,7 +153,7 @@ def table_of_content(url: str, toc_data: List[Dict]):
                 ),
                 class_name="flex flex-col w-full h-full p-4 gap-y-6",
             ),
-            class_name="flex flex-col gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",
+            class_name="flex flex-col gap-y-4 overflow-scroll scrollbar-none",
         ),
-        class_name="hidden lg:block max-w-[18rem] w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0",
+        class_name="hidden xl:block max-w-[18rem] w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0",
     )

@@ -20,3 +20,6 @@ search_items_cs = ClientStateVar.create(
     + routes.JS_INTEGRATIONS_URLS
     + routes.WRAPPED_COMPONENTS_URLS,
 )
+
+# Client state to rotate mobile menu icon
+menu_icon = ClientStateVar.create("menu_icon", False)

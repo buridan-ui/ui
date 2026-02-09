@@ -14,8 +14,11 @@ def docpage(main_content, toc_content):
                     sidebar(),
                     rx.el.div(
                         rx.el.div(
-                            main_content,
-                            class_name="flex-1 min-w-0 pt-6",
+                            rx.el.div(
+                                main_content,
+                                class_name="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 px-2 py-6 md:px-0 lg:py-8",
+                            ),
+                            class_name="flex-1 min-w-0",
                         ),
                         toc_content,
                         class_name="flex items-start w-full flex-1 min-w-0",

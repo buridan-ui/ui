@@ -1,12 +1,11 @@
 import reflex as rx
 
 import src.routes as routes
-
-from src.templates.drawer import drawer
-from src.templates.search import site_search
+from src.comps.ui.buttons import site_github, site_theme
 from src.comps.ui.titles import site_title
 from src.docs.library.base_ui.components.base.button import button
-from src.comps.ui.buttons import site_github, site_theme
+from src.templates.drawer import drawer
+from src.templates.search import site_search
 
 
 def main_navbar_nav_link(nav: str, url: str):
@@ -22,7 +21,11 @@ def main_navbar():
         rx.el.div(
             rx.el.div(
                 rx.el.div(drawer(), class_name="flex lg:hidden"),
-                rx.el.a(button(site_title(), variant="ghost"), to="/"),
+                rx.el.a(
+                    button(site_title(), variant="ghost"),
+                    to="/",
+                    class_name="hidden lg:flex",
+                ),
                 rx.el.div(
                     main_navbar_nav_link("Docs", routes.GET_STARTED_URLS[0]["url"]),
                     main_navbar_nav_link(
@@ -35,9 +38,9 @@ def main_navbar():
                     main_navbar_nav_link(
                         "Integrations", routes.JS_INTEGRATIONS_URLS[0]["url"]
                     ),
-                    class_name="hidden lg:flex flex-row items-center text-sm no-underline gap-x-2",
+                    class_name="hidden lg:flex flex-row items-center text-sm no-underline gap-x-0",
                 ),
-                class_name="flex flex-row items-baseline gap-x-2 lg:gap-x-4",
+                class_name="flex flex-row items-baseline gap-x-2 lg:gap-x-0",
             ),
             rx.el.div(
                 site_search(),
