@@ -21,7 +21,11 @@ def navbar():
         rx.el.div(
             rx.el.div(
                 rx.el.div(drawer(), class_name="flex lg:hidden"),
-                rx.el.a(button(site_title(), variant="ghost"), to="/"),
+                rx.el.a(
+                    button(site_title(), variant="ghost"),
+                    to="/",
+                    class_name="hidden lg:flex",
+                ),
                 rx.el.div(
                     navbar_nav_link("Docs", routes.GET_STARTED_URLS[0]["url"]),
                     navbar_nav_link("Components", routes.BASE_UI_COMPONENTS[0]["url"]),
@@ -35,7 +39,7 @@ def navbar():
                     navbar_nav_link("Create", "create"),
                     class_name="hidden lg:flex flex-row items-center text-sm no-underline gap-x-2",
                 ),
-                class_name="flex flex-row items-baseline gap-x-2 lg:gap-x-4",
+                class_name="flex flex-row items-baseline gap-x-2 lg:gap-x-0",
             ),
             rx.el.div(
                 site_search(),
