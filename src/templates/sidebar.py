@@ -3,6 +3,7 @@ from typing import List
 
 import reflex as rx
 
+import src.hooks as hooks
 import src.routes as routes
 
 
@@ -55,6 +56,7 @@ def create_menu_item(data: dict, in_drawer):
             ),
             to=f"/{data['url']}",
             text_decoration="none",
+            on_click=hooks.menu_icon.set_value(False),
         ),
         class_name="w-full",
         id=data["url"],
