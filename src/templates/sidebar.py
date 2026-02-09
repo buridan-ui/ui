@@ -44,13 +44,14 @@ SIDEBAR_SECTIONS = [
 ]
 
 
-def create_menu_item(data: dict):
+def create_menu_item(data: dict, in_drawer):
     """Create a single menu item."""
     return rx.el.div(
         rx.el.a(
             rx.el.p(
                 data["title"],
-                class_name="cursor-pointer text-sm font-[450]",
+                class_name="cursor-pointer font-[450] "
+                + rx.cond(in_drawer, "text-lg px-2", "text-sm").to(str),
             ),
             to=f"/{data['url']}",
             text_decoration="none",
@@ -60,39 +61,40 @@ def create_menu_item(data: dict):
     )
 
 
-def create_sidebar_menu_items(routes: List[dict]):
+def create_sidebar_menu_items(routes: List[dict], in_drawer):
     """Create menu items from routes."""
     return rx.el.div(
-        *[create_menu_item(route) for route in routes],
+        *[create_menu_item(route, in_drawer) for route in routes],
         class_name="w-full flex flex-col gap-y-1.5",
     )
 
 
-def create_section_content(section: SidebarSection):
+def create_section_content(section: SidebarSection, in_drawer):
     """Create content for a sidebar section."""
     return rx.el.div(
         rx.el.div(
-            create_sidebar_menu_items(section.routes),
+            create_sidebar_menu_items(section.routes, in_drawer),
             class_name="flex flex-row h-full w-full gap-x-2",
         ),
         class_name="flex flex-col p-0 m-0",
     )
 
 
-def sidebar_section(section: SidebarSection):
+def sidebar_section(section: SidebarSection, in_drawer=False):
     """Create a complete sidebar section with title and content."""
     return rx.el.div(
         rx.el.div(
             rx.el.div(
                 rx.el.p(
                     section.title,
-                    class_name="text-xs text-muted-foreground font-medium",
+                    class_name="text-muted-foreground font-medium "
+                    + rx.cond(in_drawer, "text-md px-2", "text-xs").to(str),
                 ),
                 class_name="flex flex-row items-center gap-x-2",
             ),
             class_name="w-full flex flex-row justify-between align-center items-center",
         ),
-        create_section_content(section),
+        create_section_content(section, in_drawer),
         class_name="flex flex-col w-full gap-y-2 p-4",
     )
 
@@ -100,13 +102,13 @@ def sidebar_section(section: SidebarSection):
 def sidebar(in_drawer=False):
     """Main sidebar component."""
     content = rx.el.div(
-        *[sidebar_section(section) for section in SIDEBAR_SECTIONS],
+        *[sidebar_section(section, in_drawer) for section in SIDEBAR_SECTIONS],
         class_name="flex flex-col max-w-[18rem] w-full h-full",
     )
 
     drawer_classes = "flex flex-col w-full h-full"
     default_classes = (
-        "hidden xl:flex max-w-[18rem] w-full sticky top-18 max-h-[100vh] z-[10] pb-5"
+        "hidden lg:flex max-w-[18rem] w-full sticky top-18 max-h-[100vh] z-[10] pb-5"
     )
 
     return rx.el.div(

@@ -155,5 +155,5 @@ def table_of_content(url: str, toc_data: List[Dict]):
             ),
             class_name="flex flex-col gap-y-4 [&_.rt-ScrollAreaScrollbar]:mt-[2rem] [&_.rt-ScrollAreaScrollbar]:mb-[2rem]",
         ),
-        class_name="hidden lg:block max-w-[18rem] w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0",
+        class_name="hidden xl:block max-w-[18rem] w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0",
     )
