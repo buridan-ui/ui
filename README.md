@@ -1,3 +1,5 @@
+> **Note (Feb 19, 2026)**  
+> This repo is unmaintained for the time being. I might come back to it at some point in the future.
 
 # buridan/ui
 
