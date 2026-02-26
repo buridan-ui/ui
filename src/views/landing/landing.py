@@ -3,7 +3,7 @@ import reflex as rx
 import src.routes as routes
 from src.comps.ui.themes import theme_buttons
 from src.docs.library.base_ui.components.base.button import button
-from src.templates.navbar import main_navbar
+from src.templates.navbar import navbar
 from src.views.examples.examples import examples_page
 
 
@@ -58,7 +58,7 @@ def landing_buttons():
 def site_landing_page():
     return rx.el.div(
         rx.el.div(
-            main_navbar(),
+            navbar(),
             rx.el.div(
                 header(),
                 sub_header(),

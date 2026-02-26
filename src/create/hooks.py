@@ -1,0 +1,13 @@
+from reflex.experimental import ClientStateVar
+
+# Var holding component library value
+component_library = ClientStateVar.create("component_library", "Base UI")
+
+# Var holding the current theme
+theme = ClientStateVar.create("theme", "neutral")
+
+# Var holding the current font family
+font_family = ClientStateVar.create("font_family", "Inter")
+
+# Var holding the current radius
+radius = ClientStateVar.create("radius", "none")

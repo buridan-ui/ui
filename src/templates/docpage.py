@@ -1,6 +1,6 @@
 import reflex as rx
 
-from src.templates.navbar import main_navbar
+from src.templates.navbar import navbar
 from src.templates.sidebar import sidebar
 
 
@@ -8,7 +8,7 @@ def docpage(main_content, toc_content):
     """The template for all documentation pages."""
     return rx.el.body(
         rx.el.div(
-            rx.el.header(main_navbar(), class_name="sticky top-0 z-50"),
+            rx.el.header(navbar(), class_name="sticky top-0 z-50"),
             rx.el.main(
                 rx.el.div(
                     sidebar(),

@@ -8,7 +8,7 @@ from src.templates.drawer import drawer
 from src.templates.search import site_search
 
 
-def main_navbar_nav_link(nav: str, url: str):
+def navbar_nav_link(nav: str, url: str):
     return rx.el.a(
         button(nav, variant="ghost", size="sm", class_name="!text-sm cursor-pointer"),
         to=f"/{url}",
@@ -16,7 +16,7 @@ def main_navbar_nav_link(nav: str, url: str):
     )
 
 
-def main_navbar():
+def navbar():
     return rx.el.div(
         rx.el.div(
             rx.el.div(
@@ -27,18 +27,17 @@ def main_navbar():
                     class_name="hidden lg:flex",
                 ),
                 rx.el.div(
-                    main_navbar_nav_link("Docs", routes.GET_STARTED_URLS[0]["url"]),
-                    main_navbar_nav_link(
-                        "Components", routes.BASE_UI_COMPONENTS[0]["url"]
-                    ),
-                    main_navbar_nav_link("Charts", routes.CHARTS_URLS[0]["url"]),
-                    main_navbar_nav_link(
+                    navbar_nav_link("Docs", routes.GET_STARTED_URLS[0]["url"]),
+                    navbar_nav_link("Components", routes.BASE_UI_COMPONENTS[0]["url"]),
+                    navbar_nav_link("Charts", routes.CHARTS_URLS[0]["url"]),
+                    navbar_nav_link(
                         "Wrapped React", routes.WRAPPED_COMPONENTS_URLS[0]["url"]
                     ),
-                    main_navbar_nav_link(
+                    navbar_nav_link(
                         "Integrations", routes.JS_INTEGRATIONS_URLS[0]["url"]
                     ),
-                    class_name="hidden lg:flex flex-row items-center text-sm no-underline gap-x-0",
+                    navbar_nav_link("Create", "create"),
+                    class_name="hidden lg:flex flex-row items-center text-sm no-underline gap-x-2",
                 ),
                 class_name="flex flex-row items-baseline gap-x-2 lg:gap-x-0",
             ),

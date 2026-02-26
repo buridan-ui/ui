@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./presets/lyra.css";
+@import "./presets/atlas.css";
+@import "./presets/minimal.css";
+
 :root {
     --radius: 0.625rem;
     --background: oklch(1 0 0);
@@ -35,6 +39,20 @@
     --chart-3: oklch(0.7 0 0);
     --chart-4: oklch(0.82 0 0);
     --chart-5: oklch(0.92 0 0);
+
+    --font-geist: "Geist Variable", sans-serif;
+    --font-inter: "Inter Variable", sans-serif;
+    --font-noto-sans: "Noto Sans Variable", sans-serif;
+    --font-nunito-sans: "Nunito Sans Variable", sans-serif;
+    --font-figtree: "Figtree Variable", sans-serif;
+    --font-roboto: "Roboto", sans-serif;
+    --font-raleway: "Raleway", sans-serif;
+    --font-dm-sans: "DM Sans", sans-serif;
+    --font-public-sans: "Public Sans", sans-serif;
+    --font-outfit: "Outfit", sans-serif;
+
+    --font-jetbrains-mono: "JetBrains Mono Variable", monospace;
+    --font-geist-mono: "Geist Mono Variable", monospace;
 }
 
 .dark {
